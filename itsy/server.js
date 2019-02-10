@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const process = require("process")
 const express = require("express")
 const serveStatic = require("serve-static")
 

@@ -1,11 +1,11 @@
 {
   "name": "itsy8",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy8.glitch.me/",
   "bin": {
-    "itsy8": "./index.js"
+    "itsy8": "./server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
@@ -15,14 +15,14 @@
     "lua-src": "5.3.5"
   },
   "files": [
+    "client.js",
     "index.html",
-    "index.js",
     "itsy8.js",
     "itsy8.wasm",
-    "loader.js",
-    "style.css"
+    "server.js"
   ],
   "scripts": {
-    "build": "make clean itsy8.js"
+    "build": "make clean itsy8.js",
+    "start": "node server.js"
   }
 }
