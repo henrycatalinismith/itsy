@@ -6,5 +6,8 @@
   "repository": "https://itsy8.glitch.me/",
   "bin": {
     "itsy8": "./index.js"
+  },
+  "devDependencies": {
+    "lua-src": "5.3.5"
   }
 }
