@@ -10,6 +10,11 @@
   "devDependencies": {
     "lua-src": "5.3.5"
   },
+  "files": {
+    "index.js",
+    "itsy8.js",
+    "itsy8.wasm",
+  },
   "scripts": {
     "build": "make clean itsy8.js"
   }
