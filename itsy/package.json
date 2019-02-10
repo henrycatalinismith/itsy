@@ -1,0 +1,10 @@
+{
+  "name": "itsy8",
+  "version": "0.0.0",
+  "description": "universal fantasy console",
+  "license": "MIT",
+  "repository": "https://itsy8.glitch.me/",
+  "bin": {
+    "itsy8": "./index.js"
+  }
+}
