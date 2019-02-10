@@ -1,6 +1,6 @@
 {
   "name": "itsy8",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy8.glitch.me/",
@@ -16,7 +16,6 @@
   },
   "files": [
     "client.js",
-    "index.html",
     "itsy8.js",
     "itsy8.wasm",
     "server.js"

@@ -49,6 +49,7 @@ lua_State* lua;
 
 int main(int argc, char **argv)
 {
+  printf("%s\n", argv[1]);
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
   }
@@ -85,10 +86,11 @@ int main(int argc, char **argv)
   lua_pushcfunction(lua, pset);
   lua_setglobal(lua, "pset");
 
-  luaL_dostring(lua, "print('lua!')\n");
-  luaL_dostring(lua, "frame = 0\n");
-  luaL_dostring(lua, "function _update()\n frame = frame + 1\n pset(12, 12, frame % 16)\nend\n");
-  luaL_dostring(lua, "pset(10, 10, 14)\n");
+  luaL_dostring(lua, argv[1]);
+  //luaL_dostring(lua, "print('lua!')\n");
+  //luaL_dostring(lua, "frame = 0\n");
+  //luaL_dostring(lua, "function _update()\n frame = frame + 1\n pset(12, 12, frame % 16)\nend\n");
+  //luaL_dostring(lua, "pset(10, 10, 14)\n");
   //lua_close(lua);
 
   emscripten_set_main_loop(loop, -1, 1);

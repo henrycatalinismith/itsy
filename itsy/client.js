@@ -1,9 +1,14 @@
 const body = document.body
 const canvas = document.createElement("canvas")
+const lua = document.querySelector("script[type='text/lua']").innerText
 const script = document.createElement("script")
 const style = document.createElement("style")
 
-window.Module = { canvas }
+window.Module = {
+  arguments: [lua],
+  canvas,
+}
+
 script.src = "/itsy8.js"
 script.onload = () => {
   console.log(Module)
