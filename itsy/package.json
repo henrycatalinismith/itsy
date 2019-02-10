@@ -7,14 +7,21 @@
   "bin": {
     "itsy8": "./index.js"
   },
+  "dependencies": {
+    "express": "^4.16.4",
+    "serve-static": "^1.13.2"
+  },
   "devDependencies": {
     "lua-src": "5.3.5"
   },
-  "files": {
+  "files": [
+    "index.html",
     "index.js",
     "itsy8.js",
     "itsy8.wasm",
-  },
+    "loader.js",
+    "style.css"
+  ],
   "scripts": {
     "build": "make clean itsy8.js"
   }
