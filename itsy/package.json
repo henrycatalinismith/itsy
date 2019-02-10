@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "lua-src": "5.3.5"
+  },
+  "scripts": {
+    "build": "make clean itsy8.js"
   }
 }
