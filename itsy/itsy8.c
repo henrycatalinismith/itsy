@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 #include <emscripten.h>
 #include <SDL2/SDL.h>
@@ -42,7 +43,11 @@ void loop(void);
 void render(void);
 
 int pget(int x, int y);
+
 static int pset(lua_State *L);
+static void __pset(int x, int y, int c);
+
+static int line(lua_State *L);
 
 lua_State* lua;
 
@@ -84,6 +89,9 @@ int main(int argc, char **argv)
 
   lua_pushcfunction(lua, pset);
   lua_setglobal(lua, "pset");
+
+  lua_pushcfunction(lua, line);
+  lua_setglobal(lua, "line");
 
   luaL_dostring(lua, argv[1]);
   emscripten_set_main_loop(loop, -1, 1);
@@ -152,9 +160,51 @@ static int pset(lua_State *L)
   int y = luaL_checknumber(L, 2);
   int c = luaL_checknumber(L, 3);
 
+  __pset(x, y, c);
+  return 0;
+}
+
+static void __pset(int x, int y, int c)
+{
   memory[pixel[x][y]] = x % 2 == 0
     ? ((memory[pixel[x][y]] >> 4) << 4) | c
     : (c << 4) | (memory[pixel[x][y]] & 0x0f);
+}
+
+// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
+static int line(lua_State *L)
+{
+  int x0 = luaL_checknumber(L, 1);
+  int y0 = luaL_checknumber(L, 2);
+  int x1 = luaL_checknumber(L, 3);
+  int y1 = luaL_checknumber(L, 4);
+  int col = luaL_checknumber(L, 5);
+
+  int dx = abs(x1 - x0);
+  int dy = abs(y1 - y0);
+  int sy = y0 < y1 ? 1 : -1;
+  int sx = x0 < x1 ? 1 : -1;
+  int err = (dx > dy ? dx : -dy) / 2;
+
+  for (;;) {
+    __pset(x0, y0, col);
+
+    if (x0 == x1 && y0 == y1) {
+      break;
+    }
+
+    int e2 = err;
+
+    if (e2 >- dx) {
+      err -= dy;
+      x0 += sx;
+    }
+
+    if (e2 < dy) {
+      err += dx;
+      y0 += sy;
+    }
+  }
 
   return 0;
 }
