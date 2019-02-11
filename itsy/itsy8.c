@@ -44,6 +44,8 @@ void render(void);
 
 int pget(int x, int y);
 
+void luaopen_itsy (lua_State *L);
+
 static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
 
@@ -86,12 +88,7 @@ int main(int argc, char **argv)
 
   lua = luaL_newstate();
   luaL_openlibs(lua);
-
-  lua_pushcfunction(lua, pset);
-  lua_setglobal(lua, "pset");
-
-  lua_pushcfunction(lua, line);
-  lua_setglobal(lua, "line");
+  luaopen_itsy(lua);
 
   luaL_dostring(lua, argv[1]);
   emscripten_set_main_loop(loop, -1, 1);
@@ -142,9 +139,22 @@ void render(void)
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
 
-  printf("Frame: %d\n", frame);
+  // printf("Frame: %d\n", frame);
 
   SDL_UpdateWindowSurface(window);
+}
+
+void luaopen_itsy (lua_State *L)
+{
+  lua_pushcfunction(L, pset);
+  lua_setglobal(L, "pset");
+
+  lua_pushcfunction(L, line);
+  lua_setglobal(L, "line");
+
+  luaopen_math(L);
+  luaL_dostring(L, "abs = math.abs");
+  luaL_dostring(L, "math = nil");
 }
 
 int pget(int x, int y)
