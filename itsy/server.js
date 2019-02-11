@@ -5,6 +5,11 @@ const process = require("process")
 const express = require("express")
 const serveStatic = require("serve-static")
 
+const pkg = JSON.parse(fs.readFileSync(`${__dirname}/package.json`))
+const json = JSON.stringify({
+  version: pkg.version,
+})
+
 const app = express()
 const port = process.env.PORT || "8080"
 
@@ -22,6 +27,7 @@ app.get("/", (req, res) => {
   res.send(`<!DOCTYPE html>
 <html>
   <body>
+    <script type="application/json">${json}</script>
     <script type="text/lua">${code}</script>
     <script type="text/javascript" src="/client.js"></script>
   </body>

@@ -1,21 +1,25 @@
 const body = document.body
 const canvas = document.createElement("canvas")
+const json = document.querySelector("script[type='application/json']").innerText
 const lua = document.querySelector("script[type='text/lua']").innerText
 const script = document.createElement("script")
 const style = document.createElement("style")
 
-window.Module = {
-  arguments: [lua],
-  canvas,
+const config = JSON.parse(json)
+
+script.src = `/itsy8.js?${config.version}`
+script.onload = () => {
+  Module({
+    arguments: [lua],
+    canvas,
+  }).then(wasm => {
+    console.log(wasm)
+    //setTimeout(() => wasm.abort(), 1000)
+    //setTimeout(() => wasm.pauseMainLoop(), 1000)
+    //setTimeout(() => wasm.resumeMainLoop(), 2000)
+  })
 }
 
-script.src = "/itsy8.js"
-script.onload = () => {
-  console.log(Module)
-  //setTimeout(() => Module.abort(), 1000)
-  //setTimeout(() => Module.pauseMainLoop(), 1000)
-  //setTimeout(() => Module.resumeMainLoop(), 2000)
-}
 
 style.type = "text/css"
 style.appendChild(document.createTextNode(`

@@ -17,7 +17,6 @@ uint16_t pixel[128][128];
 
 uint8_t pixels[128 * 128 * 4];
 
-
 int colors[][3] = {
   { 0x00, 0x00, 0x00 },
   { 0x5F, 0x57, 0x4F },
@@ -49,7 +48,7 @@ lua_State* lua;
 
 int main(int argc, char **argv)
 {
-  printf("%s\n", argv[1]);
+  // printf("%s\n", argv[1]);
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
   }
@@ -87,15 +86,8 @@ int main(int argc, char **argv)
   lua_setglobal(lua, "pset");
 
   luaL_dostring(lua, argv[1]);
-  //luaL_dostring(lua, "print('lua!')\n");
-  //luaL_dostring(lua, "frame = 0\n");
-  //luaL_dostring(lua, "function _update()\n frame = frame + 1\n pset(12, 12, frame % 16)\nend\n");
-  //luaL_dostring(lua, "pset(10, 10, 14)\n");
-  //lua_close(lua);
-
   emscripten_set_main_loop(loop, -1, 1);
 
-  //lua_close(lua);
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
@@ -111,13 +103,6 @@ void loop(void)
   lua_getglobal(lua, "_update");
   lua_pcall(lua, 0, 0, 0);
 
-  for (int x = 0; x < 128; x++) {
-    for (int y = 0; y < 128; y++) {
-      int c = (frame + x + y) % 16;
-      //pset(x, y, c);
-    }
-  }
-
   if (frame > 1000) {
     emscripten_cancel_main_loop();
   }
@@ -130,27 +115,23 @@ void render(void)
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
-      //int c = (x+y) % 16;
       int c = pget(x, y);
       const unsigned int offset = (128 * 4 * y ) + x * 4;
       pixels[ offset + 0 ] = colors[c][2];        // b
       pixels[ offset + 1 ] = colors[c][1];        // g
       pixels[ offset + 2 ] = colors[c][0];        // r
       pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
-      //SDL_SetRenderDrawColor(renderer, colors[c][0], colors[c][1], colors[c][2], 255);
-      //SDL_RenderFillRect(renderer, &rects[x][y]);
     }
   }
 
-          SDL_UpdateTexture
-            (
-            texture,
-            NULL,
-            &pixels[0],
-            128 * 4
-            );
+  SDL_UpdateTexture(
+    texture,
+    NULL,
+    &pixels[0],
+    128 * 4
+  );
 
-        SDL_RenderCopy( renderer, texture, NULL, NULL );
+  SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
 
   printf("Frame: %d\n", frame);
