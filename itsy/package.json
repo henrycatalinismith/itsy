@@ -1,11 +1,11 @@
 {
-  "name": "itsy8",
-  "version": "0.0.5",
+  "name": "@highvalley.systems/itsy",
+  "version": "0.0.6",
   "description": "universal fantasy console",
   "license": "MIT",
-  "repository": "https://itsy8.glitch.me/",
+  "repository": "https://itsy.glitch.me/",
   "bin": {
-    "itsy8": "./server.js"
+    "itsy": "./server.js"
   },
   "dependencies": {
     "express": "^4.16.4",
@@ -16,12 +16,12 @@
   },
   "files": [
     "client.js",
-    "itsy8.js",
-    "itsy8.wasm",
+    "itsy.js",
+    "itsy.wasm",
     "server.js"
   ],
   "scripts": {
-    "build": "make clean itsy8.js",
+    "build": "make clean itsy.js",
     "start": "node server.js"
   }
 }

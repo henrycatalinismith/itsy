@@ -4,14 +4,14 @@ FLAGS = node_modules/lua-src/src/liblua.a -s WASM=1 -s MODULARIZE=1 -s USE_SDL=2
 
 clean:
 	rm -rf node_modules
-	rm -f itsy8.js
-	rm -f itsy8.wasm
+	rm -f itsy.js
+	rm -f itsy.wasm
 
 emcc_sdl:
 	docker build -t emcc_sdl .
 
-itsy8.js: emcc_sdl lua node_modules
-	$(EMCC) -Inode_modules/lua-src/src itsy8.c $(FLAGS) -o itsy8.js
+itsy.js: emcc_sdl lua node_modules
+	$(EMCC) -Inode_modules/lua-src/src itsy.c $(FLAGS) -o itsy.js
 
 lua: node_modules
 	cd node_modules/lua-src/src && make generic CC='$(EMCCL)'

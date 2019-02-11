@@ -7,7 +7,7 @@ const style = document.createElement("style")
 
 const config = JSON.parse(json)
 
-script.src = `/itsy8.js?${config.version}`
+script.src = `/itsy.js?${config.version}`
 script.onload = () => {
   Module({
     arguments: [lua],

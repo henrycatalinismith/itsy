@@ -35,6 +35,6 @@ app.get("/", (req, res) => {
 })
 
 app.listen(port, () => {
-  console.log(`itsy8 up and running on http://127.0.0.1:${port}/!`)
+  console.log(`itsy up and running on http://127.0.0.1:${port}/!`)
 })
 
