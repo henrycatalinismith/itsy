@@ -17,6 +17,11 @@ line(110, 10, 10, 110, 12)
 
 print(2 + 2)
 print(abs(2 - 30))
+print(max(1, 2))
+print(min(3, 4))
+print(pow(3, 3))
+print(flr(10.99999999))
+print(ceil(99.1))
 print(3 + 2)
 
 

@@ -154,6 +154,11 @@ void luaopen_itsy (lua_State *L)
 
   luaopen_math(L);
   luaL_dostring(L, "abs = math.abs");
+  luaL_dostring(L, "max = math.max");
+  luaL_dostring(L, "min = math.min");
+  luaL_dostring(L, "pow = math.pow");
+  luaL_dostring(L, "flr = math.floor");
+  luaL_dostring(L, "ceil = math.ceil");
   luaL_dostring(L, "math = nil");
 }
 
