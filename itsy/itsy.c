@@ -156,6 +156,34 @@ void luaopen_itsy (lua_State *L)
   lua_pushcfunction(L, pset);
   lua_setglobal(L, "pset");
 
+  luaopen_base(L);
+  luaL_dostring(L, "assert = nil");
+  luaL_dostring(L, "collectgarbage = nil");
+  luaL_dostring(L, "dofile = nil");
+  luaL_dostring(L, "error = nil");
+  luaL_dostring(L, "getmetatable = nil");
+  luaL_dostring(L, "ipairs = nil");
+  luaL_dostring(L, "loadfile = nil");
+  luaL_dostring(L, "load = nil");
+  luaL_dostring(L, "loadstring = nil");
+  luaL_dostring(L, "next = nil");
+  luaL_dostring(L, "pairs = nil");
+  luaL_dostring(L, "pcall = nil");
+  // using this!
+  // luaL_dostring(L, "print = nil");
+  luaL_dostring(L, "rawequal = nil");
+  luaL_dostring(L, "rawlen = nil");
+  luaL_dostring(L, "rawget = nil");
+  luaL_dostring(L, "rawset = nil");
+  luaL_dostring(L, "select = nil");
+  luaL_dostring(L, "setmetatable = nil");
+  // luaL_dostring(L, "tonumber = nil");
+  // luaL_dostring(L, "tostring = nil");
+  // luaL_dostring(L, "type = nil");
+  luaL_dostring(L, "xpcall = nil");
+  luaL_dostring(L, "_G = nil");
+  luaL_dostring(L, "_VERSION = nil");
+
   luaopen_math(L);
   luaL_dostring(L, "abs = math.abs");
   luaL_dostring(L, "max = math.max");
@@ -164,6 +192,10 @@ void luaopen_itsy (lua_State *L)
   luaL_dostring(L, "flr = math.floor");
   luaL_dostring(L, "ceil = math.ceil");
   luaL_dostring(L, "math = nil");
+  luaL_dostring(L, "pi = nil");
+  luaL_dostring(L, "huge = nil");
+  luaL_dostring(L, "maxinteger = nil");
+  luaL_dostring(L, "mininteger = nil");
 }
 
 int pget(int x, int y)

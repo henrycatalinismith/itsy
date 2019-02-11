@@ -24,6 +24,10 @@ print(flr(10.99999999))
 print(ceil(99.1))
 print(3 + 2)
 
+print(tonumber("10"))
+print(tostring({ 1, 2 }))
+print(type(10))
+
 circ(64, 64, 32, 8)
 
 
