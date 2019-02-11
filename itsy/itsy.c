@@ -50,6 +50,7 @@ static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
 
 static int line(lua_State *L);
+static int circ(lua_State *L);
 
 lua_State* lua;
 
@@ -146,11 +147,14 @@ void render(void)
 
 void luaopen_itsy (lua_State *L)
 {
-  lua_pushcfunction(L, pset);
-  lua_setglobal(L, "pset");
+  lua_pushcfunction(L, circ);
+  lua_setglobal(L, "circ");
 
   lua_pushcfunction(L, line);
   lua_setglobal(L, "line");
+
+  lua_pushcfunction(L, pset);
+  lua_setglobal(L, "pset");
 
   luaopen_math(L);
   luaL_dostring(L, "abs = math.abs");
@@ -224,3 +228,42 @@ static int line(lua_State *L)
   return 0;
 }
 
+// https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
+static int circ(lua_State *L)
+{
+  int x = luaL_checknumber(L, 1);
+  int y = luaL_checknumber(L, 2);
+  int r = luaL_checknumber(L, 3);
+  int c = luaL_checknumber(L, 4);
+
+  int cx = r - 1;
+  int cy = 0;
+  int dx = 1;
+  int dy = 1;
+  int err = dx - (r << 1);
+
+  while (cx >= cy) {
+    __pset(x + cx, y + cy, c);
+    __pset(x + cy, y + cx, c);
+    __pset(x - cy, y + cx, c);
+    __pset(x - cx, y + cy, c);
+    __pset(x - cx, y - cy, c);
+    __pset(x - cy, y - cx, c);
+    __pset(x + cy, y - cx, c);
+    __pset(x + cx, y - cy, c);
+
+    if (err <= 0) {
+      cy++;
+      err += dy;
+      dy += 2;
+    }
+
+    if (err > 0) {
+      cx--;
+      dx += 2;
+      err += dx - (r << 1);
+    }
+  }
+
+  return 0;
+}
