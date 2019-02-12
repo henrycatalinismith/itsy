@@ -3,6 +3,7 @@
 #include <math.h>
 #include <emscripten.h>
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 #include "lua.h"
 #include <lauxlib.h>
@@ -56,6 +57,33 @@ static int circ(lua_State *L);
 void luaopen_itsy (lua_State *L);
 
 lua_State* lua;
+
+SDL_Texture *sprite;
+
+EMSCRIPTEN_KEEPALIVE
+void register_sprite(char *name, int size, void *data)
+{
+  SDL_RWops *a = SDL_RWFromConstMem(data, size);
+  printf("%s: %d\n", name, size);
+  printf("%d\n", (int)data);
+  printf("%s\n", SDL_GetError());
+
+  SDL_GetWindowSurface(window);
+  SDL_Surface *image = IMG_Load_RW(a, 1);
+  if(!image) {
+    printf("IMG_Load_RW: %s\n", IMG_GetError());
+    printf("%s\n", SDL_GetError());
+    // handle error
+  }
+  printf("%dx%d\n", image->w, image->h);
+
+  sprite = SDL_CreateTextureFromSurface(renderer, image);
+
+  //SDL_RenderCopy(renderer, sprite, NULL, NULL);
+  //SDL_RenderPresent(renderer);
+  // SDL_FreeSurface(image);
+  // SDL_UpdateWindowSurface(window);
+}
 
 int main(int argc, char **argv)
 {
@@ -122,6 +150,10 @@ void render(void)
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(renderer);
 
+  if (sprite != NULL) {
+    SDL_RenderCopy(renderer, sprite, NULL, NULL);
+  }
+
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
       int c = pget(x, y);
@@ -140,11 +172,9 @@ void render(void)
     128 * 4
   );
 
+  // printf("Frame: %d\n", frame);
   SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
-
-  // printf("Frame: %d\n", frame);
-
   SDL_UpdateWindowSurface(window);
 }
 

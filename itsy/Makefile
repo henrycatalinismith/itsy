@@ -1,6 +1,12 @@
 EMCC = docker run --rm -v $(shell pwd):/src emcc_sdl emcc
 EMCCL = docker run --rm -v $(shell pwd)/node_modules/lua-src/src:/src emcc_sdl emcc
-FLAGS = node_modules/lua-src/src/liblua.a -s WASM=1 -s MODULARIZE=1 -s USE_SDL=2 -O3
+FLAGS = node_modules/lua-src/src/liblua.a \
+	-s WASM=1 \
+	-s MODULARIZE=1 \
+	-s USE_SDL=2 \
+	-s EXPORTED_FUNCTIONS='["_main","_register_sprite"]' \
+	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
+	-O3
 
 clean:
 	rm -rf node_modules
