@@ -2,32 +2,61 @@
 
 const fs = require("fs")
 const process = require("process")
+const fetch = require("node-fetch")
 const express = require("express")
 const serveStatic = require("serve-static")
 
-const js = fs.readFileSync(`${__dirname}/client.js`, "utf-8")
-const css = fs.readFileSync(`${__dirname}/style.css`, "utf-8")
+const img = sprite => [
+  `<img data-name="${sprite.name}" src="data:image/png;base64,${sprite.dataUrl}" />`
+]
 
-const pkg = JSON.parse(fs.readFileSync(`${__dirname}/package.json`))
-const json = JSON.stringify({
-  version: pkg.version,
-}, undefined, 2)
+async function main() {
+  const cwd = process.cwd()
+  const assetsPath = `${cwd}/.glitch-assets`
+  const sprites = []
 
-const app = express()
-const port = process.env.PORT || "8080"
+  if (fs.existsSync(assetsPath)) {
+    fs
+      .readFileSync(assetsPath, "utf-8")
+      .split(/\n/)
+      .filter(b => !!b)
+      .map(json => JSON.parse(json))
+      .filter(asset => !asset.deleted)
+      .filter(asset => !!asset.name.match(/\.png$/))
+      .forEach(sprite => sprites.push(sprite))
+  }
 
-const filename = process.argv.pop()
-if (filename === __filename) {
-  // means no code file has been given :(
-  process.exit(-1)
-}
+  console.log(sprites)
 
-const code = fs.readFileSync(filename, "utf-8")
+  for (const sprite of sprites) {
+    const response = await fetch(sprite.url)
+    const buffer = await response.arrayBuffer()
+    const dataUrl = Buffer.from(buffer, "binary").toString('base64')
+    sprite.dataUrl = dataUrl
+  }
 
-app.use(serveStatic(__dirname))
+  const js = fs.readFileSync(`${__dirname}/client.js`, "utf-8")
+  const css = fs.readFileSync(`${__dirname}/style.css`, "utf-8")
 
-app.get("/", (req, res) => {
-  res.send(`<!DOCTYPE html>
+  const pkg = JSON.parse(fs.readFileSync(`${__dirname}/package.json`))
+  const json = JSON.stringify({
+    version: pkg.version,
+  }, undefined, 2)
+
+  const app = express()
+  const port = process.env.PORT || "8080"
+
+  const filename = process.argv.pop()
+  if (filename === __filename) {
+    // means no code file has been given :(
+    process.exit(-1)
+  }
+
+  const code = fs.readFileSync(filename, "utf-8")
+
+  app.use(serveStatic(__dirname))
+
+  app.get("/", (req, res) => res.send(`<!DOCTYPE html>
 <html>
 <body>
 <script type="application/json">
@@ -42,11 +71,13 @@ ${js.trim()}
 <style type="text/css">
 ${css.trim()}
 </style>
+${sprites.map(sprite => img(sprite))}
 </body>
-</html>`)
-})
+</html>`))
 
-app.listen(port, () => {
-  console.log(`itsy up and running on http://127.0.0.1:${port}/!`)
-})
+  app.listen(port, () => {
+    console.log(`itsy up and running on http://127.0.0.1:${port}/!`)
+  })
+}
 
+main()

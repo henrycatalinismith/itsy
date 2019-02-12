@@ -44,8 +44,6 @@ void render(void);
 
 int pget(int x, int y);
 
-void luaopen_itsy (lua_State *L);
-
 static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
 
@@ -53,8 +51,9 @@ static int line(lua_State *L);
 static void __line(int x0, int y0, int x1, int y1, int col);
 
 static int rect(lua_State *L);
-
 static int circ(lua_State *L);
+
+void luaopen_itsy (lua_State *L);
 
 lua_State* lua;
 
@@ -92,7 +91,7 @@ int main(int argc, char **argv)
   );
 
   lua = luaL_newstate();
-  luaL_openlibs(lua);
+  //luaL_openlibs(lua);
   luaopen_itsy(lua);
 
   luaL_dostring(lua, argv[1]);
@@ -163,7 +162,12 @@ void luaopen_itsy (lua_State *L)
   lua_pushcfunction(L, rect);
   lua_setglobal(L, "rect");
 
-  luaopen_base(L);
+  // luaL_setfuncs(L, itsy_funcs, 0);
+
+  // luaopen_base(L);
+  // lua_pushcfunction(L, luaopen_base);
+  // lua_call(L, 0, 0);
+  luaL_requiref(L, "_G", luaopen_base, 1);
   luaL_dostring(L, "assert = nil");
   luaL_dostring(L, "collectgarbage = nil");
   luaL_dostring(L, "dofile = nil");
@@ -191,7 +195,11 @@ void luaopen_itsy (lua_State *L)
   luaL_dostring(L, "_G = nil");
   luaL_dostring(L, "_VERSION = nil");
 
-  luaopen_math(L);
+  // luaopen_math(L);
+  // lua_pushcfunction(L, luaopen_math);
+  // lua_pushstring(L, "math");
+  // lua_call(L, 1, 0);
+  luaL_requiref(L, "math", luaopen_math, 1);
   luaL_dostring(L, "abs = math.abs");
   luaL_dostring(L, "max = math.max");
   luaL_dostring(L, "min = math.min");

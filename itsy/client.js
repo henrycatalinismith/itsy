@@ -11,6 +11,9 @@ script.onload = () => {
   Module({
     arguments: [lua],
     canvas,
+    onRuntimeInitialized: () => {
+      console.log('eee')
+    }
   }).then(wasm => {
     console.log(wasm)
     //setTimeout(() => wasm.abort(), 1000)
