@@ -30,4 +30,15 @@ print(type(10))
 
 circ(64, 64, 32, 8)
 
+dots = {
+  one = { 20, 20 },
+  two = { 110, 20 },
+}
+
+for k, v in pairs(dots) do
+  print(k)
+  circ(v[1], v[2], 10, 7)
+end
+
+rect(40, 40, 80, 80, 10)
 

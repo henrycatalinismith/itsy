@@ -50,6 +50,10 @@ static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
 
 static int line(lua_State *L);
+static void __line(int x0, int y0, int x1, int y1, int col);
+
+static int rect(lua_State *L);
+
 static int circ(lua_State *L);
 
 lua_State* lua;
@@ -156,6 +160,9 @@ void luaopen_itsy (lua_State *L)
   lua_pushcfunction(L, pset);
   lua_setglobal(L, "pset");
 
+  lua_pushcfunction(L, rect);
+  lua_setglobal(L, "rect");
+
   luaopen_base(L);
   luaL_dostring(L, "assert = nil");
   luaL_dostring(L, "collectgarbage = nil");
@@ -167,7 +174,7 @@ void luaopen_itsy (lua_State *L)
   luaL_dostring(L, "load = nil");
   luaL_dostring(L, "loadstring = nil");
   luaL_dostring(L, "next = nil");
-  luaL_dostring(L, "pairs = nil");
+  // luaL_dostring(L, "pairs = nil");
   luaL_dostring(L, "pcall = nil");
   // using this!
   // luaL_dostring(L, "print = nil");
@@ -231,6 +238,13 @@ static int line(lua_State *L)
   int y1 = luaL_checknumber(L, 4);
   int col = luaL_checknumber(L, 5);
 
+  __line(x0, y0, x1, y1, col);
+
+  return 0;
+}
+
+static void __line(int x0, int y0, int x1, int y1, int col)
+{
   int dx = abs(x1 - x0);
   int dy = abs(y1 - y0);
   int sy = y0 < y1 ? 1 : -1;
@@ -256,6 +270,20 @@ static int line(lua_State *L)
       y0 += sy;
     }
   }
+}
+
+static int rect(lua_State *L)
+{
+  int x0 = luaL_checknumber(L, 1);
+  int y0 = luaL_checknumber(L, 2);
+  int x1 = luaL_checknumber(L, 3);
+  int y1 = luaL_checknumber(L, 4);
+  int col = luaL_checknumber(L, 5);
+
+  __line(x0, y0, x1, y0, col);
+  __line(x1, y0, x1, y1, col);
+  __line(x1, y1, x0, y1, col);
+  __line(x0, y1, x0, y0, col);
 
   return 0;
 }
