@@ -5,10 +5,13 @@ const process = require("process")
 const express = require("express")
 const serveStatic = require("serve-static")
 
+const js = fs.readFileSync(`${__dirname}/client.js`, "utf-8")
+const css = fs.readFileSync(`${__dirname}/style.css`, "utf-8")
+
 const pkg = JSON.parse(fs.readFileSync(`${__dirname}/package.json`))
 const json = JSON.stringify({
   version: pkg.version,
-})
+}, undefined, 2)
 
 const app = express()
 const port = process.env.PORT || "8080"
@@ -26,11 +29,20 @@ app.use(serveStatic(__dirname))
 app.get("/", (req, res) => {
   res.send(`<!DOCTYPE html>
 <html>
-  <body>
-    <script type="application/json">${json}</script>
-    <script type="text/lua">${code}</script>
-    <script type="text/javascript" src="/client.js"></script>
-  </body>
+<body>
+<script type="application/json">
+${json}
+</script>
+<script type="text/lua">
+${code.trimEnd()}
+</script>
+<script type="text/javascript">
+${js.trim()}
+</script>
+<style type="text/css">
+${css.trim()}
+</style>
+</body>
 </html>`)
 })
 
