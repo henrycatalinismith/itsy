@@ -60,24 +60,24 @@ lua_State* lua;
 
 SDL_Texture *sprite;
 
-EMSCRIPTEN_KEEPALIVE
-void register_sprite(char *name, int size, void *data)
+void EMSCRIPTEN_KEEPALIVE register_sprite(char *name, int size, void *data)
 {
+  printf("pre: %s\n", SDL_GetError());
   SDL_RWops *a = SDL_RWFromConstMem(data, size);
   printf("%s: %d\n", name, size);
   printf("%d\n", (int)data);
   printf("%s\n", SDL_GetError());
 
-  SDL_GetWindowSurface(window);
-  SDL_Surface *image = IMG_Load_RW(a, 1);
-  if(!image) {
-    printf("IMG_Load_RW: %s\n", IMG_GetError());
-    printf("%s\n", SDL_GetError());
+  //SDL_GetWindowSurface(window);
+  //SDL_Surface *image = IMG_Load_RW(a, 1);
+  //if(!image) {
+    ////printf("IMG_Load_RW: %s\n", IMG_GetError());
+    //printf("%s\n", SDL_GetError());
     // handle error
-  }
-  printf("%dx%d\n", image->w, image->h);
+  //}
+  //printf("%dx%d\n", image->w, image->h);
 
-  sprite = SDL_CreateTextureFromSurface(renderer, image);
+  //sprite = SDL_CreateTextureFromSurface(renderer, image);
 
   //SDL_RenderCopy(renderer, sprite, NULL, NULL);
   //SDL_RenderPresent(renderer);
@@ -87,7 +87,23 @@ void register_sprite(char *name, int size, void *data)
 
 int main(int argc, char **argv)
 {
-  // printf("%s\n", argv[1]);
+  char *p;
+  char *code = argv[1];
+  int spriteCount;
+  sscanf(argv[2], "%d", &spriteCount);
+
+  // printf("code: %s\n", code);
+  printf("spriteCount: %d\n", spriteCount);
+
+  int offset = 3;
+  int spritePropCount = 2;
+  for (int i = 0; i < spriteCount; i++) {
+    int nameAt = offset + (i * spritePropCount) + 0;
+    int base64At = offset + (i * spritePropCount) + 1;
+    printf("name %s\n", argv[nameAt]);
+    printf("base64 %s\n", argv[base64At]);
+  }
+
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
   }
@@ -107,8 +123,15 @@ int main(int argc, char **argv)
     }
   }
 
-  SDL_Init(SDL_INIT_VIDEO);
-  SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer);
+  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    SDL_Log("SDL_Init: %s", SDL_GetError());
+    return 1;
+  }
+
+  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
+    SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
+    return 1;
+  }
 
   texture = SDL_CreateTexture(
     renderer,
@@ -118,16 +141,21 @@ int main(int argc, char **argv)
     128
   );
 
+  if (texture == NULL) {
+    SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
+    return 1;
+  }
+
   lua = luaL_newstate();
   //luaL_openlibs(lua);
   luaopen_itsy(lua);
 
-  luaL_dostring(lua, argv[1]);
+  luaL_dostring(lua, code);
   emscripten_set_main_loop(loop, -1, 1);
 
-  SDL_DestroyRenderer(renderer);
-  SDL_DestroyWindow(window);
-  SDL_Quit();
+  //SDL_DestroyRenderer(renderer);
+  //SDL_DestroyWindow(window);
+  //SDL_Quit();
 
   return 0;
 }
@@ -136,6 +164,7 @@ void loop(void)
 {
   render();
   frame++;
+  // printf("loop: %s\n", SDL_GetError());
 
   lua_getglobal(lua, "_update");
   lua_pcall(lua, 0, 0, 0);

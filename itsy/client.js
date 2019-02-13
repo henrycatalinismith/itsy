@@ -12,12 +12,24 @@ document.addEventListener("DOMContentLoaded", () => {
       name: img.dataset.name,
       src: img.src,
     }))
-  console.log(sprites)
+
+  const spriteNames = sprites.map(sprite => sprite.name)
+  const spriteBase64 = sprites.map(sprite => sprite.src.split(",")[1])
+
+  const argv = [lua, `${sprites.length}`]
+
+  sprites.forEach(sprite => {
+    argv.push(sprite.name);
+    argv.push(sprite.src.split(",")[1]);
+  })
+
+  console.log(spriteNames)
 
   script.src = `/itsy.js?${config.version}`
+  console.log(sprites.length)
   script.onload = () => {
     Module({
-      arguments: [lua],
+      arguments: argv,
       canvas,
       onRuntimeInitialized: () => {
         console.log('eee')
@@ -25,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }).then(wasm => {
       console.log(wasm)
 
+      /*
       const registerSprite = wasm.cwrap('register_sprite', 'void', [
         'string',
         'number',
@@ -32,18 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
       ])
 
       sprites.forEach(sprite => {
-        const bytes = atob(sprite.src.replace(/^data:image\/png;base64,/, ''))
-        const length = bytes.length
+        const [, base64] = sprite.src.split(",")
+        const ascii = atob(base64)
+        const length = ascii.length
         const data = new Uint8Array(length);
         for (let i = 0; i < length; i++) {
-          data[i] = bytes.charCodeAt(i)
+          data[i] = ascii.charCodeAt(i)
         }
 
         setTimeout(() => {
           console.log(data)
           registerSprite(sprite.name, length, data)
         }, 1000)
+
       })
+        */
 
       //setTimeout(() => wasm.abort(), 1000)
       //setTimeout(() => wasm.pauseMainLoop(), 1000)

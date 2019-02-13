@@ -4,6 +4,7 @@ FLAGS = node_modules/lua-src/src/liblua.a \
 	-s WASM=1 \
 	-s MODULARIZE=1 \
 	-s USE_SDL=2 \
+	-s SDL2_IMAGE_FORMATS='["png"]' \
 	-s EXPORTED_FUNCTIONS='["_main","_register_sprite"]' \
 	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
 	-O3
