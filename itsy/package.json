@@ -13,6 +13,7 @@
     "serve-static": "^1.13.2"
   },
   "devDependencies": {
+    "b64": "https://github.com/littlstar/b64.c/",
     "lua-src": "5.3.5"
   },
   "files": [

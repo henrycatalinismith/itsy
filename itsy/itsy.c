@@ -8,6 +8,7 @@
 #include "lua.h"
 #include <lauxlib.h>
 #include <lualib.h>
+#include "b64.h"
 
 uint8_t memory[0x8000];
 SDL_Window *window;
@@ -95,13 +96,50 @@ int main(int argc, char **argv)
   // printf("code: %s\n", code);
   printf("spriteCount: %d\n", spriteCount);
 
+  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    SDL_Log("SDL_Init: %s", SDL_GetError());
+    return 1;
+  }
+
+  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
+    SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
+    return 1;
+  }
+
   int offset = 3;
   int spritePropCount = 2;
-  for (int i = 0; i < spriteCount; i++) {
+  int decsize;
+  //for (int i = 0; i < spriteCount; i++) {
+  for (int i = 0; i < 1; i++) {
     int nameAt = offset + (i * spritePropCount) + 0;
     int base64At = offset + (i * spritePropCount) + 1;
-    printf("name %s\n", argv[nameAt]);
-    printf("base64 %s\n", argv[base64At]);
+    unsigned char *img = b64_decode_ex(argv[base64At], strlen(argv[base64At]), &decsize);
+
+    SDL_RWops *a = SDL_RWFromConstMem(img, decsize);
+    if (a == NULL) {
+      printf("SDL_RWFromConstMem: %s\n", SDL_GetError());
+    }
+
+    //SDL_Surface *image = IMG_Load_RW(a, 1);
+    SDL_Surface *image = IMG_LoadTyped_RW(a, 1, "PNG");
+    if (!image) {
+      printf("IMG_Load_RW: %s\n", IMG_GetError());
+      printf("IMG_Load_RW: %s\n", SDL_GetError());
+    }
+
+    sprite = SDL_CreateTextureFromSurface(renderer, image);
+    if (!sprite) {
+      printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+    }
+
+    // printf("name %s\n", argv[nameAt]);
+    // printf("base64 %s\n", argv[base64At]);
+    // printf("base64len %d\n", strlen(argv[base64At]));
+    // printf("img %s\n", img);
+    // printf("imglen %d\n", strlen(img));
+    // printf("decsize %d\n", decsize);
+    // printf("img len lololol %d\n", strlen(b64_decode(argv[base64At], strlen(argv[base64At]))));
+    // printf("img len lololol %d\n", strlen(b64_decode(hc, strlen(hc))));
   }
 
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
@@ -121,16 +159,6 @@ int main(int argc, char **argv)
     for (int y = 0; y < 128; y++) {
       pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
     }
-  }
-
-  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-    SDL_Log("SDL_Init: %s", SDL_GetError());
-    return 1;
-  }
-
-  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
-    SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
-    return 1;
   }
 
   texture = SDL_CreateTexture(

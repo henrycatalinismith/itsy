@@ -17,8 +17,12 @@ clean:
 emcc_sdl:
 	docker build -t emcc_sdl .
 
+base64:
+	$(EMCC) node_modules/b64/decode.c -o node_modules/b64/decode.o
+	$(EMCC) node_modules/b64/encode.c -o node_modules/b64/encode.o
+
 itsy.js: emcc_sdl lua node_modules
-	$(EMCC) -Inode_modules/lua-src/src itsy.c $(FLAGS) -o itsy.js
+	$(EMCC) -Inode_modules/b64 -Inode_modules/lua-src/src itsy.c $(FLAGS) -o itsy.js node_modules/b64/decode.o
 
 lua: node_modules
 	cd node_modules/lua-src/src && make generic CC='$(EMCCL)'
@@ -26,6 +30,6 @@ lua: node_modules
 node_modules:
 	npm install
 
-.PHONY: clean emcc_sdl lua
+.PHONY: base64 clean emcc_sdl lua
 
 
