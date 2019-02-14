@@ -29,6 +29,11 @@ itsy.html: lua
 	$(CC) node_modules/b64/encode.c -o b64_encode.o
 	$(CC) $(CFLAGS) $(EMCCFLAGS) $(OBJS) itsy.c -o itsy.html
 
+itsy.js: lua
+	$(CC) node_modules/b64/decode.c -o b64_decode.o
+	$(CC) node_modules/b64/encode.c -o b64_encode.o
+	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy.js
+
 lua:
 	$(EMMAKE) make -C node_modules/lua-src/src generic
 
