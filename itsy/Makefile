@@ -36,7 +36,7 @@ itsy.js: lua
 	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy.js
 
 lua:
-	$(EMMAKE) make -C node_modules/lua-src/src generic
+	cd node_modules/lua-src/src && make generic CC='../../../$(CC)'
 
 hello.html:
 	$(CC) $(CFLAGS) $(EMCCFLAGS) hello.c -o hello.html

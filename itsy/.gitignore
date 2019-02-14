@@ -2,3 +2,4 @@
 /node_modules/*
 itsy.js
 itsy.wasm
+*.o
