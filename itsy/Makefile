@@ -1,9 +1,10 @@
-CC=./node_modules/emcc/emsdk/emscripten/1.38.27/emcc
-AR=./node_modules/emcc/emsdk/emscripten/1.38.27/emar
-RANLIB=./node_modules/emcc/emsdk/emscripten/1.38.27/emranlib
+EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.27
+CC=$(EMSCRIPTEN)/emcc
+AR=$(EMSCRIPTEN)/emar
+RANLIB=$(EMSCRIPTEN)/emranlib
 
-EMCONFIGURE=./node_modules/emcc/emsdk/emscripten/1.38.27/emconfigure
-EMMAKE=./node_modules/emcc/emsdk/emscripten/1.38.27/emmake
+EMCONFIGURE=$(EMSCRIPTEN)/emconfigure
+EMMAKE=$(EMSCRIPTEN)/emmake
 
 CFLAGS=-O2 \
 		-Inode_modules/b64 \
