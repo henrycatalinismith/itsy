@@ -125,12 +125,17 @@ int main(int argc, char **argv)
     if (!image) {
       printf("IMG_Load_RW: %s\n", IMG_GetError());
       printf("IMG_Load_RW: %s\n", SDL_GetError());
+    } else {
+      printf("%dx%d\n", image->w, image->h);
     }
 
     sprite = SDL_CreateTextureFromSurface(renderer, image);
     if (!sprite) {
       printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+    } else {
+      printf("i have loaded a sprite omg\n");
     }
+
 
     // printf("name %s\n", argv[nameAt]);
     // printf("base64 %s\n", argv[base64At]);
@@ -207,10 +212,6 @@ void render(void)
   SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(renderer);
 
-  if (sprite != NULL) {
-    SDL_RenderCopy(renderer, sprite, NULL, NULL);
-  }
-
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
       int c = pget(x, y);
@@ -220,6 +221,10 @@ void render(void)
       pixels[ offset + 2 ] = colors[c][0];        // r
       pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
     }
+  }
+
+  if (sprite != NULL) {
+    SDL_RenderCopy(renderer, sprite, NULL, NULL);
   }
 
   SDL_UpdateTexture(
