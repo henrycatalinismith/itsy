@@ -13,7 +13,8 @@
     "serve-static": "^1.13.2"
   },
   "devDependencies": {
-    "b64": "https://github.com/littlstar/b64.c/",
+    "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
+    "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
     "emcc": "^0.2.2",
     "lua-src": "5.3.5"
   },

@@ -1,4 +1,7 @@
+B64=./node_modules/@highvalley.systems/b64
+LUA=./node_modules/@highvalley.systems/lua
 EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.27
+
 CC=$(EMSCRIPTEN)/emcc
 AR=$(EMSCRIPTEN)/emar
 RANLIB=$(EMSCRIPTEN)/emranlib
@@ -6,43 +9,48 @@ RANLIB=$(EMSCRIPTEN)/emranlib
 EMCONFIGURE=$(EMSCRIPTEN)/emconfigure
 EMMAKE=$(EMSCRIPTEN)/emmake
 
-CFLAGS=-O2 \
-		-Inode_modules/b64 \
-		-Inode_modules/lua-src/src
+CFLAGS=\
+	-O2 \
+	-I$(B64) \
+	-I$(LUA)/src
 
-OBJS=node_modules/lua-src/src/liblua.a \
-		 b64_decode.o \
-		 b64_encode.o
+OBJS=\
+	$(B64)/decode.o \
+	$(B64)/encode.o \
+	$(LUA)/src/liblua.a
 
-EMCCFLAGS=-s WASM=1 \
-					-s MODULARIZE=1 \
-					-s USE_SDL=2 \
-					-s USE_SDL_IMAGE=2 \
-					-s SDL2_IMAGE_FORMATS='["png"]' \
-					-s EXPORTED_FUNCTIONS='["_main","_register_sprite"]' \
-					-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
-					-s ERROR_ON_UNDEFINED_SYMBOLS=0
+EMCCFLAGS=\
+	-s WASM=1 \
+	-s MODULARIZE=1 \
+	-s USE_SDL=2 \
+	-s USE_SDL_IMAGE=2 \
+	-s SDL2_IMAGE_FORMATS='["png"]' \
+	-s EXPORTED_FUNCTIONS='["_main","_register_sprite"]' \
+	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
+	-s ERROR_ON_UNDEFINED_SYMBOLS=0
 
 all: itsy.html
 
-itsy.html: lua
-	$(CC) node_modules/b64/decode.c -o b64_decode.o
-	$(CC) node_modules/b64/encode.c -o b64_encode.o
-	$(CC) $(CFLAGS) $(EMCCFLAGS) $(OBJS) itsy.c -o itsy.html
+$(B64)/%.o:
+	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
-itsy.js: lua
-	$(CC) node_modules/b64/decode.c -o b64_decode.o
-	$(CC) node_modules/b64/encode.c -o b64_encode.o
+$(LUA)/src/liblua.a:
+	cd $(LUA)/src && make generic CC='../../../../$(CC)'
+
+itsy.js: $(OBJS)
 	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy.js
-
-lua:
-	cd node_modules/lua-src/src && make generic CC='../../../$(CC)'
-
-hello.html:
-	$(CC) $(CFLAGS) $(EMCCFLAGS) hello.c -o hello.html
 
 clean:
 	rm -f itsy.js
 	rm -f itsy.wasm
+
+
+lua: $(LUA)/src/liblua.a
+
+itsy.html: $(OBJS)
+	$(CC) $(CFLAGS) $(EMCCFLAGS) $(OBJS) itsy.c -o itsy.html
+
+hello.html:
+	$(CC) $(CFLAGS) $(EMCCFLAGS) hello.c -o hello.html
 
 .PHONY: all lua sdl clean
