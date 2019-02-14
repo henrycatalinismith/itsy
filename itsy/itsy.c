@@ -223,10 +223,6 @@ void render(void)
     }
   }
 
-  if (sprite != NULL) {
-    SDL_RenderCopy(renderer, sprite, NULL, NULL);
-  }
-
   SDL_UpdateTexture(
     texture,
     NULL,
@@ -235,7 +231,12 @@ void render(void)
   );
 
   // printf("Frame: %d\n", frame);
-  SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+  if (sprite != NULL) {
+    SDL_RenderCopy(renderer, sprite, NULL, NULL);
+  } else {
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+  }
   SDL_RenderPresent(renderer);
   SDL_UpdateWindowSurface(window);
 }
