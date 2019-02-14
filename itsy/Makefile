@@ -25,7 +25,7 @@ EMCCFLAGS=\
 	-s USE_SDL=2 \
 	-s USE_SDL_IMAGE=2 \
 	-s SDL2_IMAGE_FORMATS='["png"]' \
-	-s EXPORTED_FUNCTIONS='["_main","_register_sprite"]' \
+	-s EXPORTED_FUNCTIONS='["_main"]' \
 	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0
 

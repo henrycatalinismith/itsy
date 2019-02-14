@@ -16,8 +16,10 @@ SDL_Renderer *renderer;
 SDL_Texture *texture;
 
 SDL_Rect rects[128][128];
+uint16_t sprite[128][128];
 uint16_t pixel[128][128];
 
+void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 uint8_t pixels[128 * 128 * 4];
 
 int colors[][3] = {
@@ -45,46 +47,24 @@ void loop(void);
 void render(void);
 
 int pget(int x, int y);
+int sget(int x, int y);
 
 static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
+static void __sset(int x, int y, int c);
 
 static int line(lua_State *L);
 static void __line(int x0, int y0, int x1, int y1, int col);
 
-static int rect(lua_State *L);
 static int circ(lua_State *L);
+static int rect(lua_State *L);
+static int sspr(lua_State *L);
 
 void luaopen_itsy (lua_State *L);
 
 lua_State* lua;
 
-SDL_Texture *sprite;
-
-void EMSCRIPTEN_KEEPALIVE register_sprite(char *name, int size, void *data)
-{
-  printf("pre: %s\n", SDL_GetError());
-  SDL_RWops *a = SDL_RWFromConstMem(data, size);
-  printf("%s: %d\n", name, size);
-  printf("%d\n", (int)data);
-  printf("%s\n", SDL_GetError());
-
-  //SDL_GetWindowSurface(window);
-  //SDL_Surface *image = IMG_Load_RW(a, 1);
-  //if(!image) {
-    ////printf("IMG_Load_RW: %s\n", IMG_GetError());
-    //printf("%s\n", SDL_GetError());
-    // handle error
-  //}
-  //printf("%dx%d\n", image->w, image->h);
-
-  //sprite = SDL_CreateTextureFromSurface(renderer, image);
-
-  //SDL_RenderCopy(renderer, sprite, NULL, NULL);
-  //SDL_RenderPresent(renderer);
-  // SDL_FreeSurface(image);
-  // SDL_UpdateWindowSurface(window);
-}
+SDL_Texture *spritePng;
 
 int main(int argc, char **argv)
 {
@@ -92,6 +72,10 @@ int main(int argc, char **argv)
   char *code = argv[1];
   int spriteCount;
   sscanf(argv[2], "%d", &spriteCount);
+
+  for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
+    memory[addr] = 0;
+  }
 
   // printf("code: %s\n", code);
   printf("spriteCount: %d\n", spriteCount);
@@ -129,13 +113,37 @@ int main(int argc, char **argv)
       printf("%dx%d\n", image->w, image->h);
     }
 
-    sprite = SDL_CreateTextureFromSurface(renderer, image);
-    if (!sprite) {
+    spritePng = SDL_CreateTextureFromSurface(renderer, image);
+    if (!spritePng) {
       printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
     } else {
       printf("i have loaded a sprite omg\n");
     }
 
+    for (int x = 0; x < 128; x++) {
+      for (int y = 0; y < 128; y++) {
+        Uint8 r, g, b;
+        getpixel(image, x, y, &r, &g, &b);
+        // backup location, rgb values are pouring out of this now
+        // next steps: decide which 0-15 col value each one is and write to
+        // sprite memory
+        /*
+        5itsy.js?0.2.0:8 255 241 232
+        6itsy.js?0.2.0:8 255 0 77
+        107itsy.js?0.2.0:8 255 241 232
+        itsy.js?0.2.0:8 95 87 79
+        7itsy.js?0.2.0:8 255 241 232
+        itsy.js?0.2.0:8 95 87 79
+        itsy.js?0.2.0:8 0 135 81
+        5itsy.js?0.2.0:8 255 241 232
+        6itsy.js?0.2.0:8 255 0 77
+        445itsy.js?0.2.0:8 255 241 232
+        itsy.js?0.2.0:8
+        */
+
+        printf("%d %d %d\n", r, g, b);
+      }
+    }
 
     // printf("name %s\n", argv[nameAt]);
     // printf("base64 %s\n", argv[base64At]);
@@ -145,10 +153,6 @@ int main(int argc, char **argv)
     // printf("decsize %d\n", decsize);
     // printf("img len lololol %d\n", strlen(b64_decode(argv[base64At], strlen(argv[base64At]))));
     // printf("img len lololol %d\n", strlen(b64_decode(hc, strlen(hc))));
-  }
-
-  for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
-    memory[addr] = 0;
   }
 
   for (int x = 0; x < 128; x++) {
@@ -162,6 +166,7 @@ int main(int argc, char **argv)
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
+      sprite[x][y] = 0x0000 + (y * 64) + floor(x / 2);
       pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
     }
   }
@@ -232,8 +237,8 @@ void render(void)
 
   // printf("Frame: %d\n", frame);
 
-  if (sprite != NULL) {
-    SDL_RenderCopy(renderer, sprite, NULL, NULL);
+  if (1 != 1 && spritePng != NULL) {
+    SDL_RenderCopy(renderer, spritePng, NULL, NULL);
   } else {
     SDL_RenderCopy(renderer, texture, NULL, NULL);
   }
@@ -254,6 +259,9 @@ void luaopen_itsy (lua_State *L)
 
   lua_pushcfunction(L, rect);
   lua_setglobal(L, "rect");
+
+  lua_pushcfunction(L, sspr);
+  lua_setglobal(L, "sspr");
 
   // luaL_setfuncs(L, itsy_funcs, 0);
 
@@ -313,6 +321,13 @@ int pget(int x, int y)
     : memory[pixel[x][y]] >> 4;
 }
 
+int sget(int x, int y)
+{
+  return x % 2 == 0
+    ? memory[sprite[x][y]] & 0x0f
+    : memory[sprite[x][y]] >> 4;
+}
+
 static int pset(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
@@ -321,6 +336,13 @@ static int pset(lua_State *L)
 
   __pset(x, y, c);
   return 0;
+}
+
+static void __sset(int x, int y, int c)
+{
+  memory[sprite[x][y]] = x % 2 == 0
+    ? ((memory[sprite[x][y]] >> 4) << 4) | c
+    : (c << 4) | (memory[sprite[x][y]] & 0x0f);
 }
 
 static void __pset(int x, int y, int c)
@@ -427,4 +449,36 @@ static int circ(lua_State *L)
   }
 
   return 0;
+}
+
+static int sspr(lua_State *L)
+{
+  int sx = luaL_checknumber(L, 1);
+  int sy = luaL_checknumber(L, 2);
+  int sw = luaL_checknumber(L, 3);
+  int sh = luaL_checknumber(L, 4);
+  int dx = luaL_checknumber(L, 5);
+  int dy = luaL_checknumber(L, 6);
+  int dw = luaL_checknumber(L, 7);
+  int dh = luaL_checknumber(L, 8);
+
+  for (int x = 0; x < sw; x++) {
+    for (int y = 0; y < sh; y++) {
+      int c = sget(sx + x, sy + y);
+      __pset(dx + x, dy + y, c);
+    }
+  }
+
+  return 0;
+}
+
+void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
+{
+    int bpp = surface->format->BytesPerPixel;
+    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+    if (bpp != 4) {
+      printf("oh no not a good bpp that we know what to do with\n");
+    }
+
+    SDL_GetRGB(*(Uint32 *)p, surface->format, r, g, b);
 }

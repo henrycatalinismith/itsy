@@ -6,7 +6,10 @@ function _update()
   pset(12, 12, frame % 16)
   pset(13, 13, frame % 16)
   pset(14, 14, frame % 16)
+  sspr(0, 0, 32, 32, 32, 32, 32, 32)
 end
+
+sspr(0, 0, 128, 128, 0, 0, 128, 128)
 
 pset(10, 10, 14)
 line(10, 10, 110, 10, 8)
