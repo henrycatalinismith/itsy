@@ -14,12 +14,14 @@ uint8_t memory[0x8000];
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
+uint8_t pixels[128 * 128 * 4];
 
+// optimization!! e.g. sprite[20][30] contains the address in memory of the
+// spritesheet pixel at x=20 and y=30, to speed up reads & writes!
 uint16_t sprite[128][128];
 uint16_t pixel[128][128];
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
-uint8_t pixels[128 * 128 * 4];
 
 /*
 // these were wrong but kinda cool so im keepin them
@@ -66,6 +68,8 @@ int colors[][3] = {
 };
 
 int frame = 0;
+
+int init_sdl(void);
 
 void loop(void);
 void render(void);
@@ -138,22 +142,16 @@ int main(int argc, char **argv)
   int spriteCount;
   sscanf(argv[2], "%d", &spriteCount);
 
+  if (init_sdl() != 0) {
+    return -1;
+  }
+
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
   }
 
   // printf("code: %s\n", code);
   printf("spriteCount: %d\n", spriteCount);
-
-  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-    SDL_Log("SDL_Init: %s", SDL_GetError());
-    return 1;
-  }
-
-  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
-    SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
-    return 1;
-  }
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
@@ -208,6 +206,27 @@ int main(int argc, char **argv)
     }
   }
 
+  lua = luaL_newstate();
+  luaopen_itsy(lua);
+
+  luaL_dostring(lua, code);
+  emscripten_set_main_loop(loop, -1, 1);
+
+  return 0;
+}
+
+int init_sdl(void)
+{
+  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+    SDL_Log("SDL_Init: %s", SDL_GetError());
+    return 1;
+  }
+
+  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
+    SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
+    return 1;
+  }
+
   texture = SDL_CreateTexture(
     renderer,
     SDL_PIXELFORMAT_ARGB8888,
@@ -220,12 +239,6 @@ int main(int argc, char **argv)
     SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
     return 1;
   }
-
-  lua = luaL_newstate();
-  luaopen_itsy(lua);
-
-  luaL_dostring(lua, code);
-  emscripten_set_main_loop(loop, -1, 1);
 
   return 0;
 }
