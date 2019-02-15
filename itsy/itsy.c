@@ -74,16 +74,25 @@ void render(void);
 int pget(int x, int y);
 int sget(int x, int y);
 
-static int pset(lua_State *L);
 static void __pset(int x, int y, int c);
 static void __sset(int x, int y, int c);
 
-static int line(lua_State *L);
 static void __line(int x0, int y0, int x1, int y1, int col);
 
-static int circ(lua_State *L);
-static int rect(lua_State *L);
-static int sspr(lua_State *L);
+static int lua_circ(lua_State *L);
+static int lua_line(lua_State *L);
+static int lua_pset(lua_State *L);
+static int lua_rect(lua_State *L);
+static int lua_sspr(lua_State *L);
+
+static const luaL_Reg graphics[] = {
+  {"circ", lua_circ},
+  {"line", lua_line},
+  {"pset", lua_pset},
+  {"rect", lua_rect},
+  {"sspr", lua_sspr},
+  {NULL, NULL}
+};
 
 void luaopen_itsy (lua_State *L);
 
@@ -281,24 +290,9 @@ void render(void)
 
 void luaopen_itsy (lua_State *L)
 {
-  lua_pushcfunction(L, circ);
-  lua_setglobal(L, "circ");
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, graphics, 0);
 
-  lua_pushcfunction(L, line);
-  lua_setglobal(L, "line");
-
-  lua_pushcfunction(L, pset);
-  lua_setglobal(L, "pset");
-
-  lua_pushcfunction(L, rect);
-  lua_setglobal(L, "rect");
-
-  lua_pushcfunction(L, sspr);
-  lua_setglobal(L, "sspr");
-
-  // luaL_setfuncs(L, itsy_funcs, 0);
-
-  // luaopen_base(L);
   // lua_pushcfunction(L, luaopen_base);
   // lua_call(L, 0, 0);
   luaL_requiref(L, "_G", luaopen_base, 1);
@@ -361,15 +355,7 @@ int sget(int x, int y)
     : memory[sprite[x][y]] >> 4;
 }
 
-static int pset(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-  int c = luaL_checknumber(L, 3);
 
-  __pset(x, y, c);
-  return 0;
-}
 
 static void __sset(int x, int y, int c)
 {
@@ -385,19 +371,7 @@ static void __pset(int x, int y, int c)
     : (c << 4) | (memory[pixel[x][y]] & 0x0f);
 }
 
-// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
-static int line(lua_State *L)
-{
-  int x0 = luaL_checknumber(L, 1);
-  int y0 = luaL_checknumber(L, 2);
-  int x1 = luaL_checknumber(L, 3);
-  int y1 = luaL_checknumber(L, 4);
-  int col = luaL_checknumber(L, 5);
 
-  __line(x0, y0, x1, y1, col);
-
-  return 0;
-}
 
 static void __line(int x0, int y0, int x1, int y1, int col)
 {
@@ -428,24 +402,8 @@ static void __line(int x0, int y0, int x1, int y1, int col)
   }
 }
 
-static int rect(lua_State *L)
-{
-  int x0 = luaL_checknumber(L, 1);
-  int y0 = luaL_checknumber(L, 2);
-  int x1 = luaL_checknumber(L, 3);
-  int y1 = luaL_checknumber(L, 4);
-  int col = luaL_checknumber(L, 5);
-
-  __line(x0, y0, x1, y0, col);
-  __line(x1, y0, x1, y1, col);
-  __line(x1, y1, x0, y1, col);
-  __line(x0, y1, x0, y0, col);
-
-  return 0;
-}
-
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
-static int circ(lua_State *L)
+static int lua_circ(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
@@ -484,7 +442,48 @@ static int circ(lua_State *L)
   return 0;
 }
 
-static int sspr(lua_State *L)
+// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
+static int lua_line(lua_State *L)
+{
+  int x0 = luaL_checknumber(L, 1);
+  int y0 = luaL_checknumber(L, 2);
+  int x1 = luaL_checknumber(L, 3);
+  int y1 = luaL_checknumber(L, 4);
+  int col = luaL_checknumber(L, 5);
+
+  __line(x0, y0, x1, y1, col);
+
+  return 0;
+}
+
+static int lua_pset(lua_State *L)
+{
+  int x = luaL_checknumber(L, 1);
+  int y = luaL_checknumber(L, 2);
+  int c = luaL_checknumber(L, 3);
+
+  __pset(x, y, c);
+
+  return 0;
+}
+
+static int lua_rect(lua_State *L)
+{
+  int x0 = luaL_checknumber(L, 1);
+  int y0 = luaL_checknumber(L, 2);
+  int x1 = luaL_checknumber(L, 3);
+  int y1 = luaL_checknumber(L, 4);
+  int col = luaL_checknumber(L, 5);
+
+  __line(x0, y0, x1, y0, col);
+  __line(x1, y0, x1, y1, col);
+  __line(x1, y1, x0, y1, col);
+  __line(x0, y1, x0, y0, col);
+
+  return 0;
+}
+
+static int lua_sspr(lua_State *L)
 {
   int sx = luaL_checknumber(L, 1);
   int sy = luaL_checknumber(L, 2);
@@ -507,11 +506,10 @@ static int sspr(lua_State *L)
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
 {
-    int bpp = surface->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-    if (bpp != 4) {
-      printf("oh no not a good bpp that we know what to do with\n");
-    }
-
-    SDL_GetRGB(*(Uint32 *)p, surface->format, r, g, b);
+  int bpp = surface->format->BytesPerPixel;
+  Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
+  if (bpp != 4) {
+    printf("oh no not a good bpp that we know what to do with\n");
+  }
+  SDL_GetRGB(*(Uint32 *)p, surface->format, r, g, b);
 }
