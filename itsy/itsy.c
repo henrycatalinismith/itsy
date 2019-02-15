@@ -15,7 +15,6 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
 
-SDL_Rect rects[128][128];
 uint16_t sprite[128][128];
 uint16_t pixel[128][128];
 
@@ -74,23 +73,55 @@ void render(void);
 int pget(int x, int y);
 int sget(int x, int y);
 
-static void __pset(int x, int y, int c);
-static void __sset(int x, int y, int c);
+void pset(int x, int y, int c);
+void sset(int x, int y, int c);
 
-static void __line(int x0, int y0, int x1, int y1, int col);
+void line(int x0, int y0, int x1, int y1, int col);
 
-static int lua_circ(lua_State *L);
-static int lua_line(lua_State *L);
-static int lua_pset(lua_State *L);
-static int lua_rect(lua_State *L);
-static int lua_sspr(lua_State *L);
+int luaB_pairs (lua_State *L);
+int luaB_print (lua_State *L);
+int luaB_tonumber (lua_State *L);
+int luaB_tostring (lua_State *L);
+int luaB_type (lua_State *L);
 
-static const luaL_Reg graphics[] = {
-  {"circ", lua_circ},
-  {"line", lua_line},
-  {"pset", lua_pset},
-  {"rect", lua_rect},
-  {"sspr", lua_sspr},
+int gfx_circ(lua_State *L);
+int gfx_line(lua_State *L);
+int gfx_pset(lua_State *L);
+int gfx_rect(lua_State *L);
+int gfx_sspr(lua_State *L);
+
+int math_abs (lua_State *L);
+int math_ceil (lua_State *L);
+int math_floor (lua_State *L);
+int math_max (lua_State *L);
+int math_min (lua_State *L);
+int math_pow (lua_State *L);
+
+const luaL_Reg base[] = {
+  {"pairs", luaB_print},
+  {"print", luaB_print},
+  {"tonumber", luaB_tonumber},
+  {"tostring", luaB_tostring},
+  {"type", luaB_type},
+  {NULL, NULL}
+};
+
+const luaL_Reg graphics[] = {
+  {"circ", gfx_circ},
+  {"line", gfx_line},
+  {"pset", gfx_pset},
+  {"rect", gfx_rect},
+  {"sspr", gfx_sspr},
+  {NULL, NULL}
+};
+
+const luaL_Reg math[] = {
+  {"abs", math_abs},
+  {"ceil", math_ceil},
+  {"flr", math_floor},
+  {"max", math_max},
+  {"min", math_min},
+  {"pow", math_pow},
   {NULL, NULL}
 };
 
@@ -133,7 +164,7 @@ int main(int argc, char **argv)
 
   int offset = 3;
   int spritePropCount = 2;
-  int decsize;
+  unsigned long decsize;
   //for (int i = 0; i < spriteCount; i++) {
   for (int i = 0; i < 1; i++) {
     int nameAt = offset + (i * spritePropCount) + 0;
@@ -170,46 +201,10 @@ int main(int argc, char **argv)
           if (colors[c][0] == r && colors[c][1] == g && colors[c][2] == b) {
             // printf("%d %d %d %d %d\n", x, y, r, g, b);
             // 👆 this is printing on every pixel so the sprite must be loading
-            __sset(x, y, c);
+            sset(x, y, c);
           }
         }
-
-        // backup location, rgb values are pouring out of this now
-        // next steps: decide which 0-15 col value each one is and write to
-        // sprite memory
-        /*
-        5itsy.js?0.2.0:8 255 241 232
-        6itsy.js?0.2.0:8 255 0 77
-        107itsy.js?0.2.0:8 255 241 232
-        itsy.js?0.2.0:8 95 87 79
-        7itsy.js?0.2.0:8 255 241 232
-        itsy.js?0.2.0:8 95 87 79
-        itsy.js?0.2.0:8 0 135 81
-        5itsy.js?0.2.0:8 255 241 232
-        6itsy.js?0.2.0:8 255 0 77
-        445itsy.js?0.2.0:8 255 241 232
-        itsy.js?0.2.0:8
-        */
-
       }
-    }
-
-    // printf("name %s\n", argv[nameAt]);
-    // printf("base64 %s\n", argv[base64At]);
-    // printf("base64len %d\n", strlen(argv[base64At]));
-    // printf("img %s\n", img);
-    // printf("imglen %d\n", strlen(img));
-    // printf("decsize %d\n", decsize);
-    // printf("img len lololol %d\n", strlen(b64_decode(argv[base64At], strlen(argv[base64At]))));
-    // printf("img len lololol %d\n", strlen(b64_decode(hc, strlen(hc))));
-  }
-
-  for (int x = 0; x < 128; x++) {
-    for (int y = 0; y < 128; y++) {
-      rects[x][y].x = x;
-      rects[x][y].y = y;
-      rects[x][y].w = 1;
-      rects[x][y].h = 1;
     }
   }
 
@@ -227,15 +222,10 @@ int main(int argc, char **argv)
   }
 
   lua = luaL_newstate();
-  //luaL_openlibs(lua);
   luaopen_itsy(lua);
 
   luaL_dostring(lua, code);
   emscripten_set_main_loop(loop, -1, 1);
-
-  //SDL_DestroyRenderer(renderer);
-  //SDL_DestroyWindow(window);
-  //SDL_Quit();
 
   return 0;
 }
@@ -291,54 +281,13 @@ void render(void)
 void luaopen_itsy (lua_State *L)
 {
   lua_pushglobaltable(L);
+  luaL_setfuncs(L, base, 0);
+
+  lua_pushglobaltable(L);
   luaL_setfuncs(L, graphics, 0);
 
-  // lua_pushcfunction(L, luaopen_base);
-  // lua_call(L, 0, 0);
-  luaL_requiref(L, "_G", luaopen_base, 1);
-  luaL_dostring(L, "assert = nil");
-  luaL_dostring(L, "collectgarbage = nil");
-  luaL_dostring(L, "dofile = nil");
-  luaL_dostring(L, "error = nil");
-  luaL_dostring(L, "getmetatable = nil");
-  luaL_dostring(L, "ipairs = nil");
-  luaL_dostring(L, "loadfile = nil");
-  luaL_dostring(L, "load = nil");
-  luaL_dostring(L, "loadstring = nil");
-  luaL_dostring(L, "next = nil");
-  // luaL_dostring(L, "pairs = nil");
-  luaL_dostring(L, "pcall = nil");
-  // using this!
-  // luaL_dostring(L, "print = nil");
-  luaL_dostring(L, "rawequal = nil");
-  luaL_dostring(L, "rawlen = nil");
-  luaL_dostring(L, "rawget = nil");
-  luaL_dostring(L, "rawset = nil");
-  luaL_dostring(L, "select = nil");
-  luaL_dostring(L, "setmetatable = nil");
-  // luaL_dostring(L, "tonumber = nil");
-  // luaL_dostring(L, "tostring = nil");
-  // luaL_dostring(L, "type = nil");
-  luaL_dostring(L, "xpcall = nil");
-  luaL_dostring(L, "_G = nil");
-  luaL_dostring(L, "_VERSION = nil");
-
-  // luaopen_math(L);
-  // lua_pushcfunction(L, luaopen_math);
-  // lua_pushstring(L, "math");
-  // lua_call(L, 1, 0);
-  luaL_requiref(L, "math", luaopen_math, 1);
-  luaL_dostring(L, "abs = math.abs");
-  luaL_dostring(L, "max = math.max");
-  luaL_dostring(L, "min = math.min");
-  luaL_dostring(L, "pow = math.pow");
-  luaL_dostring(L, "flr = math.floor");
-  luaL_dostring(L, "ceil = math.ceil");
-  luaL_dostring(L, "math = nil");
-  luaL_dostring(L, "pi = nil");
-  luaL_dostring(L, "huge = nil");
-  luaL_dostring(L, "maxinteger = nil");
-  luaL_dostring(L, "mininteger = nil");
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, math, 0);
 }
 
 int pget(int x, int y)
@@ -355,25 +304,22 @@ int sget(int x, int y)
     : memory[sprite[x][y]] >> 4;
 }
 
-
-
-static void __sset(int x, int y, int c)
+void sset(int x, int y, int c)
 {
   memory[sprite[x][y]] = x % 2 == 0
     ? ((memory[sprite[x][y]] >> 4) << 4) | c
     : (c << 4) | (memory[sprite[x][y]] & 0x0f);
 }
 
-static void __pset(int x, int y, int c)
+void pset(int x, int y, int c)
 {
   memory[pixel[x][y]] = x % 2 == 0
     ? ((memory[pixel[x][y]] >> 4) << 4) | c
     : (c << 4) | (memory[pixel[x][y]] & 0x0f);
 }
 
-
-
-static void __line(int x0, int y0, int x1, int y1, int col)
+// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
+void line(int x0, int y0, int x1, int y1, int col)
 {
   int dx = abs(x1 - x0);
   int dy = abs(y1 - y0);
@@ -382,7 +328,7 @@ static void __line(int x0, int y0, int x1, int y1, int col)
   int err = (dx > dy ? dx : -dy) / 2;
 
   for (;;) {
-    __pset(x0, y0, col);
+    pset(x0, y0, col);
 
     if (x0 == x1 && y0 == y1) {
       break;
@@ -403,7 +349,7 @@ static void __line(int x0, int y0, int x1, int y1, int col)
 }
 
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
-static int lua_circ(lua_State *L)
+int gfx_circ(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
@@ -417,14 +363,14 @@ static int lua_circ(lua_State *L)
   int err = dx - (r << 1);
 
   while (cx >= cy) {
-    __pset(x + cx, y + cy, c);
-    __pset(x + cy, y + cx, c);
-    __pset(x - cy, y + cx, c);
-    __pset(x - cx, y + cy, c);
-    __pset(x - cx, y - cy, c);
-    __pset(x - cy, y - cx, c);
-    __pset(x + cy, y - cx, c);
-    __pset(x + cx, y - cy, c);
+    pset(x + cx, y + cy, c);
+    pset(x + cy, y + cx, c);
+    pset(x - cy, y + cx, c);
+    pset(x - cx, y + cy, c);
+    pset(x - cx, y - cy, c);
+    pset(x - cy, y - cx, c);
+    pset(x + cy, y - cx, c);
+    pset(x + cx, y - cy, c);
 
     if (err <= 0) {
       cy++;
@@ -442,8 +388,7 @@ static int lua_circ(lua_State *L)
   return 0;
 }
 
-// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
-static int lua_line(lua_State *L)
+int gfx_line(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
   int y0 = luaL_checknumber(L, 2);
@@ -451,23 +396,23 @@ static int lua_line(lua_State *L)
   int y1 = luaL_checknumber(L, 4);
   int col = luaL_checknumber(L, 5);
 
-  __line(x0, y0, x1, y1, col);
+  line(x0, y0, x1, y1, col);
 
   return 0;
 }
 
-static int lua_pset(lua_State *L)
+int gfx_pset(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
   int c = luaL_checknumber(L, 3);
 
-  __pset(x, y, c);
+  pset(x, y, c);
 
   return 0;
 }
 
-static int lua_rect(lua_State *L)
+int gfx_rect(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
   int y0 = luaL_checknumber(L, 2);
@@ -475,15 +420,15 @@ static int lua_rect(lua_State *L)
   int y1 = luaL_checknumber(L, 4);
   int col = luaL_checknumber(L, 5);
 
-  __line(x0, y0, x1, y0, col);
-  __line(x1, y0, x1, y1, col);
-  __line(x1, y1, x0, y1, col);
-  __line(x0, y1, x0, y0, col);
+  line(x0, y0, x1, y0, col);
+  line(x1, y0, x1, y1, col);
+  line(x1, y1, x0, y1, col);
+  line(x0, y1, x0, y0, col);
 
   return 0;
 }
 
-static int lua_sspr(lua_State *L)
+int gfx_sspr(lua_State *L)
 {
   int sx = luaL_checknumber(L, 1);
   int sy = luaL_checknumber(L, 2);
@@ -497,7 +442,7 @@ static int lua_sspr(lua_State *L)
   for (int x = 0; x < sw; x++) {
     for (int y = 0; y < sh; y++) {
       int c = sget(sx + x, sy + y);
-      __pset(dx + x, dy + y, c);
+      pset(dx + x, dy + y, c);
     }
   }
 

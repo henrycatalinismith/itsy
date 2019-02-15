@@ -35,6 +35,8 @@ $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
 $(LUA)/src/liblua.a:
+	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/lbaselib.c # yoink
+	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/lmathlib.c # lololol
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
 itsy.js: $(OBJS)
