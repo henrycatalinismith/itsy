@@ -70,6 +70,7 @@ int colors[][3] = {
 int frame = 0;
 
 int init_sdl(void);
+int init_itsy(char *spritesheet);
 
 void loop(void);
 void render(void);
@@ -137,73 +138,14 @@ SDL_Texture *spritePng;
 
 int main(int argc, char **argv)
 {
-  char *p;
   char *code = argv[1];
-  int spriteCount;
-  sscanf(argv[2], "%d", &spriteCount);
 
   if (init_sdl() != 0) {
     return -1;
   }
 
-  for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
-    memory[addr] = 0;
-  }
-
-  // printf("code: %s\n", code);
-  printf("spriteCount: %d\n", spriteCount);
-
-  for (int x = 0; x < 128; x++) {
-    for (int y = 0; y < 128; y++) {
-      sprite[x][y] = 0x0000 + (y * 64) + floor(x / 2);
-      pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
-    }
-  }
-
-  int offset = 3;
-  int spritePropCount = 2;
-  unsigned long decsize;
-  //for (int i = 0; i < spriteCount; i++) {
-  for (int i = 0; i < 1; i++) {
-    int nameAt = offset + (i * spritePropCount) + 0;
-    int base64At = offset + (i * spritePropCount) + 1;
-    unsigned char *img = b64_decode_ex(argv[base64At], strlen(argv[base64At]), &decsize);
-
-    SDL_RWops *a = SDL_RWFromConstMem(img, decsize);
-    if (a == NULL) {
-      printf("SDL_RWFromConstMem: %s\n", SDL_GetError());
-    }
-
-    //SDL_Surface *image = IMG_Load_RW(a, 1);
-    SDL_Surface *image = IMG_LoadTyped_RW(a, 1, "PNG");
-    if (!image) {
-      printf("IMG_Load_RW: %s\n", IMG_GetError());
-      printf("IMG_Load_RW: %s\n", SDL_GetError());
-    } else {
-      printf("%dx%d\n", image->w, image->h);
-    }
-
-    spritePng = SDL_CreateTextureFromSurface(renderer, image);
-    if (!spritePng) {
-      printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
-    } else {
-      printf("i have loaded a sprite omg\n");
-    }
-
-    for (int x = 0; x < 128; x++) {
-      for (int y = 0; y < 128; y++) {
-        Uint8 r, g, b;
-        getpixel(image, x, y, &r, &g, &b);
-
-        for (int c = 0; c < 16; c++) {
-          if (colors[c][0] == r && colors[c][1] == g && colors[c][2] == b) {
-            // printf("%d %d %d %d %d\n", x, y, r, g, b);
-            // 👆 this is printing on every pixel so the sprite must be loading
-            sset(x, y, c);
-          }
-        }
-      }
-    }
+  if (init_itsy(argv[2]) != 0) {
+    return -1;
   }
 
   lua = luaL_newstate();
@@ -238,6 +180,62 @@ int init_sdl(void)
   if (texture == NULL) {
     SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
     return 1;
+  }
+
+  return 0;
+}
+
+int init_itsy(char *spritesheet)
+{
+  for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
+    memory[addr] = 0;
+  }
+
+  for (int x = 0; x < 128; x++) {
+    for (int y = 0; y < 128; y++) {
+      sprite[x][y] = 0x0000 + (y * 64) + floor(x / 2);
+      pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
+    }
+  }
+
+  unsigned long decsize;
+  unsigned char *img = b64_decode_ex(spritesheet, strlen(spritesheet), &decsize);
+
+  SDL_RWops *a = SDL_RWFromConstMem(img, decsize);
+  if (a == NULL) {
+    printf("SDL_RWFromConstMem: %s\n", SDL_GetError());
+    return -1;
+  }
+
+  SDL_Surface *image = IMG_LoadTyped_RW(a, 1, "PNG");
+  if (!image) {
+    printf("IMG_Load_RW: %s\n", IMG_GetError());
+    return -1;
+  }
+
+  printf("%dx%d\n", image->w, image->h);
+
+  spritePng = SDL_CreateTextureFromSurface(renderer, image);
+  if (!spritePng) {
+    printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
+    return -1;
+  }
+
+  printf("i have loaded a sprite omg\n");
+
+  for (int x = 0; x < 128; x++) {
+    for (int y = 0; y < 128; y++) {
+      Uint8 r, g, b;
+      getpixel(image, x, y, &r, &g, &b);
+
+      for (int c = 0; c < 16; c++) {
+        if (colors[c][0] == r && colors[c][1] == g && colors[c][2] == b) {
+          // printf("%d %d %d %d %d\n", x, y, r, g, b);
+          // 👆 this is printing on every pixel so the sprite must be loading
+          sset(x, y, c);
+        }
+      }
+    }
   }
 
   return 0;

@@ -16,10 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const spriteNames = sprites.map(sprite => sprite.name)
   const spriteBase64 = sprites.map(sprite => sprite.src.split(",")[1])
 
-  const argv = [lua, `${sprites.length}`]
+  const argv = [lua]
 
   sprites.forEach(sprite => {
-    argv.push(sprite.name);
     argv.push(sprite.src.split(",")[1]);
   })
 
