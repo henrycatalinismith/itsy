@@ -7,7 +7,7 @@ const express = require("express")
 const serveStatic = require("serve-static")
 
 const img = sprite => [
-  `<img data-name="${sprite.name}" src="data:image/png;base64,${sprite.dataUrl}" />`
+  `<img data-name="${sprite.name}" src="${sprite.dataUrl}" />`
 ]
 
 async function main() {
@@ -32,7 +32,7 @@ async function main() {
     const response = await fetch(sprite.url)
     const buffer = await response.arrayBuffer()
     const dataUrl = Buffer.from(buffer, "binary").toString('base64')
-    sprite.dataUrl = dataUrl
+    sprite.dataUrl = `data:image/png;base64,${dataUrl}`
   }
 
   const js = fs.readFileSync(`${__dirname}/client.js`, "utf-8")
@@ -71,7 +71,8 @@ ${js.trim()}
 <style type="text/css">
 ${css.trim()}
 </style>
-${sprites.map(sprite => img(sprite))}
+<img width="8" height="8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAa0lEQVQoU2NkYGD4L6sdzJD4h4Fhf+I/hsMV6xkZkADj6iCz/1tYJRmScyoYrPUUGZj5JVAVvPXw/s8R/YyBI4SZoeSTCkO/+ApUBVZrf//3PLmQIfsfNwN3BDMDu0kYqgJk+7CxUVTTRgEAxuwaCSbl+0MAAAAASUVORK5CYII=" />
+<img width="128" height="128" src="${sprites[0].dataUrl}" />
 </body>
 </html>`))
 

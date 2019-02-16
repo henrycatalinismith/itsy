@@ -63,7 +63,4 @@ lua: $(LUA)/src/liblua.a
 itsy.html: $(OBJS)
 	$(CC) $(CFLAGS) $(EMCCFLAGS) $(OBJS) itsy.c -o itsy.html
 
-hello.html:
-	$(CC) $(CFLAGS) $(EMCCFLAGS) hello.c -o hello.html
-
 .PHONY: all lua sdl clean cleanlua

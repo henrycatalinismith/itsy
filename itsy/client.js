@@ -1,31 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body
+
   const canvas = document.createElement("canvas")
-  const json = document.querySelector("script[type='application/json']").innerText
-  const lua = document.querySelector("script[type='text/lua']").innerText
   const script = document.createElement("script")
+
+  const json = document
+    .querySelector("script[type='application/json']")
+    .innerText
+
+  const lua = document
+    .querySelector("script[type='text/lua']")
+    .innerText
+
+  const palette = document
+    .querySelector("img[width='8'][height='8']")
+    .src
+    .split(",")[1]
+
+  const spritesheet = document
+    .querySelector("img[width='128'][height='128']")
+    .src
+    .split(",")[1]
 
   const config = JSON.parse(json)
 
-  const sprites = Array.prototype.slice.call(document.querySelectorAll("img"))
-    .map(img => ({
-      name: img.dataset.name,
-      src: img.src,
-    }))
-
-  const spriteNames = sprites.map(sprite => sprite.name)
-  const spriteBase64 = sprites.map(sprite => sprite.src.split(",")[1])
-
-  const argv = [lua]
-
-  sprites.forEach(sprite => {
-    argv.push(sprite.src.split(",")[1]);
-  })
-
-  console.log(spriteNames)
+  const argv = [lua, palette, spritesheet]
 
   script.src = `/itsy.js?${config.version}`
-  console.log(sprites.length)
   script.onload = () => {
     Module({
       arguments: argv,

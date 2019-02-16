@@ -24,9 +24,11 @@ uint16_t pixel[128][128];
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 
+int palette[16][3];
+
 /*
 // these were wrong but kinda cool so im keepin them
-int colors[][3] = {
+int palette[][3] = {
   { 0x00, 0x00, 0x00 },
   { 0x5F, 0x57, 0x4F },
   { 0xC2, 0xC3, 0xC7 },
@@ -44,9 +46,8 @@ int colors[][3] = {
   { 0x00, 0x87, 0x51 },
   { 0xC@, 0xE4, 0x36 }
 };
-*/
 
-int colors[][3] = {
+int palette[][3] = {
   { 0x00, 0x00, 0x00 },
   { 0x1D, 0x2B, 0x53 },
   { 0x7E, 0x25, 0x53 },
@@ -67,11 +68,12 @@ int colors[][3] = {
   { 0xFF, 0x77, 0xA8 },
   { 0xFF, 0xCC, 0xAA }
 };
+*/
 
 int frame = 0;
 
 int init_sdl(void);
-int init_itsy(char *spritesheet);
+int init_itsy(char *palettePng, char *spritesheetPng);
 int init_lua(void);
 
 void loop(void);
@@ -168,17 +170,17 @@ const luaL_Reg table[] = {
 
 lua_State* lua;
 
-SDL_Texture *spritePng;
-
 int main(int argc, char **argv)
 {
   char *code = argv[1];
+  char *palettePng = argv[2];
+  char *spritesheetPng = argv[3];
 
   if (init_sdl() != 0) {
     return -1;
   }
 
-  if (init_itsy(argv[2]) != 0) {
+  if (init_itsy(palettePng, spritesheetPng) != 0) {
     return -1;
   }
 
@@ -223,7 +225,7 @@ int init_sdl(void)
   return 0;
 }
 
-int init_itsy(char *spritesheet)
+int init_itsy(char *palettePng, char *spritesheetPng)
 {
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
@@ -237,44 +239,65 @@ int init_itsy(char *spritesheet)
   }
 
   unsigned long decsize;
-  unsigned char *img = b64_decode_ex(spritesheet, strlen(spritesheet), &decsize);
+  unsigned char *img;
+  SDL_RWops *a;
+  SDL_Surface *image;
+  Uint8 r, g, b;
 
-  SDL_RWops *a = SDL_RWFromConstMem(img, decsize);
+  // -- palette
+
+  img = b64_decode_ex(palettePng, strlen(palettePng), &decsize);
+  a = SDL_RWFromConstMem(img, decsize);
   if (a == NULL) {
     printf("SDL_RWFromConstMem: %s\n", SDL_GetError());
     return -1;
   }
+  image = IMG_LoadTyped_RW(a, 1, "PNG");
+  if (!image) {
+    printf("IMG_Load_RW: %s\n", IMG_GetError());
+    return -1;
+  }
 
-  SDL_Surface *image = IMG_LoadTyped_RW(a, 1, "PNG");
+  for (int x = 0; x < 4; x++) {
+    for (int y = 0; y < 4; y++) {
+      getpixel(image, x, y, &r, &g, &b);
+      printf("%d - %d - %d\n", r, g, b);
+      int c = x + (y * 4);
+      palette[c][0] = r;
+      palette[c][1] = g;
+      palette[c][2] = b;
+    }
+  }
+
+  // -- spritesheet
+
+  img = b64_decode_ex(spritesheetPng, strlen(spritesheetPng), &decsize);
+  a = SDL_RWFromConstMem(img, decsize);
+  if (a == NULL) {
+    printf("SDL_RWFromConstMem: %s\n", SDL_GetError());
+    return -1;
+  }
+  image = IMG_LoadTyped_RW(a, 1, "PNG");
   if (!image) {
     printf("IMG_Load_RW: %s\n", IMG_GetError());
     return -1;
   }
 
   printf("%dx%d\n", image->w, image->h);
-
-  spritePng = SDL_CreateTextureFromSurface(renderer, image);
-  if (!spritePng) {
-    printf("SDL_CreateTextureFromSurface: %s\n", SDL_GetError());
-    return -1;
-  }
-
   printf("i have loaded a sprite omg\n");
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
-      Uint8 r, g, b;
       getpixel(image, x, y, &r, &g, &b);
-
       for (int c = 0; c < 16; c++) {
-        if (colors[c][0] == r && colors[c][1] == g && colors[c][2] == b) {
-          // printf("%d %d %d %d %d\n", x, y, r, g, b);
-          // 👆 this is printing on every pixel so the sprite must be loading
+        if (palette[c][0] == r && palette[c][1] == g && palette[c][2] == b) {
           sset(x, y, c);
         }
       }
     }
   }
+
+  // --
 
   return 0;
 }
@@ -327,9 +350,9 @@ void render(void)
     for (int y = 0; y < 128; y++) {
       int c = pget(x, y);
       const unsigned int offset = (128 * 4 * y ) + x * 4;
-      pixels[ offset + 0 ] = colors[c][2];        // b
-      pixels[ offset + 1 ] = colors[c][1];        // g
-      pixels[ offset + 2 ] = colors[c][0];        // r
+      pixels[ offset + 0 ] = palette[c][2];        // b
+      pixels[ offset + 1 ] = palette[c][1];        // g
+      pixels[ offset + 2 ] = palette[c][0];        // r
       pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
     }
   }
@@ -343,11 +366,7 @@ void render(void)
 
   // printf("Frame: %d\n", frame);
 
-  if (1 != 1 && spritePng != NULL) {
-    SDL_RenderCopy(renderer, spritePng, NULL, NULL);
-  } else {
-    SDL_RenderCopy(renderer, texture, NULL, NULL);
-  }
+  SDL_RenderCopy(renderer, texture, NULL, NULL);
   SDL_RenderPresent(renderer);
   SDL_UpdateWindowSurface(window);
 }
