@@ -31,40 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
     Module({
       arguments: argv,
       canvas,
-      onRuntimeInitialized: () => {
-        console.log('eee')
-      }
-    }).then(wasm => {
-      console.log(wasm)
-
-      /*
-      const registerSprite = wasm.cwrap('register_sprite', 'void', [
-        'string',
-        'number',
-        'array',
-      ])
-
-      sprites.forEach(sprite => {
-        const [, base64] = sprite.src.split(",")
-        const ascii = atob(base64)
-        const length = ascii.length
-        const data = new Uint8Array(length);
-        for (let i = 0; i < length; i++) {
-          data[i] = ascii.charCodeAt(i)
-        }
-
-        setTimeout(() => {
-          console.log(data)
-          registerSprite(sprite.name, length, data)
-        }, 1000)
-
-      })
-        */
-
-      //setTimeout(() => wasm.abort(), 1000)
-      //setTimeout(() => wasm.pauseMainLoop(), 1000)
-      //setTimeout(() => wasm.resumeMainLoop(), 2000)
-    })
+      onRuntimeInitialized: () => console.log("Module.onRuntimeInitialized"),
+    }).then(() => console.log("Module.then"))
   }
 
   body.appendChild(canvas)
