@@ -101,6 +101,7 @@ int math_floor (lua_State *L);
 int math_max (lua_State *L);
 int math_min (lua_State *L);
 int math_pow (lua_State *L);
+int math_random (lua_State *L);
 
 const luaL_Reg base[] = {
   {"pairs", luaB_print},
@@ -127,6 +128,7 @@ const luaL_Reg math[] = {
   {"max", math_max},
   {"min", math_min},
   {"pow", math_pow},
+  {"rnd", math_random},
   {NULL, NULL}
 };
 

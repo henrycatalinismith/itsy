@@ -2,6 +2,9 @@ B64=./node_modules/@highvalley.systems/b64
 LUA=./node_modules/@highvalley.systems/lua
 EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.27
 
+LUA_SRC := $(wildcard $(LUA)/src/*.c)
+LUA_OBJ := $(patsubst $(LUA)/src/%.c, $(LUA)/src/%.o, $(LUA_SRC))
+
 CC=$(EMSCRIPTEN)/emcc
 AR=$(EMSCRIPTEN)/emar
 RANLIB=$(EMSCRIPTEN)/emranlib
@@ -34,9 +37,12 @@ all: itsy.html
 $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
-$(LUA)/src/liblua.a:
-	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/lbaselib.c # yoink
-	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/lmathlib.c # lololol
+$(LUA)/src/%.o:
+	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/$*.c # yoink
+	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/$*.c # lololol
+	cd $(LUA)/src && make $*.o CC='../../../../$(CC)'
+
+$(LUA)/src/liblua.a: $(LUA_OBJ)
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
 itsy.js: $(OBJS)
@@ -46,6 +52,8 @@ clean:
 	rm -f itsy.js
 	rm -f itsy.wasm
 
+cleanlua:
+	rm -f $(LUA)/src/*.o
 
 lua: $(LUA)/src/liblua.a
 
@@ -55,4 +63,4 @@ itsy.html: $(OBJS)
 hello.html:
 	$(CC) $(CFLAGS) $(EMCCFLAGS) hello.c -o hello.html
 
-.PHONY: all lua sdl clean
+.PHONY: all lua sdl clean cleanlua
