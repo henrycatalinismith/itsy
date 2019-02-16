@@ -71,6 +71,7 @@ int frame = 0;
 
 int init_sdl(void);
 int init_itsy(char *spritesheet);
+int init_lua(void);
 
 void loop(void);
 void render(void);
@@ -141,8 +142,6 @@ const luaL_Reg table[] = {
   {NULL, NULL}
 };
 
-void luaopen_itsy (lua_State *L);
-
 lua_State* lua;
 
 SDL_Texture *spritePng;
@@ -159,8 +158,9 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  lua = luaL_newstate();
-  luaopen_itsy(lua);
+  if (init_lua() != 0) {
+    return -1;
+  }
 
   luaL_dostring(lua, code);
   emscripten_set_main_loop(loop, -1, 1);
@@ -252,6 +252,25 @@ int init_itsy(char *spritesheet)
   return 0;
 }
 
+int init_lua()
+{
+  lua = luaL_newstate();
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, base, 0);
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, graphics, 0);
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, math, 0);
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, table, 0);
+
+  return 0;
+}
+
 void loop(void)
 {
   render();
@@ -298,21 +317,6 @@ void render(void)
   }
   SDL_RenderPresent(renderer);
   SDL_UpdateWindowSurface(window);
-}
-
-void luaopen_itsy (lua_State *L)
-{
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, base, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, graphics, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, math, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, table, 0);
 }
 
 int pget(int x, int y)
@@ -483,3 +487,4 @@ void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
   }
   SDL_GetRGB(*(Uint32 *)p, surface->format, r, g, b);
 }
+
