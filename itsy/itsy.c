@@ -95,6 +95,7 @@ int luaB_tonumber (lua_State *L);
 int luaB_tostring (lua_State *L);
 int luaB_type (lua_State *L);
 
+int gfx_camera(lua_State *L);
 int gfx_circ(lua_State *L);
 int gfx_cls(lua_State *L);
 int gfx_line(lua_State *L);
@@ -127,6 +128,7 @@ const luaL_Reg base[] = {
 };
 
 const luaL_Reg graphics[] = {
+  {"camera", gfx_camera},
   {"circ", gfx_circ},
   {"cls", gfx_cls},
   {"line", gfx_line},
@@ -181,6 +183,9 @@ int main(int argc, char **argv)
   }
 
   luaL_dostring(lua, code);
+  lua_getglobal(lua, "_init");
+  lua_pcall(lua, 0, 0, 0);
+
   emscripten_set_main_loop(loop, -1, 1);
 
   return 0;
@@ -301,6 +306,9 @@ void loop(void)
   lua_getglobal(lua, "_update");
   lua_pcall(lua, 0, 0, 0);
 
+  lua_getglobal(lua, "_draw");
+  lua_pcall(lua, 0, 0, 0);
+
   if (frame > 1000) {
     emscripten_cancel_main_loop();
   }
@@ -352,6 +360,10 @@ void poke(int addr, int val)
 
 int pget(int x, int y)
 {
+  if (x < 0 || y < 0 || x > 127 || y > 127) {
+    return 0;
+  }
+
   return x % 2 == 0
     ? peek(pixel[x][y]) & 0x0f
     : peek(pixel[x][y]) >> 4;
@@ -373,6 +385,16 @@ void sset(int x, int y, int c)
 
 void pset(int x, int y, int c)
 {
+  int cx = (peek(0x5f29) << 8) | peek(0x5f28);
+  int cy = (peek(0x5f29) << 8) | peek(0x5f28);
+
+  x -= cx;
+  y -= cy;
+
+  if (x < 0 || y < 0 || x > 127 || y > 127) {
+    return;
+  }
+
   memory[pixel[x][y]] = x % 2 == 0
     ? ((memory[pixel[x][y]] >> 4) << 4) | c
     : (c << 4) | (memory[pixel[x][y]] & 0x0f);
@@ -421,6 +443,20 @@ void rectfill(int x0, int y0, int x1, int y1, int col)
   for (int y = y0; y < y1; y++) {
     line(x0, y, x1, y, col);
   }
+}
+
+int gfx_camera(lua_State *L)
+{
+  int x = luaL_checknumber(L, 1);
+  int y = luaL_checknumber(L, 2);
+
+  poke(0x5f28, x & 0xff);
+  poke(0x5f29, x >> 8);
+
+  poke(0x5f2a, y & 0xff);
+  poke(0x5f2b, y >> 8);
+
+  return 0;
 }
 
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
