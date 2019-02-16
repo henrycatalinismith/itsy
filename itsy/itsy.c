@@ -103,6 +103,9 @@ int math_min (lua_State *L);
 int math_pow (lua_State *L);
 int math_random (lua_State *L);
 
+int tinsert (lua_State *L);
+int tremove (lua_State *L);
+
 const luaL_Reg base[] = {
   {"pairs", luaB_print},
   {"print", luaB_print},
@@ -129,6 +132,12 @@ const luaL_Reg math[] = {
   {"min", math_min},
   {"pow", math_pow},
   {"rnd", math_random},
+  {NULL, NULL}
+};
+
+const luaL_Reg table[] = {
+  {"add", tinsert},
+  {"del", tremove},
   {NULL, NULL}
 };
 
@@ -301,6 +310,9 @@ void luaopen_itsy (lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, math, 0);
+
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, table, 0);
 }
 
 int pget(int x, int y)

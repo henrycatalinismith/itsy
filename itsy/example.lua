@@ -35,6 +35,15 @@ print(rnd(10))
 print(rnd(10))
 print('---- /random ----')
 
+local cave = {}
+print(#cave)
+add(cave, {2, 20})
+print(#cave)
+print(cave[1][1])
+print(cave[1][2])
+del(cave, 1)
+print(#cave)
+
 print(tonumber("10"))
 print(tostring({ 1, 2 }))
 print(type(10))

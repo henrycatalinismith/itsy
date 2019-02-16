@@ -40,6 +40,8 @@ $(B64)/%.o:
 $(LUA)/src/%.o:
 	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/$*.c # yoink
 	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/$*.c # lololol
+	perl -p -i -e "s/^static int tinsert/int tinsert/g" $(LUA)/src/$*.c
+	perl -p -i -e "s/^static int tremove/int tremove/g" $(LUA)/src/$*.c
 	cd $(LUA)/src && make $*.o CC='../../../../$(CC)'
 
 $(LUA)/src/liblua.a: $(LUA_OBJ)
@@ -54,6 +56,7 @@ clean:
 
 cleanlua:
 	rm -f $(LUA)/src/*.o
+	rm -f $(LUA)/src/liblua.a
 
 lua: $(LUA)/src/liblua.a
 
