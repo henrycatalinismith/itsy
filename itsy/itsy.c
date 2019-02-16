@@ -76,6 +76,9 @@ int init_lua(void);
 void loop(void);
 void render(void);
 
+int peek(int addr);
+void poke(int addr, int val);
+
 int pget(int x, int y);
 int sget(int x, int y);
 
@@ -108,6 +111,9 @@ int math_min (lua_State *L);
 int math_pow (lua_State *L);
 int math_random (lua_State *L);
 
+int mem_peek (lua_State *L);
+int mem_poke (lua_State *L);
+
 int tinsert (lua_State *L);
 int tremove (lua_State *L);
 
@@ -139,6 +145,12 @@ const luaL_Reg math[] = {
   {"min", math_min},
   {"pow", math_pow},
   {"rnd", math_random},
+  {NULL, NULL}
+};
+
+const luaL_Reg mem[] = {
+  {"peek", mem_peek},
+  {"poke", mem_poke},
   {NULL, NULL}
 };
 
@@ -272,6 +284,9 @@ int init_lua()
   luaL_setfuncs(lua, math, 0);
 
   lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, mem, 0);
+
+  lua_pushglobaltable(lua);
   luaL_setfuncs(lua, table, 0);
 
   return 0;
@@ -325,18 +340,28 @@ void render(void)
   SDL_UpdateWindowSurface(window);
 }
 
+int peek(int addr)
+{
+  return memory[addr];
+}
+
+void poke(int addr, int val)
+{
+  memory[addr] = val;
+}
+
 int pget(int x, int y)
 {
   return x % 2 == 0
-    ? memory[pixel[x][y]] & 0x0f
-    : memory[pixel[x][y]] >> 4;
+    ? peek(pixel[x][y]) & 0x0f
+    : peek(pixel[x][y]) >> 4;
 }
 
 int sget(int x, int y)
 {
   return x % 2 == 0
-    ? memory[sprite[x][y]] & 0x0f
-    : memory[sprite[x][y]] >> 4;
+    ? peek(sprite[x][y]) & 0x0f
+    : peek(sprite[x][y]) >> 4;
 }
 
 void sset(int x, int y, int c)
@@ -519,6 +544,25 @@ int gfx_sspr(lua_State *L)
       pset(dx + x, dy + y, c);
     }
   }
+
+  return 0;
+}
+
+int mem_peek(lua_State *L)
+{
+  int addr = luaL_checknumber(L, 1);
+
+  lua_pushnumber(L, peek(addr));
+
+  return 1;
+}
+
+int mem_poke(lua_State *L)
+{
+  int addr = luaL_checknumber(L, 1);
+  int val = luaL_checknumber(L, 2);
+
+  poke(addr, val);
 
   return 0;
 }

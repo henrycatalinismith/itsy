@@ -14,6 +14,9 @@ function _update()
   pset(13, 13, frame % 16)
   pset(14, 14, frame % 16)
 
+  pset(0, 0, frame % 15)
+  print(peek(0x6000))
+
   pset(10, 10, 14)
   line(10, 10, 110, 10, 8)
   line(110, 10, 110, 110, 9)
