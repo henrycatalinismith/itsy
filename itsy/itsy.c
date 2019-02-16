@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
 #include <emscripten.h>
@@ -78,6 +79,9 @@ void render(void);
 
 int peek(int addr);
 void poke(int addr, int val);
+
+int nibble(int addr, bool high);
+void nobble(int addr, bool high, int val);
 
 int pget(int x, int y);
 int sget(int x, int y);
@@ -358,29 +362,38 @@ void poke(int addr, int val)
   memory[addr] = val;
 }
 
+int nibble(int addr, bool high)
+{
+  return high
+    ? peek(addr) >> 4
+    : peek(addr) & 0x0f;
+}
+
+void nobble(int addr, bool high, int val)
+{
+  poke(addr, high
+    ? ((val << 4) | (peek(addr) & 0x0f))
+    : (((peek(addr) >> 4) << 4) | val)
+  );
+}
+
 int pget(int x, int y)
 {
   if (x < 0 || y < 0 || x > 127 || y > 127) {
     return 0;
   }
 
-  return x % 2 == 0
-    ? peek(pixel[x][y]) & 0x0f
-    : peek(pixel[x][y]) >> 4;
+  return nibble(pixel[x][y], x % 2 == 1);
 }
 
 int sget(int x, int y)
 {
-  return x % 2 == 0
-    ? peek(sprite[x][y]) & 0x0f
-    : peek(sprite[x][y]) >> 4;
+  return nibble(sprite[x][y], x % 2 == 1);
 }
 
 void sset(int x, int y, int c)
 {
-  memory[sprite[x][y]] = x % 2 == 0
-    ? ((memory[sprite[x][y]] >> 4) << 4) | c
-    : (c << 4) | (memory[sprite[x][y]] & 0x0f);
+  nobble(sprite[x][y], x % 2 == 1, c);
 }
 
 void pset(int x, int y, int c)
@@ -395,9 +408,7 @@ void pset(int x, int y, int c)
     return;
   }
 
-  memory[pixel[x][y]] = x % 2 == 0
-    ? ((memory[pixel[x][y]] >> 4) << 4) | c
-    : (c << 4) | (memory[pixel[x][y]] & 0x0f);
+  nobble(pixel[x][y], x % 2 == 1, c);
 }
 
 // https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
