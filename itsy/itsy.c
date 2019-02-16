@@ -83,6 +83,8 @@ void pset(int x, int y, int c);
 void sset(int x, int y, int c);
 
 void line(int x0, int y0, int x1, int y1, int col);
+void rect(int x0, int y0, int x1, int y1, int col);
+void rectfill(int x0, int y0, int x1, int y1, int col);
 
 int luaB_pairs (lua_State *L);
 int luaB_print (lua_State *L);
@@ -91,9 +93,11 @@ int luaB_tostring (lua_State *L);
 int luaB_type (lua_State *L);
 
 int gfx_circ(lua_State *L);
+int gfx_cls(lua_State *L);
 int gfx_line(lua_State *L);
 int gfx_pset(lua_State *L);
 int gfx_rect(lua_State *L);
+int gfx_rectfill(lua_State *L);
 int gfx_sspr(lua_State *L);
 
 int math_abs (lua_State *L);
@@ -118,9 +122,11 @@ const luaL_Reg base[] = {
 
 const luaL_Reg graphics[] = {
   {"circ", gfx_circ},
+  {"cls", gfx_cls},
   {"line", gfx_line},
   {"pset", gfx_pset},
   {"rect", gfx_rect},
+  {"rectfill", gfx_rectfill},
   {"sspr", gfx_sspr},
   {NULL, NULL}
 };
@@ -377,6 +383,21 @@ void line(int x0, int y0, int x1, int y1, int col)
   }
 }
 
+void rect(int x0, int y0, int x1, int y1, int col)
+{
+  line(x0, y0, x1, y0, col);
+  line(x1, y0, x1, y1, col);
+  line(x1, y1, x0, y1, col);
+  line(x0, y1, x0, y0, col);
+}
+
+void rectfill(int x0, int y0, int x1, int y1, int col)
+{
+  for (int y = y0; y < y1; y++) {
+    line(x0, y, x1, y, col);
+  }
+}
+
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
 int gfx_circ(lua_State *L)
 {
@@ -417,6 +438,19 @@ int gfx_circ(lua_State *L)
   return 0;
 }
 
+int gfx_cls(lua_State *L)
+{
+  int argc = lua_gettop(L);
+  int color = 0;
+  if (argc > 0) {
+    color = luaL_checknumber(L, 1);
+  }
+
+  rectfill(0, 0, 128, 128, color);
+
+  return 0;
+}
+
 int gfx_line(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
@@ -449,13 +483,24 @@ int gfx_rect(lua_State *L)
   int y1 = luaL_checknumber(L, 4);
   int col = luaL_checknumber(L, 5);
 
-  line(x0, y0, x1, y0, col);
-  line(x1, y0, x1, y1, col);
-  line(x1, y1, x0, y1, col);
-  line(x0, y1, x0, y0, col);
+  rect(x0, y0, x1, y1, col);
 
   return 0;
 }
+
+int gfx_rectfill(lua_State *L)
+{
+  int x0 = luaL_checknumber(L, 1);
+  int y0 = luaL_checknumber(L, 2);
+  int x1 = luaL_checknumber(L, 3);
+  int y1 = luaL_checknumber(L, 4);
+  int col = luaL_checknumber(L, 5);
+
+  rectfill(x0, y0, x1, y1, col);
+
+  return 0;
+}
+
 
 int gfx_sspr(lua_State *L)
 {
