@@ -12,6 +12,7 @@
 #include "b64.h"
 
 #include "font.h"
+#include "lua_stdlib.h"
 
 uint8_t memory[0x8000];
 int palette[16][3];
@@ -53,12 +54,6 @@ void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 void rectfill(int x0, int y0, int x1, int y1, int col);
 
-int luaB_pairs(lua_State *L);
-int luaB_print(lua_State *L);
-int luaB_tonumber(lua_State *L);
-int luaB_tostring(lua_State *L);
-int luaB_type(lua_State *L);
-
 int gfx_camera(lua_State *L);
 int gfx_circ(lua_State *L);
 int gfx_cls(lua_State *L);
@@ -69,19 +64,8 @@ int gfx_rect(lua_State *L);
 int gfx_rectfill(lua_State *L);
 int gfx_sspr(lua_State *L);
 
-int math_abs(lua_State *L);
-int math_ceil(lua_State *L);
-int math_floor(lua_State *L);
-int math_max(lua_State *L);
-int math_min(lua_State *L);
-int math_pow(lua_State *L);
-int math_random(lua_State *L);
-
 int mem_peek(lua_State *L);
 int mem_poke(lua_State *L);
-
-int tinsert(lua_State *L);
-int tremove(lua_State *L);
 
 const luaL_Reg base[] = {
   {"pairs", luaB_print},
