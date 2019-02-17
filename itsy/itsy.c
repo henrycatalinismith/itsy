@@ -12,7 +12,7 @@
 #include "b64.h"
 
 #include "font.h"
-#include "lua_stdlib.h"
+#include "lstdlib.h"
 
 uint8_t memory[0x8000];
 int palette[16][3];
