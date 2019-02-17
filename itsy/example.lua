@@ -30,8 +30,13 @@ function _update()
   line(10, 110, 10, 10, 11)
   line(110, 10, 10, 110, 12)
 
-  print("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 0, 9)
-  print("abcdefghijklmnopqrstuvwxyz", 0, 6, 9)
+  print(" !\"#$%&'()*+,-./", 0, 0, 9)
+  print("0123456789", 0, 6, 9)
+  print(":;<=>?@", 0, 12, 9)
+  print("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 0, 18, 9)
+  print("[\\]^_`", 0, 24, 9)
+  print("abcdefghijklmnopqrstuvwxyz", 0, 30, 9)
+  print("{|}~", 0, 36, 9)
 end
 
 cls(7)
