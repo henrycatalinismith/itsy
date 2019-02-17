@@ -15,6 +15,10 @@ async function main() {
   const assetsPath = `${cwd}/.glitch-assets`
   const sprites = []
 
+  const palette = Buffer.from(
+    fs.readFileSync(`${__dirname}/palette.png`)
+  ).toString("base64")
+
   if (fs.existsSync(assetsPath)) {
     fs
       .readFileSync(assetsPath, "utf-8")
@@ -26,7 +30,9 @@ async function main() {
       .forEach(sprite => sprites.push(sprite))
   }
 
+
   console.log(sprites)
+  sprites.splice(0, sprites.length - 1)
 
   for (const sprite of sprites) {
     const response = await fetch(sprite.url)
@@ -71,7 +77,7 @@ ${js.trim()}
 <style type="text/css">
 ${css.trim()}
 </style>
-<img width="8" height="8" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAa0lEQVQoU2NkYGD4L6sdzJD4h4Fhf+I/hsMV6xkZkADj6iCz/1tYJRmScyoYrPUUGZj5JVAVvPXw/s8R/YyBI4SZoeSTCkO/+ApUBVZrf//3PLmQIfsfNwN3BDMDu0kYqgJk+7CxUVTTRgEAxuwaCSbl+0MAAAAASUVORK5CYII=" />
+<img width="8" height="8" src="data:image/png;base64,${palette}" />
 <img width="128" height="128" src="${sprites[0].dataUrl}" />
 </body>
 </html>`))
@@ -81,4 +87,6 @@ ${css.trim()}
   })
 }
 
+
 main()
+

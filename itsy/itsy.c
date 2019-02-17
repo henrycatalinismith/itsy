@@ -95,11 +95,11 @@ void line(int x0, int y0, int x1, int y1, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 void rectfill(int x0, int y0, int x1, int y1, int col);
 
-int luaB_pairs (lua_State *L);
-int luaB_print (lua_State *L);
-int luaB_tonumber (lua_State *L);
-int luaB_tostring (lua_State *L);
-int luaB_type (lua_State *L);
+int luaB_pairs(lua_State *L);
+int luaB_print(lua_State *L);
+int luaB_tonumber(lua_State *L);
+int luaB_tostring(lua_State *L);
+int luaB_type(lua_State *L);
 
 int gfx_camera(lua_State *L);
 int gfx_circ(lua_State *L);
@@ -110,19 +110,19 @@ int gfx_rect(lua_State *L);
 int gfx_rectfill(lua_State *L);
 int gfx_sspr(lua_State *L);
 
-int math_abs (lua_State *L);
-int math_ceil (lua_State *L);
-int math_floor (lua_State *L);
-int math_max (lua_State *L);
-int math_min (lua_State *L);
-int math_pow (lua_State *L);
-int math_random (lua_State *L);
+int math_abs(lua_State *L);
+int math_ceil(lua_State *L);
+int math_floor(lua_State *L);
+int math_max(lua_State *L);
+int math_min(lua_State *L);
+int math_pow(lua_State *L);
+int math_random(lua_State *L);
 
-int mem_peek (lua_State *L);
-int mem_poke (lua_State *L);
+int mem_peek(lua_State *L);
+int mem_poke(lua_State *L);
 
-int tinsert (lua_State *L);
-int tremove (lua_State *L);
+int tinsert(lua_State *L);
+int tremove(lua_State *L);
 
 const luaL_Reg base[] = {
   {"pairs", luaB_print},
@@ -258,11 +258,11 @@ int init_itsy(char *palettePng, char *spritesheetPng)
     return -1;
   }
 
-  for (int x = 0; x < 4; x++) {
-    for (int y = 0; y < 4; y++) {
+  for (int y = 0; y < 4; y++) {
+    for (int x = 0; x < 4; x++) {
       getpixel(image, x, y, &r, &g, &b);
-      printf("%d - %d - %d\n", r, g, b);
       int c = x + (y * 4);
+      printf("%d: rgb(%d,%d,%d)\n", c, r, g, b);
       palette[c][0] = r;
       palette[c][1] = g;
       palette[c][2] = b;
@@ -288,11 +288,27 @@ int init_itsy(char *palettePng, char *spritesheetPng)
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
+      bool found = false;
+      int mindiff = 99999;
+      int closest = 0;
       getpixel(image, x, y, &r, &g, &b);
       for (int c = 0; c < 16; c++) {
-        if (palette[c][0] == r && palette[c][1] == g && palette[c][2] == b) {
-          sset(x, y, c);
+        int diff = (
+          abs(r - palette[c][0]) +
+          abs(g - palette[c][1]) +
+          abs(b - palette[c][2])
+        );
+        if (diff < 200 && diff < mindiff) {
+          mindiff = diff;
+          closest = c;
+          found = true;
         }
+      }
+
+      if (found) {
+        sset(x, y, closest);
+      } else {
+        printf("sprite/palette mismatch @ %dx%d rgb(%d,%d,%d)\n", x, y, r, g, b);
       }
     }
   }
@@ -637,9 +653,35 @@ void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
 {
   int bpp = surface->format->BytesPerPixel;
   Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-  if (bpp != 4) {
-    printf("oh no not a good bpp that we know what to do with\n");
+
+  Uint32 pixel;
+
+  switch(bpp) {
+    case 1:
+      pixel = *p;
+      break;
+
+    case 2:
+      pixel = *(Uint16 *)p;
+      break;
+
+    case 3:
+      if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
+        pixel = p[0] << 16 | p[1] << 8 | p[2];
+      } else {
+        pixel = p[0] | p[1] << 8 | p[2] << 16;
+      }
+      break;
+
+    case 4:
+      pixel = *(Uint32 *)p;
+      break;
+
+    default:
+      return;
   }
-  SDL_GetRGB(*(Uint32 *)p, surface->format, r, g, b);
+
+  SDL_GetRGB(pixel, surface->format, r, g, b);
+
 }
 

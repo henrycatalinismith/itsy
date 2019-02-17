@@ -1,7 +1,7 @@
 print('lua!')
 frame = 0
 
-function _update()
+function _updates()
   frame = frame + 1
 
   cls()
@@ -28,6 +28,7 @@ function _update()
 
 end
 
+cls(7)
 sspr(0, 0, 128, 128, 0, 0, 128, 128)
 
 print(2 + 2)
