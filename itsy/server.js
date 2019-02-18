@@ -60,12 +60,12 @@ async function main() {
 
   const code = fs.readFileSync(filename, "utf-8")
 
-  app.get(`/itsy.js`, (req, res) => {
+  app.get(`/itsy-${pkg.version}.js`, (req, res) => {
     res.setHeader("content-type", "text/javascript")
     fs.createReadStream(`${__dirname}/itsy.js`).pipe(res)
   })
 
-  app.get(`/itsy.wasm`, (req, res) => {
+  app.get(`/itsy-${pkg.version}.wasm`, (req, res) => {
     res.setHeader("content-type", "application/wasm")
     fs.createReadStream(`${__dirname}/itsy.wasm`).pipe(res)
   })

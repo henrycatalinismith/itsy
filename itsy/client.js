@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const argv = [lua, palette, spritesheet]
 
-  script.src = `/itsy.js?${config.version}`
+  script.src = `/itsy-${config.version}.js`
   script.onload = () => {
     Module({
       arguments: argv,

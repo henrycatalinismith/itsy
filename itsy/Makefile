@@ -2,6 +2,8 @@ B64=./node_modules/@highvalley.systems/b64
 LUA=./node_modules/@highvalley.systems/lua
 EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.27
 
+VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
+
 LUA_SRC := $(wildcard $(LUA)/src/*.c)
 LUA_OBJ := $(patsubst $(LUA)/src/%.c, $(LUA)/src/%.o, $(LUA_SRC))
 
@@ -48,7 +50,9 @@ $(LUA)/src/liblua.a: $(LUA_OBJ)
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
 itsy.js: $(OBJS)
-	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy.js
+	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy-$(VERSION).js
+	mv itsy-$(VERSION).js itsy.js
+	mv itsy-$(VERSION).wasm itsy.wasm
 
 clean:
 	rm -f itsy.js
