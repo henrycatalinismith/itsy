@@ -68,10 +68,9 @@ int mem_peek(lua_State *L);
 int mem_poke(lua_State *L);
 
 const luaL_Reg base[] = {
-  {"pairs", luaB_print},
   // {"print", luaB_print},
-  {"tonumber", luaB_tonumber},
-  {"tostring", luaB_tostring},
+  {"tonum", luaB_tonumber},
+  {"tostr", luaB_tostring},
   {"type", luaB_type},
   {NULL, NULL}
 };
@@ -95,7 +94,6 @@ const luaL_Reg math[] = {
   {"flr", math_floor},
   {"max", math_max},
   {"min", math_min},
-  {"pow", math_pow},
   {"rnd", math_random},
   {NULL, NULL}
 };
@@ -109,6 +107,7 @@ const luaL_Reg mem[] = {
 const luaL_Reg table[] = {
   {"add", tinsert},
   {"del", tremove},
+  {"pairs", luaB_pairs},
   {NULL, NULL}
 };
 
@@ -600,8 +599,6 @@ int gfx_sspr(lua_State *L)
   int sh = luaL_checknumber(L, 4);
   int dx = luaL_checknumber(L, 5);
   int dy = luaL_checknumber(L, 6);
-  int dw = luaL_checknumber(L, 7);
-  int dh = luaL_checknumber(L, 8);
 
   for (int x = 0; x < sw; x++) {
     for (int y = 0; y < sh; y++) {

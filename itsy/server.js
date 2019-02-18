@@ -6,10 +6,6 @@ const fetch = require("node-fetch")
 const express = require("express")
 const serveStatic = require("serve-static")
 
-const img = sprite => [
-  `<img data-name="${sprite.name}" src="${sprite.dataUrl}" />`
-]
-
 async function main() {
   const cwd = process.cwd()
   const assetsPath = `${cwd}/.glitch-assets`
@@ -52,9 +48,13 @@ async function main() {
   const app = express()
   const port = process.env.PORT || "8080"
 
-  const filename = process.argv.pop()
+  let filename = process.argv.pop()
   if (filename === __filename) {
-    // means no code file has been given :(
+    filename = `${process.cwd()}/itsy.lua`
+  }
+
+  if (!fs.existsSync(filename)) {
+    console.error(`itsy: no code @ ${filename}`)
     process.exit(-1)
   }
 
