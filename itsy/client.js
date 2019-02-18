@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body
 
-  const canvas = document.createElement("canvas")
-  const script = document.createElement("script")
+  const canvas = document.querySelector("canvas")
 
   const json = document
     .querySelector("script[type='application/json']")
@@ -26,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const argv = [lua, palette, spritesheet]
 
+  const script = document.createElement("script")
   script.src = `/itsy-${config.version}.js`
   script.onload = () => {
     Module({

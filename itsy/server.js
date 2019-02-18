@@ -60,6 +60,11 @@ async function main() {
 
   const code = fs.readFileSync(filename, "utf-8")
 
+  app.get("/favicon.ico", (req, res) => {
+    res.setHeader("content-type", "image/vnd.microsoft.icon")
+    fs.createReadStream(`${__dirname}/favicon.ico`).pipe(res)
+  })
+
   app.get(`/itsy-${pkg.version}.js`, (req, res) => {
     res.setHeader("content-type", "text/javascript")
     fs.createReadStream(`${__dirname}/itsy.js`).pipe(res)
@@ -79,14 +84,15 @@ ${json}
 <script type="text/lua">
 ${code.trimEnd()}
 </script>
+<img width="8" height="8" src="data:image/png;base64,${palette}" />
+<img width="128" height="128" src="${sprites[0].dataUrl}" />
+<canvas></canvas>
 <script type="text/javascript">
 ${js.trim()}
 </script>
 <style type="text/css">
 ${css.trim()}
 </style>
-<img width="8" height="8" src="data:image/png;base64,${palette}" />
-<img width="128" height="128" src="${sprites[0].dataUrl}" />
 </body>
 </html>`))
 
