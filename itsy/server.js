@@ -49,7 +49,7 @@ async function main() {
   const port = process.env.PORT || "8080"
 
   let filename = process.argv.pop()
-  if (filename === __filename) {
+  if (filename === __filename || !filename.match(/\.lua$/)) {
     filename = `${process.cwd()}/itsy.lua`
   }
 
