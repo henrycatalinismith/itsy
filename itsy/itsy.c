@@ -17,6 +17,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texture;
 uint8_t pixels[128 * 128 * 4];
+bool error = false;
 
 // optimization!! e.g. sprite[20][30] contains the address in memory of the
 // spritesheet pixel at x=20 and y=30, to speed up reads & writes!
@@ -1124,7 +1125,7 @@ void loop(void)
     return;
   }
 
-  if (frame > 1000) {
+  if (error == true || frame > 1000) {
     emscripten_cancel_main_loop();
   }
 }
@@ -1469,13 +1470,17 @@ int mem_poke(lua_State *L)
 
 void runtime_error(lua_State *L)
 {
+  const char *msg = lua_tostring(L, -1);
   printf("error error lololol\n");
-  printf("%s\n", lua_tostring(L, -1));
+  printf("%s\n", msg);
+
+  rectfill(0, 0, 128, 128, 0);
+  print(msg, 0, 0, 7);
 
   luaL_traceback(L, L, NULL, 1);
   printf("%s\n", lua_tostring(L, -1));
 
-  emscripten_cancel_main_loop();
+  error = true;
 }
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)

@@ -38,7 +38,10 @@ function _update()
   print("{|}~", 0, 36, 9)
 end
 
-cls(7)
+function _draw()
+end
+
+--cls(7)
 sspr(0, 0, 128, 128, 0, 0, 128, 128)
 
 --print(2 + 2)
@@ -58,32 +61,32 @@ sspr(0, 0, 128, 128, 0, 0, 128, 128)
 --print(rnd(10))
 --print('---- /random ----')
 
-local cave = {}
+--local cave = {}
 --print(#cave)
-add(cave, {2, 20})
+--add(cave, {2, 20})
 --print(#cave)
 --print(cave[1][1])
 --print(cave[1][2])
-del(cave, 1)
+--del(cave, 1)
 --print(#cave)
 
 --print(tonumber("10"))
 --print(tostring({ 1, 2 }))
 --print(type(10))
 
-circ(64, 64, 32, 8)
+--circ(64, 64, 32, 8)
 
-dots = {
-  one = { 20, 20 },
-  two = { 110, 20 },
-}
+--dots = {
+  --one = { 20, 20 },
+  --two = { 110, 20 },
+--}
 
-for k, v in pairs(dots) do
+--for k, v in pairs(dots) do
   --print(k)
-  circ(v[1], v[2], 10, 7)
-end
+  --circ(v[1], v[2], 10, 7)
+--end
 
-rect(40, 40, 80, 80, 10)
+--rect(40, 40, 80, 80, 10)
 
 
 
