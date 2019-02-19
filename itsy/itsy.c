@@ -11,9 +11,6 @@
 #include <lualib.h>
 #include "b64.h"
 
-#include "font.h"
-#include "lstdlib.h"
-
 uint8_t memory[0x8000];
 int palette[16][3];
 SDL_Window *window;
@@ -54,15 +51,54 @@ void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 void rectfill(int x0, int y0, int x1, int y1, int col);
 
+lua_State* lua;
+
+// we want to load lua's standard library in a more cosy pico8 kind of way:
+//
+//  1. only a few functions rather than the whole library
+//  2. everything in the global namespace rather than nested in tables
+//
+// lua tries to prevent this kind of customization by declaring all its
+// standard library functions as static and not declaring them in .h files
+//
+// this gets in the way of our goals so we use a bit of perl magic in the
+// makefile to remove the unwanted static keywords and these declarations to
+// enable us to access those internal functions anyway! 🖕😎
+
+// lbaselib.c
+int luaB_pairs(lua_State *L);
+int luaB_print(lua_State *L);
+int luaB_tonumber(lua_State *L);
+int luaB_tostring(lua_State *L);
+int luaB_type(lua_State *L);
+
+// lmathlib.c
+int math_abs(lua_State *L);
+int math_ceil(lua_State *L);
+int math_cos(lua_State *L);
+int math_floor(lua_State *L);
+int math_max(lua_State *L);
+int math_min(lua_State *L);
+int math_pow(lua_State *L);
+int math_random(lua_State *L);
+int math_sin(lua_State *L);
+int math_tan(lua_State *L);
+
+// ltablib.c
+int tinsert(lua_State *L);
+int tremove(lua_State *L);
+
+int draw_circ(lua_State *L);
+int draw_cls(lua_State *L);
+int draw_line(lua_State *L);
+int draw_print(lua_State *L);
+int draw_pset(lua_State *L);
+int draw_rect(lua_State *L);
+int draw_rectfill(lua_State *L);
+int draw_sspr(lua_State *L);
+
 int gfx_camera(lua_State *L);
-int gfx_circ(lua_State *L);
-int gfx_cls(lua_State *L);
-int gfx_line(lua_State *L);
-int gfx_print(lua_State *L);
-int gfx_pset(lua_State *L);
-int gfx_rect(lua_State *L);
-int gfx_rectfill(lua_State *L);
-int gfx_sspr(lua_State *L);
+int gfx_color(lua_State *L);
 
 int mem_peek(lua_State *L);
 int mem_poke(lua_State *L);
@@ -75,26 +111,34 @@ const luaL_Reg base[] = {
   {NULL, NULL}
 };
 
+const luaL_Reg draw[] = {
+  {"circ", draw_circ},
+  {"cls", draw_cls},
+  {"line", draw_line},
+  {"print", draw_print},
+  {"pset", draw_pset},
+  {"rect", draw_rect},
+  {"rectfill", draw_rectfill},
+  {"sspr", draw_sspr},
+  {NULL, NULL}
+};
+
 const luaL_Reg graphics[] = {
   {"camera", gfx_camera},
-  {"circ", gfx_circ},
-  {"cls", gfx_cls},
-  {"line", gfx_line},
-  {"print", gfx_print},
-  {"pset", gfx_pset},
-  {"rect", gfx_rect},
-  {"rectfill", gfx_rectfill},
-  {"sspr", gfx_sspr},
+  {"color", gfx_color},
   {NULL, NULL}
 };
 
 const luaL_Reg math[] = {
   {"abs", math_abs},
   {"ceil", math_ceil},
+  {"cos", math_cos},
   {"flr", math_floor},
   {"max", math_max},
   {"min", math_min},
   {"rnd", math_random},
+  {"sin", math_sin},
+  {"tan", math_tan},
   {NULL, NULL}
 };
 
@@ -111,7 +155,774 @@ const luaL_Reg table[] = {
   {NULL, NULL}
 };
 
-lua_State* lua;
+typedef struct glyph {
+  char *c;
+  bool px[5][3];
+} glyph;
+
+glyph font[97] = {
+  {" ", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"!", {
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 0, 0},
+    {0, 1, 0}
+  }},
+
+  {"\"", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"#", {
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1}
+  }},
+
+  {"$", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"%", {
+    {1, 0, 1},
+    {0, 0, 1},
+    {0, 1, 0},
+    {1, 0, 0},
+    {1, 0, 1}
+  }},
+
+  {"&", {
+    {1, 1, 0},
+    {1, 1, 0},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"'", {
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"(", {
+    {0, 1, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {0, 1, 0}
+  }},
+
+  {")", {
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 1, 0}
+  }},
+
+  {"*", {
+    {1, 0, 1},
+    {0, 1, 0},
+    {1, 1, 1},
+    {0, 1, 0},
+    {1, 0, 1}
+  }},
+
+  {",", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 1},
+    {0, 1, 0}
+  }},
+
+  {"-", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {".", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 1, 0}
+  }},
+
+  {"/", {
+    {0, 0, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 0, 0}
+  }},
+
+  {"+", {
+    {0, 0, 0},
+    {0, 1, 0},
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 0, 0}
+  }},
+
+  {"0", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"1", {
+    {1, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 1, 1}
+  }},
+
+  {"2", {
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"3", {
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"4", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 0, 1},
+    {0, 0, 1}
+  }},
+
+  {"5", {
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"6", {
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"7", {
+    {1, 1, 1},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 0, 1}
+  }},
+
+  {"8", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"9", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 0, 1},
+    {0, 0, 1}
+  }},
+
+  {":", {
+    {0, 0, 0},
+    {0, 1, 0},
+    {0, 0, 0},
+    {0, 1, 0},
+    {0, 0, 0}
+  }},
+
+  {";", {
+    {0, 0, 0},
+    {0, 1, 0},
+    {0, 0, 0},
+    {0, 1, 0},
+    {1, 0, 0}
+  }},
+
+  {"<", {
+    {0, 0, 1},
+    {0, 1, 0},
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+  }},
+
+  {"=", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 0, 0}
+  }},
+
+  {">", {
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 1, 0},
+    {1, 0, 0}
+  }},
+
+  {"?", {
+    {1, 1, 1},
+    {0, 0, 1},
+    {0, 1, 1},
+    {0, 0, 0},
+    {0, 1, 0}
+  }},
+
+  {"@", {
+    {0, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 0},
+    {0, 1, 1}
+  }},
+
+  {"A", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"B", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"C", {
+    {0, 1, 1},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {0, 1, 1}
+  }},
+
+  {"D", {
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"E", {
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 1, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"F", {
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 1, 0},
+    {1, 0, 0},
+    {1, 0, 0}
+  }},
+
+  {"G", {
+    {0, 1, 1},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"H", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"I", {
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 1, 1}
+  }},
+
+  {"J", {
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 1, 0}
+  }},
+
+  {"K", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"L", {
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"M", {
+    {1, 1, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"N", {
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"O", {
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 0}
+  }},
+
+  {"P", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 0, 0}
+  }},
+
+  {"Q", {
+    {0, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+    {0, 1, 1}
+  }},
+
+  {"R", {
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"S", {
+    {0, 1, 1},
+    {1, 0, 0},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 0}
+  }},
+
+  {"T", {
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0}
+  }},
+
+  {"U", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {0, 1, 1}
+  }},
+
+  {"V", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 1, 0}
+  }},
+
+  {"W", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 1, 1}
+  }},
+
+  {"X", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {0, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"Y", {
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"Z", {
+    {1, 1, 1},
+    {0, 0, 1},
+    {0, 1, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"[", {
+    {1, 1, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 1, 0}
+  }},
+
+  {"\\", {
+    {1, 0, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 0, 1}
+  }},
+
+  {"]", {
+    {0, 1, 1},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 0, 1},
+    {0, 1, 1}
+  }},
+
+  {"^", {
+    {0, 1, 0},
+    {1, 0, 1},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"_", {
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"`", {
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 0, 0},
+    {0, 0, 0},
+    {0, 0, 0}
+  }},
+
+  {"a", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+  }},
+
+  {"b", {
+    {0, 0, 0},
+    {1, 1, 0},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"c", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"d", {
+    {0, 0, 0},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 0}
+  }},
+
+  {"e", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 1, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"f", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 1, 0},
+    {1, 0, 0},
+    {1, 0, 0}
+  }},
+
+  {"g", {
+    {0, 0, 0},
+    {0, 1, 1},
+    {1, 0, 0},
+    {1, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"h", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 1}
+  }},
+
+  {"i", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 1, 1}
+  }},
+
+  {"j", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {1, 1, 0}
+  }},
+
+  {"k", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"l", {
+    {0, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"m", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"n", {
+    {0, 0, 0},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"o", {
+    {0, 0, 0},
+    {0, 1, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 0}
+  }},
+
+  {"p", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 0, 0}
+  }},
+
+  {"q", {
+    {0, 0, 0},
+    {0, 1, 0},
+    {1, 0, 1},
+    {1, 1, 0},
+    {0, 1, 1}
+  }},
+
+  {"r", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {1, 0, 1},
+    {1, 1, 0},
+    {1, 0, 1}
+  }},
+
+  {"s", {
+    {0, 0, 0},
+    {0, 1, 1},
+    {1, 0, 0},
+    {0, 0, 1},
+    {1, 1, 0}
+  }},
+
+  {"t", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0}
+  }},
+
+  {"u", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 0, 1},
+    {0, 1, 1}
+  }},
+
+  {"v", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 1, 0}
+  }},
+
+  {"w", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 0, 1},
+    {1, 1, 1},
+    {1, 1, 1}
+  }},
+
+  {"x", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {0, 1, 0},
+    {1, 0, 1},
+    {1, 0, 1}
+  }},
+
+  {"y", {
+    {0, 0, 0},
+    {1, 0, 1},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 1, 1}
+  }},
+
+  {"z", {
+    {0, 0, 0},
+    {1, 1, 1},
+    {0, 0, 1},
+    {1, 0, 0},
+    {1, 1, 1}
+  }},
+
+  {"{", {
+    {0, 1, 1},
+    {0, 1, 0},
+    {1, 1, 0},
+    {0, 1, 0},
+    {0, 1, 1},
+  }},
+
+  {"|", {
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+    {0, 1, 0},
+  }},
+
+  {"}", {
+    {1, 1, 0},
+    {0, 1, 0},
+    {0, 1, 1},
+    {0, 1, 0},
+    {1, 1, 0},
+  }},
+
+  {"~", {
+    {0, 0, 0},
+    {0, 0, 1},
+    {1, 1, 1},
+    {1, 0, 0},
+    {0, 0, 0},
+  }},
+
+  {NULL, NULL}
+};
 
 int main(int argc, char **argv)
 {
@@ -267,6 +1078,9 @@ int init_lua()
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, base, 0);
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, draw, 0);
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, graphics, 0);
@@ -461,22 +1275,8 @@ void rectfill(int x0, int y0, int x1, int y1, int col)
   }
 }
 
-int gfx_camera(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-
-  poke(0x5f28, x & 0xff);
-  poke(0x5f29, x >> 8);
-
-  poke(0x5f2a, y & 0xff);
-  poke(0x5f2b, y >> 8);
-
-  return 0;
-}
-
 // https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
-int gfx_circ(lua_State *L)
+int draw_circ(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
@@ -515,7 +1315,7 @@ int gfx_circ(lua_State *L)
   return 0;
 }
 
-int gfx_cls(lua_State *L)
+int draw_cls(lua_State *L)
 {
   int argc = lua_gettop(L);
   int color = 0;
@@ -528,7 +1328,7 @@ int gfx_cls(lua_State *L)
   return 0;
 }
 
-int gfx_line(lua_State *L)
+int draw_line(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
   int y0 = luaL_checknumber(L, 2);
@@ -541,7 +1341,7 @@ int gfx_line(lua_State *L)
   return 0;
 }
 
-int gfx_print(lua_State *L)
+int draw_print(lua_State *L)
 {
   const char *str = luaL_checkstring(L, 1);
   int x = luaL_checknumber(L, 2);
@@ -553,7 +1353,7 @@ int gfx_print(lua_State *L)
   return 0;
 }
 
-int gfx_pset(lua_State *L)
+int draw_pset(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
@@ -564,7 +1364,7 @@ int gfx_pset(lua_State *L)
   return 0;
 }
 
-int gfx_rect(lua_State *L)
+int draw_rect(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
   int y0 = luaL_checknumber(L, 2);
@@ -577,7 +1377,7 @@ int gfx_rect(lua_State *L)
   return 0;
 }
 
-int gfx_rectfill(lua_State *L)
+int draw_rectfill(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
   int y0 = luaL_checknumber(L, 2);
@@ -591,7 +1391,7 @@ int gfx_rectfill(lua_State *L)
 }
 
 
-int gfx_sspr(lua_State *L)
+int draw_sspr(lua_State *L)
 {
   int sx = luaL_checknumber(L, 1);
   int sy = luaL_checknumber(L, 2);
@@ -606,6 +1406,29 @@ int gfx_sspr(lua_State *L)
       pset(dx + x, dy + y, c);
     }
   }
+
+  return 0;
+}
+
+int gfx_camera(lua_State *L)
+{
+  int x = luaL_checknumber(L, 1);
+  int y = luaL_checknumber(L, 2);
+
+  poke(0x5f28, x & 0xff);
+  poke(0x5f29, x >> 8);
+
+  poke(0x5f2a, y & 0xff);
+  poke(0x5f2b, y >> 8);
+
+  return 0;
+}
+
+int gfx_color(lua_State *L)
+{
+  int col = luaL_checknumber(L, 1);
+
+  poke(0x5f25, col);
 
   return 0;
 }
@@ -662,6 +1485,5 @@ void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
   }
 
   SDL_GetRGB(pixel, surface->format, r, g, b);
-
 }
 
