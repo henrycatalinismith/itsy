@@ -4,7 +4,6 @@ frame = 0
 function _init()
 end
 
-
 function _update()
   frame = frame + 1
 

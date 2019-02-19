@@ -103,6 +103,8 @@ int gfx_color(lua_State *L);
 int mem_peek(lua_State *L);
 int mem_poke(lua_State *L);
 
+void runtime_error(lua_State *L);
+
 const luaL_Reg base[] = {
   // {"print", luaB_print},
   {"tonum", luaB_tonumber},
@@ -942,9 +944,16 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  luaL_dostring(lua, code);
+  if (luaL_dostring(lua, code) != 0) {
+    runtime_error(lua);
+    return -1;
+  }
+
   lua_getglobal(lua, "_init");
-  lua_pcall(lua, 0, 0, 0);
+  if (lua_pcall(lua, 0, 0, 0) != 0) {
+    runtime_error(lua);
+    return -1;
+  }
 
   emscripten_set_main_loop(loop, -1, 1);
 
@@ -1104,10 +1113,16 @@ void loop(void)
   // printf("loop: %s\n", SDL_GetError());
 
   lua_getglobal(lua, "_update");
-  lua_pcall(lua, 0, 0, 0);
+  if (lua_pcall(lua, 0, 0, 0) != 0) {
+    runtime_error(lua);
+    return;
+  }
 
   lua_getglobal(lua, "_draw");
-  lua_pcall(lua, 0, 0, 0);
+  if (lua_pcall(lua, 0, 0, 0) != 0) {
+    runtime_error(lua);
+    return;
+  }
 
   if (frame > 1000) {
     emscripten_cancel_main_loop();
@@ -1450,6 +1465,17 @@ int mem_poke(lua_State *L)
   poke(addr, val);
 
   return 0;
+}
+
+void runtime_error(lua_State *L)
+{
+  printf("error error lololol\n");
+  printf("%s\n", lua_tostring(L, -1));
+
+  luaL_traceback(L, L, NULL, 1);
+  printf("%s\n", lua_tostring(L, -1));
+
+  emscripten_cancel_main_loop();
 }
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b)
