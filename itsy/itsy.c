@@ -951,7 +951,7 @@ int main(int argc, char **argv)
   }
 
   lua_getglobal(lua, "_init");
-  if (lua_pcall(lua, 0, 0, 0) != 0) {
+  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
     runtime_error(lua);
     return -1;
   }
@@ -1114,13 +1114,13 @@ void loop(void)
   // printf("loop: %s\n", SDL_GetError());
 
   lua_getglobal(lua, "_update");
-  if (lua_pcall(lua, 0, 0, 0) != 0) {
+  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
     runtime_error(lua);
     return;
   }
 
   lua_getglobal(lua, "_draw");
-  if (lua_pcall(lua, 0, 0, 0) != 0) {
+  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
     runtime_error(lua);
     return;
   }
@@ -1480,6 +1480,7 @@ void runtime_error(lua_State *L)
   luaL_traceback(L, L, NULL, 1);
   printf("%s\n", lua_tostring(L, -1));
 
+  render();
   error = true;
 }
 
