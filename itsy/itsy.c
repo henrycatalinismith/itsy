@@ -11,11 +11,16 @@
 #include <lualib.h>
 #include "b64.h"
 
+typedef struct itsy_sdl_context {
+  SDL_Window *window;
+  SDL_Renderer *renderer;
+  SDL_Texture *texture;
+} itsy_sdl_context;
+
+itsy_sdl_context *sdl;
+
 uint8_t memory[0x8000];
 int palette[16][3];
-SDL_Window *window;
-SDL_Renderer *renderer;
-SDL_Texture *texture;
 uint8_t pixels[128 * 128 * 4];
 bool error = false;
 
@@ -101,6 +106,10 @@ int draw_sspr(lua_State *L);
 int gfx_camera(lua_State *L);
 int gfx_color(lua_State *L);
 
+int input_touch(lua_State *L);
+int input_touchx(lua_State *L);
+int input_touchy(lua_State *L);
+
 int mem_peek(lua_State *L);
 int mem_poke(lua_State *L);
 
@@ -129,6 +138,13 @@ const luaL_Reg draw[] = {
 const luaL_Reg graphics[] = {
   {"camera", gfx_camera},
   {"color", gfx_color},
+  {NULL, NULL}
+};
+
+const luaL_Reg input[] = {
+  {"touch", input_touch},
+  {"touchx", input_touchx},
+  {"touchy", input_touchy},
   {NULL, NULL}
 };
 
@@ -968,20 +984,24 @@ int init_sdl(void)
     return 1;
   }
 
-  if (SDL_CreateWindowAndRenderer(128, 128, 0, &window, &renderer) != 0) {
+  SDL_Window *w;
+  SDL_Renderer *r;
+  if (SDL_CreateWindowAndRenderer(128, 128, 0, &w, &r) != 0) {
     SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
     return 1;
   }
 
-  texture = SDL_CreateTexture(
-    renderer,
+  sdl->window = w;
+  sdl->renderer = r;
+  sdl->texture = SDL_CreateTexture(
+    sdl->renderer,
     SDL_PIXELFORMAT_ARGB8888,
     SDL_TEXTUREACCESS_STREAMING,
     128,
     128
   );
 
-  if (texture == NULL) {
+  if (sdl->texture == NULL) {
     SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
     return 1;
   }
@@ -1096,6 +1116,9 @@ int init_lua()
   luaL_setfuncs(lua, graphics, 0);
 
   lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, input, 0);
+
+  lua_pushglobaltable(lua);
   luaL_setfuncs(lua, math, 0);
 
   lua_pushglobaltable(lua);
@@ -1109,9 +1132,34 @@ int init_lua()
 
 void loop(void)
 {
-  render();
-  frame++;
-  // printf("loop: %s\n", SDL_GetError());
+  SDL_Event event;
+  while (SDL_PollEvent(&event)) {
+    switch (event.type) {
+      case SDL_FINGERDOWN:
+        printf("finger %d, %d\n", (int)event.tfinger.x, (int)event.tfinger.y);
+        break;
+
+      case SDL_FINGERUP:
+        printf("SDL_FINGERUP\n");
+        break;
+
+      case SDL_MOUSEBUTTONDOWN:
+        printf("mouse %d, %d\n", event.button.x, event.button.y);
+        break;
+
+      case SDL_MOUSEBUTTONUP:
+        printf("SDL_MOUSEBUTTONUP\n");
+        break;
+
+      //case SDL_FINGERMOTION:
+        //printf("SDL_FINGERMOTION\n");
+        //break;
+
+      //case SDL_MOUSEMOTION:
+        //printf("SDL_MOUSEMOTION\n");
+        //break;
+    }
+  }
 
   lua_getglobal(lua, "_update");
   if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
@@ -1128,12 +1176,17 @@ void loop(void)
   if (error == true || frame > 1000) {
     emscripten_cancel_main_loop();
   }
+
+
+  render();
+  frame++;
+  // printf("loop: %s\n", SDL_GetError());
 }
 
 void render(void)
 {
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(renderer);
+  SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+  SDL_RenderClear(sdl->renderer);
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
@@ -1147,7 +1200,7 @@ void render(void)
   }
 
   SDL_UpdateTexture(
-    texture,
+    sdl->texture,
     NULL,
     &pixels[0],
     128 * 4
@@ -1155,9 +1208,9 @@ void render(void)
 
   // printf("Frame: %d\n", frame);
 
-  SDL_RenderCopy(renderer, texture, NULL, NULL);
-  SDL_RenderPresent(renderer);
-  SDL_UpdateWindowSurface(window);
+  SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
+  SDL_RenderPresent(sdl->renderer);
+  SDL_UpdateWindowSurface(sdl->window);
 }
 
 int peek(int addr)
@@ -1446,6 +1499,21 @@ int gfx_color(lua_State *L)
 
   poke(0x5f25, col);
 
+  return 0;
+}
+
+int input_touch(lua_State *L)
+{
+  return 0;
+}
+
+int input_touchx(lua_State *L)
+{
+  return 0;
+}
+
+int input_touchy(lua_State *L)
+{
   return 0;
 }
 
