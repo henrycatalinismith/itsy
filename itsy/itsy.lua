@@ -36,9 +36,14 @@ function _update()
   print("[\\]^_`", 0, 24, 9)
   print("abcdefghijklmnopqrstuvwxyz", 0, 30, 9)
   print("{|}~", 0, 36, 9)
+
+  print(tostr(touch()), 0, 48, 9)
 end
 
 function _draw()
+  if touch() then
+    circ(touchx(), touchy(), 32, 14)
+  end
 end
 
 --cls(7)

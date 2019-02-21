@@ -17,7 +17,14 @@ typedef struct itsy_sdl_context {
   SDL_Texture *texture;
 } itsy_sdl_context;
 
+typedef struct itsy_input_state {
+  bool touch;
+  int touchx;
+  int touchy;
+} itsy_input_state;
+
 itsy_sdl_context *sdl;
+itsy_input_state input = { false, 0, 0 };
 
 uint8_t memory[0x8000];
 int palette[16][3];
@@ -141,7 +148,7 @@ const luaL_Reg graphics[] = {
   {NULL, NULL}
 };
 
-const luaL_Reg input[] = {
+const luaL_Reg input_funcs[] = {
   {"touch", input_touch},
   {"touchx", input_touchx},
   {"touchy", input_touchy},
@@ -1116,7 +1123,7 @@ int init_lua()
   luaL_setfuncs(lua, graphics, 0);
 
   lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, input, 0);
+  luaL_setfuncs(lua, input_funcs, 0);
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, math, 0);
@@ -1130,34 +1137,60 @@ int init_lua()
   return 0;
 }
 
+bool upagain = false;
+
 void loop(void)
 {
   SDL_Event event;
+  bool down = false;
+
+  if (upagain) {
+    input.touch = false;
+    input.touchx = 0;
+    input.touchy = 0;
+    upagain = false;
+  }
+
   while (SDL_PollEvent(&event)) {
     switch (event.type) {
-      case SDL_FINGERDOWN:
-        printf("finger %d, %d\n", (int)event.tfinger.x, (int)event.tfinger.y);
-        break;
+      //case SDL_FINGERDOWN:
+        //printf("finger %d, %d\n", (int)event.tfinger.x, (int)event.tfinger.y);
+        //break;
 
-      case SDL_FINGERUP:
-        printf("SDL_FINGERUP\n");
-        break;
+      //case SDL_FINGERUP:
+        //printf("SDL_FINGERUP\n");
+        //break;
 
       case SDL_MOUSEBUTTONDOWN:
         printf("mouse %d, %d\n", event.button.x, event.button.y);
+        input.touch = true;
+        input.touchx = event.button.x;
+        input.touchy = event.button.y;
+        down = true;
         break;
 
       case SDL_MOUSEBUTTONUP:
         printf("SDL_MOUSEBUTTONUP\n");
+        if (down) {
+          upagain = true;
+        } else {
+          input.touch = false;
+          input.touchx = 0;
+          input.touchy = 0;
+        }
         break;
 
       //case SDL_FINGERMOTION:
         //printf("SDL_FINGERMOTION\n");
         //break;
 
-      //case SDL_MOUSEMOTION:
+      case SDL_MOUSEMOTION:
         //printf("SDL_MOUSEMOTION\n");
-        //break;
+        if (input.touch) {
+          input.touchx = event.motion.x;
+          input.touchy = event.motion.y;
+        }
+        break;
     }
   }
 
@@ -1173,7 +1206,7 @@ void loop(void)
     return;
   }
 
-  if (error == true || frame > 1000) {
+  if (error == true || frame > 10000) {
     emscripten_cancel_main_loop();
   }
 
@@ -1504,17 +1537,28 @@ int gfx_color(lua_State *L)
 
 int input_touch(lua_State *L)
 {
-  return 0;
+  lua_pushboolean(L, input.touch);
+  return 1;
 }
 
 int input_touchx(lua_State *L)
 {
-  return 0;
+  if (input.touch) {
+    lua_pushnumber(L, input.touchx);
+  } else {
+    lua_pushnil(L);
+  }
+  return 1;
 }
 
 int input_touchy(lua_State *L)
 {
-  return 0;
+  if (input.touch) {
+    lua_pushnumber(L, input.touchy);
+  } else {
+    lua_pushnil(L);
+  }
+  return 1;
 }
 
 int mem_peek(lua_State *L)
