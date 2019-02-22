@@ -9,7 +9,7 @@ function _update()
 
   cls()
 
-  --camera(flr(frame/2), flr(frame/2))
+  camera(0 - flr(frame/2), 0 - flr(frame/2))
 
   sspr(32, 32, 32, 32, 32, 32, 32, 32)
 

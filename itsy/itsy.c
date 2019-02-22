@@ -17,6 +17,11 @@ typedef struct itsy_sdl_context {
   SDL_Texture *texture;
 } itsy_sdl_context;
 
+typedef struct itsy_draw_state {
+  int camerax;
+  int cameray;
+} itsy_draw_state;
+
 typedef struct itsy_input_state {
   bool touch;
   int touchx;
@@ -24,6 +29,7 @@ typedef struct itsy_input_state {
 } itsy_input_state;
 
 itsy_sdl_context *sdl;
+itsy_draw_state draw = { 0, 0 };
 itsy_input_state input = { false, 0, 0 };
 
 uint8_t memory[0x8000];
@@ -144,7 +150,7 @@ const luaL_Reg coroutines[] = {
   {NULL, NULL}
 };
 
-const luaL_Reg draw[] = {
+const luaL_Reg draw_funcs[] = {
   {"circ", draw_circ},
   {"cls", draw_cls},
   {"line", draw_line},
@@ -1134,7 +1140,7 @@ int init_lua()
   luaL_setfuncs(lua, coroutines, 0);
 
   lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, draw, 0);
+  luaL_setfuncs(lua, draw_funcs, 0);
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, graphics, 0);
@@ -1309,11 +1315,8 @@ void sset(int x, int y, int c)
 
 void pset(int x, int y, int c)
 {
-  int cx = (peek(0x5f29) << 8) | peek(0x5f28);
-  int cy = (peek(0x5f29) << 8) | peek(0x5f28);
-
-  x -= cx;
-  y -= cy;
+  x -= draw.camerax;
+  y -= draw.cameray;
 
   if (x < 0 || y < 0 || x > 127 || y > 127) {
     return;
@@ -1534,11 +1537,8 @@ int gfx_camera(lua_State *L)
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
 
-  poke(0x5f28, x & 0xff);
-  poke(0x5f29, x >> 8);
-
-  poke(0x5f2a, y & 0xff);
-  poke(0x5f2b, y >> 8);
+  draw.camerax = x;
+  draw.cameray = x;
 
   return 0;
 }
