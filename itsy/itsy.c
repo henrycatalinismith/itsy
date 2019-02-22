@@ -1538,7 +1538,7 @@ int gfx_camera(lua_State *L)
   int y = luaL_checknumber(L, 2);
 
   draw.camerax = x;
-  draw.cameray = x;
+  draw.cameray = y;
 
   return 0;
 }
