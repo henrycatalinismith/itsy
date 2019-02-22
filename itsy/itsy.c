@@ -85,6 +85,12 @@ int luaB_tonumber(lua_State *L);
 int luaB_tostring(lua_State *L);
 int luaB_type(lua_State *L);
 
+// lcorolib.c
+int luaB_cocreate (lua_State *L);
+int luaB_coresume (lua_State *L);
+int luaB_costatus (lua_State *L);
+int luaB_yield (lua_State *L);
+
 // lmathlib.c
 int math_abs(lua_State *L);
 int math_ceil(lua_State *L);
@@ -127,6 +133,14 @@ const luaL_Reg base[] = {
   {"tonum", luaB_tonumber},
   {"tostr", luaB_tostring},
   {"type", luaB_type},
+  {NULL, NULL}
+};
+
+const luaL_Reg coroutines[] = {
+  {"cocreate", luaB_cocreate},
+  {"coresume", luaB_coresume},
+  {"costatus", luaB_costatus},
+  {"yield", luaB_yield},
   {NULL, NULL}
 };
 
@@ -1115,6 +1129,9 @@ int init_lua()
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, base, 0);
+
+  lua_pushglobaltable(lua);
+  luaL_setfuncs(lua, coroutines, 0);
 
   lua_pushglobaltable(lua);
   luaL_setfuncs(lua, draw, 0);
