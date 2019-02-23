@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const body = document.body
 
   const canvas = document.querySelector("canvas")
+  const context = canvas.getContext("2d")
+  context.webkitImageSmoothingEnabled = false
 
   const json = document
     .querySelector("script[type='application/json']")

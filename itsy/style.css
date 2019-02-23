@@ -1,11 +1,22 @@
 body {
   margin: 0;
   display: flex;
-  align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100vw;
   background-color: black;
+}
+
+@media (orientation: landscape) {
+  body {
+    align-items: center;
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    align-items: flex-start;
+  }
 }
 
 canvas {

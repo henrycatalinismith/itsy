@@ -7,7 +7,7 @@ end
 function _update()
   frame = frame + 1
 
-  cls()
+  cls(12)
 
   camera(0 - flr(frame/2), 0 - flr(frame/2))
 
