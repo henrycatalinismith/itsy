@@ -15,6 +15,7 @@
   "devDependencies": {
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
     "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
+    "chalk": "^2.4.2",
     "emcc": "^0.2.2",
     "lua-src": "5.3.5"
   },
@@ -29,6 +30,7 @@
   ],
   "scripts": {
     "build": "make clean itsy.js",
+    "bump": "node workshop/bump.js",
     "start": "node server.js"
   }
 }

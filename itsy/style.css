@@ -1,6 +1,7 @@
 html {
   background-color: black;
   overflow: hidden;
+  user-select: none;
 }
 
 body {
