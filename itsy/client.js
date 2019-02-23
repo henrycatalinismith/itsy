@@ -1,7 +1,17 @@
+const resize = canvas =>  {
+  if (canvas.width !== canvas.clientWidth) {
+    canvas.width = canvas.clientWidth
+  }
+  if (canvas.height !== canvas.clientHeight) {
+    canvas.height = canvas.clientHeight
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const body = document.body
 
   const canvas = document.querySelector("canvas")
+  resize(canvas)
 
   const json = document
     .querySelector("script[type='application/json']")
