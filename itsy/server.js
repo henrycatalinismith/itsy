@@ -16,7 +16,7 @@ async function main() {
   const sprites = []
 
   const palette = Buffer.from(
-    fs.readFileSync(`${__dirname}/palette.png`)
+    fs.readFileSync(`${__dirname}/defaults/palette.png`)
   ).toString("base64")
 
   if (fs.existsSync(assetsPath)) {
@@ -61,7 +61,7 @@ async function main() {
 
   app.get("/favicon.ico", (req, res) => {
     res.setHeader("content-type", "image/vnd.microsoft.icon")
-    fs.createReadStream(`${__dirname}/favicon.ico`).pipe(res)
+    fs.createReadStream(`${__dirname}/defaults/favicon.ico`).pipe(res)
   })
 
   app.get(`/itsy-${pkg.version}.js`, (req, res) => {
