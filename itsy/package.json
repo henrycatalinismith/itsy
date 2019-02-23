@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -31,6 +31,7 @@
   "scripts": {
     "build": "make clean itsy.js",
     "bump": "node workshop/bump.js",
+    "ship": "node workshop/ship.js",
     "start": "node server.js",
     "tag": "node workshop/tag.js"
   }
