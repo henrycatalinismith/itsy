@@ -2,9 +2,13 @@
 
 const fs = require("fs")
 const process = require("process")
+const util = require("util")
+
 const fetch = require("node-fetch")
 const express = require("express")
 const serveStatic = require("serve-static")
+
+const read = util.promisify(fs.readFile)
 
 async function main() {
   const cwd = process.cwd()
@@ -26,8 +30,6 @@ async function main() {
       .forEach(sprite => sprites.push(sprite))
   }
 
-
-  console.log(sprites)
   sprites.splice(0, sprites.length - 1)
 
   for (const sprite of sprites) {
@@ -37,7 +39,6 @@ async function main() {
     sprite.dataUrl = `data:image/png;base64,${dataUrl}`
   }
 
-  const js = fs.readFileSync(`${__dirname}/client.js`, "utf-8")
   const css = fs.readFileSync(`${__dirname}/style.css`, "utf-8")
 
   const pkg = JSON.parse(fs.readFileSync(`${__dirname}/package.json`))
@@ -58,8 +59,6 @@ async function main() {
     process.exit(-1)
   }
 
-  const code = fs.readFileSync(filename, "utf-8")
-
   app.get("/favicon.ico", (req, res) => {
     res.setHeader("content-type", "image/vnd.microsoft.icon")
     fs.createReadStream(`${__dirname}/favicon.ico`).pipe(res)
@@ -75,14 +74,18 @@ async function main() {
     fs.createReadStream(`${__dirname}/itsy.wasm`).pipe(res)
   })
 
-  app.get("/", (req, res) => res.send(`<!DOCTYPE html>
+  app.get("/", async (req, res) => {
+    const lua = await read(filename, "utf-8")
+    const js = await read(`${__dirname}/client.js`, "utf-8")
+
+    res.send(`<!DOCTYPE html>
 <html>
 <body>
 <script type="application/json">
 ${json}
 </script>
 <script type="text/lua">
-${code.trimEnd()}
+${lua.trimEnd()}
 </script>
 <img width="8" height="8" src="data:image/png;base64,${palette}" />
 <img width="128" height="128" src="${sprites[0].dataUrl}" />
@@ -94,7 +97,10 @@ ${js.trim()}
 ${css.trim()}
 </style>
 </body>
-</html>`))
+</html>`)
+
+  })
+
 
   app.listen(port, () => {
     console.log(`itsy up and running on http://127.0.0.1:${port}/!`)
