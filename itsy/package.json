@@ -31,6 +31,7 @@
   "scripts": {
     "build": "make clean itsy.js",
     "bump": "node workshop/bump.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "tag": "node workshop/tag.js"
   }
 }
