@@ -7,9 +7,9 @@ end
 function _update()
   frame = frame + 1
 
-  cls(12)
+  cls(1)
 
-  camera(0 - flr(frame/2), 0 - flr(frame/2))
+  --camera(0 - flr(frame/2), 0 - flr(frame/2))
 
   sspr(32, 32, 32, 32, 32, 32, 32, 32)
 

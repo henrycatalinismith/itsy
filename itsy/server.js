@@ -80,6 +80,9 @@ async function main() {
 
     res.send(`<!DOCTYPE html>
 <html>
+<head>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
+</head>
 <body>
 <script type="application/json">
 ${json}
@@ -89,7 +92,7 @@ ${lua.trimEnd()}
 </script>
 <img width="8" height="8" src="data:image/png;base64,${palette}" />
 <img width="128" height="128" src="${sprites[0].dataUrl}" />
-<canvas></canvas>
+<canvas width="128" height="128"></canvas>
 <script type="text/javascript">
 ${js.trim()}
 </script>
