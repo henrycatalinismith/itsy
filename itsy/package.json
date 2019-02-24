@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -8,6 +8,7 @@
     "itsy": "./server.js"
   },
   "dependencies": {
+    "chalk": "^2.4.2",
     "express": "^4.16.4",
     "node-fetch": "^2.3.0",
     "redux": "^4.0.1"
@@ -15,7 +16,6 @@
   "devDependencies": {
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
     "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
-    "chalk": "^2.4.2",
     "emcc": "^0.2.2",
     "lua-src": "5.3.5"
   },
