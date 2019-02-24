@@ -16,6 +16,7 @@ EMMAKE=$(EMSCRIPTEN)/emmake
 
 CFLAGS=\
 	-O2 \
+	-I./engine \
 	-I$(B64) \
 	-I$(LUA)/src
 
