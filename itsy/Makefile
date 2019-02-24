@@ -34,8 +34,6 @@ EMCCFLAGS=\
 	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0
 
-all: itsy.html
-
 $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
@@ -49,10 +47,10 @@ $(LUA)/src/%.o:
 $(LUA)/src/liblua.a: $(LUA_OBJ)
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
-itsy.js: $(OBJS)
-	$(CC) $(CFLAGS) itsy.c $(OBJS) $(EMCCFLAGS) -o itsy-$(VERSION).js
-	mv itsy-$(VERSION).js itsy.js
-	mv itsy-$(VERSION).wasm itsy.wasm
+engine/itsy.js: $(OBJS)
+	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(EMCCFLAGS) -o engine/itsy-$(VERSION).js
+	mv engine/itsy-$(VERSION).js engine/itsy.js
+	mv engine/itsy-$(VERSION).wasm engine/itsy.wasm
 
 clean:
 	rm -f itsy.js
@@ -62,9 +60,8 @@ cleanlua:
 	rm -f $(LUA)/src/*.o
 	rm -f $(LUA)/src/liblua.a
 
+itsy: engine/itsy.js
+
 lua: $(LUA)/src/liblua.a
 
-itsy.html: $(OBJS)
-	$(CC) $(CFLAGS) $(EMCCFLAGS) $(OBJS) itsy.c -o itsy.html
-
-.PHONY: all lua sdl clean cleanlua
+.PHONY: all itsy lua sdl clean cleanlua

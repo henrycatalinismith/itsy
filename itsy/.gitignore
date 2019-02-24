@@ -1,5 +1,5 @@
 .glitch-assets
 /node_modules/*
-itsy.js
-itsy.wasm
-*.o
+/engine/itsy.js
+/engine/itsy.wasm
+/engine/*.o
