@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -10,7 +10,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "node-fetch": "^2.3.0",
-    "serve-static": "^1.13.2"
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
