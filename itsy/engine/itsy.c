@@ -55,7 +55,7 @@ int frame = 0;
 
 int init_sdl(void);
 int init_itsy(char *palettePng, char *spritesheetPng);
-int init_lua(void);
+lua_State* init_lua(lua_State *L);
 
 void loop(void);
 void render(void);
@@ -77,7 +77,8 @@ void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 void rectfill(int x0, int y0, int x1, int y1, int col);
 
-lua_State* lua;
+lua_State* runtime;
+lua_State* debugger;
 
 int draw_circ(lua_State *L);
 int draw_cls(lua_State *L);
@@ -160,6 +161,13 @@ const luaL_Reg mem[] = {
   {NULL, NULL}
 };
 
+const luaL_Reg string_funcs[] = {
+  {"lower", str_lower},
+  {"sub", str_sub},
+  {"upper", str_upper},
+  {NULL, NULL}
+};
+
 const luaL_Reg table[] = {
   {"add", tinsert},
   {"del", tremove},
@@ -181,18 +189,20 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  if (init_lua() != 0) {
+  runtime = init_lua(runtime);
+  debugger = init_lua(debugger);
+
+  lua_pushstring(debugger, code);
+  lua_setfield(debugger, -2, "lua");
+
+  if (luaL_dostring(runtime, code) != 0) {
+    runtime_error(runtime);
     return -1;
   }
 
-  if (luaL_dostring(lua, code) != 0) {
-    runtime_error(lua);
-    return -1;
-  }
-
-  lua_getglobal(lua, "_init");
-  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
-    runtime_error(lua);
+  lua_getglobal(runtime, "_init");
+  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
+    runtime_error(runtime);
     return -1;
   }
 
@@ -326,35 +336,38 @@ int init_itsy(char *palettePng, char *spritesheetPng)
   return 0;
 }
 
-int init_lua()
+lua_State* init_lua(lua_State *L)
 {
-  lua = luaL_newstate();
+  L = luaL_newstate();
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, base, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, base, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, coroutines, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, coroutines, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, draw_funcs, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, draw_funcs, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, graphics, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, graphics, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, input_funcs, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, input_funcs, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, math, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, math, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, mem, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, mem, 0);
 
-  lua_pushglobaltable(lua);
-  luaL_setfuncs(lua, table, 0);
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, string_funcs, 0);
 
-  return 0;
+  lua_pushglobaltable(L);
+  luaL_setfuncs(L, table, 0);
+
+  return L;
 }
 
 bool upagain = false;
@@ -414,15 +427,15 @@ void loop(void)
     }
   }
 
-  lua_getglobal(lua, "_update");
-  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
-    runtime_error(lua);
+  lua_getglobal(runtime, "_update");
+  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
+    runtime_error(runtime);
     return;
   }
 
-  lua_getglobal(lua, "_draw");
-  if (lua_isfunction(lua, -1) && lua_pcall(lua, 0, 0, 0) != 0) {
-    runtime_error(lua);
+  lua_getglobal(runtime, "_draw");
+  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
+    runtime_error(runtime);
     return;
   }
 
@@ -722,7 +735,9 @@ int draw_sspr(lua_State *L)
   for (int x = 0; x < sw; x++) {
     for (int y = 0; y < sh; y++) {
       int c = sget(sx + x, sy + y);
-      pset(dx + x, dy + y, c);
+      if (c != 0) {
+        pset(dx + x, dy + y, c);
+      }
     }
   }
 
@@ -802,6 +817,99 @@ void runtime_error(lua_State *L)
 
   rectfill(0, 0, 128, 128, 0);
   print(msg, 0, 0, 7);
+
+  char *debug =
+    "last = nil\n"
+    "j = 0\n"
+    "linenr = nil\n"
+    "msg = ''\n"
+    "msglines = {}\n"
+    "for i = 1, #error do\n"
+    "  char = sub(error, i, i)\n"
+    "  if char == ' ' and last == ':' then\n"
+    "    j = 1\n"
+    "    lchars = ''\n"
+    "    for k = i-2,1,-1 do\n"
+    "      lchr = sub(error, k, k)\n"
+    "      --print(lchr, 6*(k+1), 1, 7)\n"
+    "      if lchr == ':' then\n"
+    "        break\n"
+    "      else\n"
+    "        lchars = lchr .. lchars\n"
+    "      end\n"
+    "    end\n"
+    "    linenr = tonum(lchars) - 1\n"
+    "    --print('(' .. linenr .. ')', 1, 120, 5)\n"
+    "  end\n"
+    "  if j > 0 then\n"
+    "    if j > 1 then\n"
+    "      msg = msg .. char\n"
+    "    end\n"
+    "    j = j + 1\n"
+    "    if #msg == 28 then\n"
+    "      add(msglines, msg)\n"
+    "      msg = ''\n"
+    "    end\n"
+    "  end\n"
+    "  last = char\n"
+    "end\n"
+    "if #msg > 0 then\n"
+    "  add(msglines, msg)\n"
+    "end\n"
+    "\n"
+    "--print(#msglines, 120, 120, 11)\n"
+    "for i,line in pairs(msglines) do\n"
+    "  --print(line, 4, 4 + (i * 6), 12)\n"
+    "end\n"
+    "--print(lua, 4, 32, 11)\n"
+    "i = 0\n"
+    "lines = {}\n"
+    "curr = 1\n"
+    "lstr = ''\n"
+    "for i = 1, #lua do\n"
+    "  char = sub(lua, i, i)\n"
+    "  --print(char, i * 6, 48, 12)\n"
+    "  if char == \"\\n\" then\n"
+    "    --print(lstr, 4, 48 + (curr * 6), 13)\n"
+    "    curr = curr + 1\n"
+    "    add(lines, lstr)\n"
+    "    lstr = ''\n"
+    "  else\n"
+    "    lstr = lstr .. char\n"
+    "  end\n"
+    "end\n"
+    "add(lines, lstr)\n"
+    "del(lines, 1)\n"
+    "rectfill(0, 0, 127, 16, 14)\n"
+    "print('ERROR ON LINE ' .. linenr, 4, 8, 2)\n"
+    "startline = max(linenr - 3, 1)\n"
+    "endline = min(startline + 8, #lines)\n"
+    "l = 0\n"
+    "line(0, 16, 127, 16, 2)\n"
+    "rectfill(0, 17, 127, 81, 7)\n"
+    "line(0, 81, 127, 81, 2)\n"
+    "rectfill(0, 82, 127, 127, 14)\n"
+    "for i = startline,endline do\n"
+    "  y = 17 + (l * 7)\n"
+    "  if i == linenr then\n"
+    "    rectfill(0, y, 127, y + 7, 8)\n"
+    "    fg = 7\n"
+    "  else\n"
+    "    fg = 14\n"
+    "  end\n"
+    "  print(lines[i], 4, y + 1, fg)\n"
+    "  l = l + 1\n"
+    "end\n"
+    "for i,line in pairs(msglines) do\n"
+    "  print(upper(line), 4, 84 + ((i-1) * 8), 2)\n"
+    "end\n"
+
+  ;
+
+  lua_pushstring(debugger, msg);
+  lua_setfield(debugger, -2, "error");
+
+  luaL_dostring(debugger, debug);
 
   luaL_traceback(L, L, NULL, 1);
   printf("%s\n", lua_tostring(L, -1));

@@ -3,8 +3,8 @@ const make = require("./make")
 const watch = require("./watch")
 
 log("start", "building itsy.js")
-make("clean itsy.js")
+make("clean itsy")
 
-watch("itsy.c", () => make("clean itsy.js"))
+watch("engine/itsy.c", () => make("clean itsy"))
 require(`${__dirname}/../server.js`)
 

@@ -35,6 +35,11 @@ int math_random(lua_State *L);
 int math_sin(lua_State *L);
 int math_tan(lua_State *L);
 
+// lstrlib.c
+int str_lower (lua_State *L);
+int str_sub (lua_State *L);
+int str_upper (lua_State *L);
+
 // ltablib.c
 int tinsert(lua_State *L);
 int tremove(lua_State *L);

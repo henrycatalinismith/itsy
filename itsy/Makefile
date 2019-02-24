@@ -41,6 +41,8 @@ $(B64)/%.o:
 $(LUA)/src/%.o:
 	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/$*.c # yoink
 	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/$*.c # lololol
+	perl -p -i -e "s/^static int str_/int str_/g" $(LUA)/src/$*.c # lololol
+	perl -p -i -e "s/^static int gmatch/int gmatch/g" $(LUA)/src/$*.c # lololol
 	perl -p -i -e "s/^static int tinsert/int tinsert/g" $(LUA)/src/$*.c
 	perl -p -i -e "s/^static int tremove/int tremove/g" $(LUA)/src/$*.c
 	cd $(LUA)/src && make $*.o CC='../../../../$(CC)'

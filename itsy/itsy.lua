@@ -133,7 +133,7 @@ function _init()
   level_index = 1
 
   for x = 1,128 do
-    
+
     --print(cave, 8, 8, 12)
     --print(level(), 8, 16, 12)
     --add(cave, level())
