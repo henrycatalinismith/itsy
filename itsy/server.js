@@ -164,7 +164,7 @@ const reducers = redux.combineReducers({
 })
 
 const watch = (filename, cb) => {
-  fs.watchFile(filename, { interval: 1000 }, () => {
+  fs.watchFile(filename, { interval: 100 }, () => {
     fs.readFile(filename, "utf-8", (error, data) => {
       cb(data)
     })
