@@ -279,13 +279,13 @@ ${stylesheet.trim()}
       const { version } = select.package.from(store).forConfig()
       if (request.url === `/itsy-${version}.js`) {
         response.setHeader("content-type", "text/javascript")
-        fs.createReadStream(`${__dirname}/itsy.js`).pipe(response)
+        fs.createReadStream(`${__dirname}/engine/itsy.js`).pipe(response)
         return
       }
 
       if (request.url === `/itsy-${version}.wasm`) {
         response.setHeader("content-type", "application/wasm")
-        fs.createReadStream(`${__dirname}/itsy.wasm`).pipe(response)
+        fs.createReadStream(`${__dirname}/engine/itsy.wasm`).pipe(response)
         return
       }
     }

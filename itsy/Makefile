@@ -53,8 +53,8 @@ engine/itsy.js: $(OBJS)
 	mv engine/itsy-$(VERSION).wasm engine/itsy.wasm
 
 clean:
-	rm -f itsy.js
-	rm -f itsy.wasm
+	rm -f engine/itsy.js
+	rm -f engine/itsy.wasm
 
 cleanlua:
 	rm -f $(LUA)/src/*.o
