@@ -22,7 +22,5 @@ args:
 - name: dy
   type: number
   desc: screen y position
-returns:
-  type: void
 ---
 

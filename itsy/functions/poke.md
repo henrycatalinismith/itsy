@@ -10,7 +10,5 @@ args:
 - name: value
   type: number
   desc: new value
-returns:
-  type: void
 ---
 

@@ -19,7 +19,5 @@ args:
 - name: col
   type: number
   desc: line color
-returns:
-  type: void
 ---
 

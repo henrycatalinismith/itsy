@@ -7,7 +7,5 @@ args:
 - name: col
   type: number
   desc: default color
-returns:
-  type: void
 ---
 

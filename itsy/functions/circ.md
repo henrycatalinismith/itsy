@@ -16,7 +16,5 @@ args:
 - name: col
   type: number
   desc: border color
-returns:
-  type: void
 ---
 

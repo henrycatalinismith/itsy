@@ -10,7 +10,5 @@ args:
 - name: y
   type: number
   desc: vertical offset
-returns:
-  type: void
 ---
 
