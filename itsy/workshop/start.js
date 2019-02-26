@@ -6,5 +6,5 @@ log("start", "building itsy.js")
 make("clean itsy")
 
 watch("engine/itsy.c", () => make("clean itsy"))
-require(`${__dirname}/../server.js`)
+require(`${__dirname}/../commands/start.js`)
 

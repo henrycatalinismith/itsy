@@ -9,37 +9,15 @@ const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
 
+const reducer = require("../signalbox/reducer")
+const selector = require("../signalbox/selector")
+const before = require("../signalbox/before")
+const after = require("../signalbox/after")
+
 const log = message => console.log([
   chalk.cyanBright(`[${(new Date).toISOString()}]`),
   message,
 ].join(" "))
-
-const reducer = (initialState, actions) => (state, action) => {
-  return state === undefined
-    ? initialState
-    : actions.hasOwnProperty(action.type)
-      ? actions[action.type](state, action)
-      : state
-}
-
-const before = (actionType, handler) => store => next => action => {
-  action.type.match(actionType) && handler.call(null, store, action)
-  return next(action)
-}
-
-const after = (actionType, handler) => store => next => action => {
-  const result = next(action)
-  action.type.match(actionType) && handler.call(null, store, action)
-  return result
-}
-
-const selector = (entity, selectors) => ({
-  from: (store) => new Proxy({}, {
-    get: (target, name) => {
-      return selectors[name].bind(null, (store.getState())[entity])
-    }
-  })
-})
 
 const actions = {
   listen: port => ({
@@ -100,9 +78,9 @@ const loadBase64 = filename => {
   return Buffer.from(fs.readFileSync(filename)).toString("base64")
 }
 
-const defaultFavicon = loadBase64(`${__dirname}/defaults/favicon.ico`)
-const defaultPalette = loadBase64(`${__dirname}/defaults/palette.png`)
-const defaultSpritesheet = loadBase64(`${__dirname}/defaults/spritesheet.png`)
+const defaultFavicon = loadBase64(`${__dirname}/../defaults/favicon.ico`)
+const defaultPalette = loadBase64(`${__dirname}/../defaults/palette.png`)
+const defaultSpritesheet = loadBase64(`${__dirname}/../defaults/spritesheet.png`)
 
 const defaultAssets = [
   {
@@ -146,7 +124,7 @@ const reducers = redux.combineReducers({
     })
   }),
 
-  client: reducer(fs.readFileSync(`${__dirname}/client.js`, "utf-8"), {
+  client: reducer(fs.readFileSync(`${__dirname}/../client.js`, "utf-8"), {
     UPDATE_CLIENT: (client, action) => action.client,
   }),
 
@@ -154,11 +132,11 @@ const reducers = redux.combineReducers({
     UPDATE_LUA: (lua, action) => action.lua,
   }),
 
-  package: reducer(JSON.parse(fs.readFileSync(`${__dirname}/package.json`, "utf-8")), {
+  package: reducer(JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, "utf-8")), {
     UPDATE_PACKAGE: (package, action) => action.package,
   }),
 
-  stylesheet: reducer(fs.readFileSync(`${__dirname}/style.css`, "utf-8"), {
+  stylesheet: reducer(fs.readFileSync(`${__dirname}/../style.css`, "utf-8"), {
     UPDATE_STYLESHEET: (stylesheet, action) => action.stylesheet,
   }),
 })
@@ -180,7 +158,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
     store.dispatch(actions.updateAssets(assets))
   })),
 
-  after("LISTEN", store => watch(`${__dirname}/client.js`, client => {
+  after("LISTEN", store => watch(`${__dirname}/../client.js`, client => {
     store.dispatch(actions.updateClient(client))
   })),
 
@@ -188,11 +166,11 @@ const middlewares = redux.applyMiddleware.apply(null, [
     store.dispatch(actions.updateLua(lua))
   })),
 
-  after("LISTEN", store => watch(`${__dirname}/package.json`, json => {
+  after("LISTEN", store => watch(`${__dirname}/../package.json`, json => {
     store.dispatch(actions.updatePackage(JSON.parse(json)))
   })),
 
-  after("LISTEN", store => watch(`${__dirname}/style.css`, stylesheet => {
+  after("LISTEN", store => watch(`${__dirname}/../style.css`, stylesheet => {
     store.dispatch(actions.updateStylesheet(stylesheet))
   })),
 
@@ -279,13 +257,13 @@ ${stylesheet.trim()}
       const { version } = select.package.from(store).forConfig()
       if (request.url === `/itsy-${version}.js`) {
         response.setHeader("content-type", "text/javascript")
-        fs.createReadStream(`${__dirname}/engine/itsy.js`).pipe(response)
+        fs.createReadStream(`${__dirname}/../engine/itsy.js`).pipe(response)
         return
       }
 
       if (request.url === `/itsy-${version}.wasm`) {
         response.setHeader("content-type", "application/wasm")
-        fs.createReadStream(`${__dirname}/engine/itsy.wasm`).pipe(response)
+        fs.createReadStream(`${__dirname}/../engine/itsy.wasm`).pipe(response)
         return
       }
     }

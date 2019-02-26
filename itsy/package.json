@@ -1,11 +1,11 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.32.0",
+  "version": "0.33.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
   "bin": {
-    "itsy": "./server.js"
+    "itsy": "./commands/start.js"
   },
   "dependencies": {
     "chalk": "^2.4.2",
@@ -21,13 +21,14 @@
   },
   "files": [
     "client.js",
+    "commands/*.js",
     "defaults/favicon.ico",
     "defaults/palette.png",
     "defaults/spritesheet.png",
     "engine/itsy.js",
     "engine/itsy.wasm",
     "functions/*.md",
-    "server.js",
+    "signalbox/*.js",
     "style.css"
   ],
   "scripts": {
