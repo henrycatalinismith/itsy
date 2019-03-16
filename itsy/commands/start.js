@@ -9,10 +9,14 @@ const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
 
-const reducer = require("../signalbox/reducer")
-const selector = require("../signalbox/selector")
-const before = require("../signalbox/before")
-const after = require("../signalbox/after")
+const {
+  action,
+  reducer,
+  selector,
+  before,
+  after,
+  replace,
+} = require("@highvalley.systems/signalbox")
 
 const log = message => console.log([
   chalk.cyanBright(`[${(new Date).toISOString()}]`),
@@ -20,58 +24,16 @@ const log = message => console.log([
 ].join(" "))
 
 const actions = {
-  listen: port => ({
-    type: "LISTEN",
-    port,
-  }),
-
-  importAssets: (assets = {}) => ({
-    type: "IMPORT_ASSETS",
-    assets,
-  }),
-
-  downloadAsset: asset => ({
-    type: "DOWNLOAD_ASSET",
-    asset,
-  }),
-
-  request: (request, response, next) => ({
-    type: "REQUEST",
-    request,
-    response,
-    next,
-  }),
-
-  response: (request, response) => ({
-    type: "RESPONSE",
-    request,
-    response,
-  }),
-
-  updateAssets: assets => ({
-    type: "UPDATE_ASSETS",
-    assets,
-  }),
-
-  updateClient: client => ({
-    type: "UPDATE_CLIENT",
-    client,
-  }),
-
-  updateLua: lua => ({
-    type: "UPDATE_LUA",
-    lua,
-  }),
-
-  updatePackage: pkg => ({
-    type: "UPDATE_PACKAGE",
-    package: pkg,
-  }),
-
-  updateStylesheet: stylesheet => ({
-    type: "UPDATE_STYLESHEET",
-    stylesheet,
-  }),
+  ...action("listen", ["port"]),
+  ...action("importAssets", ["assets"]),
+  ...action("downloadAsset", ["asset"]),
+  ...action("updateAssets", ["assets"]),
+  ...action("request", ["request", "response", "next"]),
+  ...action("response", ["request", "response"]),
+  ...action("updateClient", ["client"]),
+  ...action("updateLua", ["lua"]),
+  ...action("updatePackage", ["package"]),
+  ...action("updateStylesheet", ["stylesheet"]),
 }
 
 const loadBase64 = filename => {
@@ -111,33 +73,33 @@ const defaultAssets = [
 
 const reducers = redux.combineReducers({
   assets: reducer(defaultAssets, {
-    IMPORT_ASSETS: (assets, action) => {
+    importAssets: (assets, action) => {
       return defaultAssets.concat(action.assets.filter(a => !a.deleted))
     },
 
-    UPDATE_ASSETS: (assets, action) => {
+    updateAssets: (assets, action) => {
       return defaultAssets.concat(action.assets.filter(a => !a.deleted))
     },
 
-    DOWNLOAD_ASSET: (assets, action) => assets.map(asset => {
+    downloadAsset: (assets, action) => assets.map(asset => {
       return asset.uuid === action.asset.uuid ? action.asset : asset
     })
   }),
 
   client: reducer(fs.readFileSync(`${__dirname}/../client.js`, "utf-8"), {
-    UPDATE_CLIENT: (client, action) => action.client,
+    updateClient: replace("client"),
   }),
 
   lua: reducer(fs.readFileSync(`${process.cwd()}/itsy.lua`, "utf-8"), {
-    UPDATE_LUA: (lua, action) => action.lua,
+    updateLua: replace("lua"),
   }),
 
   package: reducer(JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, "utf-8")), {
-    UPDATE_PACKAGE: (package, action) => action.package,
+    updatePackage: replace("package"),
   }),
 
   stylesheet: reducer(fs.readFileSync(`${__dirname}/../style.css`, "utf-8"), {
-    UPDATE_STYLESHEET: (stylesheet, action) => action.stylesheet,
+    updateStylesheet: replace("stylesheet"),
   }),
 })
 
@@ -150,31 +112,34 @@ const watch = (filename, cb) => {
 }
 
 const middlewares = redux.applyMiddleware.apply(null, [
-  after("LISTEN", store => {
-    store.dispatch(actions.importAssets())
-  }),
+  after("listen", store => store.dispatch(actions.importAssets())),
 
-  after("LISTEN", store => watch(`${process.cwd()}/.glitch-assets`, assets => {
-    store.dispatch(actions.updateAssets(assets))
-  })),
+  after("listen", store => watch(
+    `${process.cwd()}/.glitch-assets`,
+    assets => store.dispatch(actions.updateAssets(assets))
+  )),
 
-  after("LISTEN", store => watch(`${__dirname}/../client.js`, client => {
-    store.dispatch(actions.updateClient(client))
-  })),
+  after("listen", store => watch(
+    `${__dirname}/../client.js`,
+    client => store.dispatch(actions.updateClient(client))
+  )),
 
-  after("LISTEN", store => watch(`${process.cwd()}/itsy.lua`, lua => {
-    store.dispatch(actions.updateLua(lua))
-  })),
+  after("listen", store => watch(
+    `${process.cwd()}/itsy.lua`,
+    lua => store.dispatch(actions.updateLua(lua))
+  )),
 
-  after("LISTEN", store => watch(`${__dirname}/../package.json`, json => {
-    store.dispatch(actions.updatePackage(JSON.parse(json)))
-  })),
+  after("listen", store => watch(
+    `${__dirname}/../package.json`,
+    json => store.dispatch(actions.updatePackage(JSON.parse(json)))
+  )),
 
-  after("LISTEN", store => watch(`${__dirname}/../style.css`, stylesheet => {
-    store.dispatch(actions.updateStylesheet(stylesheet))
-  })),
+  after("listen", store => watch(
+    `${__dirname}/../style.css`,
+    stylesheet => store.dispatch(actions.updateStylesheet(stylesheet))
+  )),
 
-  before(/^(IMPORT|UPDATE)_ASSETS$/, async (store, action) => {
+  before(/^(import|update)Assets$/, async (store, action) => {
     const cwd = process.cwd()
     const assetsPath = `${cwd}/.glitch-assets`
     const data = fs.readFileSync(assetsPath, "utf-8")
@@ -189,7 +154,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
     action.assets = assets
   }),
 
-  after(/^(IMPORT|UPDATE)_ASSETS$/, async (store, action) => {
+  after(/^(import|update)Assets$/, async (store, action) => {
     const downloads = select.assets.from(store).forDownloading()
     for (const asset of downloads) {
       const response = await fetch(asset.url)
@@ -200,7 +165,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
     }
   }),
 
-  after("REQUEST", (store, { request, response, next }) => {
+  after("request", (store, { request, response, next }) => {
     if (request.method === "GET" && request.url === "/") {
       const config = select.package.from(store).forConfig()
       const client = select.client.from(store).forRunning()
@@ -215,21 +180,16 @@ const middlewares = redux.applyMiddleware.apply(null, [
 <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
 </head>
 <body>
-<script type="application/json">
-${JSON.stringify(config, undefined, 2)}
-</script>
 <script type="text/lua">
 ${lua.trimEnd()}
 </script>
 <img width="8" height="8" src="${palette.dataUrl}" />
 <img width="128" height="128" src="${spritesheet.dataUrl}" />
 <canvas width="128" height="128"></canvas>
-<script type="text/javascript">
-${client.trim()}
-</script>
 <style type="text/css">
 ${stylesheet.trim()}
 </style>
+<script type="text/javascript" src="/itsy-${config.version}.js"></script>
 </body>
 </html>`)
       return
@@ -260,31 +220,25 @@ ${stylesheet.trim()}
         fs.createReadStream(`${__dirname}/../engine/itsy.js`).pipe(response)
         return
       }
-
-      if (request.url === `/itsy-${version}.wasm`) {
-        response.setHeader("content-type", "application/wasm")
-        fs.createReadStream(`${__dirname}/../engine/itsy.wasm`).pipe(response)
-        return
-      }
     }
 
     next()
   }),
 
-  after("LISTEN", (store, { port }) => log(
+  after("listen", (store, { port }) => log(
     `listening on port ${chalk.magentaBright(port)}`
   )),
 
-  after("IMPORT_ASSETS", async (store, { assets }) => log([
+  after("importAssets", async (store, { assets }) => log([
     `imported ${chalk.magentaBright(assets.length)}`,
     `asset${assets.length > 1 ? "s" : ""}`,
   ].join(" "))),
 
-  after("DOWNLOAD_ASSET", (store, { asset }) => log(
+  after("downloadAsset", (store, { asset }) => log(
     `downloaded ${chalk.magentaBright(asset.name)}`
   )),
 
-  after("RESPONSE", (store, { request, response }) => log([
+  after("response", (store, { request, response }) => log([
     response.statusCode < 400
       ? chalk.greenBright(response.statusCode)
       : chalk.redBright(response.statusCode),
@@ -292,23 +246,23 @@ ${stylesheet.trim()}
     request.url,
   ].join(" "))),
 
-  after("UPDATE_ASSETS", () => log(
+  after("updateAssets", () => log(
     `updated ${chalk.magentaBright(".glitch-assets")}`
   )),
 
-  after("UPDATE_CLIENT", () => log(
+  after("updateClient", () => log(
     `updated ${chalk.magentaBright("client.js")}`
   )),
 
-  after("UPDATE_LUA", () => log(
+  after("updateLua", () => log(
     `updated ${chalk.magentaBright("itsy.lua")}`
   )),
 
-  after("UPDATE_PACKAGE", () => log(
+  after("updatePackage", () => log(
     `updated ${chalk.magentaBright("package.json")}`
   )),
 
-  after("UPDATE_STYLESHEET", () => log(
+  after("updateStylesheet", () => log(
     `updated ${chalk.yellowBright("stylesheet.css")}`
   )),
 ])

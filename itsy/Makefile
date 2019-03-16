@@ -26,14 +26,16 @@ OBJS=\
 	$(LUA)/src/liblua.a
 
 EMCCFLAGS=\
-	-s WASM=1 \
-	-s MODULARIZE=1 \
-	-s USE_SDL=2 \
-	-s USE_SDL_IMAGE=2 \
-	-s SDL2_IMAGE_FORMATS='["png"]' \
+	-s ENVIRONMENT="web" \
+	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 	-s EXPORTED_FUNCTIONS='["_main"]' \
 	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
-	-s ERROR_ON_UNDEFINED_SYMBOLS=0
+	-s MODULARIZE=1 \
+	-s SDL2_IMAGE_FORMATS='["png"]' \
+	-s SINGLE_FILE=1 \
+	-s USE_SDL=2 \
+	-s USE_SDL_IMAGE=2 \
+	-s WASM=1 \
 
 $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
@@ -52,12 +54,13 @@ $(LUA)/src/liblua.a: $(LUA_OBJ)
 
 engine/itsy.js: $(OBJS)
 	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(EMCCFLAGS) -o engine/itsy-$(VERSION).js
-	mv engine/itsy-$(VERSION).js engine/itsy.js
-	mv engine/itsy-$(VERSION).wasm engine/itsy.wasm
+	cat engine/head.js > engine/itsy.js
+	cat engine/itsy-$(VERSION).js >> engine/itsy.js
+	cat engine/foot.js >> engine/itsy.js
+	rm -f engine/itsy-$(VERSION).js
 
 clean:
 	rm -f engine/itsy.js
-	rm -f engine/itsy.wasm
 
 cleanlua:
 	rm -f $(LUA)/src/*.o

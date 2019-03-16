@@ -1,0 +1,4 @@
+Module({
+  arguments: argv,
+  canvas,
+})
