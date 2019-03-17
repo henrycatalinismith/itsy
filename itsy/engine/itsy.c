@@ -22,6 +22,7 @@ typedef struct itsy_sdl_context {
   SDL_Window *window;
   SDL_Renderer *renderer;
   SDL_Texture *texture;
+  double scale;
 } itsy_sdl_context;
 
 typedef struct itsy_draw_state {
@@ -53,7 +54,7 @@ void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 
 int frame = 0;
 
-int init_sdl(void);
+int init_sdl(int canvasWidth, int canvasHeight);
 int init_itsy(char *palettePng, char *spritesheetPng);
 lua_State* init_lua(lua_State *L);
 
@@ -181,7 +182,13 @@ int main(int argc, char **argv)
   char *palettePng = argv[2];
   char *spritesheetPng = argv[3];
 
-  if (init_sdl() != 0) {
+  int canvasWidth;
+  int canvasHeight;
+  printf("4: %s\n", argv[4]);
+  sscanf(argv[4], "%d", &canvasWidth);
+  sscanf(argv[5], "%d", &canvasHeight);
+
+  if (init_sdl(canvasWidth, canvasHeight) != 0) {
     return -1;
   }
 
@@ -211,16 +218,19 @@ int main(int argc, char **argv)
   return 0;
 }
 
-int init_sdl(void)
+int init_sdl(int canvasWidth, int canvasHeight)
 {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     SDL_Log("SDL_Init: %s", SDL_GetError());
     return 1;
   }
 
+  sdl->scale = canvasWidth / 128;
+
   SDL_Window *w;
   SDL_Renderer *r;
-  if (SDL_CreateWindowAndRenderer(128, 128, 0, &w, &r) != 0) {
+
+  if (SDL_CreateWindowAndRenderer(canvasWidth, canvasHeight, SDL_SWSURFACE, &w, &r) != 0) {
     SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
     return 1;
   }
@@ -397,8 +407,8 @@ void loop(void)
       case SDL_MOUSEBUTTONDOWN:
         printf("mouse %d, %d\n", event.button.x, event.button.y);
         input.touch = true;
-        input.touchx = event.button.x;
-        input.touchy = event.button.y;
+        input.touchx = floor(event.button.x / sdl->scale);
+        input.touchy = floor(event.button.y / sdl->scale);
         down = true;
         break;
 
@@ -420,8 +430,8 @@ void loop(void)
       case SDL_MOUSEMOTION:
         //printf("SDL_MOUSEMOTION\n");
         if (input.touch) {
-          input.touchx = event.motion.x;
-          input.touchy = event.motion.y;
+          input.touchx = floor(event.motion.x / sdl->scale);
+          input.touchy = floor(event.motion.y / sdl->scale);
         }
         break;
     }

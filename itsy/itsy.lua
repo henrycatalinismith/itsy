@@ -157,6 +157,9 @@ function _draw()
   camera(foreground[1], 0)
   draw_cave()
   draw_helicopter()
+  if touch() then
+    circ(touchx() + foreground[1], touchy(), 4, 9)
+  end
 end
 
 function collisions()

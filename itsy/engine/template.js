@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   const canvas = document.querySelector("canvas")
 
-  const lua = document
-    .querySelector("script[type='text/lua']")
-    .innerText
+  const lua = document.querySelector("script[type='text/lua']").innerText
 
   const palette = document
     .querySelector("img[width='8'][height='8']")
@@ -14,14 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelector("img[width='128'][height='128']")
     .src.split(",")[1]
 
-  const argv = [lua, palette, spritesheet]
+  const argv = [
+    lua,
+    palette,
+    spritesheet,
+    `${canvas.offsetWidth}`,
+    `${canvas.offsetHeight}`,
+  ]
 
-  var Module= {
+  console.log(argv)
+
+  var Module = {
     arguments: argv,
-    canvas,
+    canvas
   }
 
   // itsy.c
   //--:Module:--//
-
-})
+});
