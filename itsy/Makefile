@@ -30,7 +30,6 @@ EMCCFLAGS=\
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 	-s EXPORTED_FUNCTIONS='["_main"]' \
 	-s EXTRA_EXPORTED_RUNTIME_METHODS='["ccall", "cwrap"]' \
-	-s MODULARIZE=1 \
 	-s SDL2_IMAGE_FORMATS='["png"]' \
 	-s SINGLE_FILE=1 \
 	-s USE_SDL=2 \
@@ -52,27 +51,22 @@ $(LUA)/src/%.o:
 $(LUA)/src/liblua.a: $(LUA_OBJ)
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
-engine/itsy.js: $(OBJS)
-	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(EMCCFLAGS) -o engine/itsy-$(VERSION).js
-	cat engine/head.js > engine/itsy.js
-	cat engine/itsy-$(VERSION).js >> engine/itsy.js
-	cat engine/foot.js >> engine/itsy.js
-	rm -f engine/itsy-$(VERSION).js
+engine/core.js: $(OBJS)
+	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(EMCCFLAGS) -o engine/core.js
 
-engine/base64.js: engine/itsy.js
-	echo "module.exports = \`" > engine/base64.js
-	base64 engine/itsy.js >> engine/base64.js
-	echo "\`" >> engine/base64.js
+engine/itsy.js: engine/core.js
+	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js
+	./node_modules/.bin/prettier --write engine/itsy.js
 
 clean:
-	rm -f engine/base64.js
+	rm -f engine/core.js
 	rm -f engine/itsy.js
 
 cleanlua:
 	rm -f $(LUA)/src/*.o
 	rm -f $(LUA)/src/liblua.a
 
-itsy: engine/itsy.js engine/base64.js
+itsy: engine/itsy.js
 
 lua: $(LUA)/src/liblua.a
 

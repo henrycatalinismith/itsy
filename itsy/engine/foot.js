@@ -1,4 +1,0 @@
-Module({
-  arguments: argv,
-  canvas,
-})

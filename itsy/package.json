@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.35.0",
+  "version": "0.36.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -18,7 +18,8 @@
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
     "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
     "emcc": "^0.2.2",
-    "lua-src": "5.3.5"
+    "lua-src": "5.3.5",
+    "prettier": "^1.16.4"
   },
   "files": [
     "client.js",
@@ -27,7 +28,6 @@
     "defaults/palette.png",
     "defaults/spritesheet.png",
     "engine/itsy.js",
-    "engine/base64.js",
     "functions/*.md",
     "style.css"
   ],
