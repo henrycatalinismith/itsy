@@ -59,14 +59,20 @@ engine/itsy.js: $(OBJS)
 	cat engine/foot.js >> engine/itsy.js
 	rm -f engine/itsy-$(VERSION).js
 
+engine/base64.js: engine/itsy.js
+	echo "module.exports = \`" > engine/base64.js
+	base64 engine/itsy.js >> engine/base64.js
+	echo "\`" >> engine/base64.js
+
 clean:
+	rm -f engine/base64.js
 	rm -f engine/itsy.js
 
 cleanlua:
 	rm -f $(LUA)/src/*.o
 	rm -f $(LUA)/src/liblua.a
 
-itsy: engine/itsy.js
+itsy: engine/itsy.js engine/base64.js
 
 lua: $(LUA)/src/liblua.a
 
