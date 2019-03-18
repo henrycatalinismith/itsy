@@ -1,5 +1,6 @@
 .glitch-assets
 /node_modules/*
+/engine/base64.js
 /engine/core.js
 /engine/itsy.js
 /engine/*.o
