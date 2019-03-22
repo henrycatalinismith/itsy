@@ -1,5 +1,5 @@
 ---
-image: node:alpine
+image: node:11-stretch
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
