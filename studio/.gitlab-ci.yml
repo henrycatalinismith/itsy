@@ -9,8 +9,8 @@ stages:
   - deploy
 before_script:
   - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
-  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sysctl -p
-  - echo fs.inotify.max_queued_events=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+  - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
+  - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
   - npm ci
 expo-deployments:
   stage: deploy
