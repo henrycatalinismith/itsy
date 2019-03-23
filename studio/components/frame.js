@@ -1,6 +1,7 @@
 import React from "react"
 import {
   Platform,
+  StatusBar,
   StyleSheet,
   View,
 } from "react-native"
@@ -10,7 +11,13 @@ import colors from "../constants/colors"
 export default ({ children }) => (
   <>
     {(Platform.OS === "ios") && (
-      <View style={styles.statusBar} />
+      <>
+        <StatusBar
+          backgroundColor={colors[2]}
+          barStyle="light-content"
+        />
+        <View style={styles.statusBar} />
+      </>
     )}
     <View style={styles.container}>
       {children}

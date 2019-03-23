@@ -28,12 +28,6 @@ export default class App extends React.Component {
     } else {
       return (
         <Frame>
-          {Platform.OS === "ios" && (
-            <StatusBar
-              backgroundColor={colors[2]}
-              barStyle="light-content"
-            />
-          )}
           <AppNavigator />
         </Frame>
       )
