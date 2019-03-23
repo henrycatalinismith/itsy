@@ -1,11 +1,41 @@
 import React from "react"
-import { Platform, StatusBar, StyleSheet, View } from "react-native"
-import { createAppContainer, createSwitchNavigator } from "react-navigation"
-import { AppLoading, Asset, Font, Icon } from "expo"
+
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+} from "react-native"
+
+import {
+  createAppContainer,
+  createSwitchNavigator,
+} from "react-navigation"
+
+import {
+  AppLoading,
+  Asset,
+  Font,
+  Icon,
+} from "expo"
+
+import {
+  applyMiddleware,
+  combineReducers,
+  createStore,
+} from "redux"
+
+import actions from "./actions"
+import middlewares from "./middlewares"
+import reducers from "./reducers"
 
 import colors from "./constants/colors"
 import Footer from "./components/footer"
 import Frame from "./components/frame"
+
+
+const store = createStore(reducers, {}, middlewares)
+store.dispatch(actions.start())
 
 const AppNavigator = createAppContainer(createSwitchNavigator({
   Main: Footer,
