@@ -1,6 +1,13 @@
 import React from "react"
 
 import {
+  AppLoading,
+  Asset,
+  Font,
+  Icon,
+} from "expo"
+
+import {
   Platform,
   StatusBar,
   StyleSheet,
@@ -13,11 +20,9 @@ import {
 } from "react-navigation"
 
 import {
-  AppLoading,
-  Asset,
-  Font,
-  Icon,
-} from "expo"
+  Provider,
+  connect,
+} from "react-redux"
 
 import {
   applyMiddleware,
@@ -56,9 +61,11 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <Frame>
-          <AppNavigator />
-        </Frame>
+        <Provider store={store}>
+          <Frame>
+            <AppNavigator />
+          </Frame>
+        </Provider>
       )
     }
   }
