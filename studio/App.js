@@ -40,6 +40,10 @@ import Footer from "./components/footer"
 import Frame from "./components/frame"
 
 const initialState = {
+  app: {
+    loading: false,
+    ready: false,
+  },
   layout: {
     windowWidth: Dimensions.get("window").width,
     windowHeight: Dimensions.get("window").height,

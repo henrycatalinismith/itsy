@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native"
 
+import Disk from "../components/disk"
 import Header from "../components/header"
 import colors from "../constants/colors"
 
@@ -15,6 +16,7 @@ export default () => {
       <Header />
       <ScrollView style={styles.container}>
         <Text>lol</Text>
+        <Disk />
       </ScrollView>
     </>
   )
