@@ -1,7 +1,15 @@
 import React from "react"
 import { Platform, StatusBar, StyleSheet, View } from "react-native"
+import { createAppContainer, createSwitchNavigator } from "react-navigation"
 import { AppLoading, Asset, Font, Icon } from "expo"
-import AppNavigator from "./navigation/app-navigator"
+
+import colors from "./constants/colors"
+import Frame from "./components/frame"
+import MainTabNavigator from "./navigation/main-tab-navigator"
+
+const AppNavigator = createAppContainer(createSwitchNavigator({
+  Main: MainTabNavigator,
+}))
 
 export default class App extends React.Component {
   state = {
@@ -19,10 +27,15 @@ export default class App extends React.Component {
       )
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+        <Frame>
+          {Platform.OS === "ios" && (
+            <StatusBar
+              backgroundColor={colors[2]}
+              barStyle="light-content"
+            />
+          )}
           <AppNavigator />
-        </View>
+        </Frame>
       )
     }
   }
@@ -34,11 +47,9 @@ export default class App extends React.Component {
         require("./assets/images/robot-prod.png"),
       ]),
       Font.loadAsync({
-        // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
+        "overpass-mono-regular": require("./assets/fonts/overpass-mono-regular.ttf"),
+        "overpass-mono-bold": require("./assets/fonts/overpass-mono-bold.ttf"),
       }),
     ])
   }

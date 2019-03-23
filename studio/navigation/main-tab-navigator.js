@@ -2,6 +2,7 @@ import React from "react"
 import { Platform } from "react-native"
 import { createStackNavigator, createBottomTabNavigator } from "react-navigation"
 
+import colors from "../constants/colors"
 import TabBarIcon from "../components/tab-bar-icon"
 import HomeScreen from "../screens/home"
 import LinksScreen from "../screens/links"
@@ -53,8 +54,22 @@ SettingsStack.navigationOptions = {
   ),
 }
 
+const config = {
+  tabBarOptions: {
+    activeTintColor: colors[7],
+    labelStyle: {
+      color: colors[1],
+      fontFamily: "overpass-mono-bold",
+      fontSize: 16,
+    },
+    style: {
+      backgroundColor: colors[14],
+    },
+  }
+}
+
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
   SettingsStack,
-})
+}, config)
