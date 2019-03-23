@@ -16,9 +16,5 @@ export default [
   before("loadAsset", (store, action) => {
     action.asset = Asset.fromModule(action.asset)
   }),
-
-  after("loadAsset", (store, action) => {
-    console.log(store.getState())
-  }),
 ]
 

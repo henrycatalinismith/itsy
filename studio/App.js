@@ -8,6 +8,7 @@ import {
 } from "expo"
 
 import {
+  Dimensions,
   Platform,
   StatusBar,
   StyleSheet,
@@ -38,7 +39,14 @@ import colors from "./constants/colors"
 import Footer from "./components/footer"
 import Frame from "./components/frame"
 
-const store = createStore(reducers, {}, middlewares)
+const initialState = {
+  layout: {
+    windowWidth: Dimensions.get("window").width,
+    windowHeight: Dimensions.get("window").height,
+  }
+}
+
+const store = createStore(reducers, initialState, middlewares)
 store.dispatch(actions.start())
 
 const AppNavigator = createAppContainer(createSwitchNavigator({
