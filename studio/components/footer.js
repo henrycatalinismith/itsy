@@ -8,9 +8,17 @@ import HomeScreen from "../screens/home"
 import CodeScreen from "../screens/code"
 import HelpScreen from "../screens/help"
 
+const defaultNavigationOptions = {
+  header: null,
+}
+
+const stackNavigatorConfig = {
+  defaultNavigationOptions,
+}
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-})
+}, stackNavigatorConfig)
 
 HomeStack.navigationOptions = {
   tabBarLabel: "home",
@@ -28,7 +36,7 @@ HomeStack.navigationOptions = {
 
 const CodeStack = createStackNavigator({
   Code: CodeScreen,
-})
+}, stackNavigatorConfig)
 
 CodeStack.navigationOptions = {
   tabBarLabel: "code",
@@ -42,7 +50,7 @@ CodeStack.navigationOptions = {
 
 const HelpStack = createStackNavigator({
   Help: HelpScreen,
-})
+}, stackNavigatorConfig)
 
 HelpStack.navigationOptions = {
   tabBarLabel: "help",
