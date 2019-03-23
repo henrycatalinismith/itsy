@@ -5,8 +5,8 @@ import { createStackNavigator, createBottomTabNavigator } from "react-navigation
 import colors from "../constants/colors"
 import TabBarIcon from "../components/tab-bar-icon"
 import HomeScreen from "../screens/home"
-import LinksScreen from "../screens/links"
-import SettingsScreen from "../screens/settings"
+import CodeScreen from "../screens/code"
+import HelpScreen from "../screens/help"
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -26,11 +26,11 @@ HomeStack.navigationOptions = {
   ),
 }
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const CodeStack = createStackNavigator({
+  Code: CodeScreen,
 })
 
-LinksStack.navigationOptions = {
+CodeStack.navigationOptions = {
   tabBarLabel: "code",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -40,11 +40,11 @@ LinksStack.navigationOptions = {
   ),
 }
 
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+const HelpStack = createStackNavigator({
+  Help: HelpScreen,
 })
 
-SettingsStack.navigationOptions = {
+HelpStack.navigationOptions = {
   tabBarLabel: "help",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -71,6 +71,6 @@ const config = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  LinksStack,
-  SettingsStack,
+  CodeStack,
+  HelpStack,
 }, config)
