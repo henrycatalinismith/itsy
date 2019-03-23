@@ -1,6 +1,8 @@
 import { Asset } from "expo"
 import { before, after } from "@highvalley.systems/signalbox"
+
 import actions from "../actions"
+import select from "../selectors"
 
 export default [
   after("start", store => store.dispatch(actions.loadAsset(require(

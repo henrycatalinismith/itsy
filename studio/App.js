@@ -33,7 +33,6 @@ import colors from "./constants/colors"
 import Footer from "./components/footer"
 import Frame from "./components/frame"
 
-
 const store = createStore(reducers, {}, middlewares)
 store.dispatch(actions.start())
 
