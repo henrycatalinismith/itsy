@@ -4,11 +4,11 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation"
 import { AppLoading, Asset, Font, Icon } from "expo"
 
 import colors from "./constants/colors"
+import Footer from "./components/footer"
 import Frame from "./components/frame"
-import MainTabNavigator from "./navigation/main-tab-navigator"
 
 const AppNavigator = createAppContainer(createSwitchNavigator({
-  Main: MainTabNavigator,
+  Main: Footer,
 }))
 
 export default class App extends React.Component {

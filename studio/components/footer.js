@@ -13,7 +13,7 @@ const HomeStack = createStackNavigator({
 })
 
 HomeStack.navigationOptions = {
-  tabBarLabel: "Home",
+  tabBarLabel: "home",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -31,7 +31,7 @@ const LinksStack = createStackNavigator({
 })
 
 LinksStack.navigationOptions = {
-  tabBarLabel: "Links",
+  tabBarLabel: "code",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -45,7 +45,7 @@ const SettingsStack = createStackNavigator({
 })
 
 SettingsStack.navigationOptions = {
-  tabBarLabel: "Settings",
+  tabBarLabel: "help",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -57,6 +57,7 @@ SettingsStack.navigationOptions = {
 const config = {
   tabBarOptions: {
     activeTintColor: colors[7],
+    activeBackgroundColor: colors[14],
     labelStyle: {
       color: colors[1],
       fontFamily: "overpass-mono-bold",
@@ -65,7 +66,7 @@ const config = {
     style: {
       backgroundColor: colors[14],
     },
-  }
+  },
 }
 
 export default createBottomTabNavigator({
