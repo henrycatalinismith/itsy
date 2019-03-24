@@ -9,7 +9,7 @@ import {
 
 import colors from "../constants/colors"
 
-export default () => {
+export default ({ sourceUri }) => {
   return (
     <View style={styles.container}>
       <View style={styles.controls}>
@@ -18,14 +18,7 @@ export default () => {
         <WebView
           bounces={false}
           scrollEnabled={false}
-          source={{ html: `
-            <h1>player</h1>
-            <style type="text/css">
-              html {
-                background-color: ${colors[7]};
-              }
-            </style>
-          ` }}
+          source={{ uri: sourceUri }}
           //injectedJavaScript={itsy}
           //mediaPlaybackRequiresUserAction={false}
           //onMessage={handleMessage}

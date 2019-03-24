@@ -18,16 +18,21 @@ import colors from "../constants/colors"
 import select from "../selectors"
 
 const mapStateToProps = state => ({
-  orientation: select.layout.from(state).orientation()
+  editorAsset: select.assets.from(state).forEditorWebview(),
+  orientation: select.layout.from(state).orientation(),
 })
 
-export default connect(mapStateToProps)(({ orientation }) => {
+export default connect(mapStateToProps)(({
+  editorAsset,
+  orientation,
+}) => {
   const onMoveDivider = (x, y) => console.log(x, y)
+  console.log(editorAsset)
   return (
     <>
       <Header />
       <View style={[styles.container, styles[orientation]]}>
-        <Editor />
+        <Editor sourceUri={editorAsset.uri} />
         <Divider orientation={orientation} onMove={onMoveDivider} />
         <Player />
       </View>
