@@ -9,6 +9,7 @@ import {
 
 import { connect } from "react-redux"
 
+import Divider from "../components/divider"
 import Editor from "../components/editor"
 import Header from "../components/header"
 import Player from "../components/player"
@@ -27,6 +28,7 @@ export default connect(mapStateToProps)(({ orientation }) => {
       <Header />
       <View style={[styles.container, styles[orientation]]}>
         <Editor />
+        <Divider orientation={orientation} />
         <Player />
       </View>
     </>
