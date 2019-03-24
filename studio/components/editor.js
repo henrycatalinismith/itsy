@@ -3,7 +3,6 @@ import React from "react"
 import {
   StyleSheet,
   Text,
-  // WebView,
   View,
 } from "react-native"
 
@@ -33,9 +32,6 @@ export default ({
           scrollEnabled={false}
           source={{ uri: sourceUri }}
           useWebKit
-          //injectedJavaScript={itsy}
-          //mediaPlaybackRequiresUserAction={false}
-          //style={styles.webView}
         />
       </View>
     </View>
