@@ -93,7 +93,7 @@ const config = {
 }
 
 export default createBottomTabNavigator({
-  HomeStack,
   CodeStack,
+  HomeStack,
   HelpStack,
 }, config)
