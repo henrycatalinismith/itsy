@@ -13,12 +13,21 @@ export default () => {
   return (
     <View style={styles.container}>
       <Floppy size={18} style={styles.floppy} />
-      <Font
-        fontSize={18}
-        color={colors[7]}
-        borderColor={colors[13]}
-        borderMultiplier={1.5}
-      >itsy</Font>
+      <View style={styles.wordmark}>
+        <Font
+          fontSize={14}
+          color={colors[15]}
+          borderColor={colors[13]}
+          borderMultiplier={2}
+        >itsy</Font>
+
+        <Font
+          fontSize={14}
+          color={colors[15]}
+          borderColor={colors[13]}
+          borderMultiplier={2}
+        >studio</Font>
+      </View>
     </View>
   )
 }
@@ -32,5 +41,9 @@ const styles = StyleSheet.create({
   },
   floppy: {
     marginRight: 4,
+  },
+  wordmark: {
+    display: "flex",
+    flexDirection: "row",
   },
 })

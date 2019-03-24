@@ -492,7 +492,7 @@ const Character = ({
     case "i": return g(
       path([0,1], [2,1]),
       path([0,4], [2,4]),
-      path([1,2], [1,3])
+      path([1,1], [1,4])
     )
 
     case "j": return g(
@@ -548,7 +548,7 @@ const Character = ({
 
     case "t": return g(
       path([0,1], [2,1]),
-      path([1,2], [1,4])
+      path([1,1], [1,4])
     )
 
     case "u": return g(
@@ -574,7 +574,7 @@ const Character = ({
 
     case "y": return g(
       path([2,1], [2,4], [0,4]),
-      path([0,1], [0,2], [1,2])
+      path([0,1], [0,2], [2,2])
     )
 
     case "z": return g(
