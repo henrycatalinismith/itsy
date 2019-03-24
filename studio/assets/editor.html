@@ -5,6 +5,16 @@
   </head>
   <body>
 
+  <script type="text/javascript">
+    const dispatch = (type, params = {}) => {
+      const message = JSON.stringify({
+        type,
+        ...params,
+      })
+      window.postMessage(message, "*")
+    }
+  </script>
+
   <textarea></textarea>
 
   <style type="text/css">
@@ -25,6 +35,11 @@
 
   <script type="text/javascript">
     document.addEventListener("DOMContentLoaded", () => {
+
+      // wait a bit before 1st postMessage because of this
+      // https://github.com/facebook/react-native/issues/11594
+      setTimeout(() => dispatch("ready"), 300)
+
       const options = {
         autocapitalize: false,
         autocorrect: false,
@@ -39,6 +54,12 @@
       }
       const textarea = document.querySelector("textarea")
       const editor = CodeMirror.fromTextArea(textarea, options)
+
+      editor.on("change", cm => {
+        dispatch("change", {
+          value: editor.getValue()
+        })
+      })
     })
   </script>
 

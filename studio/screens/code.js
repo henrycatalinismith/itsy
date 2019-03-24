@@ -14,6 +14,7 @@ import Editor from "../components/editor"
 import Header from "../components/header"
 import Player from "../components/player"
 
+import actions from "../actions"
 import colors from "../constants/colors"
 import select from "../selectors"
 
@@ -22,18 +23,28 @@ const mapStateToProps = state => ({
   orientation: select.layout.from(state).orientation(),
 })
 
-export default connect(mapStateToProps)(({
+const mapDispatchToProps = dispatch => ({
+  changeCode: code => dispatch(actions.changeCode(code)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(({
+  changeCode,
   editorAsset,
   orientation,
 }) => {
   const onMoveDivider = (x, y) => console.log(x, y)
-  console.log(editorAsset)
   return (
     <>
       <Header />
       <View style={[styles.container, styles[orientation]]}>
-        <Editor sourceUri={editorAsset.uri} />
-        <Divider orientation={orientation} onMove={onMoveDivider} />
+        <Editor
+          onChange={changeCode}
+          sourceUri={editorAsset.uri}
+        />
+        <Divider
+          orientation={orientation}
+          onMove={onMoveDivider}
+        />
         <Player />
       </View>
     </>

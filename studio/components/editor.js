@@ -3,13 +3,25 @@ import React from "react"
 import {
   StyleSheet,
   Text,
-  WebView,
+  // WebView,
   View,
 } from "react-native"
 
+import WebView from "rn-webview"
+
 import colors from "../constants/colors"
 
-export default ({ sourceUri }) => {
+export default ({
+  onChange,
+  sourceUri,
+}) => {
+  const handleMessage = event => {
+    const message = JSON.parse(event.nativeEvent.data)
+    switch (message.type) {
+      case "change": return onChange(message.value)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.controls}>
@@ -17,13 +29,13 @@ export default ({ sourceUri }) => {
       <View style={styles.code}>
         <WebView
           bounces={false}
+          onMessage={handleMessage}
           scrollEnabled={false}
           source={{ uri: sourceUri }}
+          useWebKit
           //injectedJavaScript={itsy}
           //mediaPlaybackRequiresUserAction={false}
-          //onMessage={handleMessage}
           //style={styles.webView}
-          //useWebKit
         />
       </View>
     </View>
