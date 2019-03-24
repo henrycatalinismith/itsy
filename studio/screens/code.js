@@ -22,13 +22,13 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(({ orientation }) => {
-  console.log(orientation)
+  const onMoveDivider = (x, y) => console.log(x, y)
   return (
     <>
       <Header />
       <View style={[styles.container, styles[orientation]]}>
         <Editor />
-        <Divider orientation={orientation} />
+        <Divider orientation={orientation} onMove={onMoveDivider} />
         <Player />
       </View>
     </>

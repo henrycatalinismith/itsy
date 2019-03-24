@@ -7,10 +7,22 @@ import {
 
 import colors from "../constants/colors"
 
-export default ({ orientation }) => {
+export default ({
+  orientation,
+  onMove,
+}) => {
+  const onResponderMove = ({ nativeEvent }) => onMove(
+    nativeEvent.pageX,
+    nativeEvent.pageY
+  )
+
   return (
-    <View style={[styles.divider, styles[orientation]]}>
-    </View>
+    <View
+      style={[styles.divider, styles[orientation]]}
+      onResponderMove={onResponderMove}
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}
+    />
   )
 }
 
@@ -19,7 +31,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors[14],
   },
   landscape: {
-    width: 4,
+    width: 6,
   },
   portrait: {
     height: 4,
