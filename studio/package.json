@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
+    "@highvalley.systems/itsy": "^0.39.0",
     "@highvalley.systems/signalbox": "^0.10.0",
+    "base-64": "^0.1.0",
     "expo": "^32.0.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
