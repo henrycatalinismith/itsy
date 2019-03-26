@@ -44,6 +44,28 @@ const initialState = {
     loading: false,
     ready: false,
   },
+  disks: {
+    abc: {
+      id: "abc",
+      created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
+      name: "example",
+      lua: "cls(12)\nrect(32, 32, 96, 96, 8)\n",
+      palette: "",
+      spritesheet: "",
+      thumbnail: "",
+    },
+    def: {
+      id: "def",
+      created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
+      name: "another",
+      lua: "circ(64, 64, 32, 7)\n",
+      palette: "",
+      spritesheet: "",
+      thumbnail: "",
+    },
+  },
   layout: {
     windowWidth: Dimensions.get("window").width,
     windowHeight: Dimensions.get("window").height,

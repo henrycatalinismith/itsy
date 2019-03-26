@@ -33,7 +33,6 @@ export default [
     `)
 
     const result = await psql("SELECT COUNT(*) FROM disks")
-    console.log("lol done", result.rows.item(0)["COUNT(*)"])
   }),
 ]
 

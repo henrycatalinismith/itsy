@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 import {
   StyleSheet,
@@ -10,33 +11,71 @@ import WebView from "rn-webview"
 
 import colors from "../constants/colors"
 
-export default ({
-  onChange,
-  sourceUri,
-}) => {
-  const handleMessage = event => {
-    const message = JSON.parse(event.nativeEvent.data)
-    switch (message.type) {
-      case "change": return onChange(message.value)
-    }
+export default class Editor extends React.PureComponent {
+  static propTypes = {
+    lua: PropTypes.string,
+    onChange: PropTypes.func,
+    sourceUri: PropTypes.string,
   }
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.controls}>
+  componentDidMount() {
+    this.webview.postMessage(JSON.stringify({
+      type: "injectLua",
+      lua: this.props.lua,
+    }))
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    this.webview.postMessage(JSON.stringify({
+      type: "init",
+      lua: this.props.lua,
+    }))
+  }
+
+  render() {
+    const {
+      lua,
+      onChange,
+      sourceUri,
+    } = this.props
+
+    const handleMessage = event => {
+      const message = JSON.parse(event.nativeEvent.data)
+      console.log(`🏓 ${message.type}`)
+      switch (message.type) {
+        case "ready":
+          this.webview.postMessage(JSON.stringify({
+            type: "init",
+            lua,
+          }))
+          break
+
+        case "change": return onChange(message.value)
+        case "debug": return console.log(message)
+      }
+    }
+
+    const options = { lua }
+
+    return (
+      <View style={styles.container}>
+        <View style={styles.controls}>
+        </View>
+        <View style={styles.code}>
+          <WebView
+            bounces={false}
+            onMessage={handleMessage}
+            ref={(view) => { this.webview = view; }}
+            scrollEnabled={false}
+            source={{ uri: sourceUri }}
+            useWebKit
+          />
+        </View>
       </View>
-      <View style={styles.code}>
-        <WebView
-          bounces={false}
-          onMessage={handleMessage}
-          scrollEnabled={false}
-          source={{ uri: sourceUri }}
-          useWebKit
-        />
-      </View>
-    </View>
-  )
+    )
+  }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

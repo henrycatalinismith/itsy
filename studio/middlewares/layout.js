@@ -11,11 +11,6 @@ export default [
       store.dispatch(actions.resizeWindow(width, height))
     })
   }),
-
-  after("resizeWindow", store => {
-    console.log(select.layout.from(store).windowWidth())
-    console.log(select.layout.from(store).windowHeight())
-  })
 ]
 
 

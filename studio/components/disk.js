@@ -1,5 +1,7 @@
 import { Svg } from "expo"
+
 import React from "react"
+
 import {
   Button,
   StyleSheet,
@@ -8,14 +10,29 @@ import {
   View,
 } from "react-native"
 
+import { connect } from "react-redux"
+
 import colors from "../constants/colors"
+import select from "../selectors"
 
-const onPress = () => {}
+const mapStateToProps = (state, ownProps) => ({
+  disk: select.disks.from(state).byId(ownProps.id),
+})
 
-export default () => {
+export default connect(mapStateToProps)(({
+  disk,
+  onPress,
+  size,
+}) => {
+
+  const dimensions = {
+    width: size,
+    heigh: size,
+  }
+
   return (
-    <TouchableOpacity style={styles.disk} onPress={onPress}>
-      <Svg width="100" height="100" viewBox="0 0 17 17">
+    <TouchableOpacity style={[styles.disk, dimensions]} onPress={onPress}>
+      <Svg width={size} height={size} viewBox="0 0 17 17">
         <Svg.Path
           d={[
             "M1.5,1.5",
@@ -34,11 +51,10 @@ export default () => {
       <Text>disk</Text>
     </TouchableOpacity>
   )
-}
+})
+
 const styles = StyleSheet.create({
   disk: {
     backgroundColor: colors[6],
-    height: 128,
-    width: 128,
   },
 })

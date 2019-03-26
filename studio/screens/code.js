@@ -18,10 +18,13 @@ import actions from "../actions"
 import colors from "../constants/colors"
 import select from "../selectors"
 
-const mapStateToProps = state => ({
-  editorAsset: select.assets.from(state).forEditorWebview(),
-  orientation: select.layout.from(state).orientation(),
-})
+const mapStateToProps = state => {
+  return {
+    disk: select.disks.from(state).byId(select.code.from(state).disk()),
+    editorAsset: select.assets.from(state).forEditorWebview(),
+    orientation: select.layout.from(state).orientation(),
+  }
+}
 
 const mapDispatchToProps = dispatch => ({
   changeCode: code => dispatch(actions.changeCode(code)),
@@ -29,7 +32,9 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(({
   changeCode,
+  disk,
   editorAsset,
+  navigation,
   orientation,
 }) => {
   const onMoveDivider = (x, y) => console.log(x, y)
@@ -38,6 +43,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
       <Header />
       <View style={[styles.container, styles[orientation]]}>
         <Editor
+          lua={disk.lua}
           onChange={changeCode}
           sourceUri={editorAsset.uri}
         />
