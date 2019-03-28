@@ -1,14 +1,18 @@
 import React from "react"
 
+import { Svg } from "expo"
+
 import {
   Button,
   StyleSheet,
+  TouchableOpacity,
   View,
 } from "react-native"
 
 import colors from "../constants/colors"
 
 export default ({
+  children,
   orientation,
   onMove,
 }) => {
@@ -24,11 +28,7 @@ export default ({
         onResponderMove={onResponderMove}
         onStartShouldSetResponder={() => true}
         onMoveShouldSetResponder={() => true}>
-        <Button
-          style={styles.play}
-          title="▶️"
-          onPress={() => {}}
-        />
+        {children}
       </View>
     </>
   )
@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   landscape: {
-    width: 32,
+    width: 48,
   },
   portrait: {
-    height: 32,
+    height: 48,
   },
   play: {
     fontSize: 24,

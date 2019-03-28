@@ -12,6 +12,7 @@ import { connect } from "react-redux"
 import Divider from "../components/divider"
 import Editor from "../components/editor"
 import Header from "../components/header"
+import Play from "../components/play"
 import Player from "../components/player"
 
 import actions from "../actions"
@@ -47,10 +48,9 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
           onChange={changeCode}
           sourceUri={editorAsset.uri}
         />
-        <Divider
-          orientation={orientation}
-          onMove={onMoveDivider}
-        />
+        <Divider orientation={orientation} onMove={onMoveDivider}>
+          <Play />
+        </Divider>
         <Player />
       </View>
     </>
