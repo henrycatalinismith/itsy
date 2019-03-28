@@ -27,12 +27,14 @@ export default connect(mapStateToProps)(({
 
   const dimensions = {
     width: size,
-    heigh: size,
+    height: size,
   }
 
+  const diskSize = size / 2
+
   return (
-    <TouchableOpacity style={[styles.disk, dimensions]} onPress={onPress}>
-      <Svg width={size} height={size} viewBox="0 0 17 17">
+    <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
+      <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 17 17">
         <Svg.Path
           d={[
             "M1.5,1.5",
@@ -48,13 +50,25 @@ export default connect(mapStateToProps)(({
           fill={colors[12]}
         />
       </Svg>
-      <Text>disk</Text>
+      <Text style={styles.label}>
+        {disk.name}
+      </Text>
     </TouchableOpacity>
   )
 })
 
 const styles = StyleSheet.create({
-  disk: {
+  tile: {
     backgroundColor: colors[6],
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    margin: 8,
   },
+  disk: {
+    marginBottom: 8,
+  },
+  label: {
+    fontFamily: "overpass-mono-bold",
+  }
 })
