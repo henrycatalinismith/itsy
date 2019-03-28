@@ -35,6 +35,11 @@ import actions from "./actions"
 import middlewares from "./middlewares"
 import reducers from "./reducers"
 
+import {
+  palette,
+  spritesheet,
+} from "./defaults"
+
 import colors from "./constants/colors"
 import Footer from "./components/footer"
 import Frame from "./components/frame"
@@ -51,8 +56,8 @@ const initialState = {
       updated: (new Date).toISOString(),
       name: "example",
       lua: "cls(12)\nrect(32, 32, 96, 96, 8)\n",
-      palette: "",
-      spritesheet: "",
+      palette,
+      spritesheet,
       thumbnail: "",
     },
     def: {
@@ -61,8 +66,8 @@ const initialState = {
       updated: (new Date).toISOString(),
       name: "another",
       lua: "circ(64, 64, 32, 7)\n",
-      palette: "",
-      spritesheet: "",
+      palette,
+      spritesheet,
       thumbnail: "",
     },
   },

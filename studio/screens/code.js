@@ -22,6 +22,7 @@ import select from "../selectors"
 const mapStateToProps = state => {
   return {
     disk: select.disks.from(state).byId(select.code.from(state).disk()),
+    drive: select.drive.from(state).disk(),
     editorAsset: select.assets.from(state).forEditorWebview(),
     orientation: select.layout.from(state).orientation(),
   }
@@ -29,29 +30,38 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   changeCode: code => dispatch(actions.changeCode(code)),
+  updateDisk: disk => dispatch(actions.updateDisk(disk)),
+  play: disk => dispatch(actions.play(disk)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(({
   changeCode,
   disk,
+  drive,
   editorAsset,
   navigation,
   orientation,
+  play,
+  updateDisk,
 }) => {
   const onMoveDivider = (x, y) => console.log(x, y)
+  console.log(disk.id)
+  console.log(disk.lua)
   return (
     <>
       <Header />
       <View style={[styles.container, styles[orientation]]}>
         <Editor
           lua={disk.lua}
-          onChange={changeCode}
+          onChange={lua => {
+            updateDisk({ id: disk.id, lua })
+          }}
           sourceUri={editorAsset.uri}
         />
         <Divider orientation={orientation} onMove={onMoveDivider}>
-          <Play />
+          <Play onPress={() => play(disk)} />
         </Divider>
-        <Player />
+        <Player disk={drive} />
       </View>
     </>
   )

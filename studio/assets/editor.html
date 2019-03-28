@@ -53,22 +53,25 @@
         window.postMessage(message, "*")
       }
 
-      editor.on("change", cm => {
-        dispatch("change", {
-          value: editor.getValue()
-        })
-      })
-
       document.addEventListener("message", data => {
         const message = JSON.parse(data.data)
         switch (message.type) {
           case "init":
-            return editor.setValue(message.lua)
+            dispatch("init")
+            editor.setValue(message.lua)
+            return
         }
       })
 
       dispatch("ready")
       editor.setValue("ready")
+
+      editor.on("change", cm => {
+        dispatch("change", {
+          lua: editor.getValue()
+        })
+      })
+
     })
   </script>
 

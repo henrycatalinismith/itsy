@@ -11,11 +11,15 @@ import WebView from "rn-webview"
 
 import colors from "../constants/colors"
 
-export default class Editor extends React.PureComponent {
+export default class Editor extends React.Component {
   static propTypes = {
     lua: PropTypes.string,
     onChange: PropTypes.func,
     sourceUri: PropTypes.string,
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return false
   }
 
   componentDidMount() {
@@ -30,7 +34,7 @@ export default class Editor extends React.PureComponent {
       type: "init",
       lua: this.props.lua,
     }))
-  }
+  }w
 
   render() {
     const {
@@ -50,8 +54,17 @@ export default class Editor extends React.PureComponent {
           }))
           break
 
-        case "change": return onChange(message.value)
-        case "debug": return console.log(message)
+        case "change":
+          console.log(lua)
+          console.log(message.lua)
+          if (message.lua === lua) {
+            //console.log("SAME LOLOLOLOL")
+          } else {
+            onChange(message.lua)
+          }
+          return
+
+        default: return console.log(`🤷‍♀️ ${message.type}`)
       }
     }
 

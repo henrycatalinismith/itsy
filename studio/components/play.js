@@ -11,10 +11,10 @@ import {
 
 import colors from "../constants/colors"
 
-export default () => {
+export default ({ onPress }) => {
   return (
     <>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={onPress}>
         <Svg width={40} height={48} viewBox="0 0 40 48">
            <Svg.Path
             d="M8,8 L32,24 L8,40 L8,8"
