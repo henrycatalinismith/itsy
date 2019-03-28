@@ -1,6 +1,7 @@
 import React from "react"
 
 import {
+  Button,
   StyleSheet,
   View,
 } from "react-native"
@@ -17,23 +18,36 @@ export default ({
   )
 
   return (
-    <View
-      style={[styles.divider, styles[orientation]]}
-      onResponderMove={onResponderMove}
-      onStartShouldSetResponder={() => true}
-      onMoveShouldSetResponder={() => true}
-    />
+    <>
+      <View
+        style={[styles.divider, styles[orientation]]}
+        onResponderMove={onResponderMove}
+        onStartShouldSetResponder={() => true}
+        onMoveShouldSetResponder={() => true}>
+        <Button
+          style={styles.play}
+          title="▶️"
+          onPress={() => {}}
+        />
+      </View>
+    </>
   )
 }
 
 const styles = StyleSheet.create({
   divider: {
     backgroundColor: colors[14],
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   landscape: {
-    width: 6,
+    width: 32,
   },
   portrait: {
-    height: 4,
+    height: 32,
+  },
+  play: {
+    fontSize: 24,
   },
 })

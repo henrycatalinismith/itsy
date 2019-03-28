@@ -16,8 +16,6 @@ import colors from "../constants/colors"
 export default () => {
   return (
     <View style={styles.container}>
-      <View style={styles.controls}>
-      </View>
       <View style={styles.screen}>
         <WebView
           bounces={false}

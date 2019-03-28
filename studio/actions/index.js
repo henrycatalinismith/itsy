@@ -1,15 +1,10 @@
-import app from "./app"
-import code from "./code"
-import assets from "./assets"
-import editor from "./editor"
-import home from "./home"
-import layout from "./layout"
+import { action } from "@highvalley.systems/signalbox"
 
 export default {
-  ...app,
-  ...code,
-  ...assets,
-  ...editor,
-  ...home,
-  ...layout,
+  ...action("load"),
+  ...action("start"),
+  ...action("loadAsset", ["asset"]),
+  ...action("changeCode", ["code"]),
+  ...action("selectDisk", ["disk"]),
+  ...action("resizeWindow", ["windowWidth", "windowHeight"]),
 }

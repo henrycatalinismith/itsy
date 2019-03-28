@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
   },
   disk: {
     marginBottom: 8,
+    marginTop: 8,
   },
   label: {
     fontFamily: "overpass-mono-bold",
