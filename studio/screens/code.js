@@ -31,7 +31,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  changeCode: code => dispatch(actions.changeCode(code)),
   updateDisk: disk => dispatch(actions.updateDisk(disk)),
   play: disk => dispatch(actions.play(disk)),
   stop: () => dispatch(actions.stop()),
@@ -40,7 +39,6 @@ const mapDispatchToProps = dispatch => ({
 class Code extends React.Component {
   render() {
     const {
-      changeCode,
       disk,
       drive,
       editorAsset,
