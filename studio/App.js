@@ -55,7 +55,7 @@ const initialState = {
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
       name: "example",
-      lua: "cls(12)\nrect(32, 32, 96, 96, 8)\n",
+      lua: "cls(12)\nrect(32, 32, 96, 96, 8)\nfunction _draw()\n  circ(64, 64, 64, rnd(15))\nend\n",
       palette,
       spritesheet,
       thumbnail: "",

@@ -9,4 +9,5 @@ export default {
   ...action("changeCode", ["code"]),
   ...action("updateDisk", ["disk"]),
   ...action("play", ["disk"]),
+  ...action("stop", []),
 }
