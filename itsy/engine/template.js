@@ -18,8 +18,6 @@ const argv = [
   `${canvas.offsetHeight}`,
 ]
 
-console.log(argv)
-
 var Module = {
   arguments: argv,
   canvas
@@ -27,3 +25,13 @@ var Module = {
 
 // itsy.c
 //--:Module:--//
+
+
+document.addEventListener("message", data => {
+  const message = JSON.parse(data.data)
+  switch (message.type) {
+    case "stop":
+      Module.abort()
+      return
+  }
+})
