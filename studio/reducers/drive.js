@@ -21,8 +21,8 @@ export default reducer({
   thumbnail: spritesheet,
 }, {
   play: (drive, action) => {
-    console.log(drive)
-    console.log(action)
+    //console.log(drive)
+    //console.log(action)
     return {
       ...action.disk,
     }

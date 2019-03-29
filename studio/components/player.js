@@ -20,19 +20,36 @@ export default class Player extends React.Component {
     running: PropTypes.bool,
   }
 
-  shouldComponentUpdate(nextProps) {
+  constructor(props) {
+    super(props)
+    this.state = {
+      rebooting: false,
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     const { lua } = this.props.disk
     const { running } = this.props
 
     const play = !running && nextProps.running
     const stop = running && !nextProps.running
 
+    const beginReboot = !this.state.rebooting && nextState.rebooting
+    const endReboot = this.state.rebooting && !nextState.rebooting
+
+    if (beginReboot || endReboot) {
+      return true
+    }
+
     if (play) {
+      this.setState({ rebooting: true })
+      setTimeout(() => {
+        this.setState({ rebooting: false })
+      }, 10)
       return true
     }
 
     if (stop) {
-      console.log("stopping!!!")
       this.webview.postMessage(JSON.stringify({
         type: "stop",
       }))
@@ -42,79 +59,81 @@ export default class Player extends React.Component {
   }
 
   render() {
+    const { rebooting } = this.state
     const { disk } = this.props
-    console.log(disk.lua)
 
     return (
       <View style={styles.container}>
         <View style={styles.screen}>
-          <WebView
-            ref={(view) => { this.webview = view; }}
-            bounces={false}
-            scrollEnabled={false}
-            source={{ html: `
-              <!DOCTYPE html>
-              <html>
-              <head>
-              <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-              </head>
-              <body>
-              <script type="text/lua">
-                ${disk.lua}
-              </script>
-              <img width="8" height="8" src="data:image/png;base64,${disk.palette}" />
-              <img width="128" height="128" src="data:image/png;base64,${disk.spritesheet}" />
-              <canvas width="128" height="128"></canvas>
-              <style type="text/css">
-              html {
-                background-color: black;
-                overflow: hidden;
-                user-select: none;
-              }
+          {!rebooting && (
+            <WebView
+              ref={(view) => { this.webview = view; }}
+              bounces={false}
+              scrollEnabled={false}
+              source={{ html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
+                </head>
+                <body>
+                <script type="text/lua">
+                  ${disk.lua}
+                </script>
+                <img width="8" height="8" src="data:image/png;base64,${disk.palette}" />
+                <img width="128" height="128" src="data:image/png;base64,${disk.spritesheet}" />
+                <canvas width="128" height="128"></canvas>
+                <style type="text/css">
+                html {
+                  background-color: black;
+                  overflow: hidden;
+                  user-select: none;
+                }
 
-              body {
-                margin: 0;
-                display: flex;
-                overflow: hidden;
-                justify-content: center;
-                align-items: center;
-                user-select: none;
-                width: 100vw;
-                height: 100vh;
-              }
-
-              @media (orientation: landscape) {
                 body {
+                  margin: 0;
+                  display: flex;
+                  overflow: hidden;
+                  justify-content: center;
                   align-items: center;
+                  user-select: none;
+                  width: 100vw;
+                  height: 100vh;
                 }
-              }
 
-              @media (orientation: portrait) {
-                body {
-                  align-items: flex-start;
+                @media (orientation: landscape) {
+                  body {
+                    align-items: center;
+                  }
                 }
-              }
 
-              canvas {
-                /* https://bugs.webkit.org/show_bug.cgi?id=193895 */
-                image-rendering: pixelated;
-                user-select: none;
-                width: 100vmin;
-                height: 100vmin;
-              }
+                @media (orientation: portrait) {
+                  body {
+                    align-items: flex-start;
+                  }
+                }
 
-              img {
-                display: none;
-              }
-              </style>
-              </body>
-              </html>
+                canvas {
+                  /* https://bugs.webkit.org/show_bug.cgi?id=193895 */
+                  image-rendering: pixelated;
+                  user-select: none;
+                  width: 100vmin;
+                  height: 100vmin;
+                }
+
+                img {
+                  display: none;
+                }
+                </style>
+                </body>
+                </html>
 
 
-            ` }}
-            injectedJavaScript={itsy}
-            useWebKit
-          />
+              ` }}
+              injectedJavaScript={itsy}
+              useWebKit
+            />
+          )}
         </View>
       </View>
     )
