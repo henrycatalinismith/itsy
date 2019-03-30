@@ -35,8 +35,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   edit: lua => dispatch(thunks.edit(lua)),
-  play: disk => dispatch(actions.play(disk)),
-  stop: () => dispatch(actions.stop()),
+  play: () => dispatch(thunks.play()),
+  stop: () => dispatch(thunks.stop()),
 });
 
 class Code extends React.Component {
@@ -61,16 +61,11 @@ class Code extends React.Component {
         <View style={[styles.container, styles[orientation]]}>
           <Editor
             lua={disk.lua}
-            onChange={lua => edit(lua)}
+            onChange={edit}
             sourceUri={editorAsset.uri}
           />
           <Divider orientation={orientation} onMove={onMoveDivider}>
-            {!running && (
-              <Play onPress={() => play(disk)} />
-            )}
-            {running && (
-              <Stop onPress={() => stop()} />
-            )}
+            {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
           </Divider>
           <Player
             disk={drive}
