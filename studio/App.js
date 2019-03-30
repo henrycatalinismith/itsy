@@ -45,10 +45,6 @@ import Footer from "./components/footer"
 import Frame from "./components/frame"
 
 const initialState = {
-  app: {
-    loading: false,
-    ready: false,
-  },
   disks: {
     abc: {
       id: "abc",
@@ -71,10 +67,11 @@ const initialState = {
       thumbnail: "",
     },
   },
-  layout: {
+  scalars: {
+    ready: false,
     windowWidth: Dimensions.get("window").width,
     windowHeight: Dimensions.get("window").height,
-  }
+  },
 }
 
 const store = createStore(reducers, initialState, middlewares)

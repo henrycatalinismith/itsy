@@ -1,21 +1,19 @@
 import { combineReducers } from "redux"
 
-import app from "./app"
 import assets from "./assets"
 import code from "./code"
 import disks from "./disks"
 import drive from "./drive"
 import home from "./home"
 import itsy from "./itsy"
-import layout from "./layout"
+import scalars from "./scalars"
 
 export default combineReducers({
-  app,
   code,
   assets,
   disks,
   drive,
   home,
   itsy,
-  layout,
+  scalars,
 })

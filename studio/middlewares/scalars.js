@@ -11,6 +11,10 @@ export default [
       store.dispatch(actions.resizeWindow(width, height))
     })
   }),
+
+  after("resizeWindow", store => {
+    console.log(store.getState().scalars)
+  }),
 ]
 
 

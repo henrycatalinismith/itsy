@@ -5,7 +5,7 @@ import code from "./code"
 import disks from "./disks"
 import drive from "./drive"
 import itsy from "./itsy"
-import layout from "./layout"
+import scalars from "./scalars"
 
 export default {
   assets: selector("assets", assets),
@@ -13,5 +13,5 @@ export default {
   disks: selector("disks", disks),
   drive: selector("drive", drive),
   itsy: selector("itsy", itsy),
-  layout: selector("layout", layout),
+  scalars: selector("scalars", scalars),
 }
