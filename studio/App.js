@@ -79,6 +79,7 @@ const initialState = {
 }
 
 const store = createStore(reducers, initialState, middlewares)
+
 store.dispatch(actions.start())
 
 const AppNavigator = createAppContainer(createSwitchNavigator({

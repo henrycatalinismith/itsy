@@ -19,6 +19,7 @@ import Stop from "../components/stop"
 import actions from "../actions"
 import colors from "../constants/colors"
 import select from "../selectors"
+import thunks from "../thunks"
 
 const mapStateToProps = state => {
   const diskId = select.scalars.from(state).diskId()
@@ -33,7 +34,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  edit: disk => dispatch(actions.edit(disk)),
+  edit: lua => dispatch(thunks.edit(lua)),
   play: disk => dispatch(actions.play(disk)),
   stop: () => dispatch(actions.stop()),
 });
@@ -60,9 +61,7 @@ class Code extends React.Component {
         <View style={[styles.container, styles[orientation]]}>
           <Editor
             lua={disk.lua}
-            onChange={lua => {
-              edit({ id: disk.id, lua })
-            }}
+            onChange={lua => edit(lua)}
             sourceUri={editorAsset.uri}
           />
           <Divider orientation={orientation} onMove={onMoveDivider}>
