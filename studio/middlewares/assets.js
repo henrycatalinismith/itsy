@@ -5,19 +5,19 @@ import actions from "../actions"
 import select from "../selectors"
 
 export default [
-  after("start", store => store.dispatch(actions.loadAsset(require(
+  after("start", store => store.dispatch(actions.load(require(
     "../assets/editor.html"
   )))),
 
-  after("start", store => store.dispatch(actions.loadAsset(require(
+  after("start", store => store.dispatch(actions.load(require(
     "../assets/images/robot-dev.png"
   )))),
 
-  after("start", store => store.dispatch(actions.loadAsset(require(
+  after("start", store => store.dispatch(actions.load(require(
     "../assets/images/robot-prod.png"
   )))),
 
-  before("loadAsset", (store, action) => {
+  before("load", (store, action) => {
     action.asset = Asset.fromModule(action.asset)
   }),
 ]

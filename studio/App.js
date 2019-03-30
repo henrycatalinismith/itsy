@@ -70,8 +70,8 @@ const initialState = {
   scalars: {
     diskId: undefined,
     ready: false,
-    windowWidth: Dimensions.get("window").width,
-    windowHeight: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 }
 

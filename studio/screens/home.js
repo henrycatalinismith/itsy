@@ -24,17 +24,17 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  selectDisk: id => dispatch(actions.selectDisk(id)),
+  open: diskId => dispatch(actions.open(diskId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(({
   disks,
   navigation,
-  selectDisk,
+  open,
 }) => {
 
-  const onPress = id => () => {
-    selectDisk(id)
+  const onPress = diskId => () => {
+    open(diskId)
     navigation.navigate("CodeStack")
   }
 

@@ -6,7 +6,7 @@ import {
 } from "@highvalley.systems/signalbox"
 
 export default reducer({}, {
-  updateDisk: (disks, action) => {
+  edit: (disks, action) => {
     return {
       ...disks,
       [action.disk.id]: {

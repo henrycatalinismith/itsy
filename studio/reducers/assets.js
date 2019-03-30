@@ -1,7 +1,7 @@
 import { reducer } from "@highvalley.systems/signalbox"
 
 export default reducer([], {
-  loadAsset: (assets, { asset }) => ([
+  load: (assets, { asset }) => ([
     ...assets,
     asset,
   ])

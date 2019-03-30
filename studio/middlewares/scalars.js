@@ -8,11 +8,11 @@ export default [
   after("start", store => {
     Dimensions.addEventListener("change", () => {
       const { width, height } = Dimensions.get("window")
-      store.dispatch(actions.resizeWindow(width, height))
+      store.dispatch(actions.resize(width, height))
     })
   }),
 
-  after("resizeWindow", store => {
+  after("resize", store => {
     console.log(store.getState().scalars)
   }),
 ]

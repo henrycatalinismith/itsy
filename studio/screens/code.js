@@ -32,7 +32,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
-  updateDisk: disk => dispatch(actions.updateDisk(disk)),
+  edit: disk => dispatch(actions.edit(disk)),
   play: disk => dispatch(actions.play(disk)),
   stop: () => dispatch(actions.stop()),
 });
@@ -45,10 +45,10 @@ class Code extends React.Component {
       editorAsset,
       navigation,
       orientation,
+      running,
       play,
       stop,
-      running,
-      updateDisk,
+      edit,
     } = this.props
 
     const onMoveDivider = (x, y) => console.log(x, y)
@@ -60,7 +60,7 @@ class Code extends React.Component {
           <Editor
             lua={disk.lua}
             onChange={lua => {
-              updateDisk({ id: disk.id, lua })
+              edit({ id: disk.id, lua })
             }}
             sourceUri={editorAsset.uri}
           />
