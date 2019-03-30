@@ -1,4 +1,5 @@
 export default {
+  diskId: scalars => scalars.diskId,
   ready: scalars => scalars.ready,
   windowWidth: scalars => scalars.windowWidth,
   windowHeight: scalars => scalars.windowHeight,

@@ -21,8 +21,9 @@ import colors from "../constants/colors"
 import select from "../selectors"
 
 const mapStateToProps = state => {
+  const diskId = select.scalars.from(state).diskId()
   return {
-    disk: select.disks.from(state).byId(select.code.from(state).disk()),
+    disk: select.disks.from(state).byId(diskId),
     drive: select.drive.from(state).disk(),
     running: select.itsy.from(state).running(),
     editorAsset: select.assets.from(state).forEditorWebview(),

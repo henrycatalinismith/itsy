@@ -4,7 +4,7 @@ export default {
   ...action("load"),
   ...action("start"),
   ...action("loadAsset", ["asset"]),
-  ...action("selectDisk", ["disk"]),
+  ...action("selectDisk", ["diskId"]),
   ...action("resizeWindow", ["windowWidth", "windowHeight"]),
   ...action("updateDisk", ["disk"]),
   ...action("play", ["disk"]),
