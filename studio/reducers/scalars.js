@@ -1,10 +1,13 @@
-import { reducer, assign, update } from "@highvalley.systems/signalbox"
+import { reducer, assign, merge } from "@highvalley.systems/signalbox"
+
+console.log(reducer, assign, merge)
+console.log(require("@highvalley.systems/signalbox"))
 
 export default reducer({}, {
   start: assign({ ready: true }),
-  open: update("diskId"),
+  open: merge("diskId"),
   play: assign({ running: true }),
   stop: assign({ running: false }),
-  resize: update("width", "height"),
+  resize: merge("width", "height"),
 })
 
