@@ -1,10 +1,10 @@
-import { reducer, set, update } from "@highvalley.systems/signalbox"
+import { reducer, assign, update } from "@highvalley.systems/signalbox"
 
 export default reducer({}, {
-  start: set({ ready: true }),
+  start: assign({ ready: true }),
   open: update("diskId"),
-  play: set({ running: true }),
-  stop: set({ running: false }),
+  play: assign({ running: true }),
+  stop: assign({ running: false }),
   resize: update("width", "height"),
 })
 

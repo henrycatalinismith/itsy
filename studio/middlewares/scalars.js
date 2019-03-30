@@ -12,6 +12,10 @@ export default [
     })
   }),
 
+  after("open", store => {
+    console.log(store.getState().scalars)
+  }),
+
   after("resize", store => {
     console.log(store.getState().scalars)
   }),

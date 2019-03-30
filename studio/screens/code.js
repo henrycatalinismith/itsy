@@ -22,6 +22,7 @@ import select from "../selectors"
 
 const mapStateToProps = state => {
   const diskId = select.scalars.from(state).diskId()
+  console.log(diskId)
   return {
     disk: select.disks.from(state).byId(diskId),
     drive: select.drive.from(state).disk(),
