@@ -25,7 +25,7 @@ const mapStateToProps = state => {
   return {
     disk: select.disks.from(state).byId(diskId),
     drive: select.drive.from(state).disk(),
-    running: select.itsy.from(state).running(),
+    running: select.scalars.from(state).running(),
     editorAsset: select.assets.from(state).forEditorWebview(),
     orientation: select.scalars.from(state).orientation(),
   }

@@ -13,7 +13,7 @@
   "dependencies": {
     "@expo/samples": "2.1.1",
     "@highvalley.systems/itsy": "^0.40.0",
-    "@highvalley.systems/signalbox": "^0.11.0",
+    "@highvalley.systems/signalbox": "^0.12.0",
     "base-64": "^0.1.0",
     "codemirror": "^5.45.0",
     "expo": "^32.0.0",
