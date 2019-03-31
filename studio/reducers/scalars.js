@@ -1,4 +1,9 @@
-import { reducer, assign, merge } from "@highvalley.systems/signalbox"
+import { reducer, merge } from "@highvalley.systems/signalbox"
+
+const assign = values => (state, action) => ({
+  ...state,
+  ...values,
+})
 
 export default reducer({}, {
   start: assign({ ready: true }),
