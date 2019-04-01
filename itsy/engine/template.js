@@ -20,22 +20,32 @@ const argv = [
 
 var Module = {
   arguments: argv,
-  canvas
+  canvas,
+  webglContextAttributes: {
+    preserveDrawingBuffer: true,
+  },
 }
 
 // itsy.c
 //--:Module:--//
 
-
 document.addEventListener("message", data => {
+  window.postMessage(JSON.stringify({ type: "message", ddd: data.data  }), "*")
   const message = JSON.parse(data.data)
   switch (message.type) {
     case "stop":
-      Module.abort()
-      window.postMessage(JSON.stringify({
-        type: "snapshot",
-        uri: canvas.toDataURL(),
-      }), "*")
+      try {
+        Module.pauseMainLoop()
+      } catch (e) {
+        // lololololololol
+      }
+      requestAnimationFrame(() => {
+        window.postMessage(JSON.stringify({
+          type: "snapshot",
+          uri: canvas.toDataURL("image/png"),
+          keys: Object.keys(Module),
+        }), "*")
+      })
       return
   }
 })
