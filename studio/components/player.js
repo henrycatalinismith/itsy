@@ -3,6 +3,7 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import {
+  Image,
   StyleSheet,
   Text,
   WebView,
@@ -16,8 +17,7 @@ import colors from "../constants/colors"
 
 export default class Player extends React.Component {
   static propTypes = {
-    disk: PropTypes.any,
-    running: PropTypes.bool,
+    edit: PropTypes.any,
   }
 
   constructor(props) {
@@ -28,11 +28,17 @@ export default class Player extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    const { lua } = this.props.disk
-    const { running } = this.props
+    if (!this.props.edit || !nextProps.edit) {
+      return true
+    }
 
-    const play = !running && nextProps.running
-    const stop = running && !nextProps.running
+    const thisEdit = this.props.edit
+    const nextEdit = nextProps.edit
+
+    const { lua } = this.props.edit
+
+    const play = thisEdit.stopped && !nextEdit.stopped
+    const stop = !thisEdit.stopped && nextEdit.stopped
 
     const beginReboot = !this.state.rebooting && nextState.rebooting
     const endReboot = this.state.rebooting && !nextState.rebooting
@@ -44,7 +50,10 @@ export default class Player extends React.Component {
     if (play) {
       this.setState({ rebooting: true })
       setTimeout(() => {
-        this.setState({ rebooting: false })
+        this.setState({
+          rebooting: false,
+          stopped: false,
+        })
       }, 10)
       return true
     }
@@ -53,23 +62,60 @@ export default class Player extends React.Component {
       this.webview.postMessage(JSON.stringify({
         type: "stop",
       }))
+      setTimeout(() => {
+        this.setState({
+          stopped: true,
+        })
+      }, 1000)
+      return false
+    }
+
+    if (nextState.stopped) {
+      return true
     }
 
     return false
   }
 
   render() {
-    const { rebooting } = this.state
-    const { disk, running } = this.props
+    const { rebooting, stopped } = this.state
+    const { edit } = this.props
+
+    const handleMessage = event => {
+      const message = JSON.parse(event.nativeEvent.data)
+      console.log(`💃 ${message.type}`)
+      console.log(message)
+      switch (message.type) {
+        case "snapshot":
+          console.log("SNAPSHOOSOSOSOS")
+          console.log(message.uri)
+          console.log(message.keys)
+          return
+      }
+    }
+
+    console.log(edit && edit.stopped)
 
     return (
       <View style={styles.container}>
         <View style={styles.screen}>
-          {running && !rebooting && (
+          {edit && stopped && (
+            <>
+              <Text style={{ flex: 1 }}>stopped</Text>
+              <Image
+                resizeMode="contain"
+                source={{ uri: `data:image/gif;base64,${edit.snapshot}` }}
+                style={styles.snapshot}
+              />
+            </>
+          )}
+
+          {edit && !edit.stopped && (
             <WebView
               ref={(view) => { this.webview = view; }}
               bounces={false}
               scrollEnabled={false}
+              onMessage={handleMessage}
               source={{ html: `
                 <!DOCTYPE html>
                 <html>
@@ -78,10 +124,10 @@ export default class Player extends React.Component {
                 </head>
                 <body>
                 <script type="text/lua">
-                  ${disk.lua}
+                  ${edit.lua}
                 </script>
-                <img width="8" height="8" src="data:image/png;base64,${disk.palette}" />
-                <img width="128" height="128" src="data:image/png;base64,${disk.spritesheet}" />
+                <img width="8" height="8" src="data:image/png;base64,${edit.palette}" />
+                <img width="128" height="128" src="data:image/png;base64,${edit.spritesheet}" />
                 <canvas width="128" height="128"></canvas>
                 <style type="text/css">
                 html {
@@ -152,12 +198,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderLeftWidth: 2,
   },
-  controls: {
-    height: 32,
-    backgroundColor: colors[13],
-    borderBottomColor: colors[1],
-    borderBottomWidth: 2,
-  },
   screen: {
     flex: 1,
     borderTopColor: colors[1],
@@ -168,6 +208,9 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderLeftWidth: 2,
-  }
+  },
+  snapshot: {
+    flex: 1,
+  },
 })
 

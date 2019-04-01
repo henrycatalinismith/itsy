@@ -26,7 +26,7 @@ const mapStateToProps = state => {
   //console.log(diskId)
   return {
     disk: select.edits.from(state).byDiskId(diskId).pop(),
-    drive: select.edits.from(state).byDiskId(diskId).pop(),
+    drive: select.edits.from(state).forPlayer(diskId),
     running: select.scalars.from(state).running(),
     editorAsset: select.assets.from(state).forEditorWebview(),
     orientation: select.scalars.from(state).orientation(),
@@ -68,10 +68,7 @@ class Code extends React.Component {
           <Divider orientation={orientation} onMove={onMoveDivider}>
             {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
           </Divider>
-          <Player
-            disk={drive}
-            running={running}
-          />
+          <Player edit={drive} />
         </View>
       </>
     )

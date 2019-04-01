@@ -37,8 +37,8 @@ import reducers from "./reducers"
 
 import {
   palette,
+  snapshot,
   spritesheet,
-  thumbnail,
 } from "./defaults"
 
 import colors from "./constants/colors"
@@ -64,8 +64,8 @@ const initialState = {
       diskId: "abc",
       lua: "cls(12)\nrect(32, 32, 96, 96, 8)\nfunction _draw()\n  circ(64, 64, 64, rnd(15))\nend\n",
       palette,
+      snapshot,
       spritesheet,
-      thumbnail,
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
       started: undefined,
@@ -76,8 +76,8 @@ const initialState = {
       diskId: "def",
       lua: "circ(64, 64, 32, 7)\n",
       palette,
+      snapshot,
       spritesheet,
-      thumbnail,
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
       started: undefined,

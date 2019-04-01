@@ -1,10 +1,10 @@
 import palette from "./palette"
+import snapshot from "./snapshot"
 import spritesheet from "./spritesheet"
-import thumbnail from "./thumbnail"
 
 export {
   palette,
+  snapshot,
   spritesheet,
-  thumbnail,
 }
 
