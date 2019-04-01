@@ -23,6 +23,10 @@ export default [
   after("edit", store => {
     console.log(store.getState().edits)
   }),
+
+  after("play", store => {
+    console.log(store.getState().edits)
+  }),
 ]
 
 
