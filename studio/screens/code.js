@@ -23,7 +23,7 @@ import thunks from "../thunks"
 
 const mapStateToProps = state => {
   const diskId = select.scalars.from(state).diskId()
-  console.log(diskId)
+  //console.log(diskId)
   return {
     disk: select.edits.from(state).byDiskId(diskId).pop(),
     drive: select.edits.from(state).byDiskId(diskId).pop(),
@@ -54,7 +54,7 @@ class Code extends React.Component {
     } = this.props
 
     const onMoveDivider = (x, y) => console.log(x, y)
-    console.log(drive)
+    // console.log(drive)
 
     return (
       <>

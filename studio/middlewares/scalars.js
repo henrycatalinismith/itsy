@@ -12,21 +12,21 @@ export default [
     })
   }),
 
-  after("open", store => {
-    console.log(store.getState().scalars)
-  }),
+  //after("open", store => {
+    //console.log(store.getState().scalars)
+  //}),
 
-  after("resize", store => {
-    console.log(store.getState().scalars)
-  }),
+  //after("resize", store => {
+    //console.log(store.getState().scalars)
+  //}),
 
-  after("edit", store => {
-    console.log(store.getState().edits)
-  }),
+  //after("edit", store => {
+    //console.log(store.getState().edits)
+  //}),
 
-  after("play", store => {
-    console.log(store.getState().edits)
-  }),
+  //after("play", store => {
+    //console.log(store.getState().edits)
+  //}),
 ]
 
 

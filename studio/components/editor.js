@@ -55,8 +55,8 @@ export default class Editor extends React.Component {
           break
 
         case "change":
-          console.log(lua)
-          console.log(message.lua)
+          // console.log(lua)
+          // console.log(message.lua)
           if (message.lua === lua) {
             //console.log("SAME LOLOLOLOL")
           } else {
@@ -64,7 +64,7 @@ export default class Editor extends React.Component {
           }
           return
 
-        default: return console.log(`🤷‍♀️ ${message.type}`)
+        default: return // console.log(`🤷‍♀️ ${message.type}`)
       }
     }
 

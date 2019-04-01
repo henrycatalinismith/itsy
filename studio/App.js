@@ -51,13 +51,11 @@ const initialState = {
       id: "abc",
       name: "example",
       created: (new Date).toISOString(),
-      updated: (new Date).toISOString(),
     },
     def: {
       id: "def",
       name: "another",
       created: (new Date).toISOString(),
-      updated: (new Date).toISOString(),
     },
   },
   edits: {
@@ -70,8 +68,8 @@ const initialState = {
       thumbnail,
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
-      //started: (new Date).toISOString(),
-      //stopped: (new Date).toISOString(),
+      started: undefined,
+      stopped: undefined,
     },
     xyz: {
       id: "xyz",
@@ -82,8 +80,8 @@ const initialState = {
       thumbnail,
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
-      //started: (new Date).toISOString(),
-      //stopped: (new Date).toISOString(),
+      started: undefined,
+      stopped: undefined,
     },
   },
   scalars: {

@@ -16,6 +16,5 @@ export default lua => (dispatch, getState) => {
     lua,
   }
 
-  console.log(action)
   dispatch(action)
 }
