@@ -19,6 +19,10 @@ export default [
   after("resize", store => {
     console.log(store.getState().scalars)
   }),
+
+  after("edit", store => {
+    console.log(store.getState().edits)
+  }),
 ]
 
 

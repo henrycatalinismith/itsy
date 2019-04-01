@@ -60,12 +60,12 @@ export default class Player extends React.Component {
 
   render() {
     const { rebooting } = this.state
-    const { disk } = this.props
+    const { disk, running } = this.props
 
     return (
       <View style={styles.container}>
         <View style={styles.screen}>
-          {!rebooting && (
+          {running && !rebooting && (
             <WebView
               ref={(view) => { this.webview = view; }}
               bounces={false}

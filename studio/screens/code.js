@@ -25,8 +25,8 @@ const mapStateToProps = state => {
   const diskId = select.scalars.from(state).diskId()
   console.log(diskId)
   return {
-    disk: select.disks.from(state).byId(diskId),
-    drive: select.drive.from(state).disk(),
+    disk: select.edits.from(state).byDiskId(diskId).pop(),
+    drive: select.edits.from(state).byDiskId(diskId).pop(),
     running: select.scalars.from(state).running(),
     editorAsset: select.assets.from(state).forEditorWebview(),
     orientation: select.scalars.from(state).orientation(),
@@ -54,6 +54,7 @@ class Code extends React.Component {
     } = this.props
 
     const onMoveDivider = (x, y) => console.log(x, y)
+    console.log(drive)
 
     return (
       <>

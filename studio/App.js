@@ -49,26 +49,42 @@ const initialState = {
   disks: {
     abc: {
       id: "abc",
+      name: "example",
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
-      name: "example",
+    },
+    def: {
+      id: "def",
+      name: "another",
+      created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
+    },
+  },
+  edits: {
+    uvw: {
+      id: "uvw",
+      diskId: "abc",
       lua: "cls(12)\nrect(32, 32, 96, 96, 8)\nfunction _draw()\n  circ(64, 64, 64, rnd(15))\nend\n",
       palette,
       spritesheet,
       thumbnail,
-    },
-    def: {
-      id: "def",
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
-      name: "another",
+      //started: (new Date).toISOString(),
+      //stopped: (new Date).toISOString(),
+    },
+    xyz: {
+      id: "xyz",
+      diskId: "def",
       lua: "circ(64, 64, 32, 7)\n",
       palette,
       spritesheet,
       thumbnail,
+      created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
+      //started: (new Date).toISOString(),
+      //stopped: (new Date).toISOString(),
     },
-  },
-  edits: {
   },
   scalars: {
     diskId: undefined,
