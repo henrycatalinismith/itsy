@@ -32,6 +32,10 @@ document.addEventListener("message", data => {
   switch (message.type) {
     case "stop":
       Module.abort()
+      window.postMessage(JSON.stringify({
+        type: "snapshot",
+        uri: canvas.toDataURL(),
+      }), "*")
       return
   }
 })
