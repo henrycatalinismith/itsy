@@ -18,7 +18,7 @@ const argv = [
   `${canvas.offsetHeight}`,
 ]
 
-var Module = {
+var itsy = {
   arguments: argv,
   canvas,
   webglContextAttributes: {
@@ -35,17 +35,46 @@ document.addEventListener("message", data => {
   switch (message.type) {
     case "stop":
       try {
-        Module.pauseMainLoop()
+        itsy.pauseMainLoop()
       } catch (e) {
         // lololololololol
       }
-      requestAnimationFrame(() => {
-        window.postMessage(JSON.stringify({
-          type: "snapshot",
-          uri: canvas.toDataURL("image/png"),
-          keys: Object.keys(Module),
-        }), "*")
-      })
+
+      const colors = [
+        "#000000",
+        "#1D2B53",
+        "#7E2553",
+        "#008751",
+        "#AB5236",
+        "#5F574F",
+        "#C2C3C7",
+        "#FFF1E8",
+        "#FF004D",
+        "#FFA300",
+        "#FFEC27",
+        "#00E436",
+        "#29ADFF",
+        "#83769C",
+        "#FF77A8",
+        "#FFCCAA",
+      ]
+      const tmp = document.createElement("canvas")
+      tmp.width = 128
+      tmp.height = 128
+      const ctx = tmp.getContext("2d")
+      for (let x = 0; x < 128; x++) {
+        for (let y = 0; y < 128; y++) {
+          const c = itsy._pget(x, y)
+          ctx.fillStyle = colors[c]
+          ctx.fillRect(x, y, 128, 128)
+        }
+      }
+
+      window.postMessage(JSON.stringify({
+        type: "snapshot",
+        uri: tmp.toDataURL("image/png"),
+      }), "*")
+
       return
   }
 })
