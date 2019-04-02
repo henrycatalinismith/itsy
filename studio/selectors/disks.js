@@ -1,5 +1,5 @@
 export default {
-  all: disks => disks,
+  all: disks => Object.values(disks),
   byId: (disks, id) => disks[id],
 }
 

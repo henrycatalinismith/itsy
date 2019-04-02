@@ -71,6 +71,7 @@ class Code extends React.Component {
             {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
           </Divider>
           <Player
+            disk={disk}
             edit={drive}
             onSnap={snapshot => snap({
               id: drive.id,

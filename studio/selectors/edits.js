@@ -14,6 +14,13 @@ export default {
     .sort(desc)
     .pop(),
 
+  forHome: (edits, diskId) => Object
+    .values(edits)
+    .filter(edit => edit.diskId === diskId)
+    .filter(edit => (!!edit.snapshot) === true)
+    .sort(desc)
+    .pop(),
+
   forPlayer: (edits, diskId) => Object
     .values(edits)
     .filter(edit => edit.diskId === diskId)

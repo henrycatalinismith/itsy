@@ -7,7 +7,12 @@ const assign = values => (state, action) => ({
 
 export default reducer({}, {
   start: assign({ ready: true }),
-  open: merge("diskId"),
+
+  open: (scalars, action) => ({
+    ...scalars,
+    diskId: action.diskId,
+  }),
+
   play: assign({ running: true }),
   stop: assign({ running: false }),
   resize: merge("width", "height"),

@@ -17,6 +17,7 @@ import colors from "../constants/colors"
 
 export default class Player extends React.Component {
   static propTypes = {
+    disk: PropTypes.any,
     edit: PropTypes.any,
     onSnap: PropTypes.any,
   }
@@ -29,6 +30,11 @@ export default class Player extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.props.disk.id)
+    if (this.props.disk.id !== nextProps.disk.id) {
+      return true
+    }
+
     if (!this.props.edit || !nextProps.edit) {
       return true
     }
@@ -85,26 +91,24 @@ export default class Player extends React.Component {
     const handleMessage = event => {
       const message = JSON.parse(event.nativeEvent.data)
       console.log(`💃 ${message.type}`)
-      console.log(message)
+      //console.log(message)
       switch (message.type) {
         case "snapshot":
-          console.log("SNAPSHOOSOSOSOS")
-          console.log(message.uri)
-          console.log(message.keys)
+          //console.log("SNAPSHOOSOSOSOS")
+          //console.log(message.uri)
+          //console.log(message.keys)
           onSnap(message.uri)
           return
       }
     }
 
-    console.log(edit && edit.stopped)
+    //console.log(edit && edit.stopped)
 
     return (
       <View style={styles.container}>
         <View style={styles.screen}>
           {edit && stopped && (
             <>
-              <Text style={{ flex: 1 }}>stopped</Text>
-              <Text style={{ flex: 1 }}>{edit.snapshot}</Text>
               <Image
                 resizeMode="contain"
                 source={{ uri: edit.snapshot }}
