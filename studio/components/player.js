@@ -18,6 +18,7 @@ import colors from "../constants/colors"
 export default class Player extends React.Component {
   static propTypes = {
     edit: PropTypes.any,
+    onSnap: PropTypes.any,
   }
 
   constructor(props) {
@@ -79,7 +80,7 @@ export default class Player extends React.Component {
 
   render() {
     const { rebooting, stopped } = this.state
-    const { edit } = this.props
+    const { edit, onSnap } = this.props
 
     const handleMessage = event => {
       const message = JSON.parse(event.nativeEvent.data)
@@ -90,6 +91,7 @@ export default class Player extends React.Component {
           console.log("SNAPSHOOSOSOSOS")
           console.log(message.uri)
           console.log(message.keys)
+          onSnap(message.uri)
           return
       }
     }
@@ -102,9 +104,10 @@ export default class Player extends React.Component {
           {edit && stopped && (
             <>
               <Text style={{ flex: 1 }}>stopped</Text>
+              <Text style={{ flex: 1 }}>{edit.snapshot}</Text>
               <Image
                 resizeMode="contain"
-                source={{ uri: `data:image/gif;base64,${edit.snapshot}` }}
+                source={{ uri: edit.snapshot }}
                 style={styles.snapshot}
               />
             </>

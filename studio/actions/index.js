@@ -7,5 +7,6 @@ export default {
   ...action("resize", ["width", "height"]),
   ...action("edit", ["disk"]),
   ...action("play", ["disk"]),
+  ...action("snap", ["edit"]),
   ...action("stop", []),
 }

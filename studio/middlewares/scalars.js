@@ -12,9 +12,9 @@ export default [
     })
   }),
 
-  //after("open", store => {
-    //console.log(store.getState().scalars)
-  //}),
+  after("snap", store => {
+    console.log(store.getState().edits)
+  }),
 
   //after("resize", store => {
     //console.log(store.getState().scalars)

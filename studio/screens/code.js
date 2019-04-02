@@ -36,6 +36,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
   edit: lua => dispatch(thunks.edit(lua)),
   play: () => dispatch(thunks.play()),
+  snap: edit => dispatch(actions.snap(edit)),
   stop: () => dispatch(thunks.stop()),
 });
 
@@ -49,6 +50,7 @@ class Code extends React.Component {
       orientation,
       running,
       play,
+      snap,
       stop,
       edit,
     } = this.props
@@ -68,7 +70,13 @@ class Code extends React.Component {
           <Divider orientation={orientation} onMove={onMoveDivider}>
             {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
           </Divider>
-          <Player edit={drive} />
+          <Player
+            edit={drive}
+            onSnap={snapshot => snap({
+              id: drive.id,
+              snapshot,
+            })}
+          />
         </View>
       </>
     )

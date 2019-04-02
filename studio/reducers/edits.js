@@ -16,6 +16,7 @@ const update = entityName => (entityState, action) => ({
 export default reducer({}, {
   edit: update("edit"),
   play: update("edit"),
+  snap: update("edit"),
   stop: update("edit"),
 })
 
