@@ -73,7 +73,7 @@ export default class Player extends React.Component {
         this.setState({
           stopped: true,
         })
-      }, 1000)
+      }, 100)
       return false
     }
 
@@ -109,10 +109,43 @@ export default class Player extends React.Component {
         <View style={styles.screen}>
           {edit && stopped && (
             <>
-              <Image
-                resizeMode="contain"
-                source={{ uri: edit.snapshot }}
-                style={styles.snapshot}
+              <WebView
+                source={{ html: `
+                  <!DOCTYPE html>
+                  <html>
+                  <head>
+                  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
+                  </head>
+                  <body>
+                  <style type="text/css">
+                    html {
+                      overflow: hidden;
+                      user-select: none;
+                    }
+
+                    body {
+                      background-color: #111;
+                      width: 100vw;
+                      height: 100vh;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      margin: 0;
+                      overflow: hidden;
+                      user-select: none;
+                    }
+
+                    img {
+                      width: 100vmin;
+                      height: 100vmin;
+                      image-rendering: pixelated;
+                    }
+                  </style>
+                  <img src="${edit.snapshot}" />
+                  </body>
+                  </html>
+                ` }}
+                useWebKit
               />
             </>
           )}
@@ -152,18 +185,7 @@ export default class Player extends React.Component {
                   user-select: none;
                   width: 100vw;
                   height: 100vh;
-                }
-
-                @media (orientation: landscape) {
-                  body {
-                    align-items: center;
-                  }
-                }
-
-                @media (orientation: portrait) {
-                  body {
-                    align-items: flex-start;
-                  }
+                  align-items: center;
                 }
 
                 canvas {
@@ -180,8 +202,6 @@ export default class Player extends React.Component {
                 </style>
                 </body>
                 </html>
-
-
               ` }}
               injectedJavaScript={itsy}
               useWebKit

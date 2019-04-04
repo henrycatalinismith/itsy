@@ -34,7 +34,6 @@ export default connect(mapStateToProps)(({
   }
 
   const diskSize = size / 2
-  console.log(edit.snapshot)
 
   return (
     <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
