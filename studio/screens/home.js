@@ -45,7 +45,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
           <Font
             fontSize={16}
             color={colors[7]}
-            borderColor={colors[1]}
+            borderColor={colors[5]}
             borderMultiplier={2}
           >new</Font>
         </TouchableHighlight>
@@ -81,10 +81,13 @@ const styles = StyleSheet.create({
   },
 
   new: {
-    backgroundColor: colors[11],
-    borderColor: colors[3],
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors[13],
+    borderColor: colors[2],
     borderWidth: 2,
     padding: 2,
+    paddingBottom: 4,
   },
 
   button: {

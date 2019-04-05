@@ -10,7 +10,7 @@ export default ({
   x = 0,
   y = 0,
   scale = 1,
-  strokeMultiplier = 1.08,
+  strokeMultiplier = 1,
   borderColor = undefined,
   borderMultiplier = 0,
 }) => {
@@ -55,6 +55,7 @@ export default ({
         color={color}
         borderColor={borderColor}
         borderMultiplier={borderMultiplier}
+        strokeMultiplier={strokeMultiplier}
       >{letter}</Character>
     )
   })
@@ -560,16 +561,12 @@ const Character = ({
     )
 
     case "w": return g(
-      path([0,1], [0,4], [2,4], [2,1]),
-      path([1,3], [1,3])
+      path([0,1], [0,4], [1,3], [2,4], [2,1]),
     )
 
     case "x": return g(
-      path([0,1], [0,1]),
-      path([2,1], [2,1]),
-      path([1,2], [1,2]),
-      path([0,3], [0,4]),
-      path([2,3], [2,4])
+      path([0,1], [2,3], [2,4]),
+      path([2,1], [0,3], [0,4])
     )
 
     case "y": return g(

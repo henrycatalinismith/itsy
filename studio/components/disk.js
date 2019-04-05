@@ -13,6 +13,8 @@ import {
 
 import { connect } from "react-redux"
 
+import Font from "./font"
+
 import colors from "../constants/colors"
 import select from "../selectors"
 
@@ -85,9 +87,14 @@ export default connect(mapStateToProps)(({
 
       </Svg>
 
-      <Text style={styles.label}>
-        {disk.name}
-      </Text>
+      <Font
+        fontSize={15}
+        color={colors[7]}
+        borderColor={colors[1]}
+        borderMultiplier={3}
+        strokeMultiplier={0.9}
+      >{disk.name}</Font>
+
     </TouchableOpacity>
   )
 })
