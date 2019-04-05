@@ -40,7 +40,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
 
   return (
     <>
-      <Header />
+      <Header>
+        <TouchableHighlight style={styles.new}>
+          <Font
+            fontSize={16}
+            color={colors[7]}
+            borderColor={colors[1]}
+            borderMultiplier={2}
+          >new</Font>
+        </TouchableHighlight>
+      </Header>
       <ScrollView style={styles.container}>
         {Object.values(disks).map(disk => (
           <Disk
@@ -69,6 +78,13 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     paddingLeft: 4,
     paddingRight: 4,
+  },
+
+  new: {
+    backgroundColor: colors[11],
+    borderColor: colors[3],
+    borderWidth: 2,
+    padding: 2,
   },
 
   button: {

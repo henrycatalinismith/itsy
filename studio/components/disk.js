@@ -37,20 +37,20 @@ export default connect(mapStateToProps)(({
 
   return (
     <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
-      <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 17 17">
+      <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 16 16">
 
         <Svg.Defs>
           <Svg.ClipPath id="shape">
             <Svg.Path
               d={[
-                "M1.5,1.5",
-                "L14.5,1.5",
-                "L14.5,3.5",
-                "L16.5,3.5",
-                "L16.5,16.5",
-                "L1.5,16.5",
-                "L1.5,1.5",
-                "L14.5,1.5",
+                "M1,1",
+                "L13,1",
+                "L13,3",
+                "L15,3",
+                "L15,15",
+                "L1,15",
+                "L1,1",
+                "L13,1.5",
               ].join(" ")}
             />
           </Svg.ClipPath>
@@ -58,29 +58,31 @@ export default connect(mapStateToProps)(({
 
         <Svg.Path
           d={[
-            "M1.5,1.5",
-            "L14.5,1.5",
-            "L14.5,3.5",
-            "L16.5,3.5",
-            "L16.5,16.5",
-            "L1.5,16.5",
-            "L1.5,1.5",
-            "L14.5,1.5",
+            "M1,1",
+            "L13,1",
+            "L13,3",
+            "L15,3",
+            "L15,15",
+            "L1,15",
+            "L1,1",
+            "L13,1",
           ].join(" ")}
           stroke={colors[0]}
+          strokeWidth={2}
           fill={colors[12]}
         />
 
         {edit && (
           <Svg.Image
             href={{ uri: edit.snapshot }}
-            x={0}
-            y={0}
-            width={17}
-            height={17}
+            x={1}
+            y={1}
+            width={14}
+            height={14}
             clipPath="url(#shape)"
           />
         )}
+
       </Svg>
 
       <Text style={styles.label}>
@@ -97,6 +99,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 8,
+    borderTopWidth: 4,
+    borderRightWidth: 4,
+    borderBottomWidth: 4,
+    borderLeftWidth: 4,
+    borderTopColor: colors[13],
+    borderRightColor: colors[13],
+    borderBottomColor: colors[13],
+    borderLeftColor: colors[13],
   },
   disk: {
     marginBottom: 8,
