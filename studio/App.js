@@ -51,11 +51,13 @@ const initialState = {
       id: "abc",
       name: "example",
       created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
     },
     def: {
       id: "def",
       name: "another",
       created: (new Date).toISOString(),
+      updated: (new Date).toISOString(),
     },
   },
   edits: {

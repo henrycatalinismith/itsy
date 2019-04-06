@@ -24,7 +24,7 @@ import Font from "../components/font"
 import Header from "../components/header"
 
 const mapStateToProps = state => ({
-  disks: select.disks.from(state).all(),
+  disks: select.disks.from(state).forHomeScreen(),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -151,4 +151,3 @@ const styles = StyleSheet.create({
         <Floppy size={256} />
         */
 
-      

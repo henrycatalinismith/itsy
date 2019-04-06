@@ -14,6 +14,7 @@ export default () => (dispatch, getState) => {
     id: uuid(),
     name: words(),
     created: (new Date).toISOString(),
+    updated: (new Date).toISOString(),
   }
 
   action.edit = {
@@ -24,7 +25,7 @@ export default () => (dispatch, getState) => {
     snapshot,
     spritesheet,
     created: action.disk.created,
-    updated: action.disk.created,
+    updated: action.disk.updated,
     started: undefined,
     stopped: undefined,
 
