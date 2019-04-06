@@ -9,6 +9,8 @@ import {
   View,
 } from "react-native"
 
+import { FlatGrid } from "react-native-super-grid"
+
 import { connect } from "react-redux"
 
 import actions from "../actions"
@@ -56,14 +58,19 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
         </TouchableOpacity>
       </Header>
       <ScrollView style={styles.container}>
-        {disks.map(disk => (
-          <Disk
-            key={disk.id}
-            id={disk.id}
-            onPress={onPress(disk.id)}
-            size={128}
-          />
-        ))}
+
+        <FlatGrid
+          itemDimension={128}
+          items={disks}
+          renderItem={({ item: disk }) => (
+            <Disk
+              key={disk.id}
+              id={disk.id}
+              onPress={onPress(disk.id)}
+              size={128}
+            />
+          )}
+        />
       </ScrollView>
     </>
   )

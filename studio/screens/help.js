@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native"
 
+import Font from "../components/font"
 import Header from "../components/header"
 import colors from "../constants/colors"
 
@@ -14,7 +15,39 @@ export default () => {
     <>
       <Header />
       <ScrollView style={styles.container}>
-        <Text>help</Text>
+
+        <Font
+          fontSize={64}
+          color={colors[7]}
+          borderColor={colors[1]}
+          strokeMultiplier={0.9}
+          borderMultiplier={3}
+        >abcdefghijklmnopqrstuvwxyz</Font>
+
+        <Font
+          fontSize={64}
+          color={colors[7]}
+          borderColor={colors[1]}
+          strokeMultiplier={0.9}
+          borderMultiplier={3}
+        >ABCDEFGHIJKLMNOPQRSTUVWXYZ</Font>
+
+        <Font
+          fontSize={64}
+          color={colors[7]}
+          borderColor={colors[1]}
+          strokeMultiplier={0.9}
+          borderMultiplier={3}
+        >0123456789</Font>
+
+        <Font
+          fontSize={64}
+          color={colors[7]}
+          borderColor={colors[1]}
+          strokeMultiplier={0.9}
+          borderMultiplier={3}
+        >!@{'"'}{"'"}{'/'}{'\\'}$%^&*()_+][?}{'}{'}{'#'}</Font>
+
       </ScrollView>
     </>
   )
