@@ -88,6 +88,13 @@ const config = {
     showLabel: false,
     style: {
       backgroundColor: colors[14],
+      borderBottomColor: colors[2],
+      borderBottomWidth: 2,
+
+      borderRightColor: colors[2],
+      borderLeftColor: colors[2],
+      borderRightWidth: 2,
+      borderLeftWidth: 2,
     },
   },
 }

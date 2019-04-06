@@ -16,7 +16,6 @@ export default ({ children }) => (
           backgroundColor={colors[2]}
           barStyle="light-content"
         />
-        <View style={styles.statusBar} />
       </>
     )}
     <View style={styles.container}>
@@ -31,11 +30,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors[14],
     borderTopColor: colors[2],
     borderRightColor: colors[2],
-    borderBottomColor: colors[2],
     borderLeftColor: colors[2],
     borderTopWidth: 2,
     borderRightWidth: 2,
-    borderBottomWidth: 2,
     borderLeftWidth: 2,
     paddingLeft: 4,
     paddingRight: 4,

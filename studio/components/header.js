@@ -16,16 +16,18 @@ export default ({ children }) => {
         <Floppy size={18} style={styles.floppy} />
         <View style={styles.wordmark}>
           <Font
-            fontSize={14}
-            color={colors[15]}
+            fontSize={16}
+            color={colors[7]}
             borderColor={colors[13]}
+            strokeMultiplier={0.9}
             borderMultiplier={2}
           >itsy</Font>
 
           <Font
-            fontSize={14}
-            color={colors[15]}
+            fontSize={16}
+            color={colors[7]}
             borderColor={colors[13]}
+            strokeMultiplier={0.9}
             borderMultiplier={2}
           >studio</Font>
         </View>
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
   right: {
   },
   floppy: {
-    marginRight: 8,
   },
   wordmark: {
     display: "flex",

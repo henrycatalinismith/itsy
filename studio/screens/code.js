@@ -1,6 +1,7 @@
 import React from "react"
 
 import {
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -12,6 +13,7 @@ import { connect } from "react-redux"
 import Divider from "../components/divider"
 import Editor from "../components/editor"
 import Header from "../components/header"
+import Frame from "../components/frame"
 import Play from "../components/play"
 import Player from "../components/player"
 import Stop from "../components/stop"
@@ -59,32 +61,38 @@ class Code extends React.Component {
     // console.log(drive)
 
     return (
-      <>
-        <Header />
-        <View style={[styles.container, styles[orientation]]}>
-          <Editor
-            lua={disk.lua}
-            onChange={edit}
-            sourceUri={editorAsset.uri}
-          />
-          <Divider orientation={orientation} onMove={onMoveDivider}>
-            {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
-          </Divider>
-          <Player
-            disk={disk}
-            edit={drive}
-            onSnap={snapshot => snap({
-              id: drive.id,
-              snapshot,
-            })}
-          />
-        </View>
-      </>
+      <SafeAreaView style={styles.screen}>
+        <Frame>
+          <Header />
+          <View style={[styles.container, styles[orientation]]}>
+            <Editor
+              lua={disk.lua}
+              onChange={edit}
+              sourceUri={editorAsset.uri}
+            />
+            <Divider orientation={orientation} onMove={onMoveDivider}>
+              {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
+            </Divider>
+            <Player
+              disk={disk}
+              edit={drive}
+              onSnap={snapshot => snap({
+                id: drive.id,
+                snapshot,
+              })}
+            />
+          </View>
+        </Frame>
+      </SafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: colors[1],
+  },
   container: {
     flex: 1,
     backgroundColor: colors[7],

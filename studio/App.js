@@ -43,7 +43,6 @@ import {
 
 import colors from "./constants/colors"
 import Footer from "./components/footer"
-import Frame from "./components/frame"
 
 const initialState = {
   disks: {
@@ -119,9 +118,7 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <Frame>
-            <AppNavigator />
-          </Frame>
+          <AppNavigator />
         </Provider>
       )
     }

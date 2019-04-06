@@ -1,6 +1,7 @@
 import React from "react"
 
 import {
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,6 +22,7 @@ import thunks from "../thunks"
 import Disk from "../components/disk"
 import Floppy from "../components/floppy"
 import Font from "../components/font"
+import Frame from "../components/frame"
 import Header from "../components/header"
 
 const mapStateToProps = state => ({
@@ -45,38 +47,44 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
   }
 
   return (
-    <>
-      <Header>
-        <TouchableOpacity style={styles.new} onPress={onNew}>
-          <Font
-            fontSize={16}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >new</Font>
-        </TouchableOpacity>
-      </Header>
-      <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.screen}>
+      <Frame>
+        <Header>
+          <TouchableOpacity style={styles.new} onPress={onNew}>
+            <Font
+              fontSize={16}
+              color={colors[7]}
+              borderColor={colors[1]}
+              strokeMultiplier={0.9}
+              borderMultiplier={3}
+            >new</Font>
+          </TouchableOpacity>
+        </Header>
+        <ScrollView style={styles.container}>
 
-        <FlatGrid
-          itemDimension={128}
-          items={disks}
-          renderItem={({ item: disk }) => (
-            <Disk
-              key={disk.id}
-              id={disk.id}
-              onPress={onPress(disk.id)}
-              size={128}
-            />
-          )}
-        />
-      </ScrollView>
-    </>
+          <FlatGrid
+            itemDimension={128}
+            items={disks}
+            renderItem={({ item: disk }) => (
+              <Disk
+                key={disk.id}
+                id={disk.id}
+                onPress={onPress(disk.id)}
+                size={128}
+              />
+            )}
+          />
+        </ScrollView>
+      </Frame>
+    </SafeAreaView>
   )
 })
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: colors[1],
+  },
   container: {
     flex: 1,
     backgroundColor: colors[7],
@@ -88,8 +96,6 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderLeftWidth: 2,
-    paddingLeft: 4,
-    paddingRight: 4,
   },
 
   new: {

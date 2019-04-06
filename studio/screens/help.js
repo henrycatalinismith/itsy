@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -7,53 +8,60 @@ import {
 } from "react-native"
 
 import Font from "../components/font"
+import Frame from "../components/frame"
 import Header from "../components/header"
 import colors from "../constants/colors"
 
 export default () => {
   return (
-    <>
-      <Header />
-      <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.screen}>
+      <Frame>
+        <Header />
+        <ScrollView style={styles.container}>
 
-        <Font
-          fontSize={64}
-          color={colors[7]}
-          borderColor={colors[1]}
-          strokeMultiplier={0.9}
-          borderMultiplier={3}
-        >abcdefghijklmnopqrstuvwxyz</Font>
+          <Font
+            fontSize={64}
+            color={colors[7]}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
+          >abcdefghijklmnopqrstuvwxyz</Font>
 
-        <Font
-          fontSize={64}
-          color={colors[7]}
-          borderColor={colors[1]}
-          strokeMultiplier={0.9}
-          borderMultiplier={3}
-        >ABCDEFGHIJKLMNOPQRSTUVWXYZ</Font>
+          <Font
+            fontSize={64}
+            color={colors[7]}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
+          >ABCDEFGHIJKLMNOPQRSTUVWXYZ</Font>
 
-        <Font
-          fontSize={64}
-          color={colors[7]}
-          borderColor={colors[1]}
-          strokeMultiplier={0.9}
-          borderMultiplier={3}
-        >0123456789</Font>
+          <Font
+            fontSize={64}
+            color={colors[7]}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
+          >0123456789</Font>
 
-        <Font
-          fontSize={64}
-          color={colors[7]}
-          borderColor={colors[1]}
-          strokeMultiplier={0.9}
-          borderMultiplier={3}
-        >!@{'"'}{"'"}{'/'}{'\\'}$%^&*()_+][?}{'}{'}{'#'}</Font>
+          <Font
+            fontSize={64}
+            color={colors[7]}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
+          >!@{'"'}{"'"}{'/'}{'\\'}$%^&*()_+][?}{'}{'}{'#'}</Font>
 
-      </ScrollView>
-    </>
+        </ScrollView>
+      </Frame>
+    </SafeAreaView>
   )
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: colors[1],
+  },
   container: {
     flex: 1,
 
