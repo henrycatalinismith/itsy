@@ -1,4 +1,3 @@
-
 const adjectives = [
   "ace",
   "amazing",
@@ -45,7 +44,7 @@ const adjectives = [
   "fuzzy",
   "gentle",
   "geometric",
-  "giant"
+  "giant",
   "glorious",
   "gnarly",
   "good",
@@ -242,6 +241,8 @@ const animals = [
   "zebra",
 ]
 
+const choose = a => a[Math.floor(Math.random() * a.length)]
 
-
-
+export default () => {
+  return `${choose(adjectives)} ${choose(animals)}`
+}

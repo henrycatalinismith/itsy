@@ -45,14 +45,14 @@ export default connect(mapStateToProps)(({
           <Svg.ClipPath id="shape">
             <Svg.Path
               d={[
-                "M1,1",
-                "L13,1",
-                "L13,3",
-                "L15,3",
-                "L15,15",
-                "L1,15",
-                "L1,1",
-                "L13,1.5",
+                "M1.5,1.5",
+                "L12.5,1.5",
+                "L12.5,3.5",
+                "L14.5,3.5",
+                "L14.5,14.5",
+                "L1.5,14.5",
+                "L1.5,1.5",
+                "L12.5,1.5",
               ].join(" ")}
             />
           </Svg.ClipPath>
@@ -70,7 +70,7 @@ export default connect(mapStateToProps)(({
             "L13,1",
           ].join(" ")}
           stroke={colors[0]}
-          strokeWidth={2}
+          strokeWidth={1}
           fill={colors[12]}
         />
 

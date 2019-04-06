@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native"
 
@@ -13,6 +14,7 @@ import { connect } from "react-redux"
 import actions from "../actions"
 import colors from "../constants/colors"
 import select from "../selectors"
+import thunks from "../thunks"
 
 import Disk from "../components/disk"
 import Floppy from "../components/floppy"
@@ -24,12 +26,14 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  onNew: () => dispatch(thunks.new()),
   open: diskId => dispatch(actions.open(diskId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(({
   disks,
   navigation,
+  onNew,
   open,
 }) => {
 
@@ -41,17 +45,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(({
   return (
     <>
       <Header>
-        <TouchableHighlight style={styles.new}>
+        <TouchableOpacity style={styles.new} onPress={onNew}>
           <Font
             fontSize={16}
             color={colors[7]}
-            borderColor={colors[5]}
-            borderMultiplier={2}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
           >new</Font>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </Header>
       <ScrollView style={styles.container}>
-        {Object.values(disks).map(disk => (
+        {disks.map(disk => (
           <Disk
             key={disk.id}
             id={disk.id}
