@@ -23,6 +23,39 @@ export default ({
 
   return (
     <TouchableHighlight style={styles} onPress={onPress}>
+      <Svg width={size} height={size} viewBox="0 0 6 6">
+        <Svg.Rect fill={colors[12]} x={1} y={1} width={4} height={4} />
+        <Svg.Rect fill={colors[0]} x={0} y={0} width={5} height={1} />
+        <Svg.Rect fill={colors[0]} x={4} y={0} width={1} height={2} />
+        <Svg.Rect fill={colors[0]} x={4} y={1} width={2} height={1} />
+        <Svg.Rect fill={colors[0]} x={0} y={0} width={1} height={5} />
+        <Svg.Rect fill={colors[0]} x={0} y={5} width={5} height={1} />
+        <Svg.Rect fill={colors[0]} x={5} y={1} width={1} height={5} />
+        <Svg.Rect fill={colors[6]} x={2} y={1} width={2} height={1} />
+        <Svg.Rect fill={colors[7]} x={2} y={3} width={2} height={2} />
+      </Svg>
+    </TouchableHighlight>
+  )
+
+  /*
+  return (
+
+        <Svg.Path
+          d={[
+            "M1,1",
+            "L4,1",
+            "L4,2",
+            "L5,2",
+            "L5,5",
+            "L1,5",
+            "L1,1",
+            "L4,1",
+          ].join(" ")}
+          stroke={colors[0]}
+          strokeWidth={1}
+          fill={colors[12]}
+        />
+    <TouchableHighlight style={styles} onPress={onPress}>
       <Svg width={size} height={size} viewBox="0 0 17 17">
         <Svg.Path
           d={[
@@ -68,6 +101,7 @@ export default ({
       </Svg>
     </TouchableHighlight>
   )
+  */
 }
 
 const styles = StyleSheet.create({

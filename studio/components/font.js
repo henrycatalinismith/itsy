@@ -27,8 +27,8 @@ export default ({
   ]
 
   if (borderColor) {
-    viewbox[0] -= borderMultiplier/2
-    viewbox[1] -= borderMultiplier/2
+    viewbox[0] -= borderMultiplier/3
+    viewbox[1] -= borderMultiplier/3
     viewbox[2] += borderMultiplier
     viewbox[3] += borderMultiplier
   }
@@ -37,7 +37,7 @@ export default ({
 
   const pixelSize = fontSize / 5
 
-  const fontWidth = fontSize * 0.6
+  const fontWidth = fontSize * 0.5
   const fontHeight = fontSize
 
   const svgWidth = (

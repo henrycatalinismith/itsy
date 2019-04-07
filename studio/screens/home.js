@@ -54,9 +54,9 @@ class HomeScreen extends React.Component {
       open,
     } = this.props
 
-    const onPress = diskId => () => {
-      open(diskId)
-      navigation.navigate("Code")
+    const onPress = disk => () => {
+      open(disk.id)
+      navigation.navigate("Code", { disk })
     }
 
     return (
@@ -81,7 +81,7 @@ class HomeScreen extends React.Component {
                   <Disk
                     key={disk.id}
                     id={disk.id}
-                    onPress={onPress(disk.id)}
+                    onPress={onPress(disk)}
                     size={128}
                   />
                 )}
@@ -104,8 +104,10 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     borderRightColor: colors[14],
+    borderBottomColor: colors[14],
     borderLeftColor: colors[14],
     borderRightWidth: 4,
+    borderBottomWidth: 4,
     borderLeftWidth: 4,
   },
 

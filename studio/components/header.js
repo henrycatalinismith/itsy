@@ -11,7 +11,22 @@ import Floppy from "./floppy"
 import Font from "./font"
 import colors from "../constants/colors"
 
-export default ({ children }) => {
+export default ({
+  children,
+  disk,
+  navigation,
+}) => {
+
+  const activeIndex = navigation.state.index
+  const activeRoute = navigation.state.routes[activeIndex]
+  const activeScreen = activeRoute.routeName
+
+  const title = ({
+    Home: () => "itsy studio",
+    Code: () => activeRoute.params.disk.name,
+  })[activeScreen]()
+  console.log(navigation)
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar
@@ -23,20 +38,12 @@ export default ({ children }) => {
           <Floppy size={18} style={styles.floppy} />
           <View style={styles.wordmark}>
             <Font
-              fontSize={16}
+              fontSize={15}
               color={colors[7]}
-              borderColor={colors[13]}
+              borderColor={colors[0]}
+              borderMultiplier={3}
               strokeMultiplier={0.9}
-              borderMultiplier={2}
-            >itsy</Font>
-
-            <Font
-              fontSize={16}
-              color={colors[7]}
-              borderColor={colors[13]}
-              strokeMultiplier={0.9}
-              borderMultiplier={2}
-            >studio</Font>
+            >{title}</Font>
           </View>
         </View>
         <View style={styles.right}>
@@ -46,6 +53,7 @@ export default ({ children }) => {
     </SafeAreaView>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors[1],
@@ -67,7 +75,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    paddingLeft: 16,
+    paddingLeft: 6,
   },
   right: {
   },

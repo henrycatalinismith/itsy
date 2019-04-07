@@ -100,8 +100,10 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     borderRightColor: colors[14],
+    borderBottomColor: colors[14],
     borderLeftColor: colors[14],
     borderRightWidth: 4,
+    borderBottomWidth: 4,
     borderLeftWidth: 4,
   },
 
