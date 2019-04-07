@@ -8,7 +8,6 @@ import {
 } from "react-native"
 
 import Font from "../components/font"
-import Frame from "../components/frame"
 import Header from "../components/header"
 import colors from "../constants/colors"
 

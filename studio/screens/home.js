@@ -63,7 +63,8 @@ class HomeScreen extends React.Component {
       <SafeAreaView style={styles.screen}>
         <View style={styles.frame1}>
           <View style={styles.frame2}>
-            <ScrollView style={styles.container}>
+
+            <View style={styles.controls}>
               <TouchableOpacity style={styles.new} onPress={onNew}>
                 <Font
                   fontSize={16}
@@ -73,6 +74,9 @@ class HomeScreen extends React.Component {
                   borderMultiplier={3}
                 >new</Font>
               </TouchableOpacity>
+            </View>
+
+            <ScrollView style={styles.container}>
 
               <FlatGrid
                 itemDimension={128}
@@ -82,11 +86,12 @@ class HomeScreen extends React.Component {
                     key={disk.id}
                     id={disk.id}
                     onPress={onPress(disk)}
-                    size={128}
+                    size={120}
                   />
                 )}
               />
             </ScrollView>
+
           </View>
         </View>
       </SafeAreaView>
@@ -98,6 +103,12 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors[14],
+    borderRightColor: colors[2],
+    borderBottomColor: colors[2],
+    borderLeftColor: colors[2],
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
   },
 
   frame1: {
@@ -124,6 +135,17 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
   },
 
+  controls: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    height: 32,
+    backgroundColor: colors[15],
+    borderBottomColor: colors[13],
+    borderBottomWidth: 2,
+    paddingLeft: 2,
+  },
+
   container: {
     flex: 1,
     backgroundColor: colors[7],
@@ -133,12 +155,11 @@ const styles = StyleSheet.create({
     display: "flex",
     alignItems: "center",
     backgroundColor: colors[13],
-    borderColor: colors[2],
+    borderColor: colors[5],
     borderWidth: 2,
     padding: 2,
     paddingBottom: 4,
-    margin: 8,
-    width: 100,
+    width: 64,
   },
 
   button: {

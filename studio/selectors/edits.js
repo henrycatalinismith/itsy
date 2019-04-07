@@ -1,5 +1,5 @@
-const asc = (a, b) => a > b ? 1 : a < b ? -1 : 0
-const desc = (a, b) => a > b ? -1 : a < b ? 1 : 0
+const asc = (a, b) => a.updated < b.updated ? -1 : a.updated > b.updated ? 1 : 0
+const desc = (a, b) => a.updated > b.updated ? -1 : a.updated < b.updated ? 1 : 0
 
 export default {
   all: edits => edits,

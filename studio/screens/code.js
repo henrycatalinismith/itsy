@@ -94,6 +94,12 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors[14],
+    borderRightColor: colors[2],
+    borderBottomColor: colors[2],
+    borderLeftColor: colors[2],
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
   },
 
   frame1: {

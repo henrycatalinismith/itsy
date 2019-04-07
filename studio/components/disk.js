@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
     borderRightColor: colors[13],
     borderBottomColor: colors[13],
     borderLeftColor: colors[13],
+    overflow: "hidden",
   },
   disk: {
     marginBottom: 8,

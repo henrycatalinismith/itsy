@@ -70,6 +70,11 @@ const styles = StyleSheet.create({
 
     borderTopColor: colors[2],
     borderTopWidth: 2,
+    borderRightColor: colors[2],
+    borderLeftColor: colors[2],
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+
   },
   left: {
     display: "flex",
