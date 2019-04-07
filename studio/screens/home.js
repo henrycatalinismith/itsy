@@ -20,7 +20,7 @@ import colors from "../constants/colors"
 import select from "../selectors"
 import thunks from "../thunks"
 
-import Disk from "../components/disk"
+import Tile from "../components/tile"
 import Floppy from "../components/floppy"
 import Font from "../components/font"
 import Header from "../components/header"
@@ -56,7 +56,7 @@ class HomeScreen extends React.Component {
 
     const onPress = disk => () => {
       open(disk.id)
-      navigation.navigate("Code", { disk })
+      navigation.navigate("Disk", { disk })
     }
 
     return (
@@ -82,7 +82,7 @@ class HomeScreen extends React.Component {
                 itemDimension={128}
                 items={disks}
                 renderItem={({ item: disk }) => (
-                  <Disk
+                  <Tile
                     key={disk.id}
                     id={disk.id}
                     onPress={onPress(disk)}

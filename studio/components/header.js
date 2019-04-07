@@ -23,9 +23,9 @@ export default ({
 
   const title = ({
     Home: () => "itsy studio",
+    Disk: () => activeRoute.params.disk.name,
     Code: () => activeRoute.params.disk.name,
   })[activeScreen]()
-  console.log(navigation)
 
   return (
     <SafeAreaView style={styles.container}>

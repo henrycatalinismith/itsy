@@ -43,6 +43,7 @@ import {
 } from "./defaults"
 
 import Home from "./screens/home"
+import Disk from "./screens/disk"
 import Code from "./screens/code"
 
 import Header from "./components/header"
@@ -105,6 +106,9 @@ store.dispatch(actions.start())
 const routes = {
   Home: {
     screen: Home,
+  },
+  Disk: {
+    screen: Disk,
   },
   Code: {
     screen: Code,
