@@ -13,7 +13,6 @@ import { connect } from "react-redux"
 import Divider from "../components/divider"
 import Editor from "../components/editor"
 import Header from "../components/header"
-import Frame from "../components/frame"
 import Play from "../components/play"
 import Player from "../components/player"
 import Stop from "../components/stop"
@@ -43,6 +42,10 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Code extends React.Component {
+  static navigationOptions = {
+    header: Header
+  }
+
   render() {
     const {
       disk,
@@ -62,27 +65,26 @@ class Code extends React.Component {
 
     return (
       <SafeAreaView style={styles.screen}>
-        <Frame>
-          <Header />
-          <View style={[styles.container, styles[orientation]]}>
-            <Editor
-              lua={disk.lua}
-              onChange={edit}
-              sourceUri={editorAsset.uri}
-            />
-            <Divider orientation={orientation} onMove={onMoveDivider}>
-              {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
-            </Divider>
-            <Player
-              disk={disk}
-              edit={drive}
-              onSnap={snapshot => snap({
-                id: drive.id,
-                snapshot,
-              })}
-            />
-          </View>
-        </Frame>
+        <View style={styles.frame1}>
+        <View style={[styles.container, styles[orientation]]}>
+          <Editor
+            lua={disk.lua}
+            onChange={edit}
+            sourceUri={editorAsset.uri}
+          />
+          <Divider orientation={orientation} onMove={onMoveDivider}>
+            {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
+          </Divider>
+          <Player
+            disk={disk}
+            edit={drive}
+            onSnap={snapshot => snap({
+              id: drive.id,
+              snapshot,
+            })}
+          />
+        </View>
+        </View>
       </SafeAreaView>
     )
   }
@@ -91,8 +93,33 @@ class Code extends React.Component {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors[1],
+    backgroundColor: colors[14],
   },
+
+  frame1: {
+    flex: 1,
+    display: "flex",
+    borderRightColor: colors[14],
+    borderLeftColor: colors[14],
+    borderRightWidth: 4,
+    borderLeftWidth: 4,
+  },
+
+  frame2: {
+    flex: 1,
+    display: "flex",
+    borderTopColor: colors[2],
+    borderRightColor: colors[2],
+    borderBottomColor: colors[2],
+    borderLeftColor: colors[2],
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+  },
+
+
+
   container: {
     flex: 1,
     backgroundColor: colors[7],

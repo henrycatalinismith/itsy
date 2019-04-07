@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 import {
   SafeAreaView,
@@ -22,7 +23,6 @@ import thunks from "../thunks"
 import Disk from "../components/disk"
 import Floppy from "../components/floppy"
 import Font from "../components/font"
-import Frame from "../components/frame"
 import Header from "../components/header"
 
 const mapStateToProps = state => ({
@@ -34,60 +34,84 @@ const mapDispatchToProps = dispatch => ({
   open: diskId => dispatch(actions.open(diskId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(({
-  disks,
-  navigation,
-  onNew,
-  open,
-}) => {
-
-  const onPress = diskId => () => {
-    open(diskId)
-    navigation.navigate("CodeStack")
+class HomeScreen extends React.Component {
+  static navigationOptions = {
+    header: Header
   }
 
-  return (
-    <SafeAreaView style={styles.screen}>
-      <Frame>
-        <Header>
-          <TouchableOpacity style={styles.new} onPress={onNew}>
-            <Font
-              fontSize={16}
-              color={colors[7]}
-              borderColor={colors[1]}
-              strokeMultiplier={0.9}
-              borderMultiplier={3}
-            >new</Font>
-          </TouchableOpacity>
-        </Header>
-        <ScrollView style={styles.container}>
+  static propTypes = {
+    disks: PropTypes.any,
+    navigation: PropTypes.any,
+    onNew: PropTypes.any,
+    open: PropTypes.any,
+  }
 
-          <FlatGrid
-            itemDimension={128}
-            items={disks}
-            renderItem={({ item: disk }) => (
-              <Disk
-                key={disk.id}
-                id={disk.id}
-                onPress={onPress(disk.id)}
-                size={128}
+  render() {
+    const {
+      disks,
+      navigation,
+      onNew,
+      open,
+    } = this.props
+
+    const onPress = diskId => () => {
+      open(diskId)
+      navigation.navigate("Code")
+    }
+
+    return (
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.frame1}>
+          <View style={styles.frame2}>
+            <ScrollView style={styles.container}>
+              <TouchableOpacity style={styles.new} onPress={onNew}>
+                <Font
+                  fontSize={16}
+                  color={colors[7]}
+                  borderColor={colors[1]}
+                  strokeMultiplier={0.9}
+                  borderMultiplier={3}
+                >new</Font>
+              </TouchableOpacity>
+
+              <FlatGrid
+                itemDimension={128}
+                items={disks}
+                renderItem={({ item: disk }) => (
+                  <Disk
+                    key={disk.id}
+                    id={disk.id}
+                    onPress={onPress(disk.id)}
+                    size={128}
+                  />
+                )}
               />
-            )}
-          />
-        </ScrollView>
-      </Frame>
-    </SafeAreaView>
-  )
-})
+            </ScrollView>
+          </View>
+        </View>
+      </SafeAreaView>
+    )
+  }
+}
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors[1],
+    backgroundColor: colors[14],
   },
-  container: {
+
+  frame1: {
     flex: 1,
-    backgroundColor: colors[7],
+    display: "flex",
+    borderRightColor: colors[14],
+    borderLeftColor: colors[14],
+    borderRightWidth: 4,
+    borderLeftWidth: 4,
+  },
+
+  frame2: {
+    flex: 1,
+    display: "flex",
     borderTopColor: colors[2],
     borderRightColor: colors[2],
     borderBottomColor: colors[2],
@@ -98,6 +122,11 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
   },
 
+  container: {
+    flex: 1,
+    backgroundColor: colors[7],
+  },
+
   new: {
     display: "flex",
     alignItems: "center",
@@ -106,6 +135,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 2,
     paddingBottom: 4,
+    margin: 8,
+    width: 100,
   },
 
   button: {
@@ -114,46 +145,4 @@ const styles = StyleSheet.create({
   },
 })
 
-
-        /*
-        <Text>lol</Text>
-        <Disk />
-        <Font borderColor={1}>abcdefghijklm</Font>
-        <Font
-          fontSize={16}
-          color={colors[10]}
-          borderColor={colors[0]}
-          borderMultiplier={1.5}
-        >ALPHA!</Font>
-
-        <Font
-          fontSize={32}
-          color={colors[8]}
-          borderColor={colors[0]}
-          borderMultiplier={2}
-        >Universal</Font>
-
-        <Font
-          fontSize={32}
-          color={colors[12]}
-          borderColor={colors[0]}
-          borderMultiplier={2}
-        >Fantasy</Font>
-
-        <Font
-          fontSize={32}
-          color={colors[11]}
-          borderColor={colors[0]}
-          borderMultiplier={2}
-        >Console</Font>
-
-        <Font
-          fontSize={24}
-          color={colors[6]}
-          borderColor={colors[0]}
-          borderMultiplier={2}
-        >something</Font>
-
-        <Floppy size={256} />
-        */
-
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

@@ -17,6 +17,7 @@ import {
 
 import {
   createAppContainer,
+  createStackNavigator,
   createSwitchNavigator,
 } from "react-navigation"
 
@@ -41,8 +42,12 @@ import {
   spritesheet,
 } from "./defaults"
 
+import Home from "./screens/home"
+import Code from "./screens/code"
+
+import Header from "./components/header"
+
 import colors from "./constants/colors"
-import Footer from "./components/footer"
 
 const initialState = {
   disks: {
@@ -97,9 +102,18 @@ const store = createStore(reducers, initialState, middlewares)
 
 store.dispatch(actions.start())
 
-const AppNavigator = createAppContainer(createSwitchNavigator({
-  Main: Footer,
-}))
+const routes = {
+  Home: {
+    screen: Home,
+  },
+  Code: {
+    screen: Code,
+  },
+}
+
+const AppNavigator = createStackNavigator(routes)
+
+const AppContainer = createAppContainer(AppNavigator)
 
 export default class App extends React.Component {
   state = {
@@ -118,7 +132,7 @@ export default class App extends React.Component {
     } else {
       return (
         <Provider store={store}>
-          <AppNavigator />
+          <AppContainer />
         </Provider>
       )
     }
