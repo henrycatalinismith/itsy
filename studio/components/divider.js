@@ -42,10 +42,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   landscape: {
-    width: 48,
+    width: 4,
   },
   portrait: {
-    height: 48,
+    height: 4,
   },
   play: {
     fontSize: 24,

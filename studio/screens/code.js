@@ -67,13 +67,23 @@ class Code extends React.Component {
       <SafeAreaView style={styles.screen}>
         <View style={styles.frame1}>
         <View style={[styles.container, styles[orientation]]}>
-          <Editor
-            lua={disk.lua}
-            onChange={edit}
-            sourceUri={editorAsset.uri}
-          />
+
+          <View style={styles.editorContainer}>
+            <View style={styles.controls}>
+              <View style={styles.button}>
+                {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
+              </View>
+            </View>
+            <Editor
+              lua={disk.lua}
+              onChange={edit}
+              onPlay={play}
+              onStop={stop}
+              running={running}
+              sourceUri={editorAsset.uri}
+            />
+          </View>
           <Divider orientation={orientation} onMove={onMoveDivider}>
-            {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
           </Divider>
           <Player
             disk={disk}
@@ -126,7 +136,29 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
   },
 
+  editorContainer: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    borderTopColor: colors[2],
+    borderRightColor: colors[2],
+    borderBottomColor: colors[2],
+    borderLeftColor: colors[2],
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+  },
 
+  controls: {
+    height: 32,
+    backgroundColor: colors[15],
+    borderBottomColor: colors[13],
+    borderBottomWidth: 2,
+  },
+
+  button: {
+  },
 
   container: {
     flex: 1,

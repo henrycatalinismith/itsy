@@ -71,19 +71,15 @@ export default class Editor extends React.Component {
     const options = { lua }
 
     return (
-      <View style={styles.container}>
-        <View style={styles.controls}>
-        </View>
-        <View style={styles.code}>
-          <WebView
-            bounces={false}
-            onMessage={handleMessage}
-            ref={(view) => { this.webview = view; }}
-            scrollEnabled={false}
-            source={{ uri: sourceUri }}
-            useWebKit
-          />
-        </View>
+      <View style={styles.code}>
+        <WebView
+          bounces={false}
+          onMessage={handleMessage}
+          ref={(view) => { this.webview = view; }}
+          scrollEnabled={false}
+          source={{ uri: sourceUri }}
+          useWebKit
+        />
       </View>
     )
   }
@@ -91,17 +87,6 @@ export default class Editor extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    borderTopColor: colors[2],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
   },
   controls: {
     height: 32,

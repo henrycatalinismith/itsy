@@ -15,7 +15,7 @@ export default ({ onPress }) => {
   return (
     <>
       <TouchableOpacity onPress={onPress}>
-        <Svg width={40} height={48} viewBox="0 0 40 48">
+        <Svg width={26} height={32} viewBox="0 0 40 48">
            <Svg.Path
             d="M8,8 L32,24 L8,40 L8,8"
             strokeLinecap="round"

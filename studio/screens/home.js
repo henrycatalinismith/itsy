@@ -46,6 +46,16 @@ class HomeScreen extends React.Component {
     open: PropTypes.any,
   }
 
+  componentDidMount() {
+    this.props.open("abc")
+    this.props.navigation.navigate("Code", {
+      disk: {
+        id: "abc",
+        name: "example",
+      },
+    })
+  }
+
   render() {
     const {
       disks,
