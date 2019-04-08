@@ -3,6 +3,7 @@ import React from "react"
 import {
   AppLoading,
   Asset,
+  FileSystem,
   Font,
   Icon,
 } from "expo"
@@ -173,3 +174,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 })
+
+/*
+FileSystem
+  .readDirectoryAsync(FileSystem.documentDirectory)
+  .then(list => console.log(list))
+
+const uri = `${FileSystem.documentDirectory}/test.html`
+FileSystem.writeAsStringAsync(uri, "<h1>test</h1>")
+  .then(() => console.log("done"))
+  */
