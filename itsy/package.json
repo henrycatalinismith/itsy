@@ -22,7 +22,6 @@
     "prettier": "^1.16.4"
   },
   "files": [
-    "client.js",
     "commands/*.js",
     "defaults/favicon.ico",
     "defaults/palette.png",

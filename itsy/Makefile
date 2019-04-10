@@ -1,6 +1,6 @@
 B64=./node_modules/@highvalley.systems/b64
 LUA=./node_modules/@highvalley.systems/lua
-EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.27
+EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.29
 
 VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
 

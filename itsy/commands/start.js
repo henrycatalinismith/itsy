@@ -86,7 +86,7 @@ const reducers = redux.combineReducers({
     })
   }),
 
-  client: reducer(fs.readFileSync(`${__dirname}/../client.js`, "utf-8"), {
+  client: reducer(fs.readFileSync(`${__dirname}/../engine/itsy.js`, "utf-8"), {
     updateClient: replace("client"),
   }),
 
@@ -120,7 +120,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => watch(
-    `${__dirname}/../client.js`,
+    `${__dirname}/../engine/itsy.js`,
     client => store.dispatch(actions.updateClient(client))
   )),
 
@@ -189,7 +189,9 @@ ${lua.trimEnd()}
 <style type="text/css">
 ${stylesheet.trim()}
 </style>
-<script type="text/javascript" src="/itsy-${config.version}.js"></script>
+<script type="text/javascript">
+${client.trim()}
+</script>
 </body>
 </html>`)
       return
@@ -251,7 +253,7 @@ ${stylesheet.trim()}
   )),
 
   after("updateClient", () => log(
-    `updated ${chalk.magentaBright("client.js")}`
+    `updated ${chalk.magentaBright("engine/itsy.js")}`
   )),
 
   after("updateLua", () => log(
