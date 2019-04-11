@@ -183,7 +183,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
 <script type="text/lua">
 ${lua.trimEnd()}
 </script>
-<img width="8" height="8" src="${palette.dataUrl}" />
+<img width="4" height="4" src="${palette.dataUrl}" />
 <img width="128" height="128" src="${spritesheet.dataUrl}" />
 <canvas width="128" height="128"></canvas>
 <style type="text/css">
