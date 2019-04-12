@@ -10,8 +10,8 @@ import {
   View,
 } from "react-native"
 
-const blob = require("../node_modules/@highvalley.systems/itsy/engine/base64.js")
-const itsy = Base64.decode(blob)
+import itsy from "@highvalley.systems/itsy"
+console.log(Object.keys(itsy))
 
 import colors from "../constants/colors"
 
@@ -156,54 +156,7 @@ export default class Player extends React.Component {
               bounces={false}
               scrollEnabled={false}
               onMessage={handleMessage}
-              source={{ html: `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-                </head>
-                <body>
-                <script type="text/lua">
-                  ${edit.lua}
-                </script>
-                <img width="8" height="8" src="data:image/png;base64,${edit.palette}" />
-                <img width="128" height="128" src="data:image/png;base64,${edit.spritesheet}" />
-                <canvas width="128" height="128"></canvas>
-                <style type="text/css">
-                html {
-                  background-color: black;
-                  overflow: hidden;
-                  user-select: none;
-                }
-
-                body {
-                  margin: 0;
-                  display: flex;
-                  overflow: hidden;
-                  justify-content: center;
-                  align-items: center;
-                  user-select: none;
-                  width: 100vw;
-                  height: 100vh;
-                  align-items: center;
-                }
-
-                canvas {
-                  /* https://bugs.webkit.org/show_bug.cgi?id=193895 */
-                  image-rendering: pixelated;
-                  user-select: none;
-                  width: 100vmin;
-                  height: 100vmin;
-                }
-
-                img {
-                  display: none;
-                }
-                </style>
-                </body>
-                </html>
-              ` }}
-              injectedJavaScript={itsy}
+              source={{ html: itsy.build(edit.lua) }}
               useWebKit
             />
           )}
