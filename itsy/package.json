@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.47.0",
+  "version": "0.48.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -23,11 +23,14 @@
     "prettier": "^1.16.4"
   },
   "files": [
+    "base64/engine.js",
+    "base64/palette.js",
+    "base64/spritesheet.js",
+    "base64/stylesheet.js",
     "commands/*.js",
     "defaults/favicon.ico",
     "defaults/palette.png",
     "defaults/spritesheet.png",
-    "engine/base64.js",
     "engine/itsy.js",
     "functions/*.md",
     "style.css"

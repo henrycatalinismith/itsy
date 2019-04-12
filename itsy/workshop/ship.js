@@ -10,7 +10,7 @@ npm("run bump")
 make("clean itsy")
 git(`commit -am "${message}"`)
 npm("run tag")
-git("push highvalley master --tags")
+git("push github master --tags")
 npm("publish")
 
 console.log()
