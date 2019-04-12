@@ -52,6 +52,20 @@ $(LUA)/src/%.o:
 $(LUA)/src/liblua.a: $(LUA_OBJ)
 	cd $(LUA)/src && make generic CC='../../../../$(CC)'
 
+base64/engine.js: engine/itsy.js
+	echo "module.exports = \"" | perl -pe "chomp" > base64/engine.js
+	base64 engine/itsy.js | perl -pe "chomp" >> base64/engine.js
+	echo "\"" >> base64/engine.js
+
+base64/palette.js:
+	echo "module.exports = '`base64 defaults/palette.png`'" > base64/palette.js
+
+base64/spritesheet.js:
+	echo "module.exports = '`base64 defaults/spritesheet.png`'" > base64/spritesheet.js
+
+base64/stylesheet.js:
+	echo "module.exports = '`base64 style.css`'" > base64/stylesheet.js
+
 engine/core.js: $(OBJS)
 	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(EMCCFLAGS) -o engine/core.js
 
@@ -59,13 +73,9 @@ engine/itsy.js: engine/core.js
 	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js
 	./node_modules/.bin/prettier --write engine/itsy.js
 
-engine/base64.js: engine/itsy.js
-	echo "module.exports = \"" | perl -pe "chomp" > engine/base64.js
-	base64 engine/itsy.js | perl -pe "chomp" >> engine/base64.js
-	echo "\"" >> engine/base64.js
-
 clean:
-	rm -f engine/base64.js
+	rm -f base64/engine.js
+	rm -f base64/stylesheet.js
 	rm -f engine/core.js
 	rm -f engine/itsy.js
 
@@ -73,7 +83,7 @@ cleanlua:
 	rm -f $(LUA)/src/*.o
 	rm -f $(LUA)/src/liblua.a
 
-itsy: engine/itsy.js engine/base64.js
+itsy: engine/itsy.js base64/engine.js base64/stylesheet.js
 
 lua: $(LUA)/src/liblua.a
 

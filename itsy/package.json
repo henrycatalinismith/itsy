@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.46.0",
+  "version": "0.47.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@highvalley.systems/signalbox": "^0.17.0",
+    "buffer": "^5.2.1",
     "chalk": "^2.4.2",
     "express": "^4.16.4",
     "node-fetch": "^2.3.0",

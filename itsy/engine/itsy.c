@@ -18,11 +18,15 @@
 #include "font.h"
 #include "luahack.h"
 
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+
 typedef struct itsy_sdl_context {
   SDL_Window *window;
   SDL_Renderer *renderer;
   SDL_Texture *texture;
   double scale;
+  int x;
+  int y;
 } itsy_sdl_context;
 
 typedef struct itsy_draw_state {
@@ -225,12 +229,22 @@ int init_sdl(int canvasWidth, int canvasHeight)
     return 1;
   }
 
-  sdl->scale = canvasWidth / 128;
+  int size = min(canvasWidth, canvasHeight);
+  sdl->scale = size / 128;
+  sdl->x = ceil((canvasWidth - size) / 2);
+  sdl->y = ceil((canvasHeight - size) / 2);
+
+  double m = (double) 128 / size;
+  printf("i%d j%d k%d l%f\n", canvasWidth, canvasHeight, size, m);
+  int width = ceil(canvasWidth * m);
+  int height = ceil(canvasHeight * m);
+  printf("w%d h%d\n", width, height);
+  printf("x%d y%d\n", sdl->x, sdl->y);
 
   SDL_Window *w;
   SDL_Renderer *r;
 
-  if (SDL_CreateWindowAndRenderer(canvasWidth, canvasHeight, SDL_SWSURFACE, &w, &r) != 0) {
+  if (SDL_CreateWindowAndRenderer(size, size, SDL_SWSURFACE, &w, &r) != 0) {
     SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
     return 1;
   }
@@ -241,8 +255,8 @@ int init_sdl(int canvasWidth, int canvasHeight)
     sdl->renderer,
     SDL_PIXELFORMAT_ARGB8888,
     SDL_TEXTUREACCESS_STREAMING,
-    128,
-    128
+    width,
+    height
   );
 
   if (sdl->texture == NULL) {

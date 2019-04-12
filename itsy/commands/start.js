@@ -9,6 +9,8 @@ const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
 
+const itsy = require("../")
+
 const {
   action,
   reducer,
@@ -167,33 +169,15 @@ const middlewares = redux.applyMiddleware.apply(null, [
 
   after("request", (store, { request, response, next }) => {
     if (request.method === "GET" && request.url === "/") {
-      const config = select.package.from(store).forConfig()
-      const client = select.client.from(store).forRunning()
       const lua = select.lua.from(store).forRunning()
       const palette = select.assets.from(store).forPalette().pop()
       const spritesheet = select.assets.from(store).forSpritesheet().pop()
-      const stylesheet = select.stylesheet.from(store).forRendering()
 
-      response.send(`<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-</head>
-<body>
-<script type="text/lua">
-${lua.trimEnd()}
-</script>
-<img width="4" height="4" src="${palette.dataUrl}" />
-<img width="128" height="128" src="${spritesheet.dataUrl}" />
-<canvas width="128" height="128"></canvas>
-<style type="text/css">
-${stylesheet.trim()}
-</style>
-<script type="text/javascript">
-${client.trim()}
-</script>
-</body>
-</html>`)
+      response.send(itsy.build(
+        lua,
+        palette.dataUrl.split(",")[1],
+        spritesheet.dataUrl.split(",")[1]
+      ))
       return
     }
 

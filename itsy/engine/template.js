@@ -1,9 +1,14 @@
+const width = window.innerWidth
+const height = window.innerHeight
+
 const canvas = document.querySelector("canvas")
+canvas.style.width = `${width}px`
+canvas.style.height = `${height}px`
 
 const lua = document.querySelector("script[type='text/lua']").innerText
 
 const palette = document
-  .querySelector("img[width='8'][height='8']")
+  .querySelector("img[width='4'][height='4']")
   .src.split(",")[1]
 
 const spritesheet = document
@@ -14,8 +19,8 @@ const argv = [
   lua,
   palette,
   spritesheet,
-  `${canvas.offsetWidth}`,
-  `${canvas.offsetHeight}`,
+  `${width}`,
+  `${height}`,
 ]
 
 var itsy = {
