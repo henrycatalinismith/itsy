@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.48.0",
+  "version": "0.49.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -22,6 +22,7 @@
     "lua-src": "5.3.5",
     "prettier": "^1.16.4"
   },
+  "main": "index.js",
   "files": [
     "base64/engine.js",
     "base64/palette.js",
