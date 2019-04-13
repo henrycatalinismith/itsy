@@ -1,17 +1,11 @@
-import Base64 from "base-64"
 import React from "react"
 import PropTypes from "prop-types"
 
 import {
-  Image,
   StyleSheet,
-  Text,
   WebView,
   View,
 } from "react-native"
-
-import itsy from "@highvalley.systems/itsy"
-console.log(Object.keys(itsy))
 
 import colors from "../constants/colors"
 
@@ -160,7 +154,7 @@ export default class Player extends React.Component {
               bounces={false}
               scrollEnabled={false}
               onMessage={handleMessage}
-              source={{ html: itsy.build(edit.lua) }}
+              source={{ html: edit.html }}
               useWebKit
             />
           )}
@@ -184,6 +178,7 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
+    backgroundColor: colors[0],
     borderTopColor: colors[1],
     borderRightColor: colors[1],
     borderBottomColor: colors[1],
