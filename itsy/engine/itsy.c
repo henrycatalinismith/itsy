@@ -23,7 +23,9 @@
 typedef struct itsy_sdl_context {
   SDL_Window *window;
   SDL_Renderer *renderer;
-  SDL_Texture *texture;
+  SDL_Texture *canvas;
+  SDL_Rect src;
+  SDL_Rect dst;
   double scale;
   int x;
   int y;
@@ -234,6 +236,21 @@ int init_sdl(int canvasWidth, int canvasHeight)
   sdl->x = ceil((canvasWidth - size) / 2);
   sdl->y = ceil((canvasHeight - size) / 2);
 
+  sdl->src.x = 0;
+  sdl->src.y = 0;
+  sdl->src.w = 128;
+  sdl->src.h = 128;
+
+
+  sdl->dst.x = canvasWidth > canvasHeight
+    ? (canvasWidth - canvasHeight) / 2
+    : 0;
+  sdl->dst.y = canvasHeight > canvasWidth
+    ? (canvasHeight - canvasWidth) / 2
+    : 0;
+  sdl->dst.w = size;
+  sdl->dst.h = size;
+
   double m = (double) 128 / size;
   printf("i%d j%d k%d l%f\n", canvasWidth, canvasHeight, size, m);
   int width = ceil(canvasWidth * m);
@@ -244,22 +261,22 @@ int init_sdl(int canvasWidth, int canvasHeight)
   SDL_Window *w;
   SDL_Renderer *r;
 
-  if (SDL_CreateWindowAndRenderer(size, size, SDL_SWSURFACE, &w, &r) != 0) {
+  if (SDL_CreateWindowAndRenderer(canvasWidth, canvasHeight, SDL_SWSURFACE, &w, &r) != 0) {
     SDL_Log("SDL_CreateWindowAndRenderer: %s", SDL_GetError());
     return 1;
   }
 
   sdl->window = w;
   sdl->renderer = r;
-  sdl->texture = SDL_CreateTexture(
+  sdl->canvas = SDL_CreateTexture(
     sdl->renderer,
     SDL_PIXELFORMAT_ARGB8888,
     SDL_TEXTUREACCESS_STREAMING,
-    width,
-    height
+    canvasWidth,
+    canvasHeight
   );
 
-  if (sdl->texture == NULL) {
+  if (sdl->canvas == NULL) {
     SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
     return 1;
   }
@@ -421,8 +438,12 @@ void loop(void)
       case SDL_MOUSEBUTTONDOWN:
         printf("mouse %d, %d\n", event.button.x, event.button.y);
         input.touch = true;
-        input.touchx = floor(event.button.x / sdl->scale);
-        input.touchy = floor(event.button.y / sdl->scale);
+        input.touchx = floor(
+          (event.motion.x - sdl->dst.x) / sdl->scale
+        );
+        input.touchy = floor(
+          (event.motion.y - sdl->dst.y) / sdl->scale
+        );
         down = true;
         break;
 
@@ -444,8 +465,12 @@ void loop(void)
       case SDL_MOUSEMOTION:
         //printf("SDL_MOUSEMOTION\n");
         if (input.touch) {
-          input.touchx = floor(event.motion.x / sdl->scale);
-          input.touchy = floor(event.motion.y / sdl->scale);
+          input.touchx = floor(
+            (event.motion.x - sdl->dst.x) / sdl->scale
+          );
+          input.touchy = floor(
+            (event.motion.y - sdl->dst.y) / sdl->scale
+          );
         }
         break;
     }
@@ -490,7 +515,7 @@ void render(void)
   }
 
   SDL_UpdateTexture(
-    sdl->texture,
+    sdl->canvas,
     NULL,
     &pixels[0],
     128 * 4
@@ -498,7 +523,8 @@ void render(void)
 
   // printf("Frame: %d\n", frame);
 
-  SDL_RenderCopy(sdl->renderer, sdl->texture, NULL, NULL);
+  SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, &sdl->dst);
+  // SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, NULL);
   SDL_RenderPresent(sdl->renderer);
   SDL_UpdateWindowSurface(sdl->window);
 }

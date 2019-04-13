@@ -4,6 +4,11 @@ const height = window.innerHeight
 const canvas = document.querySelector("canvas")
 canvas.style.width = `${width}px`
 canvas.style.height = `${height}px`
+canvas.width = width
+canvas.height = height
+// canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight)
+// canvas.width = 128
+// canvas.height = 128
 
 const lua = document.querySelector("script[type='text/lua']").innerText
 
@@ -19,8 +24,8 @@ const argv = [
   lua,
   palette,
   spritesheet,
-  `${width}`,
-  `${height}`,
+  `${canvas.width}`,
+  `${canvas.height}`,
 ]
 
 var itsy = {

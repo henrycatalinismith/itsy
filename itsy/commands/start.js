@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
+const cp = require("child_process")
 const fs = require("fs")
+const path = require("path")
 const process = require("process")
 const util = require("util")
 
@@ -9,7 +11,19 @@ const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
 
-const itsy = require("../")
+let itsy = require("../")
+
+const invalidate = filename => {
+  const key = require.resolve(filename)
+  delete require.cache[key]
+}
+
+const run = command => {
+  cp.execSync(command, {
+    cwd: `${__dirname}/../`,
+    stdio: "inherit",
+  })
+}
 
 const {
   action,
@@ -32,10 +46,16 @@ const actions = {
   ...action("updateAssets", ["assets"]),
   ...action("request", ["request", "response", "next"]),
   ...action("response", ["request", "response"]),
-  ...action("updateClient", ["client"]),
   ...action("updateLua", ["lua"]),
-  ...action("updatePackage", ["package"]),
-  ...action("updateStylesheet", ["stylesheet"]),
+
+  ...action("updateTemplate"),
+  ...action("rebuildTemplate"),
+
+  ...action("updateEngine", ["filename"]),
+  ...action("rebuildEngine"),
+
+  ...action("updateStylesheet"),
+  ...action("rebuildStylesheet"),
 }
 
 const loadBase64 = filename => {
@@ -88,20 +108,8 @@ const reducers = redux.combineReducers({
     })
   }),
 
-  client: reducer(fs.readFileSync(`${__dirname}/../engine/itsy.js`, "utf-8"), {
-    updateClient: replace("client"),
-  }),
-
   lua: reducer(fs.readFileSync(`${process.cwd()}/itsy.lua`, "utf-8"), {
     updateLua: replace("lua"),
-  }),
-
-  package: reducer(JSON.parse(fs.readFileSync(`${__dirname}/../package.json`, "utf-8")), {
-    updatePackage: replace("package"),
-  }),
-
-  stylesheet: reducer(fs.readFileSync(`${__dirname}/../style.css`, "utf-8"), {
-    updateStylesheet: replace("stylesheet"),
   }),
 })
 
@@ -122,8 +130,13 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => watch(
-    `${__dirname}/../engine/itsy.js`,
-    client => store.dispatch(actions.updateClient(client))
+    `${__dirname}/../engine/itsy.c`,
+    () => store.dispatch(actions.updateEngine("itsy.c"))
+  )),
+
+  after("listen", store => watch(
+    `${__dirname}/../engine/template.js`,
+    () => store.dispatch(actions.updateTemplate())
   )),
 
   after("listen", store => watch(
@@ -132,14 +145,62 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => watch(
-    `${__dirname}/../package.json`,
-    json => store.dispatch(actions.updatePackage(JSON.parse(json)))
+    `${__dirname}/../style.css`,
+    () => store.dispatch(actions.updateStylesheet())
   )),
 
-  after("listen", store => watch(
-    `${__dirname}/../style.css`,
-    stylesheet => store.dispatch(actions.updateStylesheet(stylesheet))
-  )),
+  after("updateEngine", store => {
+    store.dispatch(actions.rebuildEngine())
+  }),
+
+  after("updateStylesheet", store => {
+    store.dispatch(actions.rebuildStylesheet())
+  }),
+
+  after("updateTemplate", store => {
+    store.dispatch(actions.rebuildTemplate())
+  }),
+
+  before("rebuildEngine", store => {
+    run("rm -f engine/core.js")
+    run("rm -f engine/itsy.js")
+    run("rm -f base64/engine.js")
+    run("make engine/itsy.js")
+    run("make base64/engine.js")
+  }),
+
+  before("rebuildStylesheet", store => {
+    run("rm -f base64/stylesheet.js")
+    run("make base64/stylesheet.js")
+  }),
+
+  before("rebuildTemplate", store => {
+    run("rm -f base64/engine.js")
+    run("rm -f engine/itsy.js")
+    run("make engine/itsy.js")
+    run("make base64/engine.js")
+  }),
+
+  after("rebuildEngine", () => {
+    invalidate(`${__dirname}/../base64/engine.js`)
+    invalidate(`${__dirname}/../base64/index.js`)
+    invalidate(`${__dirname}/../index.js`)
+    itsy = require("../")
+  }),
+
+  after("rebuildStylesheet", () => {
+    invalidate(`${__dirname}/../base64/stylesheet.js`)
+    invalidate(`${__dirname}/../base64/index.js`)
+    invalidate(`${__dirname}/../index.js`)
+    itsy = require("../")
+  }),
+
+  after("rebuildTemplate", () => {
+    invalidate(`${__dirname}/../base64/engine.js`)
+    invalidate(`${__dirname}/../base64/index.js`)
+    invalidate(`${__dirname}/../index.js`)
+    itsy = require("../")
+  }),
 
   before(/^(import|update)Assets$/, async (store, action) => {
     const cwd = process.cwd()
@@ -199,15 +260,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
       return
     }
 
-    if (request.method === 'GET' && request.url.match(/^\/itsy-/)) {
-      const { version } = select.package.from(store).forConfig()
-      if (request.url === `/itsy-${version}.js`) {
-        response.setHeader("content-type", "text/javascript")
-        fs.createReadStream(`${__dirname}/../engine/itsy.js`).pipe(response)
-        return
-      }
-    }
-
     next()
   }),
 
@@ -236,20 +288,32 @@ const middlewares = redux.applyMiddleware.apply(null, [
     `updated ${chalk.magentaBright(".glitch-assets")}`
   )),
 
-  after("updateClient", () => log(
-    `updated ${chalk.magentaBright("engine/itsy.js")}`
-  )),
-
   after("updateLua", () => log(
     `updated ${chalk.magentaBright("itsy.lua")}`
   )),
 
-  after("updatePackage", () => log(
-    `updated ${chalk.magentaBright("package.json")}`
+  after("updateEngine", (store, { filename }) => log(
+    `updated ${chalk.yellowBright(filename)}`
   )),
 
   after("updateStylesheet", () => log(
     `updated ${chalk.yellowBright("stylesheet.css")}`
+  )),
+
+  after("updateTemplate", () => log(
+    `updated ${chalk.yellowBright("template.js")}`
+  )),
+
+  after("rebuildEngine", () => log(
+    `rebuilt ${chalk.yellowBright("base64/engine.js")}`
+  )),
+
+  after("rebuildStylesheet", () => log(
+    `rebuilt ${chalk.yellowBright("base64/stylesheet.js")}`
+  )),
+
+  after("rebuildTemplate", () => log(
+    `rebuilt ${chalk.yellowBright("base64/engine.js")}`
   )),
 ])
 
@@ -277,18 +341,8 @@ const select = {
       .filter(asset => asset.dataUrl !== undefined),
   }),
 
-  client: selector("client", {
-    forRunning: client => client,
-  }),
-
   lua: selector("lua", {
     forRunning: lua => lua,
-  }),
-
-  package: selector("package", {
-    forConfig: package => ({
-      version: package.version,
-    }),
   }),
 
   stylesheet: selector("stylesheet", {
@@ -301,7 +355,6 @@ const read = util.promisify(fs.readFile)
 const store = redux.createStore(reducers, {}, middlewares)
 const app = express()
 const port = process.env.PORT || "8080"
-const config = select.package.from(store).forConfig()
 
 app.use((req, res, next) => {
   store.dispatch(actions.request(req, res, next))
@@ -311,4 +364,3 @@ app.use((req, res, next) => {
 })
 
 app.listen(port, () => store.dispatch(actions.listen(port)))
-

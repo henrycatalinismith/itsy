@@ -1,7 +1,6 @@
 const { Buffer } = require("buffer")
 const base64 = require("./base64")
 
-console.log(base64)
 module.exports = {
   build (
     lua = '',
