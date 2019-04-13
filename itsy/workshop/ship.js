@@ -10,8 +10,9 @@ npm("run bump")
 make("clean itsy")
 git(`commit -am "${message}"`)
 npm("run tag")
-git("push github master --tags")
 npm("publish")
+git("push github master --tags")
+git("push gitlab master --tags")
 
 console.log()
 
