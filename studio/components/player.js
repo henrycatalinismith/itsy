@@ -102,55 +102,59 @@ export default class Player extends React.Component {
       }
     }
 
+    let mode
+    if (edit && stopped) {
+      mode = "snapshot"
+    } else if (edit && !edit.stopped) {
+      mode = "player"
+    }
     //console.log(edit && edit.stopped)
 
     return (
       <View style={styles.container}>
         <View style={styles.screen}>
-          {edit && stopped && (
-            <>
-              <WebView
-                source={{ html: `
-                  <!DOCTYPE html>
-                  <html>
-                  <head>
-                  <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
-                  </head>
-                  <body>
-                  <style type="text/css">
-                    html {
-                      overflow: hidden;
-                      user-select: none;
-                    }
+          {mode === "snapshot" && (
+            <WebView
+              source={{ html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width">
+                </head>
+                <body>
+                <style type="text/css">
+                  html {
+                    overflow: hidden;
+                    user-select: none;
+                  }
 
-                    body {
-                      background-color: #111;
-                      width: 100vw;
-                      height: 100vh;
-                      display: flex;
-                      align-items: center;
-                      justify-content: center;
-                      margin: 0;
-                      overflow: hidden;
-                      user-select: none;
-                    }
+                  body {
+                    background-color: #111;
+                    width: 100vw;
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0;
+                    overflow: hidden;
+                    user-select: none;
+                  }
 
-                    img {
-                      width: 100vmin;
-                      height: 100vmin;
-                      image-rendering: pixelated;
-                    }
-                  </style>
-                  <img src="${edit.snapshot}" />
-                  </body>
-                  </html>
-                ` }}
-                useWebKit
-              />
-            </>
+                  img {
+                    width: 100vmin;
+                    height: 100vmin;
+                    image-rendering: pixelated;
+                  }
+                </style>
+                <img src="${edit.snapshot}" />
+                </body>
+                </html>
+              ` }}
+              useWebKit
+            />
           )}
 
-          {edit && !edit.stopped && (
+          {mode === "player" && (
             <WebView
               ref={(view) => { this.webview = view; }}
               bounces={false}
