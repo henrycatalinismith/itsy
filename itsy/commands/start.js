@@ -6,6 +6,9 @@ const path = require("path")
 const process = require("process")
 const util = require("util")
 
+const environment = process.env.NODE_ENV || "production"
+const isDev = environment === "development"
+
 const chalk = require("chalk")
 const express = require("express")
 const fetch = require("node-fetch")
@@ -130,21 +133,21 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => watch(
-    `${__dirname}/../engine/itsy.c`,
-    () => store.dispatch(actions.updateEngine("itsy.c"))
-  )),
-
-  after("listen", store => watch(
-    `${__dirname}/../engine/template.js`,
-    () => store.dispatch(actions.updateTemplate())
-  )),
-
-  after("listen", store => watch(
     `${process.cwd()}/itsy.lua`,
     lua => store.dispatch(actions.updateLua(lua))
   )),
 
-  after("listen", store => watch(
+  after("listen", store => isDev && watch(
+    `${__dirname}/../engine/itsy.c`,
+    () => store.dispatch(actions.updateEngine("itsy.c"))
+  )),
+
+  after("listen", store => isDev && watch(
+    `${__dirname}/../engine/template.js`,
+    () => store.dispatch(actions.updateTemplate())
+  )),
+
+  after("listen", store => isDev && watch(
     `${__dirname}/../style.css`,
     () => store.dispatch(actions.updateStylesheet())
   )),
