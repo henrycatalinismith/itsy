@@ -36,6 +36,7 @@ import {
 import actions from "./actions"
 import middlewares from "./middlewares"
 import reducers from "./reducers"
+import thunks from "./thunks"
 
 import {
   palette,
@@ -177,13 +178,4 @@ const styles = StyleSheet.create({
   },
 })
 
-/*
-FileSystem
-  .readDirectoryAsync(FileSystem.documentDirectory)
-  .then(list => console.log(list))
-
-
-const uri = `${FileSystem.documentDirectory}/test.html`
-FileSystem.writeAsStringAsync(uri, "<h1>test</h1>")
-  .then(() => console.log("done"))
-  */
+store.dispatch(thunks.startup())

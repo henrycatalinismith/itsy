@@ -47,6 +47,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
+    return // COMMENT HERE TO LOAD CODE SCREEN
     this.props.open("abc")
     this.props.navigation.navigate("Code", {
       disk: {

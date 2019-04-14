@@ -14,6 +14,13 @@ const update = entityName => (entityState, action) => ({
 })
 
 export default reducer({}, {
+  startup: (edits, action) => {
+    return {
+      ...edits,
+      ...action.edits,
+    }
+  },
+
   new: update("edit"),
   edit: update("edit"),
   play: update("edit"),
