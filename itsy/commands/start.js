@@ -2,14 +2,13 @@
 
 const cp = require("child_process")
 const fs = require("fs")
-const path = require("path")
 const process = require("process")
 const util = require("util")
 
 const environment = process.env.NODE_ENV || "production"
 const isDev = environment === "development"
 
-const chalk = require("chalk")
+const colors = require("ansi-colors")
 const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
@@ -38,7 +37,7 @@ const {
 } = require("@highvalley.systems/signalbox")
 
 const log = message => console.log([
-  chalk.cyanBright(`[${(new Date).toISOString()}]`),
+  colors.cyanBright(`[${(new Date).toISOString()}]`),
   message,
 ].join(" "))
 
@@ -267,56 +266,56 @@ const middlewares = redux.applyMiddleware.apply(null, [
   }),
 
   after("listen", (store, { port }) => log(
-    `listening on port ${chalk.magentaBright(port)}`
+    `listening on port ${colors.magentaBright(port)}`
   )),
 
   after("importAssets", async (store, { assets }) => log([
-    `imported ${chalk.magentaBright(assets.length)}`,
+    `imported ${colors.magentaBright(assets.length)}`,
     `asset${assets.length > 1 ? "s" : ""}`,
   ].join(" "))),
 
   after("downloadAsset", (store, { asset }) => log(
-    `downloaded ${chalk.magentaBright(asset.name)}`
+    `downloaded ${colors.magentaBright(asset.name)}`
   )),
 
   after("response", (store, { request, response }) => log([
     response.statusCode < 400
-      ? chalk.greenBright(response.statusCode)
-      : chalk.redBright(response.statusCode),
+      ? colors.greenBright(response.statusCode)
+      : colors.redBright(response.statusCode),
     request.method,
     request.url,
   ].join(" "))),
 
   after("updateAssets", () => log(
-    `updated ${chalk.magentaBright(".glitch-assets")}`
+    `updated ${colors.magentaBright(".glitch-assets")}`
   )),
 
   after("updateLua", () => log(
-    `updated ${chalk.magentaBright("itsy.lua")}`
+    `updated ${colors.magentaBright("itsy.lua")}`
   )),
 
   after("updateEngine", (store, { filename }) => log(
-    `updated ${chalk.yellowBright(filename)}`
+    `updated ${colors.yellowBright(filename)}`
   )),
 
   after("updateStylesheet", () => log(
-    `updated ${chalk.yellowBright("stylesheet.css")}`
+    `updated ${colors.yellowBright("stylesheet.css")}`
   )),
 
   after("updateTemplate", () => log(
-    `updated ${chalk.yellowBright("template.js")}`
+    `updated ${colors.yellowBright("template.js")}`
   )),
 
   after("rebuildEngine", () => log(
-    `rebuilt ${chalk.yellowBright("base64/engine.js")}`
+    `rebuilt ${colors.yellowBright("base64/engine.js")}`
   )),
 
   after("rebuildStylesheet", () => log(
-    `rebuilt ${chalk.yellowBright("base64/stylesheet.js")}`
+    `rebuilt ${colors.yellowBright("base64/stylesheet.js")}`
   )),
 
   after("rebuildTemplate", () => log(
-    `rebuilt ${chalk.yellowBright("base64/engine.js")}`
+    `rebuilt ${colors.yellowBright("base64/engine.js")}`
   )),
 ])
 
