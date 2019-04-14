@@ -182,6 +182,7 @@ FileSystem
   .readDirectoryAsync(FileSystem.documentDirectory)
   .then(list => console.log(list))
 
+
 const uri = `${FileSystem.documentDirectory}/test.html`
 FileSystem.writeAsStringAsync(uri, "<h1>test</h1>")
   .then(() => console.log("done"))
