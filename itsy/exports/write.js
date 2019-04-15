@@ -4,13 +4,13 @@ const base64 = require("../base64")
 
 const write = ({
   id = uuid(),
-  lua = "",
   name = "",
+  created = (new Date).toISOString(),
+  updated = (new Date).toISOString(),
+  lua = "",
   palette = base64.palette,
   snapshot = base64.snapshot,
   spritesheet = base64.spritesheet,
-  created = (new Date).toISOString(),
-  updated = (new Date).toISOString(),
 }) => `
 <!DOCTYPE html>
 <html>
