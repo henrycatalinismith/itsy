@@ -11,14 +11,8 @@ canvas.height = height
 // canvas.height = 128
 
 const lua = document.querySelector("script[type='text/lua']").innerText
-
-const palette = document
-  .querySelector("img[width='4'][height='4']")
-  .src.split(",")[1]
-
-const spritesheet = document
-  .querySelector("img[width='128'][height='128']")
-  .src.split(",")[1]
+const palette = document.querySelector("#palette").src.split(",")[1]
+const spritesheet = document.querySelector("#spritesheet").src.split(",")[1]
 
 const argv = [
   lua,
