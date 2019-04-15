@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-const cp = require("child_process")
 const fs = require("fs")
 const process = require("process")
 const util = require("util")
@@ -13,7 +12,7 @@ const express = require("express")
 const fetch = require("node-fetch")
 const redux = require("redux")
 
-let itsy = require("../")
+let itsy = require("../exports")
 
 const invalidate = filename => {
   const key = require.resolve(filename)
@@ -113,6 +112,8 @@ const reducers = redux.combineReducers({
   lua: reducer(fs.readFileSync(`${process.cwd()}/itsy.lua`, "utf-8"), {
     updateLua: replace("lua"),
   }),
+
+  name: reducer("", {}),
 })
 
 const watch = (filename, cb) => {
@@ -124,6 +125,10 @@ const watch = (filename, cb) => {
 }
 
 const middlewares = redux.applyMiddleware.apply(null, [
+  before("listen", store => log(
+    `starting ${colors.magentaBright(select.name.from(store).asString())}`
+  )),
+
   after("listen", store => store.dispatch(actions.importAssets())),
 
   after("listen", store => watch(
@@ -163,7 +168,7 @@ const middlewares = redux.applyMiddleware.apply(null, [
     store.dispatch(actions.rebuildTemplate())
   }),
 
-  before("rebuildEngine", store => {
+  before("rebuildEngine", () => {
     run("rm -f engine/core.js")
     run("rm -f engine/itsy.js")
     run("rm -f base64/engine.js")
@@ -171,12 +176,12 @@ const middlewares = redux.applyMiddleware.apply(null, [
     run("make base64/engine.js")
   }),
 
-  before("rebuildStylesheet", store => {
+  before("rebuildStylesheet", () => {
     run("rm -f base64/stylesheet.js")
     run("make base64/stylesheet.js")
   }),
 
-  before("rebuildTemplate", store => {
+  before("rebuildTemplate", () => {
     run("rm -f base64/engine.js")
     run("rm -f engine/itsy.js")
     run("make engine/itsy.js")
@@ -236,11 +241,11 @@ const middlewares = redux.applyMiddleware.apply(null, [
       const palette = select.assets.from(store).forPalette().pop()
       const spritesheet = select.assets.from(store).forSpritesheet().pop()
 
-      response.send(itsy.build(
+      response.send(itsy.write({
         lua,
-        palette.dataUrl.split(",")[1],
-        spritesheet.dataUrl.split(",")[1]
-      ))
+        palette: palette.dataUrl.split(",")[1],
+        spritesheet: spritesheet.dataUrl.split(",")[1],
+      }))
       return
     }
 
@@ -347,14 +352,20 @@ const select = {
     forRunning: lua => lua,
   }),
 
+  name: selector("name", {
+    asString: name => name,
+  }),
+
   stylesheet: selector("stylesheet", {
     forRendering: stylesheet => stylesheet,
   }),
 }
 
-const read = util.promisify(fs.readFile)
+const initialState = {
+  name: process.env.PROJECT_NAME,
+}
 
-const store = redux.createStore(reducers, {}, middlewares)
+const store = redux.createStore(reducers, initialState, middlewares)
 const app = express()
 const port = process.env.PORT || "8080"
 

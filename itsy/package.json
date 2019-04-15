@@ -11,6 +11,7 @@
     "@highvalley.systems/signalbox": "^0.17.0",
     "ansi-colors": "^3.2.4",
     "buffer": "^5.2.1",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "himalaya": "^1.1.0",
     "node-fetch": "^2.3.0",
@@ -23,19 +24,13 @@
     "lua-src": "5.3.5",
     "prettier": "^1.16.4"
   },
-  "main": "index.js",
+  "main": "exports/index.js",
   "files": [
-    "base64/engine.js",
-    "base64/palette.js",
-    "base64/spritesheet.js",
-    "base64/stylesheet.js",
-    "commands/*.js",
-    "defaults/favicon.ico",
-    "defaults/palette.png",
-    "defaults/spritesheet.png",
-    "engine/itsy.js",
-    "functions/*.md",
-    "style.css"
+    "base64/*",
+    "commands/*",
+    "defaults/*",
+    "exports/*",
+    "functions/*"
   ],
   "scripts": {
     "build": "make clean itsy.js",
