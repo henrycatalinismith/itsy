@@ -10,7 +10,17 @@ export default () => (dispatch, getState) => {
   const disk = select.disks.from(state).byId(diskId)
   const edit = select.edits.from(state).latest(diskId)
 
-  const html = itsy.write({ lua: edit.lua })
+  const html = itsy.write({
+    id: disk.id,
+    name: disk.name,
+    created: disk.created,
+    updated: disk.updated,
+    lua: edit.lua,
+    palette: edit.palette,
+    snapshot: edit.snapshot,
+    spritesheet: edit.spritesheet,
+  })
+
   const action = actions.play(disk)
 
   action.edit = {

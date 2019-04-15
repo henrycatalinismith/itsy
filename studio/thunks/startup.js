@@ -17,25 +17,25 @@ export default () => async (dispatch, getState) => {
   for (const name of diskNames) {
     const uri = `${dir}${name}`
     const html = await FileSystem.readAsStringAsync(uri)
-    const { lua, palette, spritesheet } = itsy.read(html)
+    const disk = itsy.read(html)
 
     const newDisk = {
-      id: uuid(),
-      name: "--from disk--",
-      created: (new Date).toISOString(),
-      updated: (new Date).toISOString(),
+      id: disk.id,
+      name: disk.name,
+      created: disk.created,
+      updated: disk.updated,
     }
 
     diskList.push(newDisk)
 
     editList.push({
       id: uuid(),
-      diskId: newDisk.id,
+      diskId: disk.id,
       html: html,
-      lua,
-      palette,
-      snapshot: undefined,
-      spritesheet,
+      lua: disk.lua,
+      palette: disk.palette,
+      snapshot: disk.snapshot,
+      spritesheet: disk.spritesheet,
       created: (new Date).toISOString(),
       updated: (new Date).toISOString(),
       started: undefined,
