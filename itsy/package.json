@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.55.0",
+  "version": "0.56.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -14,6 +14,7 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "himalaya": "^1.1.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
     "redux": "^4.0.1",

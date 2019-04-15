@@ -1,12 +1,53 @@
-const cheerio = require("cheerio")
+const _ = require("lodash")
+const { parse } = require("himalaya")
 
 const read = html => {
-  const $ = cheerio.load(html)
-  const { id, name, created, updated } = JSON.parse($("#metadata").html())
-  const lua = $("#lua").html()
-  const palette = $("#palette").attr("src").split(",")[1]
-  const snapshot = $("#snapshot").attr("src").split(",")[1]
-  const spritesheet = $("#spritesheet").attr("src").split(",")[1]
+  const tree = parse(html)
+
+  const document = _.find(tree, {
+    type: "element",
+    tagName: "html",
+  })
+
+  const body = _.find(document.children, {
+    type: "element",
+    tagName: "body",
+  })
+
+  const {
+    id,
+    name,
+    created,
+    updated,
+  } = JSON.parse(_.get(_.find(body.children, node => (
+    "element" === node.type &&
+    "script" === node.tagName &&
+    "metadata" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
+  )), "children[0].content"))
+
+  const lua = _.get(_.find(body.children, node => (
+    "element" === node.type &&
+    "script" === node.tagName &&
+    "lua" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
+  )), "children[0].content")
+
+  const palette = _.get(_.find(body.children, node => (
+    "element" === node.type &&
+    "img" === node.tagName &&
+    "palette" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
+  )), "attributes[3].value").split(",")[1]
+
+  const snapshot = _.get(_.find(body.children, node => (
+    "element" === node.type &&
+    "img" === node.tagName &&
+    "snapshot" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
+  )), "attributes[3].value").split(",")[1]
+
+  const spritesheet = _.get(_.find(body.children, node => (
+    "element" === node.type &&
+    "img" === node.tagName &&
+    "spritesheet" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
+  )), "attributes[3].value").split(",")[1]
 
   return {
     id,
