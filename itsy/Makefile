@@ -57,8 +57,14 @@ base64/engine.js: engine/itsy.js
 	base64 engine/itsy.js | perl -pe "chomp" >> base64/engine.js
 	echo "\"" >> base64/engine.js
 
+base64/favicon.js:
+	echo "module.exports = '`base64 defaults/favicon.ico`'" > base64/favicon.js
+
 base64/palette.js:
 	echo "module.exports = '`base64 defaults/palette.png`'" > base64/palette.js
+
+base64/snapshot.js:
+	echo "module.exports = '`base64 defaults/snapshot.png`'" > base64/snapshot.js
 
 base64/spritesheet.js:
 	echo "module.exports = '`base64 defaults/spritesheet.png`'" > base64/spritesheet.js

@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.53.0",
+  "version": "0.54.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -11,11 +11,13 @@
     "@highvalley.systems/signalbox": "^0.17.0",
     "ansi-colors": "^3.2.4",
     "buffer": "^5.2.1",
+    "cheerio": "^1.0.0-rc.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
-    "himalaya": "^1.1.0",
+    "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
-    "redux": "^4.0.1"
+    "redux": "^4.0.1",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",

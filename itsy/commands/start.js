@@ -2,7 +2,6 @@
 
 const fs = require("fs")
 const process = require("process")
-const util = require("util")
 
 const environment = process.env.NODE_ENV || "production"
 const isDev = environment === "development"
@@ -237,11 +236,13 @@ const middlewares = redux.applyMiddleware.apply(null, [
 
   after("request", (store, { request, response, next }) => {
     if (request.method === "GET" && request.url === "/") {
+      const name = select.name.from(store).asString()
       const lua = select.lua.from(store).forRunning()
       const palette = select.assets.from(store).forPalette().pop()
       const spritesheet = select.assets.from(store).forSpritesheet().pop()
 
       response.send(itsy.write({
+        name, 
         lua,
         palette: palette.dataUrl.split(",")[1],
         spritesheet: spritesheet.dataUrl.split(",")[1],
