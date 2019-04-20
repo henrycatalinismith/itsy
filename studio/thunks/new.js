@@ -28,7 +28,6 @@ export default () => (dispatch, getState) => {
     updated: action.disk.updated,
     started: undefined,
     stopped: undefined,
-
   }
 
   dispatch(action)

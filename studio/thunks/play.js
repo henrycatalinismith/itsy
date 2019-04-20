@@ -2,6 +2,7 @@ import { FileSystem } from "expo"
 import itsy from "@highvalley.systems/itsy"
 
 import actions from "../actions"
+import helpers from "../helpers"
 import select from "../selectors"
 
 export default () => (dispatch, getState) => {
@@ -30,7 +31,7 @@ export default () => (dispatch, getState) => {
     stopped: undefined,
   }
 
-  const uri = `${FileSystem.documentDirectory}${disk.name}.html`
+  const uri = helpers.filename(disk)
   FileSystem.writeAsStringAsync(uri, html).then(() => {
     console.log("saved disk")
   }).catch(e => {

@@ -11,4 +11,5 @@ export default {
   ...action("play", ["disk"]),
   ...action("snap", ["edit"]),
   ...action("stop", []),
+  ...action("rename", ["disk"]),
 }

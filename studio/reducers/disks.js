@@ -29,6 +29,16 @@ export default reducer({}, {
     }
   },
 
+  rename: (disks, action) => {
+    return {
+      ...disks,
+      [action.disk.id]: {
+        ...disks[action.disk.id],
+        ...action.disk,
+      }
+    }
+  },
+
   //createDisk: insert("disk"),
   //deleteDisk: remove("disk"),
 })
