@@ -31,6 +31,7 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.2",
     "emcc": "^0.2.2",
+    "gray-matter": "^4.0.2",
     "lua-src": "5.3.5",
     "prettier": "^1.16.4"
   },

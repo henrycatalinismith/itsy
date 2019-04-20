@@ -1,10 +1,27 @@
 import React from "react"
+import frontMatter from "gray-matter"
 import { storiesOf } from "@storybook/react"
 import ItsyDecorator from "../components/ItsyDecorator"
 
-storiesOf("Functions", module)
-  .addDecorator(story => <ItsyDecorator>{story()}</ItsyDecorator>)
+const stories = storiesOf("Functions", module)
 
+stories.addDecorator(story => (
+  <ItsyDecorator>{story()}</ItsyDecorator>
+))
+
+const req = require.context(`${__dirname}/../functions`, true, /\.md$/)
+req.keys().forEach(filename => {
+  const markdown = req(filename)
+  const doc = frontMatter(markdown)
+  console.log(doc.data.example)
+  if (!doc.data.example) {
+    return
+  }
+
+  stories.add(doc.data.name, () => doc.data.example)
+})
+
+/*
   .add("abs", () => `
     print("ABS(-50)", 4, 14, 7)
     print("=" .. abs(-50), 8, 22, 14)
@@ -56,3 +73,14 @@ storiesOf("Functions", module)
     print(#table, 52, 56, 14)
   `)
 
+  .add("touch", () => `
+    function _draw()
+      if touch() then
+        cls(12)
+      else
+        cls(1)
+      end
+    end
+  `)
+
+  */
