@@ -478,7 +478,7 @@ void loop(void)
     }
   }
 
-  lua_getglobal(runtime, "_update");
+  lua_getglobal(runtime, "_tick");
   if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
     runtime_error(runtime);
     return;

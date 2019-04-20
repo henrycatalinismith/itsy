@@ -7,5 +7,7 @@ args:
 - name: col
   type: number
   desc: fill color
+example: |
+  cls(14)
 ---
 

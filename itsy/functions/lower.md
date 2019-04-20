@@ -10,5 +10,10 @@ args:
 returns:
   type: string
   desc: lower case version of s
+example: |
+  shouty_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  quiet_alphabet = lower(shouty_alphabet)
+  print(shouty_alphabet, 16, 58, 5)
+  print(quiet_alphabet, 16, 70, 7)
 ---
 
