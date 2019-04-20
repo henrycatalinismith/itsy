@@ -1,5 +1,5 @@
 const read = require("./read")
-const write = require("./write")
+const write = require("./write").write
 
 module.exports = {
   read,

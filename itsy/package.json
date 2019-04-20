@@ -14,6 +14,7 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "highlight.js": "^9.15.6",
     "himalaya": "^1.1.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
@@ -21,8 +22,14 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.3",
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
     "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
+    "@storybook/addon-links": "^5.0.10",
+    "@storybook/addons": "^5.0.10",
+    "@storybook/react": "^5.0.10",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-add-module-exports": "^1.0.2",
     "emcc": "^0.2.2",
     "lua-src": "5.3.5",
     "prettier": "^1.16.4"
@@ -40,6 +47,8 @@
     "bump": "node workshop/bump.js",
     "ship": "node workshop/ship.js",
     "start": "NODE_ENV=development node workshop/start.js",
-    "tag": "node workshop/tag.js"
+    "tag": "node workshop/tag.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   }
 }

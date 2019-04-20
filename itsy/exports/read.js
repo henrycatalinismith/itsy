@@ -1,7 +1,7 @@
 const _ = require("lodash")
 const { parse } = require("himalaya")
 
-const read = html => {
+module.exports = html => {
   const tree = parse(html)
 
   const document = _.find(tree, {
@@ -60,5 +60,3 @@ const read = html => {
     spritesheet,
   }
 }
-
-module.exports = read

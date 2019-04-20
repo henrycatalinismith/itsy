@@ -2,7 +2,7 @@ const uuid = require("uuid")
 const { Buffer } = require("buffer")
 const base64 = require("../base64")
 
-const write = ({
+exports.write = ({
   id = uuid(),
   name = "",
   created = (new Date).toISOString(),
@@ -39,10 +39,10 @@ ${JSON.stringify({
 ${Buffer.from(base64.stylesheet, "base64").toString()}
 </style>
 <script id="itsy" type="text/javascript">
+console.log("test")
 ${Buffer.from(base64.engine, "base64").toString()}
 </script>
 </body>
 </html>
 `.trim()
 
-module.exports = write

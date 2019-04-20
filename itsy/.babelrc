@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": "cjs",
+        "useBuiltIns": "entry",
+        "targets": {
+          "node": true
+        }
+      }
+    ]
+  ],
+  "plugins": ["add-module-exports"]
+}
