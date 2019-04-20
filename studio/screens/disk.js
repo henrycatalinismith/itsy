@@ -5,6 +5,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native"
@@ -29,6 +31,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  rename: name => dispatch(thunks.rename(name)),
 });
 
 class DiskScreen extends React.Component {
@@ -36,12 +39,46 @@ class DiskScreen extends React.Component {
     header: Header
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      mode: "neutral",
+      name: props.disk.name,
+    }
+  }
+
   render() {
     const {
       disk,
       edit,
       navigation,
+      rename,
     } = this.props
+
+    const {
+      mode,
+      name,
+    } = this.state
+
+    const onRenameStart = () => {
+      this.setState({
+        mode: "rename",
+        name: disk.name,
+      })
+    }
+
+    const onRenameEdit = newName => {
+      this.setState({
+        name: newName,
+      })
+    }
+
+    const onRenameSubmit = () => {
+      this.setState({
+        mode: "neutral",
+      })
+      rename(name)
+    }
 
     const onEdit = () => {
       navigation.navigate("Code", { disk })
@@ -59,13 +96,30 @@ class DiskScreen extends React.Component {
                   size={300}
                 />
 
-                <Font
-                  fontSize={32}
-                  color={colors[7]}
-                  borderColor={colors[0]}
-                  borderMultiplier={3}
-                  strokeMultiplier={0.9}
-                >{disk.name}</Font>
+                {mode === "neutral" && (
+                  <TouchableHighlight onPress={onRenameStart}>
+                    <Font
+                      fontSize={32}
+                      color={colors[7]}
+                      borderColor={colors[0]}
+                      borderMultiplier={3}
+                      strokeMultiplier={0.9}
+                    >{disk.name}</Font>
+                  </TouchableHighlight>
+                )}
+
+                {mode === "rename" && (
+                  <TextInput
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoFocus={true}
+                    onChangeText={onRenameEdit}
+                    onSubmitEditing={onRenameSubmit}
+                    style={styles.rename}
+                    textContentType="none"
+                    value={name}
+                  />
+                )}
 
                 <TouchableOpacity style={styles.edit} onPress={onEdit}>
                   <Font
@@ -153,9 +207,19 @@ const styles = StyleSheet.create({
   landscape: {
     flexDirection: "row",
   },
+
   portrait: {
     flexDirection: "column",
   },
+
+  rename: {
+    borderColor: colors[0],
+    borderWidth: 2,
+    backgroundColor: colors[7],
+    fontSize: 18,
+    padding: 4,
+  },
+
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiskScreen)
