@@ -88,6 +88,7 @@ lua_State* runtime;
 lua_State* debugger;
 
 int draw_circ(lua_State *L);
+int draw_circfill(lua_State *L);
 int draw_cls(lua_State *L);
 int draw_line(lua_State *L);
 int draw_print(lua_State *L);
@@ -126,6 +127,7 @@ const luaL_Reg coroutines[] = {
 
 const luaL_Reg draw_funcs[] = {
   {"circ", draw_circ},
+  {"circfill", draw_circfill},
   {"cls", draw_cls},
   {"line", draw_line},
   {"print", draw_print},
@@ -585,6 +587,72 @@ void pset(int x, int y, int c)
   nobble(pixel[x][y], x % 2 == 1, c);
 }
 
+void circ(int x, int y, int r, int col)
+{
+  int f = 1 - r;
+  int ddF_x = 0;
+  int ddF_y = -2 * r;
+  int cx = 0;
+  int cy = r;
+
+  pset(x, y + r, col);
+  pset(x, y - r, col);
+  pset(x + r, y, col);
+  pset(x - r, y, col);
+
+  while (cx < cy) {
+    if (f >= 0) {
+      cy--;
+      ddF_y += 2;
+      f += ddF_y;
+    }
+
+    cx++;
+    ddF_x += 2;
+    f += ddF_x + 1;
+
+    pset(x + cx, y + cy, col);
+    pset(x - cx, y + cy, col);
+    pset(x + cx, y - cy, col);
+    pset(x - cx, y - cy, col);
+    pset(x + cy, y + cx, col);
+    pset(x - cy, y + cx, col);
+    pset(x + cy, y - cx, col);
+    pset(x - cy, y - cx, col);
+  }
+
+}
+
+void circfill(int x, int y, int r, int col)
+{
+  int f = 1 - r;
+  int ddF_x = 0;
+  int ddF_y = -2 * r;
+  int cx = 0;
+  int cy = r;
+
+  pset(x, y + r, col);
+  pset(x, y - r, col);
+  line(x + r, y, x - r, y, col);
+
+  while (cx < cy) {
+    if (f >= 0) {
+      cy--;
+      ddF_y += 2;
+      f += ddF_y;
+    }
+
+    cx++;
+    ddF_x += 2;
+    f += ddF_x + 1;
+
+    line(x + cx, y + cy, x - cx, y + cy, col);
+    line(x + cx, y - cy, x - cx, y - cy, col);
+    line(x + cy, y + cx, x - cy, y + cx, col);
+    line(x + cy, y - cx, x - cy, y - cx, col);
+  }
+}
+
 // https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
 void line(int x0, int y0, int x1, int y1, int col)
 {
@@ -657,7 +725,7 @@ void rectfill(int x0, int y0, int x1, int y1, int col)
   }
 }
 
-// https://en.wikipedia.org/wiki/Midpoint_circle_algorithm#C_example
+// http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
 int draw_circ(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
@@ -665,34 +733,19 @@ int draw_circ(lua_State *L)
   int r = luaL_checknumber(L, 3);
   int c = luaL_checknumber(L, 4);
 
-  int cx = r - 1;
-  int cy = 0;
-  int dx = 1;
-  int dy = 1;
-  int err = dx - (r << 1);
+  circ(x, y, r, c);
 
-  while (cx >= cy) {
-    pset(x + cx, y + cy, c);
-    pset(x + cy, y + cx, c);
-    pset(x - cy, y + cx, c);
-    pset(x - cx, y + cy, c);
-    pset(x - cx, y - cy, c);
-    pset(x - cy, y - cx, c);
-    pset(x + cy, y - cx, c);
-    pset(x + cx, y - cy, c);
+  return 0;
+}
 
-    if (err <= 0) {
-      cy++;
-      err += dy;
-      dy += 2;
-    }
+int draw_circfill(lua_State *L)
+{
+  int x = luaL_checknumber(L, 1);
+  int y = luaL_checknumber(L, 2);
+  int r = luaL_checknumber(L, 3);
+  int c = luaL_checknumber(L, 4);
 
-    if (err > 0) {
-      cx--;
-      dx += 2;
-      err += dx - (r << 1);
-    }
-  }
+  circfill(x, y, r, c);
 
   return 0;
 }
