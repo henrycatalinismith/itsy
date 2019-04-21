@@ -16,13 +16,14 @@ args:
 - name: col
   type: number
   desc: border color
-example: |
-  circ(64, 64, 1, 14)
-  circ(64, 64, 2, 12)
-  circ(64, 64, 4, 11)
-  circ(64, 64, 8, 10)
-  circ(64, 64, 16, 9)
-  circ(64, 64, 32, 8)
-  circ(64, 64, 64, 7)
+examples:
+  plain: |
+    circ(64, 64, 1, 14)
+    circ(64, 64, 2, 12)
+    circ(64, 64, 4, 11)
+    circ(64, 64, 8, 10)
+    circ(64, 64, 16, 9)
+    circ(64, 64, 32, 8)
+    circ(64, 64, 64, 7)
 ---
 

@@ -16,13 +16,13 @@ args:
 - name: col
   type: number
   desc: fill color
-example: |
-  circfill(64, 64, 64, 7)
-  circfill(64, 64, 32, 8)
-  circfill(64, 64, 16, 9)
-  circfill(64, 64, 8, 10)
-  circfill(64, 64, 4, 11)
-  circfill(64, 64, 2, 12)
-  circfill(64, 64, 1, 14)
+examples:
+  plain: |
+    circfill(64, 64, 64, 7)
+    circfill(64, 64, 32, 8)
+    circfill(64, 64, 16, 9)
+    circfill(64, 64, 8, 10)
+    circfill(64, 64, 4, 11)
+    circfill(64, 64, 2, 12)
+    circfill(64, 64, 1, 14)
 ---
-

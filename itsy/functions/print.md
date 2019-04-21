@@ -16,19 +16,21 @@ args:
 - name: col
   type: number
   desc: text color
-example: |
-  print("HELLO!!", 2, 2, 15)
-  print("Have a lovely day", 8, 10, 14)
+examples:
+  plain: |
+    print("HELLO!!", 32, 32, 15)
+    print("Have a lovely day", 32, 48, 14)
 
-  for i = 0, 2 do
-    for j = 0, 2 do
-      if i ~= 1 or j ~= 1 then
-        print("you got this!", 16 + i, 18 + j, 7)
+  graphical: |
+    cls(13)
+    for i = 0, 2 do
+      for j = 0, 2 do
+        if i ~= 1 or j ~= 1 then
+          print("YOU CAN DO IT!", 40 + i, 48 + j, 1)
+        end
       end
     end
-  end
-
-  print("you got this!", 16 + 1,18 + 1, 12)
+    print("YOU CAN DO IT!", 40 + 1, 48 + 1, 12)
 
 ---
 

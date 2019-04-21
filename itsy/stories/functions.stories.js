@@ -13,10 +13,13 @@ const req = require.context(`${__dirname}/../functions`, true, /\.md$/)
 req.keys().forEach(filename => {
   const markdown = req(filename)
   const doc = frontMatter(markdown)
-  console.log(doc.data.example)
-  if (!doc.data.example) {
-    return
-  }
 
-  stories.add(doc.data.name, () => doc.data.example)
+  if (doc.data.examples) {
+    Object.entries(doc.data.examples).forEach(([name, code]) => {
+      const storyName = `${doc.data.name} [${name}]`
+      stories.add(storyName, () => code)
+    })
+  } else {
+    stories.add(`${doc.data.name} ❌`, () => "")
+  }
 })
