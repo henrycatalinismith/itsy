@@ -11,6 +11,17 @@ returns:
   type: number
   desc: absolute value of [num]
 examples:
+  plain: |
+    print(abs(-999))  -- prints 999
+    print(abs(-50))   -- prints 50
+    print(abs(-1))    -- prints 1
+    print(abs(-0.1))  -- prints 0.1
+    print(abs(0))     -- prints 0
+    print(abs(0.1))   -- prints 0.1
+    print(abs(1))     -- prints 1
+    print(abs(50))    -- prints 50
+    print(abs(999))   -- prints 999
+
   graphical: |
     print("ABS(-50)", 4, 14, 7)
     print("=" .. abs(-50), 8, 22, 14)

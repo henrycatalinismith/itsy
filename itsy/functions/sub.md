@@ -7,14 +7,20 @@ args:
 - name: s
   type: string
   desc: input string
-- name: i
+- name: start
   type: number
   desc: start of substring
-- name: j
+- name: end
   type: number
   desc: end of substring
+  base: -1
 returns:
   type: string
   desc: substring of s
+examples:
+  plain: |
+    print(sub("hello there", 1, 5))  -- hello
+  defaults: |
+    print(sub("hello there", -5)) -- there
 ---
 

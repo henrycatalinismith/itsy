@@ -20,6 +20,12 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
+#define DRAW_COLOR 0x5f25
+#define DRAW_PRINT_X 0x5f26
+#define DRAW_PRINT_Y 0x5f27
+#define DRAW_LINE_X 0x5f28
+#define DRAW_LINE_Y 0x5f29
+
 typedef struct itsy_sdl_context {
   SDL_Window *window;
   SDL_Renderer *renderer;
@@ -307,6 +313,8 @@ int init_itsy(char *palettePng, char *spritesheetPng)
       pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
     }
   }
+
+  poke(DRAW_COLOR, 6);
 
   unsigned long decsize;
   unsigned char *img;
@@ -739,10 +747,10 @@ int draw_circ(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
-  int r = luaL_checknumber(L, 3);
-  int c = luaL_checknumber(L, 4);
+  int r = luaL_optinteger(L, 3, 4);
+  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
 
-  circ(x, y, r, c);
+  circ(x, y, r, col);
 
   return 0;
 }
@@ -751,10 +759,10 @@ int draw_circfill(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
-  int r = luaL_checknumber(L, 3);
-  int c = luaL_checknumber(L, 4);
+  int r = luaL_optinteger(L, 3, 4);
+  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
 
-  circfill(x, y, r, c);
+  circfill(x, y, r, col);
 
   return 0;
 }
@@ -774,25 +782,54 @@ int draw_cls(lua_State *L)
 
 int draw_line(lua_State *L)
 {
-  int x0 = luaL_checknumber(L, 1);
-  int y0 = luaL_checknumber(L, 2);
-  int x1 = luaL_checknumber(L, 3);
-  int y1 = luaL_checknumber(L, 4);
-  int col = luaL_checknumber(L, 5);
+  int argc = lua_gettop(L);
+
+  int x0, y0, x1, y1, col;
+
+  switch (argc) {
+    case 2:
+      x0 = peek(DRAW_LINE_X);
+      y0 = peek(DRAW_LINE_Y);
+      x1 = luaL_checknumber(L, 1);
+      y1 = luaL_checknumber(L, 2);
+      col = peek(DRAW_COLOR);
+      break;
+
+    case 4:
+      x0 = luaL_checknumber(L, 1);
+      y0 = luaL_checknumber(L, 2);
+      x1 = luaL_checknumber(L, 3);
+      y1 = luaL_checknumber(L, 4);
+      col = peek(DRAW_COLOR);
+      break;
+
+    case 5:
+      x0 = luaL_checknumber(L, 1);
+      y0 = luaL_checknumber(L, 2);
+      x1 = luaL_checknumber(L, 3);
+      y1 = luaL_checknumber(L, 4);
+      col = luaL_checknumber(L, 5);
+      break;
+  }
 
   line(x0, y0, x1, y1, col);
+
+  poke(DRAW_LINE_X, x1);
+  poke(DRAW_LINE_Y, y1);
 
   return 0;
 }
 
 int draw_print(lua_State *L)
 {
-  const char *str = luaL_checkstring(L, 1);
-  int x = luaL_checknumber(L, 2);
-  int y = luaL_checknumber(L, 3);
-  int col = luaL_checknumber(L, 4);
+  const char *str = luaL_optstring(L, 1, "");
+  int x = luaL_optinteger(L, 2, peek(DRAW_PRINT_X));
+  int y = luaL_optinteger(L, 3, peek(DRAW_PRINT_Y));
+  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
 
   print(str, x, y, col);
+  poke(DRAW_PRINT_X, x);
+  poke(DRAW_PRINT_Y, y + 8);
 
   return 0;
 }
@@ -801,9 +838,9 @@ int draw_pset(lua_State *L)
 {
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
-  int c = luaL_checknumber(L, 3);
+  int col = luaL_optinteger(L, 3, peek(DRAW_COLOR));
 
-  pset(x, y, c);
+  pset(x, y, col);
 
   return 0;
 }
@@ -814,7 +851,7 @@ int draw_rect(lua_State *L)
   int y0 = luaL_checknumber(L, 2);
   int x1 = luaL_checknumber(L, 3);
   int y1 = luaL_checknumber(L, 4);
-  int col = luaL_checknumber(L, 5);
+  int col = luaL_optinteger(L, 5, peek(DRAW_COLOR));
 
   rect(x0, y0, x1, y1, col);
 
@@ -827,7 +864,7 @@ int draw_rectfill(lua_State *L)
   int y0 = luaL_checknumber(L, 2);
   int x1 = luaL_checknumber(L, 3);
   int y1 = luaL_checknumber(L, 4);
-  int col = luaL_checknumber(L, 5);
+  int col = luaL_optinteger(L, 5, peek(DRAW_COLOR));
 
   rectfill(x0, y0, x1, y1, col);
 
@@ -871,7 +908,7 @@ int gfx_color(lua_State *L)
 {
   int col = luaL_checknumber(L, 1);
 
-  poke(0x5f25, col);
+  poke(DRAW_COLOR, col);
 
   return 0;
 }

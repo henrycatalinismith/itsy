@@ -10,5 +10,19 @@ args:
 returns:
   type: function
   desc: an iterator representing the input table
+examples:
+  plain: |
+    list = {
+      a = 2,
+      b = 4,
+      c = 8,
+      d = 16,
+      e = 32,
+      f = 64,
+      g = 128,
+    }
+    for letter, number in pairs(list) do
+      print(letter .. "=" .. number)
+    end
 ---
 

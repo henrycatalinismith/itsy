@@ -13,4 +13,11 @@ args:
 returns:
   type: number
   desc: whichever of the two input numbers was smallest
+examples:
+  plain: |
+    print(min(0, 1))   -- prints 0
+    print(min(2, 1))   -- prints 1
+    print(min(-1, 1))  -- prints -1
+    print(min(-1, -2)) -- prints -2
+    print(min(0, -2))  -- prints -2
 ---

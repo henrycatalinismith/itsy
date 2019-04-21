@@ -22,5 +22,10 @@ args:
 - name: dy
   type: number
   desc: screen y position
+examples:
+  🚫: |
+    cls(7)
+    sspr(0, 0, 8, 8, 56, 56)
+    sspr(8, 0, 8, 8, 60, 60)
 ---
 

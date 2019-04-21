@@ -15,15 +15,18 @@ returns:
   desc: the value deleted
 examples:
   plain: |
-    table = { "a", "b", "c" }
+    table = {
+      "a",
+      "b",
+      "c",
+    }
+    print(#table)   -- prints 3
+    del(table, 2)   -- deletes "b"
+    print(#table)   -- prints 2
+    del(table, 2)   -- deletes "c"
+    print(#table)   -- prints 1
+    del(table, 1)   -- deletes "a"
+    print(#table)   -- prints 0
 
-    print("TABLE SIZE: ", 8, 8, 12)
-    print(#table, 52, 8, 14)
-
-    print("del(table, 2)", 8, 16, 7)
-    del(table, 2)
-
-    print("TABLE SIZE: ", 8, 24, 12)
-    print(#table, 52, 24, 14)
 ---
 

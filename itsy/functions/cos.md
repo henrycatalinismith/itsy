@@ -11,6 +11,9 @@ returns:
   type: number
   desc: the cosine of the input angle
 examples:
+  plain: |
+    print(cos(0))
+    print(cos(3.141592))
   animated: |
     function _init()
       x = 0

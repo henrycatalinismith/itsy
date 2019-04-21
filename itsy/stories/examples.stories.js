@@ -3,7 +3,7 @@ import frontMatter from "gray-matter"
 import { storiesOf } from "@storybook/react"
 import ItsyDecorator from "../components/ItsyDecorator"
 
-const stories = storiesOf("Functions", module)
+const stories = storiesOf("Examples", module)
 
 stories.addDecorator(story => (
   <ItsyDecorator>{story()}</ItsyDecorator>

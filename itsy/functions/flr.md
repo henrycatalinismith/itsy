@@ -11,6 +11,17 @@ returns:
   type: number
   desc: the input number rounded down to the next lowest integer
 examples:
+  plain: |
+    print(flr(-99.9))  -- prints -100
+    print(flr(-50.9))  -- prints -51
+    print(flr(-1.1))   -- prints -2
+    print(flr(-0.1))   -- prints -1
+    print(flr(0))      -- prints 0
+    print(flr(0.1))    -- prints 0
+    print(flr(1.1))    -- prints 1
+    print(flr(50.9))   -- prints 50
+    print(flr(99.9))   -- prints 99
+
   graphical: |
     y1 = 32
     y2 = 32
