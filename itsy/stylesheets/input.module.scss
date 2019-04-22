@@ -2,6 +2,10 @@
 @import "layout";
 @import "typography";
 
+@mixin cell () {
+  padding-top: 8px;
+}
+
 .input {
   @include section();
 }
@@ -10,15 +14,29 @@
   @include h2();
 }
 
+.input__args {
+  border-collapse: collapse;
+}
+
 .input__name {
+  @include cell();
   color: pico8(2);
 }
 
 .input__type {
+  @include cell();
   color: pico8(14);
   font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 
 .input__desc {
+  @include cell();
   color: pico8(0);
+}
+
+.input__base {
+  color: pico8(13);
+  font-size: 14px;
 }

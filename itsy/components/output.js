@@ -7,7 +7,9 @@ export default ({ type, desc }) => {
       <h2 className={styles.output__heading}>
         returns
         {" "}
-        {type}
+        <span className={styles.output__type}>
+          &lt;{type}&gt;
+        </span>
       </h2>
       <p className={styles.output__description}>
         {desc}

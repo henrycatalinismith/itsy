@@ -10,11 +10,11 @@ args:
 - name: x
   type: number
   desc: x position
-  base: value from previous call
+  base: x from previous call
 - name: y
   type: number
   desc: y position
-  base: value from previous call + 8
+  base: y from previous call + 8
 - name: col
   type: number
   desc: text color

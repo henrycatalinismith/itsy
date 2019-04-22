@@ -8,7 +8,7 @@ export default ({ children }) => {
         parameters
       </h2>
 
-      <table>
+      <table className={styles.input__args}>
         <tbody>
           {children.map((arg, i) => (
             <tr key={arg.name}>
@@ -20,6 +20,14 @@ export default ({ children }) => {
               </td>
               <td className={styles.input__desc}>
                 {arg.desc}
+                {arg.base && (
+                  <>
+                    <br />
+                    <span className={styles.input__base}>
+                      (default: {arg.base})
+                    </span>
+                  </>
+                )}
               </td>
             </tr>
           ))}

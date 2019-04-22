@@ -9,7 +9,7 @@ args:
   desc: any number
 returns:
   type: number
-  desc: absolute value of [num]
+  desc: absolute value of input number
 examples:
   plain: |
     print(abs(-999))  -- prints 999
