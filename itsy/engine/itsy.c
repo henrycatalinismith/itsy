@@ -232,7 +232,7 @@ int main(int argc, char **argv)
   lua_getglobal(runtime, "_draw");
   int has_draw = lua_isfunction(runtime, -1);
 
-  if (has_tick || has_draw) {
+  if (has_tick && has_draw) {
     emscripten_set_main_loop(loop, -1, 1);
   } else {
     render();

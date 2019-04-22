@@ -133,7 +133,6 @@ function _init()
   level_index = 1
 
   for x = 1,128 do
-
     --print(cave, 8, 8, 12)
     --print(level(), 8, 16, 12)
     --add(cave, level())
@@ -141,7 +140,7 @@ function _init()
   end
 end
 
-function _update()
+function _tick()
   tick = tick + 1
   controls()
   if tick % 5 < 4 then
