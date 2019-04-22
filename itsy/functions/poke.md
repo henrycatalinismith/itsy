@@ -11,7 +11,7 @@ args:
   type: number
   desc: new value
 examples:
-  plain: |
+  poking video memory addresses: |
     for x = 0,127 do
       for y = 0,127 do
         addr = (0x6000 + (

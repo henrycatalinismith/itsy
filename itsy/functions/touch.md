@@ -7,7 +7,7 @@ returns:
   type: boolean
   desc: true when the player touches the screen
 examples:
-  interactive: |
+  interactive demo (touch the square): |
     function _draw()
       if touch() then
         cls(12)

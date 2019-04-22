@@ -14,7 +14,7 @@ returns:
   type: any
   desc: the value added
 examples:
-  plain: |
+  adding 3 values to a table: |
     table = {}
     print(#table)   -- prints 0
     add(table, 123)

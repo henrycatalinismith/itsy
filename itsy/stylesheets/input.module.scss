@@ -20,15 +20,19 @@
 
 .input__name {
   @include cell();
-  color: pico8(2);
+  @include code();
+
+  color: pico8(3);
 }
 
 .input__type {
   @include cell();
+  @include code();
+
   color: pico8(14);
   font-size: 12px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 2px;
+  padding-right: 4px;
 }
 
 .input__desc {

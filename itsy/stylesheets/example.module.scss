@@ -1,19 +1,60 @@
+@import "color";
 @import "layout";
 @import "typography";
 
 .example {
   @include subsection();
+  margin-bottom: 32px;
 }
 
 .example__heading {
   @include h3();
 }
 
+.example__card {
+  background: pico8(7) !important;
+  border: 1px solid pico8(6);
+  border-radius: 2px;
+  box-shadow: pico8(13) 1px 1px 2px;
+  display: flex;
+  flex-direction: column;
+  margin: 8px 0;
+  padding: 0 0 4px 0;
+  align-items: center;
+}
+
 .example__pre {
+  background: pico8(7) !important;
+  flex: 1;
   margin: 0;
+  width: 100%;
 }
 
 .example__code {
-  background: #fff !important;
+  background: none !important;
+  border-top: 4px solid pico8(14) !important;
   margin: 0;
+  padding: 4px 8px !important;
+}
+
+$screenBorder: 2px;
+.example__square {
+  border: $screenBorder solid pico8(0) !important;
+  width: calc(100% - 8px - (#{2 * $screenBorder}) );
+  padding-top: 100%;
+  position: relative;
+}
+
+.example__iframe {
+  border: 0;
+  // kflex: 1;
+  // kheight: 90vw;
+  // kwidth: calc(100% - 2 * 4px);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }

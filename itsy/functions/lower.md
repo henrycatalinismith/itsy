@@ -11,7 +11,7 @@ returns:
   type: string
   desc: lower case version of s
 examples:
-  plain: |
+  inputs vs outputs: |
     -- prints "ABCDEFGHIJKLMN"
     print("ABCDEFGHIJKLMN")
 

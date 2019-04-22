@@ -11,7 +11,10 @@ returns:
   type: function
   desc: an iterator representing the input table
 examples:
-  plain: |
+  random order: |
+    -- this will print all the
+    -- items from the list in a
+    -- different order every time
     list = {
       a = 2,
       b = 4,

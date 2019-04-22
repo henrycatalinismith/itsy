@@ -11,7 +11,7 @@ returns:
   type: number
   desc: the sine of the input angle
 examples:
-  animated: |
+  animated demo: |
     function _init()
       x = 0
       y = 0

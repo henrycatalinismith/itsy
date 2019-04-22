@@ -9,9 +9,9 @@ export default ({ name, args }) => {
         <span key={i}>
           {" "}
           {arg.base ? (
-            <span>[{arg.name}]</span>
+            <span className={styles.signature__name}>[{arg.name}]</span>
           ) : (
-            <span>{arg.name}</span>
+            <span className={styles.signature__name}>{arg.name}</span>
           )}
           {(i < args.length - 1) && <span>,</span>}
         </span>

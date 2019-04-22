@@ -14,7 +14,7 @@ returns:
   type: any
   desc: the value deleted
 examples:
-  plain: |
+  deleting 3 values from a table: |
     table = {
       "a",
       "b",

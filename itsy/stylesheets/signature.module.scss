@@ -4,6 +4,10 @@
 
 .signature {
   @include subsection();
-  font-family: "Monaco", monospace;
+  @include code();
   font-size: 14px;
+}
+
+.signature__name {
+  color: pico8(3);
 }

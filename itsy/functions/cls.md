@@ -9,7 +9,9 @@ args:
   desc: fill color
   base: draw state color
 examples:
-  plain: |
+  red screen: |
+    cls(8)
+  pink screen: |
     cls(14)
 ---
 

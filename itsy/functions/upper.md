@@ -11,11 +11,11 @@ returns:
   type: string
   desc: upper case version of s
 examples:
-  plain: |
+  inputs vs outputs: |
    -- prints "abcdefghijklmn"
-    print("abcdefghijklmn")
+   print("abcdefghijklmn")
 
-    -- prints "ABCDEFGHIJKLMN"
-    print(upper("abcdefghijklmn"))
+   -- prints "ABCDEFGHIJKLMN"
+   print(upper("abcdefghijklmn"))
 ---
 

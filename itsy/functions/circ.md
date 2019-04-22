@@ -19,7 +19,7 @@ args:
   desc: border color
   base: draw state color
 examples:
-  plain: |
+  7 concentric circles: |
     circ(64, 64, 1, 14)
     circ(64, 64, 2, 12)
     circ(64, 64, 4, 11)

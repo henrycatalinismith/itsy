@@ -21,7 +21,7 @@ args:
   desc: border color
   base: draw state color
 examples:
-  plain: |
+  7 concentric rectangles: |
     rect(0, 0, 127, 127, 7)
     rect(1, 1, 126, 126, 8)
     rect(2, 2, 125, 125, 9)

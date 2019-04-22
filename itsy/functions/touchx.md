@@ -7,7 +7,7 @@ returns:
   type: number
   desc: the x position where the player is touching
 examples:
-  interactive: |
+  interactive demo (touch the square): |
     function _draw()
       if touch() then
         x = touchx()

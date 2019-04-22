@@ -14,7 +14,7 @@ returns:
   type: number
   desc: whichever input number is smallest
 examples:
-  plain: |
+  inputs vs outputs: |
     -- prints "0"
     print(min(0, 1))
 

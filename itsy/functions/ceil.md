@@ -11,7 +11,7 @@ returns:
   type: number
   desc: the input number rounded up to the next highest integer
 examples:
-  plain: |
+  inputs vs outputs: |
     print(ceil(-99.9))  -- prints -99
     print(ceil(-50.9))  -- prints -50
     print(ceil(-1.1))   -- prints -1
@@ -22,7 +22,7 @@ examples:
     print(ceil(50.9))   -- prints 51
     print(ceil(99.9))   -- prints 100
 
-  graphical: |
+  graph demo: |
     y1 = 96
     y2 = 96
 

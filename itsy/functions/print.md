@@ -20,11 +20,30 @@ args:
   desc: text color
   base: draw state color
 examples:
-  plain: |
+  the mouse's tale: |
+    print("       Fury said to a")
+    print("     mouse, That he")
+    print("    met in the")
+    print("   house,")
+    print('  "Let us')
+    print("    both go to")
+    print("     law:  I will")
+    print("       prosecute")
+    print("          YOU.  --Come,")
+    print("           I'll take no")
+    print("            denial; We")
+    print("          must have a")
+    print("        trial:  For")
+    print("      really this")
+    print("   morning I've")
+    print("  nothing")
+    print(' to do."')
+
+  position and color: |
     print("HELLO!!", 32, 32, 15)
     print("Good Morning!", 32, 48, 14)
 
-  graphical: |
+  border effect: |
     cls(13)
     for i = 0, 2 do
       for j = 0, 2 do

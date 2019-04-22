@@ -11,7 +11,7 @@ returns:
   type: number
   desc: the value at the requested memory address
 examples:
-  plain: |
+  peeking at video memory addresses: |
     print(peek(0x7020))
     circfill(64, 64, 4, 7)
     print(peek(0x7020))

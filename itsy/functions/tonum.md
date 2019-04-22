@@ -11,7 +11,7 @@ returns:
   type: number
   desc: numerical representation of the input string
 examples:
-  plain: |
+  inputs vs outputs: |
     -- 12345
     print(tonum('12345'))
 

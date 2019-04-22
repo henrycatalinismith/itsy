@@ -18,11 +18,14 @@ returns:
   type: string
   desc: substring of s
 examples:
-  plain: |
+  the start of a string: |
     -- "hello"
     print(sub("hello there", 1, 5))
-  defaults: |
+  the end of a string: |
     -- "there"
     print(sub("hello there", -5))
+  the middle of a string: |
+    -- "spoon"
+    print(sub("one spoon farm", 4, 9))
 ---
 

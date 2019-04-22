@@ -8,25 +8,25 @@ args:
   type: number
   desc: default color
 examples:
-  circ: |
+  circ(): |
     color(8)
     circ(64, 64)
-  circfill: |
+  circfill(): |
     color(9)
     circfill(64, 64)
-  line: |
+  line(): |
     color(10)
     line(64, 64)
-  print: |
+  print(): |
     color(11)
     print("ABCDEFG")
-  pset: |
+  pset(): |
     color(12)
     pset(64, 64)
-  rect: |
+  rect(): |
     color(13)
     rect(32, 32, 96, 96)
-  rectfill: |
+  rectfill(): |
     color(14)
     rectfill(32, 32, 96, 96)
 ---

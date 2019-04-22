@@ -11,7 +11,7 @@ returns:
   type: number
   desc: absolute value of input number
 examples:
-  plain: |
+  inputs vs outputs: |
     print(abs(-999))  -- prints 999
     print(abs(-50))   -- prints 50
     print(abs(-1))    -- prints 1

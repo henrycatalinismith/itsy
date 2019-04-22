@@ -19,7 +19,7 @@ args:
   desc: fill color
   base: draw state color
 examples:
-  plain: |
+  7 concentric circles: |
     circfill(64, 64, 64, 7)
     circfill(64, 64, 32, 8)
     circfill(64, 64, 16, 9)

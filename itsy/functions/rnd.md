@@ -11,7 +11,7 @@ returns:
   type: number
   desc: a random number
 examples:
-  plain: |
+  some random numbers: |
     print(rnd())
     print(rnd())
     print(rnd(6))

@@ -15,7 +15,7 @@ args:
   desc: new color
   base: draw state color
 examples:
-  plain: |
+  setting some pixels: |
     pset(0, 0, 7)
     pset(1, 1, 8)
     pset(2, 2, 9)

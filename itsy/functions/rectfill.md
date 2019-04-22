@@ -21,7 +21,7 @@ args:
   desc: fill color
   base: draw state color
 examples:
-  plain: |
+  7 concentric rectangles: |
     rectfill(0, 0, 127, 127, 7)
     rectfill(1, 1, 126, 126, 8)
     rectfill(2, 2, 125, 125, 9)
