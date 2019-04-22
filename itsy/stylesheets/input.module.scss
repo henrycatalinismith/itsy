@@ -19,9 +19,6 @@
 
 .input__type {
   @include cell();
-  @include code();
-
-  color: pico8(14);
   font-size: 12px;
   padding-left: 2px;
   padding-right: 4px;

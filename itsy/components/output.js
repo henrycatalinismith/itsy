@@ -1,5 +1,6 @@
 import React from "react"
 import Section from "./section"
+import Type from "./type"
 import styles from "../stylesheets/output.module.scss"
 
 export default ({ type, desc }) => {
@@ -9,7 +10,7 @@ export default ({ type, desc }) => {
         returns
         {" "}
         <span className={styles.output__type}>
-          &lt;{type}&gt;
+          <Type name={type} />
         </span>
       </>
     )}>

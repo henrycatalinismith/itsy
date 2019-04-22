@@ -2,10 +2,6 @@
 @import "layout";
 @import "typography";
 
-.output__type {
-  color: pico8(14);
-}
-
 .output__description {
   @include text();
   margin: 0;

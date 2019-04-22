@@ -1,5 +1,6 @@
 import React from "react"
 import Section from "./section"
+import Type from "./type"
 import styles from "../stylesheets/input.module.scss"
 
 export default ({ children }) => {
@@ -13,7 +14,7 @@ export default ({ children }) => {
                 {arg.name}
               </td>
               <td className={styles.input__type}>
-                &lt;{arg.type}&gt;
+                <Type name={arg.type} />
               </td>
               <td className={styles.input__desc}>
                 {arg.desc}
