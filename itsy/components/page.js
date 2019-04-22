@@ -7,7 +7,9 @@ export default ({ title, children }) => {
       <h1 className={styles.page__title}>
         {title}
       </h1>
-      {children}
+      <div className={styles.page__body}>
+        {children}
+      </div>
     </article>
   )
 }
