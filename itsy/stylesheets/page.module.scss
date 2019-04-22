@@ -1,0 +1,13 @@
+@import "color";
+@import "layout";
+@import "typography";
+
+.page {
+  background-color: #fceeff;
+  font-family: "Helvetica";
+  margin: 8px;
+}
+
+.page__title {
+  @include h1();
+}

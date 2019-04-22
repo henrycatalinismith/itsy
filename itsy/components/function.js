@@ -1,4 +1,5 @@
 import React from "react"
+import Page from "./page"
 import Signature from "./signature"
 import Input from "./input"
 import Output from "./output"
@@ -18,11 +19,7 @@ export default ({
   }
 }) => {
   return (
-    <article className={styles.function}>
-      <h1 className={styles.function__name}>
-        {name}
-      </h1>
-
+    <Page title={name}>
       <Signature name={name} args={args} />
 
       <p className={styles.function__desc}>
@@ -32,6 +29,6 @@ export default ({
       {args && <Input>{args}</Input>}
       {returns && <Output {...returns} />}
       <Examples>{examples}</Examples>
-    </article>
+    </Page>
   )
 }
