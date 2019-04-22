@@ -1,14 +1,11 @@
 import React from "react"
+import Section from "./section"
 import styles from "../stylesheets/input.module.scss"
 
 export default ({ children }) => {
   return (
-    <section className={styles.input}>
-      <h2 className={styles.input__heading}>
-        parameters
-      </h2>
-
-      <table className={styles.input__args}>
+    <Section title="parameters">
+      <table className={styles.input}>
         <tbody>
           {children.map((arg, i) => (
             <tr key={arg.name}>
@@ -33,6 +30,6 @@ export default ({ children }) => {
           ))}
         </tbody>
       </table>
-    </section>
+    </Section>
   )
 }

@@ -2,14 +2,6 @@
 @import "layout";
 @import "typography";
 
-.output {
-  @include section();
-}
-
-.output__heading {
-  @include h2();
-}
-
 .output__type {
   color: pico8(14);
 }

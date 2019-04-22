@@ -1,9 +1,10 @@
 import React from "react"
 import Page from "./page"
+import Section from "./section"
 import Signature from "./signature"
 import Input from "./input"
 import Output from "./output"
-import Examples from "./examples"
+import Example from "./example"
 import styles from "../stylesheets/function.module.scss"
 
 export default ({
@@ -28,7 +29,12 @@ export default ({
 
       {args && <Input>{args}</Input>}
       {returns && <Output {...returns} />}
-      <Examples>{examples}</Examples>
+
+      <Section title="examples">
+        {Object.entries(examples).map(([id, code]) => (
+          <Example key={id} id={id} code={code} />
+        ))}
+      </Section>
     </Page>
   )
 }

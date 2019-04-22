@@ -7,14 +7,6 @@
 }
 
 .input {
-  @include section();
-}
-
-.input__heading {
-  @include h2();
-}
-
-.input__args {
   border-collapse: collapse;
 }
 

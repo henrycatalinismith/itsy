@@ -1,10 +1,10 @@
 @import "layout";
 @import "typography";
 
-.examples {
+.section {
   @include section();
 }
 
-.examples__heading {
+.section__heading {
   @include h2();
 }

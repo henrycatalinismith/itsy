@@ -1,12 +1,14 @@
 import React from "react"
 import frontMatter from "gray-matter"
 import { storiesOf } from "@storybook/react"
-import Decorator from "../components/decorator"
+import Example from "../components/example"
 
 const stories = storiesOf("Examples", module)
 
 stories.addDecorator(story => (
-  <Decorator>{story()}</Decorator>
+  <div style={{ width: 640 }}>
+    {story()}
+  </div>
 ))
 
 const req = require.context(`${__dirname}/../functions`, true, /\.md$/)
@@ -17,7 +19,9 @@ req.keys().forEach(filename => {
   if (doc.data.examples) {
     Object.entries(doc.data.examples).forEach(([name, code]) => {
       const storyName = `${doc.data.name} [${name}]`
-      stories.add(storyName, () => code)
+      stories.add(storyName, () => 
+        <Example id={name} code={code} />
+      )
     })
   } else {
     stories.add(`${doc.data.name} ❌`, () => "")
