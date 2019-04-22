@@ -7,9 +7,11 @@ args:
 - name: x0
   type: number
   desc: start x
+  base: x1 from previous call
 - name: y0
   type: number
   desc: start y
+  base: y1 from previous call
 - name: x1
   type: number
   desc: finish x
@@ -19,6 +21,7 @@ args:
 - name: col
   type: number
   desc: line color
+  base: draw state color
 examples:
   plain: |
     line(63, 0, 126, 63, 8)

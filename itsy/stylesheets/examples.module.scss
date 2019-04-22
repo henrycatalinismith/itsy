@@ -1,0 +1,10 @@
+@import "layout";
+@import "typography";
+
+.examples {
+  @include section();
+}
+
+.examples__heading {
+  @include h2();
+}

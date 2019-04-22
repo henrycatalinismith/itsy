@@ -1,12 +1,12 @@
 import React from "react"
 import frontMatter from "gray-matter"
 import { storiesOf } from "@storybook/react"
-import ItsyDecorator from "../components/ItsyDecorator"
+import Decorator from "../components/decorator"
 
 const stories = storiesOf("Examples", module)
 
 stories.addDecorator(story => (
-  <ItsyDecorator>{story()}</ItsyDecorator>
+  <Decorator>{story()}</Decorator>
 ))
 
 const req = require.context(`${__dirname}/../functions`, true, /\.md$/)

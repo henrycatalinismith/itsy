@@ -19,6 +19,7 @@ args:
 - name: col
   type: number
   desc: border color
+  base: draw state color
 examples:
   plain: |
     rect(0, 0, 127, 127, 7)

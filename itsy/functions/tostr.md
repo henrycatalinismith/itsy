@@ -12,16 +12,25 @@ returns:
   desc: string representation of the input value
 examples:
   decimals: |
-    print(tostr(12345))     -- "12345"
-    print(tostr(-12345.67)) -- "-12345.67"
+    -- "12345"
+    print(tostr(12345))
+
+    -- "-12345.67"
+    print(tostr(-12345.67))
   hex: |
-    print(tostr(0x0f))  -- "15"
+    -- "15"
+    print(tostr(0x0f))
   booleans: |
-    print(tostr(true))   -- "true"
-    print(tostr(false))  -- "false"
+    -- "true"
+    print(tostr(true))
+
+    -- "false"
+    print(tostr(false))
   nil: |
-    print(tostr(nil))  -- "nil"
+    -- "nil"
+    print(tostr(nil))
   tables: |
-    print(tostr({1, 2, 3})) -- "table: 0xXXXXXX"
+    -- "table: 0xXXXXXX"
+    print(tostr({1, 2, 3}))
 ---
 

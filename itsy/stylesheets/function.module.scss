@@ -1,0 +1,15 @@
+@import "typography";
+
+.function {
+  background-color: #fceeff;
+  font-family: "Helvetica";
+  margin: 8px;
+}
+
+.function__name {
+  @include h1();
+}
+
+.function__desc {
+  @include text();
+}

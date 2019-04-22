@@ -1,0 +1,24 @@
+@import "color";
+@import "layout";
+@import "typography";
+
+.input {
+  @include section();
+}
+
+.input__heading {
+  @include h2();
+}
+
+.input__name {
+  color: pico8(2);
+}
+
+.input__type {
+  color: pico8(14);
+  font-size: 12px;
+}
+
+.input__desc {
+  color: pico8(0);
+}

@@ -12,12 +12,21 @@ args:
   desc: the second number
 returns:
   type: number
-  desc: whichever of the two input numbers was biggest
+  desc: whichever input number is biggest
 examples:
   plain: |
-    print(max(0, 1))   -- prints 1
-    print(max(2, 1))   -- prints 2
-    print(max(-1, 1))  -- prints 1
-    print(max(-1, -2)) -- prints -1
-    print(max(0, -2))  -- prints 0
+    -- prints "1"
+    print(max(0, 1))   
+
+    -- prints "2"
+    print(max(2, 1))
+
+    -- prints "1"
+    print(max(-1, 1))  
+
+    -- prints "-1"
+    print(max(-1, -2)) 
+
+    -- prints "0"
+    print(max(0, -2))  
 ---

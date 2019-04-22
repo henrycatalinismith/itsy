@@ -1,0 +1,15 @@
+@import "layout";
+@import "typography";
+
+.output {
+  @include section();
+}
+
+.output__heading {
+  @include h2();
+}
+
+.output__description {
+  @include text();
+  margin: 0;
+}

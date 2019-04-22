@@ -1,0 +1,9 @@
+@import "color";
+@import "layout";
+@import "typography";
+
+.signature {
+  @include section();
+  font-family: "Monaco", monospace;
+  font-size: 14px;
+}

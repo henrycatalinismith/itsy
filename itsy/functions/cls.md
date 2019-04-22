@@ -7,6 +7,7 @@ args:
 - name: col
   type: number
   desc: fill color
+  base: draw state color
 examples:
   plain: |
     cls(14)

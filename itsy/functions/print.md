@@ -10,27 +10,32 @@ args:
 - name: x
   type: number
   desc: x position
+  base: value from previous call
 - name: y
   type: number
   desc: y position
+  base: value from previous call + 8
 - name: col
   type: number
   desc: text color
+  base: draw state color
 examples:
   plain: |
     print("HELLO!!", 32, 32, 15)
-    print("Have a lovely day", 32, 48, 14)
+    print("Good Morning!", 32, 48, 14)
 
   graphical: |
     cls(13)
     for i = 0, 2 do
       for j = 0, 2 do
         if i ~= 1 or j ~= 1 then
-          print("YOU CAN DO IT!", 40 + i, 48 + j, 1)
+          x = 40 + i
+          y = 48 + j
+          print("YOU WIN!", x, y, 1)
         end
       end
     end
-    print("YOU CAN DO IT!", 40 + 1, 48 + 1, 12)
+    print("YOU WIN!", 41, 49, 12)
 
 ---
 

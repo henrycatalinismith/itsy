@@ -21,8 +21,8 @@ examples:
       f = 64,
       g = 128,
     }
-    for letter, number in pairs(list) do
-      print(letter .. "=" .. number)
+    for l, n in pairs(list) do
+      print(l .. "=" .. n)
     end
 ---
 

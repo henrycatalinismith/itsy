@@ -1,11 +1,11 @@
 import React from "react"
 import { storiesOf } from "@storybook/react"
-import ItsyDecorator from "../components/ItsyDecorator"
+import Decorator from "../components/decorator"
 
 const stories = storiesOf("Tweetcarts", module)
 
 stories.addDecorator(story => (
-  <ItsyDecorator>{story()}</ItsyDecorator>
+  <Decorator>{story()}</Decorator>
 ))
 
 stories.add('lol', () => `

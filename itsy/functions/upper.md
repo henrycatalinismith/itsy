@@ -12,9 +12,10 @@ returns:
   desc: upper case version of s
 examples:
   plain: |
-    quiet_alphabet = "abcdefghijklmnopqrstuvwxyz"
-    shouty_alphabet = upper(quiet_alphabet)
-    print(quiet_alphabet, 16, 58, 5)
-    print(shouty_alphabet, 16, 70, 7)
+   -- prints "abcdefghijklmn"
+    print("abcdefghijklmn")
+
+    -- prints "ABCDEFGHIJKLMN"
+    print(upper("abcdefghijklmn"))
 ---
 

@@ -19,6 +19,7 @@ args:
 - name: col
   type: number
   desc: fill color
+  base: draw state color
 examples:
   plain: |
     rectfill(0, 0, 127, 127, 7)

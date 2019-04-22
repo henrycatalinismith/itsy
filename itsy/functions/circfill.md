@@ -13,9 +13,11 @@ args:
 - name: r
   type: number
   desc: radius
+  base: 4
 - name: col
   type: number
   desc: fill color
+  base: draw state color
 examples:
   plain: |
     circfill(64, 64, 64, 7)

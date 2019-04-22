@@ -14,7 +14,6 @@
     "cheerio": "^1.0.0-rc.3",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
-    "highlight.js": "^9.15.6",
     "himalaya": "^1.1.0",
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
@@ -26,14 +25,18 @@
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
     "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
     "@storybook/addon-links": "^5.0.10",
+    "@storybook/addon-viewport": "^5.0.10",
     "@storybook/addons": "^5.0.10",
     "@storybook/react": "^5.0.10",
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.2",
     "emcc": "^0.2.2",
     "gray-matter": "^4.0.2",
+    "highlight.js": "^9.15.6",
     "lua-src": "5.3.5",
-    "prettier": "^1.16.4"
+    "prettier": "^1.16.4",
+    "sass": "^1.19.0",
+    "sass-loader": "^7.1.0"
   },
   "main": "exports/index.js",
   "files": [

@@ -10,8 +10,9 @@ examples:
   interactive: |
     function _draw()
       if touch() then
+        y = touchy()
         cls(1)
-        line(0, touchy(), 127, touchy(), 14)
+        line(0, y, 127, y, 14)
       else
         cls(5)
       end

@@ -13,6 +13,7 @@ args:
 - name: col
   type: number
   desc: new color
+  base: draw state color
 examples:
   plain: |
     pset(0, 0, 7)

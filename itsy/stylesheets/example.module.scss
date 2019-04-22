@@ -1,0 +1,19 @@
+@import "layout";
+@import "typography";
+
+.example {
+  @include subsection();
+}
+
+.example__heading {
+  @include h3();
+}
+
+.example__pre {
+  margin: 0;
+}
+
+.example__code {
+  background: #fff !important;
+  margin: 0;
+}

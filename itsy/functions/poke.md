@@ -14,7 +14,10 @@ examples:
   plain: |
     for x = 0,127 do
       for y = 0,127 do
-        poke(0x6000 + (y * 64) + (x / 2), 0x2D)
+        addr = (0x6000 + (
+          (y * 64) + (x / 2)
+        ))
+        poke(addr, 0x2D)
       end
     end
 ---

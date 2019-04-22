@@ -19,8 +19,10 @@ returns:
   desc: substring of s
 examples:
   plain: |
-    print(sub("hello there", 1, 5))  -- hello
+    -- "hello"
+    print(sub("hello there", 1, 5))
   defaults: |
-    print(sub("hello there", -5)) -- there
+    -- "there"
+    print(sub("hello there", -5))
 ---
 
