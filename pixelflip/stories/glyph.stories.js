@@ -177,3 +177,57 @@ stories.add("uppercase [thicker]", () => upper.split("").map((letter, i) => (
     {letter}
   </Glyph>
 )))
+
+stories.add("numbers [thicker]", () => numbers.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.5,
+    color: pico8[0],
+    x: 2,
+    y: 2,
+    width: 1.4,
+  }, {
+    scale: 0.5,
+    color: pico8[7],
+    x: 2,
+    y: 2,
+    width: 0.50,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("lowercase [between]", () => lower.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.7,
+    color: pico8[0],
+    x: 1.1,
+    y: 1.6,
+    width: 1.2,
+  }, {
+    scale: 0.7,
+    color: pico8[7],
+    x: 1.1,
+    y: 1.6,
+    width: 0.6,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("uppercase [between]", () => upper.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.7,
+    color: pico8[0],
+    x: 1.1,
+    y: 1.6,
+    width: 1.2,
+  }, {
+    scale: 0.7,
+    color: pico8[7],
+    x: 1.1,
+    y: 1.6,
+    width: 0.6,
+  }]}>
+    {letter}
+  </Glyph>
+)))
