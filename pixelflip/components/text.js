@@ -22,16 +22,18 @@ export default ({ children }) => {
         const chars = line.split("")
         return chars.map((char, x) => {
 
+          const xScale = 4.8
+
           const layers = [{
             scale: 0.5,
             color: pico8[0],
-            x: x * 5,
+            x: x * xScale,
             y: 2,
             width: 1.4,
           }, {
             scale: 0.5,
             color: pico8[7],
-            x: x * 5,
+            x: x * xScale,
             y: 2,
             width: 0.50,
           }]
