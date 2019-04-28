@@ -3,6 +3,7 @@ import { storiesOf } from "@storybook/react"
 import Center from "../components/center"
 import Grid from "../components/grid"
 import Glyph from "../components/glyph"
+import pico8 from "../palettes/pico8.es6"
 
 const lower = "abcdefghijklmnopqrstuvwxyz"
 const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -48,4 +49,95 @@ stories.add("numbers", () => numbers.split("").map((letter, i) => (
 
 stories.add("symbols", () => symbols.split("").map((letter, i) => (
   <Glyph>{letter}</Glyph>
+)))
+
+stories.add("lowercase [border]", () => lower.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 1,
+    color: pico8[0],
+    x: 0.5,
+    y: 0.5,
+    width: 1,
+  }, {
+    scale: 0.9,
+    color: pico8[7],
+    x: 0.7,
+    y: 0.8,
+    width: 0.3,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("uppercase [border]", () => upper.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 1,
+    color: pico8[0],
+    x: 0.5,
+    y: 0.5,
+    width: 1,
+  }, {
+    scale: 0.9,
+    color: pico8[7],
+    x: 0.7,
+    y: 0.8,
+    width: 0.3,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+
+stories.add("uppercase [another]", () => upper.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 1,
+    color: pico8[0],
+    x: 0.5,
+    y: 0.5,
+    width: 1,
+  }, {
+    scale: 1,
+    color: pico8[7],
+    x: 0.5,
+    y: 0.5,
+    width: 0.25,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("lowercase [and another]", () => lower.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.5,
+    color: pico8[0],
+    x: 2,
+    y: 2,
+    width: 1,
+  }, {
+    scale: 0.5,
+    color: pico8[7],
+    x: 2,
+    y: 2,
+    width: 0.55,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("uppercase [and another]", () => upper.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.5,
+    color: pico8[0],
+    x: 2,
+    y: 2,
+    width: 1,
+  }, {
+    scale: 0.5,
+    color: pico8[7],
+    x: 2,
+    y: 2,
+    width: 0.55,
+  }]}>
+    {letter}
+  </Glyph>
 )))

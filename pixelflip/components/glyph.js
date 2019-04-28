@@ -2,38 +2,47 @@ import React from "react"
 
 export default ({
   children,
-  x = 0.5,
-  y = 0.5,
-  strokeWidth = 0.8,
+  layers = [{
+    scale: 1,
+    width: 0.8,
+    x: 0.5,
+    y: 0.5,
+    color: "black",
+  }],
+  fontWeight = 0.8,
   groupElement = "g",
   pathElement = "path",
 }) => {
 
-  const d = (points) => `M${points.map(p => [
-    1 * (p[0] + x),
-    1 * (p[1] + y),
+  const d = (points, layer) => `M${points.map(p => [
+    layer.scale * (p[0] + layer.x),
+    layer.scale * (p[1] + layer.y),
   ]).join(" L")}`
-
-  const pathProps = {
-    d: d(points["A"])
-  }
 
   const strokes = points[children] || []
 
-  const paths = strokes.map((stroke, i) => React.createElement(
-    pathElement, {
-      d: d(stroke),
-      key: i,
-      fill: "none",
-      stroke: "black",
-      strokeWidth,
-    }
-  ))
-
-  const group = React.createElement(groupElement, {
+  const groupProps = {
     strokeLinecap: "square",
     strokeLinejoin: "round",
-  }, [...paths])
+  }
+
+  const groupChildren = layers.map((layer, i) => {
+    return strokes.map((stroke, j) => React.createElement(
+      pathElement, {
+        d: d(stroke, layer),
+        key: `${i}-${j}`,
+        fill: "none",
+        stroke: layer.color,
+        strokeWidth: layer.width,
+      }
+    ))
+  })
+
+  const group = React.createElement(
+    groupElement,
+    groupProps,
+    groupChildren
+  )
 
   return group
 }
