@@ -16,37 +16,43 @@ export default ({ children }) => {
     4 * lines.length,
   ].join(" ")
 
-  return (
-    <svg style={style} viewBox={viewBox}>
-      {lines.map((line, y) => {
-        const chars = line.split("")
-        return chars.map((char, x) => {
+  const glyphs = []
+  lines.forEach((line, y) => {
+    const chars = line.split("")
+    chars.forEach((char, x) => {
+      const xScale = 4.8
 
-          const xScale = 4.8
+      const layers = [{
+        scale: 0.5,
+        color: pico8[0],
+        x: x * xScale,
+        y: 2,
+        width: 1.4,
+      }, {
+        scale: 0.5,
+        color: pico8[7],
+        x: x * xScale,
+        y: 2,
+        width: 0.50,
+      }]
 
-          const layers = [{
-            scale: 0.5,
-            color: pico8[0],
-            x: x * xScale,
-            y: 2,
-            width: 1.4,
-          }, {
-            scale: 0.5,
-            color: pico8[7],
-            x: x * xScale,
-            y: 2,
-            width: 0.50,
-          }]
+      const key = `${x}-${y}`
 
-          const key = `${x}-${y}`
-          return (
-            <Glyph
-              key={key}
-              layers={layers}
-            >{char}</Glyph>
-          )
-        })
-      })}
-    </svg>
-  )
+      const props = {
+        key,
+        layers,
+      }
+
+      const glyph = React.createElement(Glyph, props, [char])
+      glyphs.push(glyph)
+    })
+  })
+
+  const props = {
+    style,
+    viewBox,
+  }
+  
+  const svg = React.createElement("svg", props, glyphs)
+  return svg
 }
