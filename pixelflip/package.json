@@ -1,0 +1,9 @@
+{
+  "name": "@highvalley.systems/spraypaint",
+  "description": "highvalley systems design tokens",
+  "version": "0.0.0",
+  "license": "UNLICENSED",
+  "files": [
+    "palettes/*"
+  ]
+}
