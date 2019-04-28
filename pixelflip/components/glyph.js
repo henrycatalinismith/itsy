@@ -9,7 +9,6 @@ export default ({
     y: 0.5,
     color: "black",
   }],
-  fontWeight = 0.8,
   groupElement = "g",
   pathElement = "path",
 }) => {
@@ -464,45 +463,3 @@ const points = {
     [[0,1], [2,1], [2,2], [0,3], [0,4], [2,4]],
   ],
 }
-
-/*
-export default ({
-  children,
-  color,
-  x = 0,
-  y = 0,
-  scale = 1,
-  strokeMultiplier = 1,
-  borderColor = undefined,
-  borderMultiplier = 0,
-}) => {
-  const g = (...paths) => (
-    <Svg.G fill="none" strokeLinecap="square" strokeLinejoin="round">
-      {(borderColor && borderMultiplier > 0) && (
-        <Svg.G
-          stroke={borderColor}
-          strokeWidth={borderMultiplier}
-        >{paths}</Svg.G>
-      )}
-      <Svg.G stroke={color} strokeWidth={scale * strokeMultiplier}>{paths}</Svg.G>
-    </Svg.G>
-  )
-
-  let i = 0
-  const path = (...points) => {
-    return (
-      <Svg.Path
-        key={`letter-${i++}`}
-        d={`M${points.map(p => [
-          1 * (p[0] + x),
-          1 * (p[1] + y),
-        ]).join(" L")}`}
-      />
-    ],
-  }
-
-  switch (children) {
-  }
-}
-
-*/

@@ -141,3 +141,39 @@ stories.add("uppercase [and another]", () => upper.split("").map((letter, i) => 
     {letter}
   </Glyph>
 )))
+
+stories.add("lowercase [thicker]", () => lower.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.5,
+    color: pico8[0],
+    x: 2,
+    y: 2,
+    width: 1.4,
+  }, {
+    scale: 0.5,
+    color: pico8[7],
+    x: 2,
+    y: 2,
+    width: 0.50,
+  }]}>
+    {letter}
+  </Glyph>
+)))
+
+stories.add("uppercase [thicker]", () => upper.split("").map((letter, i) => (
+  <Glyph layers={[{
+    scale: 0.5,
+    color: pico8[0],
+    x: 2,
+    y: 2,
+    width: 1.4,
+  }, {
+    scale: 0.5,
+    color: pico8[7],
+    x: 2,
+    y: 2,
+    width: 0.50,
+  }]}>
+    {letter}
+  </Glyph>
+)))
