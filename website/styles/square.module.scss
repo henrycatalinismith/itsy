@@ -1,0 +1,31 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+
+.sizeLimit {
+  max-width: 400px;
+  max-height: 500px;
+  flex: 1;
+}
+
+.aspectRatio {
+  margin: 0 auto;
+  width: 100%;
+  border: 8px solid pico8(14);
+
+  overflow: hidden;
+  padding-top: 125%;
+  position: relative;
+  width: 100%; 
+}
+
+.square {
+  background-color: pico8(7);
+  border: 8px solid pico8(2);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

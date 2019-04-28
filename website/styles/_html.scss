@@ -1,4 +1,6 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+
 html {
-  background-color: #fafaff;
+  background-color: pico8(5);
   font-family: sans-serif;
 }
