@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.56.0",
+  "version": "0.57.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@highvalley.systems/signalbox": "^0.17.0",
+    "@highvalley.systems/spraypaint": "^0.1.0",
     "ansi-colors": "^3.2.4",
     "buffer": "^5.2.1",
     "cheerio": "^1.0.0-rc.3",
