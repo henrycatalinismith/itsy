@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   webView: {
     flex: 1,
     borderColor: colors[14],
-    borderWidth: 64,
+    height: 512,
   },
 
 })
