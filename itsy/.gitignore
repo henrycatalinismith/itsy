@@ -1,7 +1,9 @@
-.glitch-assets
+/.glitch-assets
 /base64/engine.js
 /base64/stylesheet.js
 /engine/core.js
 /engine/itsy.js
 /engine/*.o
+/help/index.html
+/help/build.js
 /node_modules/*

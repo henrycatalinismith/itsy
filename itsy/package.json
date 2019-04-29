@@ -1,6 +1,6 @@
 {
   "name": "@highvalley.systems/itsy",
-  "version": "0.57.0",
+  "version": "0.58.0",
   "description": "universal fantasy console",
   "license": "MIT",
   "repository": "https://itsy.glitch.me/",
@@ -19,7 +19,8 @@
     "lodash": "^4.17.11",
     "node-fetch": "^2.3.0",
     "redux": "^4.0.1",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "webpack": "^4.30.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -34,11 +35,14 @@
     "emcc": "^0.2.2",
     "gray-matter": "^4.0.2",
     "highlight.js": "^9.15.6",
+    "html-webpack-inline-source-plugin": "0.0.10",
+    "html-webpack-plugin": "^3.2.0",
     "lua-src": "5.3.5",
     "marked": "^0.6.2",
     "prettier": "^1.16.4",
     "sass": "^1.19.0",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "webpack-cli": "^3.3.1"
   },
   "main": "exports/index.js",
   "files": [
@@ -46,7 +50,8 @@
     "commands/*",
     "defaults/*",
     "exports/*",
-    "functions/*"
+    "functions/*",
+    "help/index.html"
   ],
   "scripts": {
     "build": "make clean itsy.js",
@@ -55,6 +60,8 @@
     "start": "NODE_ENV=development node workshop/start.js",
     "tag": "node workshop/tag.js",
     "storybook": "start-storybook -p 6006",
+    "help": "webpack --watch --config help/webpack.config.js",
+    "build-help": "webpack --config help/webpack.config.js && rm help/build.js",
     "build-storybook": "build-storybook"
   }
 }
