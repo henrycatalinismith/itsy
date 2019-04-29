@@ -8,8 +8,11 @@ import {
   Text,
   TouchableHighlight,
   TouchableOpacity,
+  WebView,
   View,
 } from "react-native"
+
+// import WebView from "rn-webview"
 
 import { FlatGrid } from "react-native-super-grid"
 
@@ -26,12 +29,12 @@ import Font from "../components/font"
 import Header from "../components/header"
 
 const mapStateToProps = state => ({
-  disks: select.disks.from(state).forHomeScreen(),
+  asset: select.assets.from(state).forHelpScreen(),
 })
 
 const mapDispatchToProps = dispatch => ({
-  onNew: () => dispatch(thunks.new()),
-  open: diskId => dispatch(actions.open(diskId)),
+  // onNew: () => dispatch(thunks.new()),
+  // open: diskId => dispatch(actions.open(diskId)),
 });
 
 class HelpScreen extends React.Component {
@@ -40,15 +43,17 @@ class HelpScreen extends React.Component {
   }
 
   static propTypes = {
-    disks: PropTypes.any,
+    asset: PropTypes.any,
     navigation: PropTypes.any,
-    onNew: PropTypes.any,
-    open: PropTypes.any,
   }
 
   render() {
     const {
+      asset,
     } = this.props
+
+    console.log("help")
+    console.log(asset.uri)
 
     return (
       <SafeAreaView style={styles.screen}>
@@ -56,15 +61,13 @@ class HelpScreen extends React.Component {
           <View style={styles.frame2}>
 
             <ScrollView style={styles.container}>
-
-              <Font
-                fontSize={16}
-                color={colors[7]}
-                borderColor={colors[1]}
-                strokeMultiplier={0.9}
-                borderMultiplier={3}
-              >help</Font>
-
+              <WebView
+                bounces={false}
+                scrollEnabled={false}
+                source={{ uri: asset.uri }}
+                style={styles.webView}
+                useWebKit
+              />
             </ScrollView>
 
           </View>
@@ -115,21 +118,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors[7],
   },
 
-  new: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: colors[13],
-    borderColor: colors[5],
-    borderWidth: 2,
-    padding: 2,
-    paddingBottom: 4,
-    width: 64,
+  webView: {
+    flex: 1,
+    borderColor: colors[14],
+    borderWidth: 64,
   },
 
-  button: {
-    width: 256,
-    height: 256,
-  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HelpScreen)

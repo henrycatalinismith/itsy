@@ -47,6 +47,7 @@ class HomeScreen extends React.Component {
   }
 
   componentDidMount() {
+    this.props.navigation.navigate("Help")
     return // COMMENT HERE TO LOAD CODE SCREEN
     this.props.open("abc")
     this.props.navigation.navigate("Code", {
@@ -180,3 +181,4 @@ const styles = StyleSheet.create({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
+  

@@ -17,6 +17,10 @@ export default [
     "../assets/images/robot-prod.png"
   )))),
 
+  after("start", store => store.dispatch(actions.load(require(
+    "../help/index.html"
+  )))),
+
   before("load", (store, action) => {
     action.asset = Asset.fromModule(action.asset)
   }),

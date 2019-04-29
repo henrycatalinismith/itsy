@@ -7,4 +7,8 @@ export default [
       `${action.type}`,
     ].join(" "))
   }),
+
+  after("load", (store, action) => {
+    console.log(action.asset)
+  }),
 ]
