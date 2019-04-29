@@ -58,7 +58,7 @@ export default ({
             <Font
               fontSize={15}
               color={colors[7]}
-              borderColor={colors[0]}
+              borderColor={colors[1]}
               borderMultiplier={3}
               strokeMultiplier={0.9}
             >help</Font>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   help: {
     display: "flex",
     alignItems: "center",
-    backgroundColor: colors[13],
+    backgroundColor: colors[12],
     borderColor: colors[5],
     borderWidth: 2,
     padding: 2,
