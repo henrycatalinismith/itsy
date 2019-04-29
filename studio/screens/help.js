@@ -1,70 +1,105 @@
 import React from "react"
+import PropTypes from "prop-types"
+
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableHighlight,
+  TouchableOpacity,
   View,
 } from "react-native"
 
+import { FlatGrid } from "react-native-super-grid"
+
+import { connect } from "react-redux"
+
+import actions from "../actions"
+import colors from "../constants/colors"
+import select from "../selectors"
+import thunks from "../thunks"
+
+import Tile from "../components/tile"
+import Floppy from "../components/floppy"
 import Font from "../components/font"
 import Header from "../components/header"
-import colors from "../constants/colors"
 
-export default () => {
-  return (
-    <SafeAreaView style={styles.screen}>
-      <Frame>
-        <Header />
-        <ScrollView style={styles.container}>
+const mapStateToProps = state => ({
+  disks: select.disks.from(state).forHomeScreen(),
+})
 
-          <Font
-            fontSize={64}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >abcdefghijklmnopqrstuvwxyz</Font>
+const mapDispatchToProps = dispatch => ({
+  onNew: () => dispatch(thunks.new()),
+  open: diskId => dispatch(actions.open(diskId)),
+});
 
-          <Font
-            fontSize={64}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >ABCDEFGHIJKLMNOPQRSTUVWXYZ</Font>
+class HelpScreen extends React.Component {
+  static navigationOptions = {
+    header: Header
+  }
 
-          <Font
-            fontSize={64}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >0123456789</Font>
+  static propTypes = {
+    disks: PropTypes.any,
+    navigation: PropTypes.any,
+    onNew: PropTypes.any,
+    open: PropTypes.any,
+  }
 
-          <Font
-            fontSize={64}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >!@{'"'}{"'"}{'/'}{'\\'}$%^&*()_+][?}{'}{'}{'#'}</Font>
+  render() {
+    const {
+    } = this.props
 
-        </ScrollView>
-      </Frame>
-    </SafeAreaView>
-  )
+    return (
+      <SafeAreaView style={styles.screen}>
+        <View style={styles.frame1}>
+          <View style={styles.frame2}>
+
+            <ScrollView style={styles.container}>
+
+              <Font
+                fontSize={16}
+                color={colors[7]}
+                borderColor={colors[1]}
+                strokeMultiplier={0.9}
+                borderMultiplier={3}
+              >help</Font>
+
+            </ScrollView>
+
+          </View>
+        </View>
+      </SafeAreaView>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: colors[1],
+    backgroundColor: colors[14],
+    borderRightColor: colors[2],
+    borderBottomColor: colors[2],
+    borderLeftColor: colors[2],
+    borderBottomWidth: 2,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
   },
-  container: {
-    flex: 1,
 
-    backgroundColor: colors[7],
+  frame1: {
+    flex: 1,
+    display: "flex",
+    borderRightColor: colors[14],
+    borderBottomColor: colors[14],
+    borderLeftColor: colors[14],
+    borderRightWidth: 4,
+    borderBottomWidth: 4,
+    borderLeftWidth: 4,
+  },
+
+  frame2: {
+    flex: 1,
+    display: "flex",
     borderTopColor: colors[2],
     borderRightColor: colors[2],
     borderBottomColor: colors[2],
@@ -73,9 +108,28 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderBottomWidth: 2,
     borderLeftWidth: 2,
-    paddingLeft: 4,
-    paddingRight: 4,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: colors[7],
+  },
+
+  new: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors[13],
+    borderColor: colors[5],
+    borderWidth: 2,
+    padding: 2,
+    paddingBottom: 4,
+    width: 64,
+  },
+
+  button: {
+    width: 256,
+    height: 256,
   },
 })
 
-
+export default connect(mapStateToProps, mapDispatchToProps)(HelpScreen)

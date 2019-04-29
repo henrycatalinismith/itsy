@@ -1,5 +1,6 @@
 import React from "react"
 import {
+  TouchableOpacity,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -12,7 +13,6 @@ import Font from "./font"
 import colors from "../constants/colors"
 
 export default ({
-  children,
   disk,
   navigation,
 }) => {
@@ -25,7 +25,13 @@ export default ({
     Home: () => "itsy studio",
     Disk: () => activeRoute.params.disk.name,
     Code: () => activeRoute.params.disk.name,
+    Help: () => "itsy studio",
   })[activeScreen]()
+
+  const onHelp = () => {
+    console.log("onHelp")
+    navigation.navigate("Help", {})
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,8 +52,17 @@ export default ({
             >{title}</Font>
           </View>
         </View>
+
         <View style={styles.right}>
-          {children}
+          <TouchableOpacity style={styles.help} onPress={onHelp}>
+            <Font
+              fontSize={15}
+              color={colors[7]}
+              borderColor={colors[0]}
+              borderMultiplier={3}
+              strokeMultiplier={0.9}
+            >help</Font>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -89,5 +104,16 @@ const styles = StyleSheet.create({
   wordmark: {
     display: "flex",
     flexDirection: "row",
+  },
+  help: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors[13],
+    borderColor: colors[5],
+    borderWidth: 2,
+    padding: 2,
+    paddingBottom: 4,
+    width: 64,
+    marginRight: 4,
   },
 })

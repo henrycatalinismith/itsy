@@ -47,6 +47,7 @@ import {
 import Home from "./screens/home"
 import Disk from "./screens/disk"
 import Code from "./screens/code"
+import Help from "./screens/help"
 
 import Header from "./components/header"
 
@@ -116,6 +117,9 @@ const routes = {
   },
   Code: {
     screen: Code,
+  },
+  Help: {
+    screen: Help,
   },
 }
 
