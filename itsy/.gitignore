@@ -4,6 +4,6 @@
 /engine/core.js
 /engine/itsy.js
 /engine/*.o
-/help/index.html
-/help/build.js
+/manual/index.html
+/manual/build.js
 /node_modules/*

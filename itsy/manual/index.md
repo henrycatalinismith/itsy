@@ -18,3 +18,5 @@ These are the main ones:
 The fixed square aspect ratio is especially helpful as it saves you the
 difficult, detailed work of adapting your games to the huge variety of 
 screen sizes that mobile devices come with.
+
+* [game loop](/game-loop)

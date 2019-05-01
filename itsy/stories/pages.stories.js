@@ -24,7 +24,7 @@ stories.addParameters({
   }
 })
 
-const req = require.context(`${__dirname}/../pages`, true, /\.md$/)
+const req = require.context(`${__dirname}/../manual`, true, /\.md$/)
 req.keys().forEach(filename => {
   const markdown = req(filename)
   const doc = frontMatter(markdown)

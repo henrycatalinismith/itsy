@@ -1,6 +1,30 @@
 import React from "react"
+import marked from "marked"
+
+import Function from "./function"
 import styles from "../stylesheets/page.module.scss"
 
+export default ({ frontMatter, body }) => {
+  return (
+    <article className={styles.page}>
+      <h1 className={styles.page__title}>
+        {frontMatter.title}
+      </h1>
+      {frontMatter.path.match(/^\/functions\/.+/) ? (
+        <div className={styles.page__body}>
+          <p>lol</p>
+        </div>
+      ) : (
+        <div
+          className={styles.page__body}
+          dangerouslySetInnerHTML={{ __html: marked(body) }}
+        />
+      )}
+    </article>
+  )
+}
+
+/*
 export default ({ title, children }) => {
   return (
     <article className={styles.page}>
@@ -13,3 +37,4 @@ export default ({ title, children }) => {
     </article>
   )
 }
+*/

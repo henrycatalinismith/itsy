@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@highvalley.systems/signalbox": "^0.17.0",
-    "@highvalley.systems/spraypaint": "^0.1.0",
+    "@highvalley.systems/spraypaint": "^0.5.0",
     "ansi-colors": "^3.2.4",
     "buffer": "^5.2.1",
     "cheerio": "^1.0.0-rc.3",
@@ -33,6 +33,7 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.2",
     "emcc": "^0.2.2",
+    "frontmatter-markdown-loader": "^1.6.0",
     "gray-matter": "^4.0.2",
     "highlight.js": "^9.15.6",
     "html-webpack-inline-source-plugin": "0.0.10",
@@ -51,7 +52,7 @@
     "defaults/*",
     "exports/*",
     "functions/*",
-    "help/index.html"
+    "manual/index.html"
   ],
   "scripts": {
     "build": "make clean itsy.js",
@@ -60,8 +61,8 @@
     "start": "NODE_ENV=development node workshop/start.js",
     "tag": "node workshop/tag.js",
     "storybook": "start-storybook -p 6006",
-    "help": "webpack --watch --config help/webpack.config.js",
-    "build-help": "webpack --config help/webpack.config.js && rm help/build.js",
+    "build-manual": "webpack --config manual/webpack.config.js && rm manual/build.js",
+    "watch-manual": "webpack --watch --config manual/webpack.config.js",
     "build-storybook": "build-storybook"
   }
 }

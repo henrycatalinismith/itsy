@@ -7,6 +7,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+      {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
@@ -18,6 +22,28 @@ module.exports = {
             ],
           }
         }
+      },
+      {
+        test: /\.md$/,
+        loader: "frontmatter-markdown-loader",
+      },
+      {
+        test: /\.module\.scss$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              implementation: require("sass")
+            }
+          },
+        ]
       }
     ]
   },
