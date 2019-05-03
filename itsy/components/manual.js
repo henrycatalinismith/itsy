@@ -8,6 +8,7 @@ export default ({ content }) => {
 
   React.useEffect(() => {
     window.onclick = event => {
+      console.log(event)
       const link = event.target.closest("a")
       if (!link) {
         console.log("skip", event.target)
