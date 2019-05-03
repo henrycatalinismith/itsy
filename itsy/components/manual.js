@@ -4,24 +4,24 @@ import Page from "./page"
 
 export default ({ content }) => {
   const defaultPath = location.hash.substring(1) || "/"
-  console.log(defaultPath)
   const [path, navigate] = React.useState(defaultPath)
 
   React.useEffect(() => {
     window.onclick = event => {
-      if (event.target.localName !== "a") {
+      const link = event.target.closest("a")
+      if (!link) {
+        console.log("skip", event.target)
         return
       }
       event.preventDefault()
-      const newPath = url.parse(event.target.href).path
-      location.hash = newPath
+      location.hash = url.parse(link.href).path
     }
 
     window.onhashchange = () => {
-      const newHash = location.hash.substring(1)
+      const newHash = location.hash.substring(1) || "/"
       navigate(newHash)
     }
-  }, [])
+  }, [path])
 
   const page = content[path]
 
