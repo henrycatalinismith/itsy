@@ -1,15 +1,18 @@
 import React from "react"
 import marked from "marked"
 
+import Text from "@highvalley.systems/spraypaint/components/text"
 import Function from "./function"
 import styles from "../stylesheets/page.module.scss"
 
 export default ({ frontMatter, body }) => {
   return (
     <article className={styles.page}>
-      <h1 className={styles.page__title}>
-        {frontMatter.title}
-      </h1>
+      <div className={styles.page__title}>
+        <Text>
+          {frontMatter.title}
+        </Text>
+      </div>
       {frontMatter.path.match(/^\/functions\/.+/) ? (
         <div className={styles.page__body}>
           <p>lol</p>

@@ -5,11 +5,12 @@
 .page {
   background-color: #fceeff;
   font-family: "Helvetica";
-  margin: 8px;
 }
 
 .page__title {
-  @include h1();
+  height: 32px;
+  max-height: 32px;
+  display: flex;
 }
 
 .page__body {
