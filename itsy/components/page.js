@@ -10,7 +10,6 @@ export default ({ frontMatter, body }) => {
   return (
     <article className={styles.page}>
 
-
       {frontMatter.path.match(/^\/functions\/.+/) ? (
 
         <>
@@ -41,18 +40,3 @@ export default ({ frontMatter, body }) => {
     </article>
   )
 }
-
-/*
-export default ({ title, children }) => {
-  return (
-    <article className={styles.page}>
-      <h1 className={styles.page__title}>
-        {title}
-      </h1>
-      <div className={styles.page__body}>
-        {children}
-      </div>
-    </article>
-  )
-}
-*/

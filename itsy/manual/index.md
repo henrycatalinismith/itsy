@@ -20,3 +20,4 @@ difficult, detailed work of adapting your games to the huge variety of
 screen sizes that mobile devices come with.
 
 * [game loop](/game-loop)
+* [api reference](/functions)
