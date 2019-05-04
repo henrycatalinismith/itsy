@@ -131,6 +131,7 @@ const root = document.createElement("div")
 root.style.display = "flex"
 root.style.flexDirection = "column"
 
+document.documentElement.style.backgroundColor = "#fceeff"
 document.body.appendChild(root)
 document.body.style.margin = 0
 
