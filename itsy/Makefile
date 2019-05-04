@@ -93,7 +93,7 @@ cleanlua:
 	rm -f $(LUA)/src/*.o
 	rm -f $(LUA)/src/liblua.a
 
-itsy: engine/itsy.js base64/engine.js base64/stylesheet.js
+itsy: engine/itsy.js base64/engine.js base64/stylesheet.js manual/index.html
 
 lua: $(LUA)/src/liblua.a
 
