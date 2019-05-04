@@ -33,12 +33,12 @@ export default ({
       navigation.navigate("Help", {})
     } else {
       console.log("goBack")
-      navigation.goBack()
+      navigation.pop()
     }
   }
 
   const helpStyle = activeScreen === "Help" ? styles.back : styles.help
-  const helpText = activeScreen === "Help" ? "back" : "help"
+  const helpText = activeScreen === "Help" ? "done" : "help"
 
   return (
     <SafeAreaView style={styles.container}>
