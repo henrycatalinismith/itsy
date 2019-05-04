@@ -6,6 +6,7 @@ import { action } from "@highvalley.systems/signalbox"
 import Breadcrumbs from "./breadcrumbs"
 import Function from "./function"
 import Header from "./header"
+import Markdown from "./markdown"
 import Page from "./page"
 import Results from "./results"
 import Search from "./search"
@@ -41,11 +42,7 @@ export default connect(
   } else {
     header = <Breadcrumbs path={path} />
     title = page.frontMatter.title
-    body = (
-      <div dangerouslySetInnerHTML={{
-        __html: marked(page.body)
-      }} />
-    )
+    body = <Markdown {...page} />
   }
 
   const onHeaderClick = event => {
@@ -59,7 +56,7 @@ export default connect(
 
   return (
     <>
-      <Header path={path} navigate={navigate} onClick={onHeaderClick}>
+      <Header path={path} onClick={onHeaderClick}>
         {header}
       </Header>
       <Page title={title}>

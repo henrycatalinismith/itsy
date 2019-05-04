@@ -35,13 +35,25 @@
     }
   }
 
+  a {
+    color: pico8(12);
+    color: #036EB5;
+    text-decoration: none;
+  }
+
+  code {
+    font-family: "Overpass Mono";
+    font-size: 16px;
+  }
+
   pre code {
     font-size: 16px;
   }
 
-  td > a {
-    display: block;
-    text-decoration: none;
-    width: 70px;
-  }
+  // td:first-child > a {
+    // display: block;
+    // text-decoration: none;
+    // width: 70px;
+  // }
 }
+

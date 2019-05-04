@@ -1,7 +1,23 @@
 ---
 title: itsy
 path: /
+css: |
+  td:first-child a {
+    font-size: 32px;
+    line-height: 32px;
+    padding-right: 8px;
+  }
+
+  td:last-child a {
+    font-size: 20px;
+    line-height: 20px;
+  }
 ---
+
+|                 |                         |
+|-----------------|-------------------------|
+| ️[🍄][functions] | [functions]             |
+| [♻️][game loop] | [game loop]             |
 
 itsy is a game engine for making games on mobile devices!
 
@@ -19,5 +35,5 @@ The fixed square aspect ratio is especially helpful as it saves you the
 difficult, detailed work of adapting your games to the huge variety of 
 screen sizes that mobile devices come with.
 
-* [game loop](/game-loop)
-* [api reference](/functions)
+[functions]: /functions
+[game loop]: /game-loop

@@ -1,6 +1,13 @@
 ---
-title: api reference
+title: functions
 path: /functions
+css: |
+  td:first-child {
+    width: 70px;
+  }
+
+  td:last-child a {
+  }
 ---
 
 draw functions

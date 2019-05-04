@@ -35,7 +35,7 @@ const pages = [
   require("./init.md"),
   require("./tick.md"),
   require("./draw.md"),
-  require("./api-reference.md"),
+  require("./functions.md"),
   require("../functions/abs.md"),
   require("../functions/add.md"),
   require("../functions/camera.md"),
