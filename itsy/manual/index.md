@@ -4,36 +4,28 @@ path: /
 css: |
   td:first-child a {
     font-size: 32px;
-    line-height: 32px;
+    line-height: 48px;
     padding-right: 8px;
   }
 
+  td:last-child {
+    font-size: 14px;
+    line-height: 18px;
+    color: #83769c;
+  }
+
   td:last-child a {
-    font-size: 20px;
-    line-height: 20px;
+    font-size: 18px;
+    line-height: 18px;
   }
 ---
 
-|                 |                         |
-|-----------------|-------------------------|
-| ️[🍄][functions] | [functions]             |
-| [♻️][game loop] | [game loop]             |
+|                 |                                                  |
+|-----------------|--------------------------------------------------|
+| ️[💖][intro]     | [intro]<br/>what itsy is and how to use it       |
+| ️[🍄][functions] | [functions]<br/>complete api reference           |
+| [♻️][game loop] | [game loop]<br/>hooks to run your game at 60 fps |
 
-itsy is a game engine for making games on mobile devices!
-
-You write your game in Lua, and itsy compiles it to one HTML file which
-you can upload and share anywhere.
-
-To keep things simple and fun, itsy imposes a few helpful limitations.
-These are the main ones:
-
-* 128x128 screen
-* 16 colors
-* 1 source code file per game
-
-The fixed square aspect ratio is especially helpful as it saves you the
-difficult, detailed work of adapting your games to the huge variety of 
-screen sizes that mobile devices come with.
-
+[intro]: /intro
 [functions]: /functions
 [game loop]: /game-loop

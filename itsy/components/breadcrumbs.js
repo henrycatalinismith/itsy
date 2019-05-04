@@ -6,7 +6,7 @@ export default ({ path }) => {
 
   const breadcrumbs = [
     {
-      text: "home",
+      text: "itsy",
       href: "/",
     },
     ...path.split(/\//).filter(segment => !!segment).map(segment => {

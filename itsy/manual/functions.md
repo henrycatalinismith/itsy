@@ -3,15 +3,16 @@ title: functions
 path: /functions
 css: |
   td:first-child {
-    width: 70px;
+    font-family: "Overpass Mono";
+    width: 96px;
   }
 
   td:last-child a {
   }
 ---
 
-draw functions
---------------
+draw functions 🖌
+-----------------
 
 |            |                      |
 |------------|----------------------|
@@ -33,8 +34,8 @@ draw functions
 [rectfill]: /functions/rectfill
 [sspr]: /functions/sspr
 
-input functions
----------------
+input functions 🎮
+------------------
 
 |            |                      |
 |------------|----------------------|
@@ -46,8 +47,8 @@ input functions
 [touchx]: /functions/touchx
 [touchy]: /functions/touchy
 
-graphics functions
-------------------
+graphics functions 🎨
+---------------------
 
 |            |                      |
 |------------|----------------------|
@@ -57,8 +58,8 @@ graphics functions
 [camera]: /functions/camera
 [color]: /functions/color
 
-math functions
---------------
+math functions 📊
+-----------------
 
 |            |                      |
 |------------|----------------------|
@@ -82,8 +83,8 @@ math functions
 [sin]: /functions/sin
 [tan]: /functions/tan
 
-table functions
----------------
+table functions 👩‍👩‍👧‍👧
+------------------
 
 |            |                      |
 |------------|----------------------|
@@ -95,8 +96,8 @@ table functions
 [del]: /functions/del
 [pairs]: /functions/pairs
 
-string functions
-----------------
+string functions 🧶
+-------------------
 
 |            |                      |
 |------------|----------------------|
@@ -108,8 +109,8 @@ string functions
 [sub]: /functions/sub
 [upper]: /functions/upper
 
-misc functions
---------------
+misc functions 🧦
+-----------------
 
 |            |                      |
 |------------|----------------------|
@@ -121,8 +122,8 @@ misc functions
 [tostr]: /functions/tostr
 [type]: /functions/type
 
-memory functions
-----------------
+memory functions 🧙‍♀️
+--------------------
 
 |            |                      |
 |------------|----------------------|

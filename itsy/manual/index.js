@@ -31,6 +31,7 @@ marked.setOptions({
 
 const pages = [
   require("./index.md"),
+  require("./intro.md"),
   require("./game-loop.md"),
   require("./init.md"),
   require("./tick.md"),
@@ -127,6 +128,9 @@ window.onhashchange = () => {
 }
 
 const root = document.createElement("div")
+root.style.display = "flex"
+root.style.flexDirection = "column"
+
 document.body.appendChild(root)
 document.body.style.margin = 0
 
