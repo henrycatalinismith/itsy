@@ -6,7 +6,7 @@ export default ({ title, children}) => {
   return (
     <article className={styles.page}>
       <div className={styles.page__title}>
-        <Text>
+        <Text fontSize={32}>
           {title}
         </Text>
       </div>

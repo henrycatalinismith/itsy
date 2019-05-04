@@ -5,13 +5,14 @@
 .page {
   background-color: #fceeff;
   font-family: "Helvetica";
-  padding: 8px;
+  padding: 0 8px;
 }
 
 .page__title {
-  height: 32px;
-  max-height: 32px;
-  display: flex;
+  padding: 16px 0;
+  // height: 32px;
+  // max-height: 32px;
+  // display: flex;
 }
 
 .page__body {
@@ -19,6 +20,19 @@
 
   h2 {
     @include h2();
+  }
+
+  $elements: p ul h2 h3 table ol pre;
+
+  @each $a in $elements {
+    #{$a} {
+      margin: 0;
+    }
+    @each $b in $elements {
+      #{$a} + #{$b} {
+        margin-top: 16px;
+      }
+    }
   }
 
   pre code {
