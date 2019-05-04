@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "@highvalley.systems/itsy": "^0.58.0",
+    "@highvalley.systems/itsy": "^0.61.0",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.5.0",
     "base-64": "^0.1.0",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
-    "expo-cli": "^2.13.0",
+    "expo-cli": "^2.16.1",
     "jest-expo": "^32.0.0"
   },
   "private": true

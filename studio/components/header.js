@@ -29,9 +29,16 @@ export default ({
   })[activeScreen]()
 
   const onHelp = () => {
-    console.log("onHelp")
-    navigation.navigate("Help", {})
+    if (activeScreen !== "Help") {
+      navigation.navigate("Help", {})
+    } else {
+      console.log("goBack")
+      navigation.goBack()
+    }
   }
+
+  const helpStyle = activeScreen === "Help" ? styles.back : styles.help
+  const helpText = activeScreen === "Help" ? "back" : "help"
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,14 +61,14 @@ export default ({
         </View>
 
         <View style={styles.right}>
-          <TouchableOpacity style={styles.help} onPress={onHelp}>
+          <TouchableOpacity style={helpStyle} onPress={onHelp}>
             <Font
               fontSize={15}
               color={colors[7]}
               borderColor={colors[1]}
               borderMultiplier={3}
               strokeMultiplier={0.9}
-            >help</Font>
+            >{helpText}</Font>
           </TouchableOpacity>
         </View>
       </View>
@@ -105,6 +112,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
   },
+
   help: {
     display: "flex",
     alignItems: "center",
@@ -116,4 +124,17 @@ const styles = StyleSheet.create({
     width: 64,
     marginRight: 4,
   },
+
+  back: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: colors[8],
+    borderColor: colors[5],
+    borderWidth: 2,
+    padding: 2,
+    paddingBottom: 4,
+    width: 64,
+    marginRight: 4,
+  },
+
 })

@@ -18,7 +18,7 @@ export default [
   )))),
 
   after("start", store => store.dispatch(actions.load(require(
-    "@highvalley.systems/itsy/help/index.html"
+    "@highvalley.systems/itsy/manual/index.html"
   )))),
 
   before("load", (store, action) => {

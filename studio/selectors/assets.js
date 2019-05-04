@@ -5,7 +5,7 @@ export default {
     .pop(),
 
   forHelpScreen: assets => assets
-    .filter(asset => asset.uri.includes("@highvalley.systems/itsy/help/index.html"))
+    .filter(asset => asset.uri.includes("@highvalley.systems/itsy/manual/index.html"))
     .pop(),
 
   withDimensions: (assets, width, height) => assets

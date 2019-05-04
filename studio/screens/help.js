@@ -60,15 +60,16 @@ class HelpScreen extends React.Component {
         <View style={styles.frame1}>
           <View style={styles.frame2}>
 
-            <ScrollView style={styles.container}>
+            <View style={styles.container}>
               <WebView
                 bounces={false}
-                scrollEnabled={false}
+                originWhitelist={["*"]}
+                scrollEnabled={true}
                 source={{ uri: asset.uri }}
                 style={styles.webView}
                 useWebKit
               />
-            </ScrollView>
+            </View>
 
           </View>
         </View>
@@ -114,14 +115,14 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    flex: 1,
+    flex: 10,
+    display: "flex",
     backgroundColor: colors[7],
   },
 
   webView: {
-    flex: 1,
+    flex: 10,
     borderColor: colors[14],
-    height: 512,
   },
 
 })
