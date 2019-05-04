@@ -1,15 +1,26 @@
+import colors from "ansi-colors"
+import frontMatter from "gray-matter"
 import React from "react"
 import ReactDOM from "react-dom"
-import frontMatter from "gray-matter"
+import { createLogger } from "redux-logger"
 import Text from "@highvalley.systems/spraypaint/components/text"
 import pico8 from "@highvalley.systems/spraypaint/palettes/pico8.es6"
 import Manual from "../components/manual"
 import Page from "../components/page"
+import url from "url"
 
 import marked from "marked"
 import hljs from "highlight.js/lib/highlight"
 import lua from "highlight.js/lib/languages/lua"
 import "../stylesheets/itsy.css"
+
+import { combineReducers, applyMiddleware, createStore } from "redux"
+import { Provider } from "react-redux"
+import {
+  reducer,
+  after,
+  before,
+} from "@highvalley.systems/signalbox"
 
 hljs.registerLanguage("lua", lua)
 marked.setOptions({
@@ -71,11 +82,58 @@ pages.forEach(page => {
   }
 })
 
-console.log(content)
+const reducers = combineReducers({
+  content: reducer(content, {}),
+
+  history: reducer([location.hash.substring(1) || "/"], {
+    navigate: (history, destination) => ([
+      destination.path,
+      ...history,
+    ]),
+  }),
+})
+
+const initialState = {
+  content,
+}
+
+const middlewares = applyMiddleware.apply(null, [
+  createLogger({ collapsed: true }),
+
+  after("navigate", (store, action) => {
+    location.hash = action.path
+  }),
+])
+
+const store = createStore(reducers, initialState, middlewares)
+
+window.onclick = event => {
+  const link = event.target.closest("a")
+  if (!link) {
+    return
+  }
+  event.preventDefault()
+  store.dispatch({
+    type: "navigate",
+    path: url.parse(link.href).path,
+  })
+}
+
+window.onhashchange = () => {
+  const path = location.hash.substring(1) || "/"
+  if (store.getState().history[0] !== path) {
+    store.dispatch({ type: "navigate", path })
+  }
+}
 
 const root = document.createElement("div")
 document.body.appendChild(root)
 document.body.style.margin = 0
 
-ReactDOM.render(<Manual content={content} />, root)
+const manual = (
+  <Provider store={store}>
+    <Manual />
+  </Provider>
+)
 
+ReactDOM.render(manual, root)

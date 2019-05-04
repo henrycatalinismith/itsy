@@ -1,36 +1,70 @@
 import React from "react"
-import url from "url"
-import Page from "./page"
+import marked from "marked"
+import { connect } from "react-redux"
+import { action } from "@highvalley.systems/signalbox"
+
+import Breadcrumbs from "./breadcrumbs"
+import Function from "./function"
 import Header from "./header"
+import Page from "./page"
+import Results from "./results"
+import Search from "./search"
 
-export default ({ content }) => {
-  const defaultPath = location.hash.substring(1) || "/"
-  const [path, navigate] = React.useState(defaultPath)
+export default connect(
+  ({ content, history }) => ({
+    content,
+    history,
+  }), {
+    ...action("navigate", ["path"]),
+  }
+)(({
+  content,
+  history,
+  navigate,
+}) => {
 
-  React.useEffect(() => {
-    window.onclick = event => {
-      console.log(event)
-      const link = event.target.closest("a")
-      if (!link) {
-        console.log("skip", event.target)
-        return
-      }
-      event.preventDefault()
-      location.hash = url.parse(link.href).path
-    }
-
-    window.onhashchange = () => {
-      const newHash = location.hash.substring(1) || "/"
-      navigate(newHash)
-    }
-  }, [path])
-
+  const path = history[0]
   const page = content[path]
+
+  let header
+  let title
+  let body
+
+  if (path.match(/^\/functions\/.+/)) {
+    header = <Breadcrumbs path={path} />
+    title = page.frontMatter.name
+    body = <Function {...page.frontMatter} />
+  } else if (path.match(/^\/search$/)) {
+    header = <Search />
+    title = "search"
+    body = <Results />
+  } else {
+    header = <Breadcrumbs path={path} />
+    title = page.frontMatter.title
+    body = (
+      <div dangerouslySetInnerHTML={{
+        __html: marked(page.body)
+      }} />
+    )
+  }
+
+  const onHeaderClick = event => {
+    const link = event.target.closest("a")
+    if (link) {
+      return
+    }
+    event.preventDefault()
+    navigate("/search")
+  }
 
   return (
     <>
-      <Header path={path} />
-      <Page {...page} />
+      <Header path={path} navigate={navigate} onClick={onHeaderClick}>
+        {header}
+      </Header>
+      <Page title={title}>
+        {body}
+      </Page>
     </>
   )
-}
+})
