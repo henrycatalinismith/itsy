@@ -79,11 +79,15 @@ engine/itsy.js: engine/core.js
 	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js
 	./node_modules/.bin/prettier --write engine/itsy.js
 
+manual/index.html: base64/engine.js base64/stylesheet.js
+	npm run build-manual
+
 clean:
 	rm -f base64/engine.js
 	rm -f base64/stylesheet.js
 	rm -f engine/core.js
 	rm -f engine/itsy.js
+	rm -f manual/index.html
 
 cleanlua:
 	rm -f $(LUA)/src/*.o
