@@ -1,7 +1,7 @@
 {
   "name": "@highvalley.systems/spraypaint",
   "description": "highvalley systems design tokens",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "UNLICENSED",
   "files": [
     "components/*",

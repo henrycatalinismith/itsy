@@ -2,17 +2,24 @@ import React from "react"
 import pico8 from "../palettes/pico8.es6"
 import Glyph from "./glyph"
 
-export default ({ children }) => {
+export default ({
+  children,
+  fg = pico8[7],
+  bg = pico8[0],
+  fontSize = undefined,
+}) => {
   const style = {
     flex: 1,
   }
 
   const lines = children.split(/\n/)
 
+  const xm = 2.6
+
   const viewBox = [
-    -1,
+    -0.5,
     0,
-    2.7 * lines[0].length - 1,
+    xm * lines[0].length - 1,
     4 * lines.length,
   ].join(" ")
 
@@ -24,13 +31,13 @@ export default ({ children }) => {
 
       const layers = [{
         scale: 0.5,
-        color: pico8[0],
+        color: bg,
         x: x * xScale,
         y: 2,
         width: 1.4,
       }, {
         scale: 0.5,
-        color: pico8[7],
+        color: fg,
         x: x * xScale,
         y: 2,
         width: 0.50,
@@ -51,6 +58,11 @@ export default ({ children }) => {
   const props = {
     style,
     viewBox,
+  }
+
+  if (fontSize) {
+    props.height = `${fontSize}px`
+    props.width = `${((fontSize / 4 * xm) * lines[0].length)}px`
   }
   
   const svg = React.createElement("svg", props, glyphs)
