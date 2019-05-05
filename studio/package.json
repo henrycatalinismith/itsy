@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "@highvalley.systems/itsy": "^0.62.0",
+    "@highvalley.systems/itsy": "^0.63.0",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.5.0",
     "base-64": "^0.1.0",

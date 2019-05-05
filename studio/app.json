@@ -23,11 +23,15 @@
     ],
     "ios": {
       "bundleIdentifier": "systems.highvalley.itsystudio",
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "infoPlist": {
         "UIFileSharingEnabled": true,
         "LSSupportsOpeningDocumentsInPlace": true
       },
-      "supportsTablet": true
+      "supportsTablet": true,
+      "usesIcloudStorage": true
     }
   }
 }
