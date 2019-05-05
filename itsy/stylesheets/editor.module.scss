@@ -1,0 +1,26 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+
+.loading {
+  background: #fae4ec;
+  color: pico8(14);
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  font-family: "Overpass Mono", monospace !important;
+  font-size: 18px;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+}
+
+.editor {
+  background: #eee;
+  width: 100vw !important;
+  height: 100vh !important;
+  display: flex;
+  flex-direction: column;
+  font-family: "Overpass Mono", monospace !important;
+  font-size: 18px;
+  font-weight: bold;
+}

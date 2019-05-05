@@ -32,6 +32,7 @@
     "@storybook/react": "^5.0.10",
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.2",
+    "codemirror": "^5.46.0",
     "emcc": "^0.2.2",
     "frontmatter-markdown-loader": "^1.6.0",
     "gray-matter": "^4.0.2",
@@ -41,6 +42,7 @@
     "lua-src": "5.3.5",
     "marked": "^0.6.2",
     "prettier": "^1.16.4",
+    "react-codemirror2": "^6.0.0",
     "react-redux": "^7.0.3",
     "redux-logger": "^3.0.6",
     "sass": "^1.19.0",
@@ -52,6 +54,7 @@
     "base64/*",
     "commands/*",
     "defaults/*",
+    "editor/index.html",
     "exports/*",
     "functions/*",
     "manual/index.html"
@@ -63,7 +66,9 @@
     "start": "NODE_ENV=development node workshop/start.js",
     "tag": "node workshop/tag.js",
     "storybook": "start-storybook -p 6006",
+    "build-editor": "webpack --config editor/webpack.config.js && rm editor/build.js",
     "build-manual": "webpack --config manual/webpack.config.js && rm manual/build.js",
+    "watch-editor": "webpack --watch --config editor/webpack.config.js",
     "watch-manual": "webpack --watch --config manual/webpack.config.js",
     "build-storybook": "build-storybook"
   }
