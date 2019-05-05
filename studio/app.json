@@ -19,8 +19,7 @@
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*",
-      "node_modules/@highvalley.systems/itsy/manual/index.html"
+      "**/*"
     ],
     "ios": {
       "bundleIdentifier": "systems.highvalley.itsystudio",

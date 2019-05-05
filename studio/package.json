@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "build": "npm run manual; expo build:ios",
+    "manual": "cp node_modules/@highvalley.systems/itsy/manual/index.html assets/webviews/manual.html"
   },
   "jest": {
     "preset": "jest-expo"

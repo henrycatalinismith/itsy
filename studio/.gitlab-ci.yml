@@ -12,6 +12,7 @@ before_script:
   - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
   - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
   - npm ci
+  - npm run manual
 expo-deployments:
   stage: deploy
   script:
