@@ -54,6 +54,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       inlineSource: ".(js|css)$",
+      meta: {
+        viewport: "initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width",
+      },
     }),
     new InlineSourcePlugin(),
   ]
