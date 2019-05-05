@@ -49,7 +49,7 @@ export default class Editor extends React.Component {
       switch (message.type) {
         case "ready":
           this.webview.postMessage(JSON.stringify({
-            type: "init",
+            type: "inject",
             lua,
           }))
           break
@@ -74,6 +74,7 @@ export default class Editor extends React.Component {
       <View style={styles.code}>
         <WebView
           bounces={false}
+          injectedJavaScript="window.isReactNative = true;"
           onMessage={handleMessage}
           ref={(view) => { this.webview = view; }}
           scrollEnabled={false}

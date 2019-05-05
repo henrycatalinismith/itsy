@@ -7,6 +7,7 @@
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "build": "npm run manual; expo build:ios",
+    "editor": "cp node_modules/@highvalley.systems/itsy/editor/index.html assets/webviews/editor.html",
     "manual": "cp node_modules/@highvalley.systems/itsy/manual/index.html assets/webviews/manual.html"
   },
   "jest": {
@@ -14,7 +15,7 @@
   },
   "dependencies": {
     "@expo/samples": "2.1.1",
-    "@highvalley.systems/itsy": "^0.61.0",
+    "@highvalley.systems/itsy": "^0.62.0",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.5.0",
     "base-64": "^0.1.0",
