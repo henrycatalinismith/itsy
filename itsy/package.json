@@ -25,7 +25,6 @@
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@highvalley.systems/b64": "https://github.com/highvalley-systems/b64/",
-    "@highvalley.systems/lua": "https://github.com/highvalley-systems/lua/",
     "@storybook/addon-links": "^5.0.10",
     "@storybook/addon-viewport": "^5.0.10",
     "@storybook/addons": "^5.0.10",
