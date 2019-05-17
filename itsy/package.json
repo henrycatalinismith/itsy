@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@highvalley.systems/signalbox": "^0.17.0",
-    "@highvalley.systems/spraypaint": "^0.6.0",
+    "@highvalley.systems/spraypaint": "^0.7.0",
     "ansi-colors": "^3.2.4",
     "buffer": "^5.2.1",
     "cheerio": "^1.0.0-rc.3",

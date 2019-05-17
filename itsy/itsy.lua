@@ -138,10 +138,14 @@ function _init()
     --add(cave, level())
     add(cave, { 8, 120 })
   end
+  number = rnd(100)
 end
 
 function _tick()
   tick = tick + 1
+  if tick % 60 == 0 then
+    number = rnd(100)
+  end
   controls()
   if tick % 5 < 4 then
     move_helicopter()
@@ -159,6 +163,7 @@ function _draw()
   if touch() then
     circ(touchx() + foreground[1], touchy(), 4, 9)
   end
+  print(""..number, 8 + foreground[1], 8, 14)
 end
 
 function collisions()
