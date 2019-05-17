@@ -164,6 +164,7 @@ function _draw()
     circ(touchx() + foreground[1], touchy(), 4, 9)
   end
   print(""..number, 8 + foreground[1], 8, 14)
+  print("".. 0b1, 8 + foreground[1], 24, 14)
 end
 
 function collisions()
