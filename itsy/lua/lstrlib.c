@@ -34,7 +34,7 @@
 
 
 
-static int str_len (lua_State *L) {
+int str_len (lua_State *L) {
   size_t l;
   luaL_checklstring(L, 1, &l);
   lua_pushinteger(L, (lua_Integer)l);
@@ -50,7 +50,7 @@ static size_t posrelat (ptrdiff_t pos, size_t len) {
 }
 
 
-static int str_sub (lua_State *L) {
+int str_sub (lua_State *L) {
   size_t l;
   const char *s = luaL_checklstring(L, 1, &l);
   size_t start = posrelat(luaL_checkinteger(L, 2), l);
@@ -64,7 +64,7 @@ static int str_sub (lua_State *L) {
 }
 
 
-static int str_reverse (lua_State *L) {
+int str_reverse (lua_State *L) {
   size_t l, i;
   luaL_Buffer b;
   const char *s = luaL_checklstring(L, 1, &l);
@@ -76,7 +76,7 @@ static int str_reverse (lua_State *L) {
 }
 
 
-static int str_lower (lua_State *L) {
+int str_lower (lua_State *L) {
   size_t l;
   size_t i;
   luaL_Buffer b;
@@ -89,7 +89,7 @@ static int str_lower (lua_State *L) {
 }
 
 
-static int str_upper (lua_State *L) {
+int str_upper (lua_State *L) {
   size_t l;
   size_t i;
   luaL_Buffer b;
@@ -105,7 +105,7 @@ static int str_upper (lua_State *L) {
 /* reasonable limit to avoid arithmetic overflow */
 #define MAXSIZE		((~(size_t)0) >> 1)
 
-static int str_rep (lua_State *L) {
+int str_rep (lua_State *L) {
   size_t l, lsep;
   const char *s = luaL_checklstring(L, 1, &l);
   int n = luaL_checkint(L, 2);
@@ -130,7 +130,7 @@ static int str_rep (lua_State *L) {
 }
 
 
-static int str_byte (lua_State *L) {
+int str_byte (lua_State *L) {
   size_t l;
   const char *s = luaL_checklstring(L, 1, &l);
   size_t posi = posrelat(luaL_optinteger(L, 2, 1), l);
@@ -149,7 +149,7 @@ static int str_byte (lua_State *L) {
 }
 
 
-static int str_char (lua_State *L) {
+int str_char (lua_State *L) {
   int n = lua_gettop(L);  /* number of arguments */
   int i;
   luaL_Buffer b;
@@ -171,7 +171,7 @@ static int writer (lua_State *L, const void* b, size_t size, void* B) {
 }
 
 
-static int str_dump (lua_State *L) {
+int str_dump (lua_State *L) {
   luaL_Buffer b;
   luaL_checktype(L, 1, LUA_TFUNCTION);
   lua_settop(L, 1);
@@ -574,7 +574,7 @@ static int nospecials (const char *p, size_t l) {
 }
 
 
-static int str_find_aux (lua_State *L, int find) {
+int str_find_aux (lua_State *L, int find) {
   size_t ls, lp;
   const char *s = luaL_checklstring(L, 1, &ls);
   const char *p = luaL_checklstring(L, 2, &lp);
@@ -626,17 +626,17 @@ static int str_find_aux (lua_State *L, int find) {
 }
 
 
-static int str_find (lua_State *L) {
+int str_find (lua_State *L) {
   return str_find_aux(L, 1);
 }
 
 
-static int str_match (lua_State *L) {
+int str_match (lua_State *L) {
   return str_find_aux(L, 0);
 }
 
 
-static int gmatch_aux (lua_State *L) {
+int gmatch_aux (lua_State *L) {
   MatchState ms;
   size_t ls, lp;
   const char *s = lua_tolstring(L, lua_upvalueindex(1), &ls);
@@ -665,7 +665,7 @@ static int gmatch_aux (lua_State *L) {
 }
 
 
-static int gmatch (lua_State *L) {
+int gmatch (lua_State *L) {
   luaL_checkstring(L, 1);
   luaL_checkstring(L, 2);
   lua_settop(L, 2);
@@ -732,7 +732,7 @@ static void add_value (MatchState *ms, luaL_Buffer *b, const char *s,
 }
 
 
-static int str_gsub (lua_State *L) {
+int str_gsub (lua_State *L) {
   size_t srcl, lp;
   const char *src = luaL_checklstring(L, 1, &srcl);
   const char *p = luaL_checklstring(L, 2, &lp);
@@ -889,7 +889,7 @@ static void addlenmod (char *form, const char *lenmod) {
 }
 
 
-static int str_format (lua_State *L) {
+int str_format (lua_State *L) {
   int top = lua_gettop(L);
   int arg = 1;
   size_t sfl;

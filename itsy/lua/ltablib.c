@@ -39,7 +39,7 @@ static int maxn (lua_State *L) {
 #endif
 
 
-static int tinsert (lua_State *L) {
+int tinsert (lua_State *L) {
   int e = aux_getn(L, 1) + 1;  /* first empty element */
   int pos;  /* where to insert new element */
   switch (lua_gettop(L)) {
@@ -66,7 +66,7 @@ static int tinsert (lua_State *L) {
 }
 
 
-static int tremove (lua_State *L) {
+int tremove (lua_State *L) {
   int size = aux_getn(L, 1);
   int pos = luaL_optint(L, 2, size);
   if (pos != size)  /* validate 'pos' if given */

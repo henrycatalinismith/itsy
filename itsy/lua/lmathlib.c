@@ -23,79 +23,79 @@
 
 
 
-static int math_abs (lua_State *L) {
+int math_abs (lua_State *L) {
   lua_pushnumber(L, l_mathop(fabs)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_sin (lua_State *L) {
+int math_sin (lua_State *L) {
   lua_pushnumber(L, l_mathop(sin)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_sinh (lua_State *L) {
+int math_sinh (lua_State *L) {
   lua_pushnumber(L, l_mathop(sinh)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_cos (lua_State *L) {
+int math_cos (lua_State *L) {
   lua_pushnumber(L, l_mathop(cos)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_cosh (lua_State *L) {
+int math_cosh (lua_State *L) {
   lua_pushnumber(L, l_mathop(cosh)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_tan (lua_State *L) {
+int math_tan (lua_State *L) {
   lua_pushnumber(L, l_mathop(tan)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_tanh (lua_State *L) {
+int math_tanh (lua_State *L) {
   lua_pushnumber(L, l_mathop(tanh)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_asin (lua_State *L) {
+int math_asin (lua_State *L) {
   lua_pushnumber(L, l_mathop(asin)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_acos (lua_State *L) {
+int math_acos (lua_State *L) {
   lua_pushnumber(L, l_mathop(acos)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_atan (lua_State *L) {
+int math_atan (lua_State *L) {
   lua_pushnumber(L, l_mathop(atan)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_atan2 (lua_State *L) {
+int math_atan2 (lua_State *L) {
   lua_pushnumber(L, l_mathop(atan2)(luaL_checknumber(L, 1),
                                 luaL_checknumber(L, 2)));
   return 1;
 }
 
-static int math_ceil (lua_State *L) {
+int math_ceil (lua_State *L) {
   lua_pushnumber(L, l_mathop(ceil)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_floor (lua_State *L) {
+int math_floor (lua_State *L) {
   lua_pushnumber(L, l_mathop(floor)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_fmod (lua_State *L) {
+int math_fmod (lua_State *L) {
   lua_pushnumber(L, l_mathop(fmod)(luaL_checknumber(L, 1),
                                luaL_checknumber(L, 2)));
   return 1;
 }
 
-static int math_modf (lua_State *L) {
+int math_modf (lua_State *L) {
   lua_Number ip;
   lua_Number fp = l_mathop(modf)(luaL_checknumber(L, 1), &ip);
   lua_pushnumber(L, ip);
@@ -103,19 +103,19 @@ static int math_modf (lua_State *L) {
   return 2;
 }
 
-static int math_sqrt (lua_State *L) {
+int math_sqrt (lua_State *L) {
   lua_pushnumber(L, l_mathop(sqrt)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_pow (lua_State *L) {
+int math_pow (lua_State *L) {
   lua_Number x = luaL_checknumber(L, 1);
   lua_Number y = luaL_checknumber(L, 2);
   lua_pushnumber(L, l_mathop(pow)(x, y));
   return 1;
 }
 
-static int math_log (lua_State *L) {
+int math_log (lua_State *L) {
   lua_Number x = luaL_checknumber(L, 1);
   lua_Number res;
   if (lua_isnoneornil(L, 2))
@@ -130,35 +130,35 @@ static int math_log (lua_State *L) {
 }
 
 #if defined(LUA_COMPAT_LOG10)
-static int math_log10 (lua_State *L) {
+int math_log10 (lua_State *L) {
   lua_pushnumber(L, l_mathop(log10)(luaL_checknumber(L, 1)));
   return 1;
 }
 #endif
 
-static int math_exp (lua_State *L) {
+int math_exp (lua_State *L) {
   lua_pushnumber(L, l_mathop(exp)(luaL_checknumber(L, 1)));
   return 1;
 }
 
-static int math_deg (lua_State *L) {
+int math_deg (lua_State *L) {
   lua_pushnumber(L, luaL_checknumber(L, 1)/RADIANS_PER_DEGREE);
   return 1;
 }
 
-static int math_rad (lua_State *L) {
+int math_rad (lua_State *L) {
   lua_pushnumber(L, luaL_checknumber(L, 1)*RADIANS_PER_DEGREE);
   return 1;
 }
 
-static int math_frexp (lua_State *L) {
+int math_frexp (lua_State *L) {
   int e;
   lua_pushnumber(L, l_mathop(frexp)(luaL_checknumber(L, 1), &e));
   lua_pushinteger(L, e);
   return 2;
 }
 
-static int math_ldexp (lua_State *L) {
+int math_ldexp (lua_State *L) {
   lua_Number x = luaL_checknumber(L, 1);
   int ep = luaL_checkint(L, 2);
   lua_pushnumber(L, l_mathop(ldexp)(x, ep));
@@ -167,7 +167,7 @@ static int math_ldexp (lua_State *L) {
 
 
 
-static int math_min (lua_State *L) {
+int math_min (lua_State *L) {
   int n = lua_gettop(L);  /* number of arguments */
   lua_Number dmin = luaL_checknumber(L, 1);
   int i;
@@ -181,7 +181,7 @@ static int math_min (lua_State *L) {
 }
 
 
-static int math_max (lua_State *L) {
+int math_max (lua_State *L) {
   int n = lua_gettop(L);  /* number of arguments */
   lua_Number dmax = luaL_checknumber(L, 1);
   int i;
@@ -195,7 +195,7 @@ static int math_max (lua_State *L) {
 }
 
 
-static int math_random (lua_State *L) {
+int math_random (lua_State *L) {
   /* the `%' avoids the (rare) case of r==1, and is needed also because on
      some systems (SunOS!) `rand()' may return a value larger than RAND_MAX */
   lua_Number r = (lua_Number)(rand()%RAND_MAX) / (lua_Number)RAND_MAX;
@@ -223,7 +223,7 @@ static int math_random (lua_State *L) {
 }
 
 
-static int math_randomseed (lua_State *L) {
+int math_randomseed (lua_State *L) {
   srand(luaL_checkunsigned(L, 1));
   (void)rand(); /* discard first value to avoid undesirable correlations */
   return 0;

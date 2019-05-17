@@ -46,7 +46,7 @@ static int auxresume (lua_State *L, lua_State *co, int narg) {
 }
 
 
-static int luaB_coresume (lua_State *L) {
+int luaB_coresume (lua_State *L) {
   lua_State *co = lua_tothread(L, 1);
   int r;
   luaL_argcheck(L, co, 1, "coroutine expected");
@@ -64,7 +64,7 @@ static int luaB_coresume (lua_State *L) {
 }
 
 
-static int luaB_auxwrap (lua_State *L) {
+int luaB_auxwrap (lua_State *L) {
   lua_State *co = lua_tothread(L, lua_upvalueindex(1));
   int r = auxresume(L, co, lua_gettop(L));
   if (r < 0) {
@@ -79,7 +79,7 @@ static int luaB_auxwrap (lua_State *L) {
 }
 
 
-static int luaB_cocreate (lua_State *L) {
+int luaB_cocreate (lua_State *L) {
   lua_State *NL;
   luaL_checktype(L, 1, LUA_TFUNCTION);
   NL = lua_newthread(L);
@@ -89,19 +89,19 @@ static int luaB_cocreate (lua_State *L) {
 }
 
 
-static int luaB_cowrap (lua_State *L) {
+int luaB_cowrap (lua_State *L) {
   luaB_cocreate(L);
   lua_pushcclosure(L, luaB_auxwrap, 1);
   return 1;
 }
 
 
-static int luaB_yield (lua_State *L) {
+int luaB_yield (lua_State *L) {
   return lua_yield(L, lua_gettop(L));
 }
 
 
-static int luaB_costatus (lua_State *L) {
+int luaB_costatus (lua_State *L) {
   lua_State *co = lua_tothread(L, 1);
   luaL_argcheck(L, co, 1, "coroutine expected");
   if (L == co) lua_pushliteral(L, "running");
@@ -129,7 +129,7 @@ static int luaB_costatus (lua_State *L) {
 }
 
 
-static int luaB_corunning (lua_State *L) {
+int luaB_corunning (lua_State *L) {
   int ismain = lua_pushthread(L);
   lua_pushboolean(L, ismain);
   return 2;
