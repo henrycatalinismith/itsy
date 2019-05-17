@@ -1,11 +1,11 @@
 B64=./node_modules/@highvalley.systems/b64
-LUA=./node_modules/@highvalley.systems/lua
+LUA=./lua
 EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.31
 
 VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
 
-LUA_SRC := $(wildcard $(LUA)/src/*.c)
-LUA_OBJ := $(patsubst $(LUA)/src/%.c, $(LUA)/src/%.o, $(LUA_SRC))
+LUA_SRC := $(wildcard $(LUA)/*.c)
+LUA_OBJ := $(patsubst $(LUA)/%.c, $(LUA)/%.o, $(LUA_SRC))
 
 CC=$(EMSCRIPTEN)/emcc
 AR=$(EMSCRIPTEN)/emar
@@ -18,12 +18,12 @@ CFLAGS=\
 	-O2 \
 	-I./engine \
 	-I$(B64) \
-	-I$(LUA)/src
+	-I$(LUA)
 
 OBJS=\
 	$(B64)/decode.o \
 	$(B64)/encode.o \
-	$(LUA)/src/liblua.a
+	$(LUA)/liblua.a
 
 EMCCFLAGS=\
 	-s ENVIRONMENT="web" \
@@ -40,17 +40,18 @@ EMCCFLAGS=\
 $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
-$(LUA)/src/%.o:
-	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/src/$*.c # yoink
-	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/src/$*.c # lololol
-	perl -p -i -e "s/^static int str_/int str_/g" $(LUA)/src/$*.c # lololol
-	perl -p -i -e "s/^static int gmatch/int gmatch/g" $(LUA)/src/$*.c # lololol
-	perl -p -i -e "s/^static int tinsert/int tinsert/g" $(LUA)/src/$*.c
-	perl -p -i -e "s/^static int tremove/int tremove/g" $(LUA)/src/$*.c
-	cd $(LUA)/src && make $*.o CC='../../../../$(CC)'
 
-$(LUA)/src/liblua.a: $(LUA_OBJ)
-	cd $(LUA)/src && make generic CC='../../../../$(CC)'
+$(LUA)/%.o:
+	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/$*.c # yoink
+	perl -p -i -e "s/^static int math_/int math_/g" $(LUA)/$*.c # lololol
+	perl -p -i -e "s/^static int str_/int str_/g" $(LUA)/$*.c # lololol
+	perl -p -i -e "s/^static int gmatch/int gmatch/g" $(LUA)/$*.c # lololol
+	perl -p -i -e "s/^static int tinsert/int tinsert/g" $(LUA)/$*.c
+	perl -p -i -e "s/^static int tremove/int tremove/g" $(LUA)/$*.c
+	cd $(LUA) && make $*.o CC='../$(CC)'
+
+$(LUA)/liblua.a: $(LUA_OBJ)
+	cd $(LUA) && make generic CC='../$(CC)'
 
 base64/engine.js: engine/itsy.js
 	echo "module.exports = \"" | perl -pe "chomp" > base64/engine.js
@@ -93,11 +94,11 @@ clean:
 	rm -f manual/index.html
 
 cleanlua:
-	rm -f $(LUA)/src/*.o
-	rm -f $(LUA)/src/liblua.a
+	rm -f $(LUA)/*.o
+	rm -f $(LUA)/liblua.a
 
 itsy: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html manual/index.html
 
-lua: $(LUA)/src/liblua.a
+lua: $(LUA)/liblua.a
 
 .PHONY: all itsy lua sdl clean cleanlua

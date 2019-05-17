@@ -6,6 +6,10 @@
 /engine/core.js
 /engine/itsy.js
 /engine/*.o
+/lua/lua
+/lua/luac
+/lua/*.a
+/lua/*.o
 /manual/index.html
 /manual/build.js
 /node_modules/*
