@@ -142,7 +142,7 @@ function _init()
 end
 
 function _tick()
-  tick = tick + 1
+  tick += 1
   if tick % 60 == 0 then
     number = rnd(100)
   end
