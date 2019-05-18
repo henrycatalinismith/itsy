@@ -29,6 +29,7 @@
 #include <cocreate/cocreate.h>
 #include <color/color.h>
 #include <coresume/coresume.h>
+#include <cos/cos.h>
 #include <costatus/costatus.h>
 #include <line/line.h>
 #include <nibble/nibble.h>
@@ -102,6 +103,7 @@ const luaL_Reg itsy_functions[] = {
   {"cocreate", itsy_cocreate},
   {"color", itsy_color},
   {"coresume", itsy_coresume},
+  {"cos", itsy_cos},
   {"costatus", itsy_costatus},
   {"line", itsy_line},
   {"peek", itsy_peek},
@@ -122,7 +124,6 @@ const luaL_Reg itsy_functions[] = {
 };
 
 const luaL_Reg math[] = {
-  {"cos", math_cos},
   {"flr", math_floor},
   {"max", math_max},
   {"min", math_min},
