@@ -17,7 +17,6 @@
 #include <SDL2/SDL_render.h>
 
 #include "itsy.h"
-#include "luahack.h"
 
 #include <abs/abs.h>
 #include <add/add.h>
@@ -31,6 +30,7 @@
 #include <coresume/coresume.h>
 #include <cos/cos.h>
 #include <costatus/costatus.h>
+#include <del/del.h>
 #include <flr/flr.h>
 #include <line/line.h>
 #include <lower/lower.h>
@@ -38,6 +38,7 @@
 #include <min/min.h>
 #include <nibble/nibble.h>
 #include <nobble/nobble.h>
+#include <pairs/pairs.h>
 #include <poke/poke.h>
 #include <peek/peek.h>
 #include <print/print.h>
@@ -114,11 +115,13 @@ const luaL_Reg itsy_functions[] = {
   {"coresume", itsy_coresume},
   {"cos", itsy_cos},
   {"costatus", itsy_costatus},
+  {"del", itsy_del},
   {"flr", itsy_flr},
   {"line", itsy_line},
   {"lower", itsy_lower},
   {"max", itsy_max},
   {"min", itsy_min},
+  {"pairs", itsy_pairs},
   {"peek", itsy_peek},
   {"poke", itsy_poke},
   {"print", itsy_print},
@@ -139,12 +142,6 @@ const luaL_Reg itsy_functions[] = {
   {"type", itsy_type},
   {"upper", itsy_upper},
   {"yield", itsy_yield},
-};
-
-const luaL_Reg table[] = {
-  {"del", tremove},
-  {"pairs", luaB_pairs},
-  {NULL, NULL}
 };
 
 int main(int argc, char **argv)
@@ -361,9 +358,6 @@ lua_State* init_lua(lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, itsy_functions, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, table, 0);
 
   return L;
 }

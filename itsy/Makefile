@@ -28,9 +28,11 @@ CFLAGS=\
 OBJS=\
 	$(B64)/decode.o \
 	$(B64)/encode.o \
+	$(LUA)/lbaselib.o \
 	$(LUA)/lcorolib.o \
 	$(LUA)/lmathlib.o \
 	$(LUA)/lstrlib.o \
+	$(LUA)/ltablib.o \
 	$(LUA)/liblua.a
 
 EMCCFLAGS=\
