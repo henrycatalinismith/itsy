@@ -19,28 +19,31 @@
 #include "itsy.h"
 #include "luahack.h"
 
-#include "abs/abs.h"
-#include "add/add.h"
-#include "camera/camera.h"
-#include "ceil/ceil.h"
-#include "circ/circ.h"
-#include "circfill/circfill.h"
-#include "cls/cls.h"
-#include "line/line.h"
-#include "nibble/nibble.h"
-#include "nobble/nobble.h"
-#include "poke/poke.h"
-#include "peek/peek.h"
-#include "print/print.h"
-#include "pget/pget.h"
-#include "pset/pset.h"
-#include "rect/rect.h"
-#include "rectfill/rectfill.h"
-#include "sget/sget.h"
-#include "sspr/sspr.h"
-#include "touch/touch.h"
-#include "touchx/touchx.h"
-#include "touchy/touchy.h"
+#include <abs/abs.h>
+#include <add/add.h>
+#include <camera/camera.h>
+#include <ceil/ceil.h>
+#include <circ/circ.h>
+#include <circfill/circfill.h>
+#include <cls/cls.h>
+#include <color/color.h>
+#include <line/line.h>
+#include <nibble/nibble.h>
+#include <nobble/nobble.h>
+#include <poke/poke.h>
+#include <peek/peek.h>
+#include <print/print.h>
+#include <pget/pget.h>
+#include <pset/pset.h>
+#include <rect/rect.h>
+#include <rectfill/rectfill.h>
+#include <sget/sget.h>
+#include <sset/sset.h>
+#include <sspr/sspr.h>
+#include <time/time.h>
+#include <touch/touch.h>
+#include <touchx/touchx.h>
+#include <touchy/touchy.h>
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -76,19 +79,35 @@ lua_State* init_lua(lua_State *L);
 void loop(void);
 void render(void);
 
-void sset(int x, int y, int c);
-
 lua_State* runtime;
 lua_State* debugger;
 
-int gfx_color(lua_State *L);
-
-int misc_time(lua_State *L);
-
 void runtime_error(lua_State *L);
 
+const luaL_Reg itsy_functions[] = {
+  {"abs", itsy_abs},
+  {"add", itsy_add},
+  {"camera", itsy_camera},
+  {"ceil", itsy_ceil},
+  {"circ", itsy_circ},
+  {"circfill", itsy_circfill},
+  {"cls", itsy_cls},
+  {"color", itsy_color},
+  {"line", itsy_line},
+  {"peek", itsy_peek},
+  {"poke", itsy_poke},
+  {"print", itsy_print},
+  {"pset", itsy_pset},
+  {"rect", itsy_rect},
+  {"rectfill", itsy_rectfill},
+  {"sspr", itsy_sspr},
+  {"time", itsy_time},
+  {"touch", itsy_touch},
+  {"touchx", itsy_touchx},
+  {"touchy", itsy_touchy},
+};
+
 const luaL_Reg base[] = {
-  {"time", misc_time},
   {"tonum", luaB_tonumber},
   {"tostr", luaB_tostring},
   {"type", luaB_type},
@@ -103,35 +122,7 @@ const luaL_Reg coroutines[] = {
   {NULL, NULL}
 };
 
-const luaL_Reg draw_funcs[] = {
-  {"circ", itsy_circ},
-  {"circfill", itsy_circfill},
-  {"cls", itsy_cls},
-  {"line", itsy_line},
-  {"print", itsy_print},
-  {"pset", itsy_pset},
-  {"rect", itsy_rect},
-  {"rectfill", itsy_rectfill},
-  {"sspr", itsy_sspr},
-  {NULL, NULL}
-};
-
-const luaL_Reg graphics[] = {
-  {"camera", itsy_camera},
-  {"color", gfx_color},
-  {NULL, NULL}
-};
-
-const luaL_Reg input_funcs[] = {
-  {"touch", itsy_touch},
-  {"touchx", itsy_touchx},
-  {"touchy", itsy_touchy},
-  {NULL, NULL}
-};
-
 const luaL_Reg math[] = {
-  {"abs", itsy_abs},
-  {"ceil", itsy_ceil},
   {"cos", math_cos},
   {"flr", math_floor},
   {"max", math_max},
@@ -139,12 +130,6 @@ const luaL_Reg math[] = {
   {"rnd", math_random},
   {"sin", math_sin},
   {"tan", math_tan},
-  {NULL, NULL}
-};
-
-const luaL_Reg mem[] = {
-  {"peek", itsy_peek},
-  {"poke", itsy_poke},
   {NULL, NULL}
 };
 
@@ -156,7 +141,6 @@ const luaL_Reg string_funcs[] = {
 };
 
 const luaL_Reg table[] = {
-  {"add", itsy_add},
   {"del", tremove},
   {"pairs", luaB_pairs},
   {NULL, NULL}
@@ -375,25 +359,16 @@ lua_State* init_lua(lua_State *L)
   L = luaL_newstate();
 
   lua_pushglobaltable(L);
+  luaL_setfuncs(L, itsy_functions, 0);
+
+  lua_pushglobaltable(L);
   luaL_setfuncs(L, base, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, coroutines, 0);
 
   lua_pushglobaltable(L);
-  luaL_setfuncs(L, draw_funcs, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, graphics, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, input_funcs, 0);
-
-  lua_pushglobaltable(L);
   luaL_setfuncs(L, math, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, mem, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, string_funcs, 0);
@@ -519,27 +494,6 @@ void render(void)
   // SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, NULL);
   SDL_RenderPresent(sdl->renderer);
   SDL_UpdateWindowSurface(sdl->window);
-}
-
-void sset(int x, int y, int c)
-{
-  nobble(sprite[x][y], x % 2 == 1, c);
-}
-
-int gfx_color(lua_State *L)
-{
-  int col = luaL_checknumber(L, 1);
-
-  poke(DRAW_COLOR, col);
-
-  return 0;
-}
-
-int misc_time(lua_State *L)
-{
-  double diff = (double) SDL_GetTicks() / 1000;
-  lua_pushnumber(L, diff);
-  return 1;
 }
 
 void runtime_error(lua_State *L)
