@@ -26,11 +26,13 @@
 #include "ceil/ceil.h"
 #include "circ/circ.h"
 #include "circfill/circfill.h"
+#include "cls/cls.h"
 #include "line/line.h"
 #include "nobble/nobble.h"
 #include "poke/poke.h"
 #include "peek/peek.h"
 #include "pset/pset.h"
+#include "rectfill/rectfill.h"
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -82,15 +84,12 @@ void sset(int x, int y, int c);
 
 void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
-void rectfill(int x0, int y0, int x1, int y1, int col);
 
 lua_State* runtime;
 lua_State* debugger;
 
-int draw_cls(lua_State *L);
 int draw_print(lua_State *L);
 int draw_rect(lua_State *L);
-int draw_rectfill(lua_State *L);
 int draw_sspr(lua_State *L);
 
 int gfx_color(lua_State *L);
@@ -123,12 +122,12 @@ const luaL_Reg coroutines[] = {
 const luaL_Reg draw_funcs[] = {
   {"circ", itsy_circ},
   {"circfill", itsy_circfill},
-  {"cls", draw_cls},
+  {"cls", itsy_cls},
   {"line", itsy_line},
   {"print", draw_print},
   {"pset", itsy_pset},
   {"rect", draw_rect},
-  {"rectfill", draw_rectfill},
+  {"rectfill", itsy_rectfill},
   {"sspr", draw_sspr},
   {NULL, NULL}
 };
@@ -600,26 +599,6 @@ void rect(int x0, int y0, int x1, int y1, int col)
   line(x0, y1, x0, y0, col);
 }
 
-void rectfill(int x0, int y0, int x1, int y1, int col)
-{
-  for (int y = y0; y < y1; y++) {
-    line(x0, y, x1, y, col);
-  }
-}
-
-int draw_cls(lua_State *L)
-{
-  int argc = lua_gettop(L);
-  int color = 0;
-  if (argc > 0) {
-    color = luaL_checknumber(L, 1);
-  }
-
-  rectfill(0, 0, 128, 128, color);
-
-  return 0;
-}
-
 int draw_print(lua_State *L)
 {
   const char *str = luaL_optstring(L, 1, "");
@@ -646,20 +625,6 @@ int draw_rect(lua_State *L)
 
   return 0;
 }
-
-int draw_rectfill(lua_State *L)
-{
-  int x0 = luaL_checknumber(L, 1);
-  int y0 = luaL_checknumber(L, 2);
-  int x1 = luaL_checknumber(L, 3);
-  int y1 = luaL_checknumber(L, 4);
-  int col = luaL_optinteger(L, 5, peek(DRAW_COLOR));
-
-  rectfill(x0, y0, x1, y1, col);
-
-  return 0;
-}
-
 
 int draw_sspr(lua_State *L)
 {
