@@ -1,7 +1,28 @@
-typedef struct glyph {
-  char *c;
-  bool px[5][3];
-} glyph;
+#include <string.h>
+#include <stdbool.h>
+
+#include <lua.h>
+#include <lauxlib.h>
+
+#include "itsy.h"
+#include "print/print.h"
+#include "peek/peek.h"
+#include "poke/poke.h"
+#include "pset/pset.h"
+
+int itsy_print (lua_State *L)
+{
+  const char *str = luaL_optstring(L, 1, "");
+  int x = luaL_optinteger(L, 2, peek(DRAW_PRINT_X));
+  int y = luaL_optinteger(L, 3, peek(DRAW_PRINT_Y));
+  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
+
+  print(str, x, y, col);
+  poke(DRAW_PRINT_X, x);
+  poke(DRAW_PRINT_Y, y + 8);
+
+  return 0;
+}
 
 glyph font[97] = {
   {" ", {
@@ -766,3 +787,30 @@ glyph font[97] = {
 
   {NULL, NULL}
 };
+
+void print(const char *str, int x, int y, int col)
+{
+  int len = strlen(str);
+  for (int i = 0; i < len; i++) {
+    int lx = x + (i * 4);
+    int ly = y;
+
+    for (int j = 0; j < 999; j++) {
+      if (font[j].c == NULL) {
+        break;
+      }
+
+      if (str[i] != font[j].c[0]) {
+        continue;
+      }
+
+      for (int k = 0; k < 5; k++) {
+        for (int l = 0; l < 3; l++) {
+          if (font[j].px[k][l]) {
+            pset(lx + l, ly + k, col);
+          }
+        }
+      }
+    }
+  }
+}

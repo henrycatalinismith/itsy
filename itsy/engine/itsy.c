@@ -17,7 +17,6 @@
 #include <SDL2/SDL_render.h>
 
 #include "itsy.h"
-#include "font.h"
 #include "luahack.h"
 
 #include "abs/abs.h"
@@ -31,6 +30,7 @@
 #include "nobble/nobble.h"
 #include "poke/poke.h"
 #include "peek/peek.h"
+#include "print/print.h"
 #include "pset/pset.h"
 #include "rectfill/rectfill.h"
 #include "touch/touch.h"
@@ -78,13 +78,11 @@ int sget(int x, int y);
 
 void sset(int x, int y, int c);
 
-void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 
 lua_State* runtime;
 lua_State* debugger;
 
-int draw_print(lua_State *L);
 int draw_rect(lua_State *L);
 int draw_sspr(lua_State *L);
 
@@ -95,7 +93,6 @@ int misc_time(lua_State *L);
 void runtime_error(lua_State *L);
 
 const luaL_Reg base[] = {
-  // {"print", luaB_print},
   {"time", misc_time},
   {"tonum", luaB_tonumber},
   {"tostr", luaB_tostring},
@@ -116,7 +113,7 @@ const luaL_Reg draw_funcs[] = {
   {"circfill", itsy_circfill},
   {"cls", itsy_cls},
   {"line", itsy_line},
-  {"print", draw_print},
+  {"print", itsy_print},
   {"pset", itsy_pset},
   {"rect", draw_rect},
   {"rectfill", itsy_rectfill},
@@ -555,53 +552,12 @@ void sset(int x, int y, int c)
   nobble(sprite[x][y], x % 2 == 1, c);
 }
 
-void print(const char *str, int x, int y, int col)
-{
-  int len = strlen(str);
-  for (int i = 0; i < len; i++) {
-    int lx = x + (i * 4);
-    int ly = y;
-
-    for (int j = 0; j < 999; j++) {
-      if (font[j].c == NULL) {
-        break;
-      }
-
-      if (str[i] != font[j].c[0]) {
-        continue;
-      }
-
-      for (int k = 0; k < 5; k++) {
-        for (int l = 0; l < 3; l++) {
-          if (font[j].px[k][l]) {
-            pset(lx + l, ly + k, col);
-          }
-        }
-      }
-    }
-  }
-}
-
 void rect(int x0, int y0, int x1, int y1, int col)
 {
   line(x0, y0, x1, y0, col);
   line(x1, y0, x1, y1, col);
   line(x1, y1, x0, y1, col);
   line(x0, y1, x0, y0, col);
-}
-
-int draw_print(lua_State *L)
-{
-  const char *str = luaL_optstring(L, 1, "");
-  int x = luaL_optinteger(L, 2, peek(DRAW_PRINT_X));
-  int y = luaL_optinteger(L, 3, peek(DRAW_PRINT_Y));
-  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
-
-  print(str, x, y, col);
-  poke(DRAW_PRINT_X, x);
-  poke(DRAW_PRINT_Y, y + 8);
-
-  return 0;
 }
 
 int draw_rect(lua_State *L)
