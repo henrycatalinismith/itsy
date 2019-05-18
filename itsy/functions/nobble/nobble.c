@@ -5,6 +5,7 @@
 #include <lualib.h>
 
 #include "itsy.h"
+#include "nobble/nobble.h"
 #include "peek/peek.h"
 #include "poke/poke.h"
 

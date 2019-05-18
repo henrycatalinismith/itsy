@@ -27,6 +27,7 @@
 #include "circfill/circfill.h"
 #include "cls/cls.h"
 #include "line/line.h"
+#include "nibble/nibble.h"
 #include "nobble/nobble.h"
 #include "poke/poke.h"
 #include "peek/peek.h"
@@ -70,8 +71,6 @@ lua_State* init_lua(lua_State *L);
 
 void loop(void);
 void render(void);
-
-int nibble(int addr, bool high);
 
 int pget(int x, int y);
 int sget(int x, int y);
@@ -524,13 +523,6 @@ void render(void)
   // SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, NULL);
   SDL_RenderPresent(sdl->renderer);
   SDL_UpdateWindowSurface(sdl->window);
-}
-
-int nibble(int addr, bool high)
-{
-  return high
-    ? peek(addr) >> 4
-    : peek(addr) & 0x0f;
 }
 
 int pget(int x, int y)
