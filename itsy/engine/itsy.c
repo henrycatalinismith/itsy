@@ -26,7 +26,10 @@
 #include <circ/circ.h>
 #include <circfill/circfill.h>
 #include <cls/cls.h>
+#include <cocreate/cocreate.h>
 #include <color/color.h>
+#include <coresume/coresume.h>
+#include <costatus/costatus.h>
 #include <line/line.h>
 #include <nibble/nibble.h>
 #include <nobble/nobble.h>
@@ -46,6 +49,8 @@
 #include <touch/touch.h>
 #include <touchx/touchx.h>
 #include <touchy/touchy.h>
+#include <type/type.h>
+#include <yield/yield.h>
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -94,7 +99,10 @@ const luaL_Reg itsy_functions[] = {
   {"circ", itsy_circ},
   {"circfill", itsy_circfill},
   {"cls", itsy_cls},
+  {"cocreate", itsy_cocreate},
   {"color", itsy_color},
+  {"coresume", itsy_coresume},
+  {"costatus", itsy_costatus},
   {"line", itsy_line},
   {"peek", itsy_peek},
   {"poke", itsy_poke},
@@ -110,14 +118,7 @@ const luaL_Reg itsy_functions[] = {
   {"touchx", itsy_touchx},
   {"touchy", itsy_touchy},
   {"type", itsy_type},
-};
-
-const luaL_Reg coroutines[] = {
-  {"cocreate", luaB_cocreate},
-  {"coresume", luaB_coresume},
-  {"costatus", luaB_costatus},
-  {"yield", luaB_yield},
-  {NULL, NULL}
+  {"yield", itsy_yield},
 };
 
 const luaL_Reg math[] = {
@@ -358,9 +359,6 @@ lua_State* init_lua(lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, itsy_functions, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, coroutines, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, math, 0);
