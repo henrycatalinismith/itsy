@@ -2,7 +2,6 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 
 #include <emscripten.h>
 
@@ -66,7 +65,6 @@ uint16_t pixel[128][128];
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 
 int frame = 0;
-time_t start_time;
 
 int init_sdl(int canvasWidth, int canvasHeight);
 int init_itsy(char *palettePng, char *spritesheetPng);
@@ -319,7 +317,6 @@ int init_itsy(char *palettePng, char *spritesheetPng)
     }
   }
 
-  start_time = time(NULL);
   poke(DRAW_COLOR, 6);
 
   unsigned long decsize;
@@ -966,8 +963,7 @@ int mem_poke(lua_State *L)
 
 int misc_time(lua_State *L)
 {
-  time_t now = time(NULL);
-  time_t diff = now - start_time;
+  double diff = (double) SDL_GetTicks() / 1000;
   lua_pushnumber(L, diff);
   return 1;
 }
