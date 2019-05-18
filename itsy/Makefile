@@ -29,6 +29,8 @@ OBJS=\
 	$(B64)/decode.o \
 	$(B64)/encode.o \
 	$(LUA)/lcorolib.o \
+	$(LUA)/lmathlib.o \
+	$(LUA)/lstrlib.o \
 	$(LUA)/liblua.a
 
 EMCCFLAGS=\

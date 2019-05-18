@@ -33,6 +33,7 @@
 #include <costatus/costatus.h>
 #include <flr/flr.h>
 #include <line/line.h>
+#include <lower/lower.h>
 #include <max/max.h>
 #include <min/min.h>
 #include <nibble/nibble.h>
@@ -49,6 +50,7 @@
 #include <sin/sin.h>
 #include <sset/sset.h>
 #include <sspr/sspr.h>
+#include <sub/sub.h>
 #include <tan/tan.h>
 #include <time/time.h>
 #include <tonum/tonum.h>
@@ -57,6 +59,7 @@
 #include <touchx/touchx.h>
 #include <touchy/touchy.h>
 #include <type/type.h>
+#include <upper/upper.h>
 #include <yield/yield.h>
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
@@ -113,6 +116,7 @@ const luaL_Reg itsy_functions[] = {
   {"costatus", itsy_costatus},
   {"flr", itsy_flr},
   {"line", itsy_line},
+  {"lower", itsy_lower},
   {"max", itsy_max},
   {"min", itsy_min},
   {"peek", itsy_peek},
@@ -124,6 +128,7 @@ const luaL_Reg itsy_functions[] = {
   {"rnd", itsy_rnd},
   {"sin", itsy_sin},
   {"sspr", itsy_sspr},
+  {"sub", itsy_sub},
   {"tan", itsy_tan},
   {"time", itsy_time},
   {"tonum", itsy_tonum},
@@ -132,14 +137,8 @@ const luaL_Reg itsy_functions[] = {
   {"touchx", itsy_touchx},
   {"touchy", itsy_touchy},
   {"type", itsy_type},
+  {"upper", itsy_upper},
   {"yield", itsy_yield},
-};
-
-const luaL_Reg string_funcs[] = {
-  {"lower", str_lower},
-  {"sub", str_sub},
-  {"upper", str_upper},
-  {NULL, NULL}
 };
 
 const luaL_Reg table[] = {
@@ -362,9 +361,6 @@ lua_State* init_lua(lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, itsy_functions, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, string_funcs, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, table, 0);
