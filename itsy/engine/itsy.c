@@ -16,20 +16,23 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 
+#include "itsy.h"
 #include "font.h"
 #include "luahack.h"
 
 #include "abs/abs.h"
 #include "add/add.h"
 #include "ceil/ceil.h"
+#include "nobble/nobble.h"
+#include "poke/poke.h"
+#include "peek/peek.h"
+#include "pset/pset.h"
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-#define DRAW_COLOR 0x5f25
-#define DRAW_PRINT_X 0x5f26
-#define DRAW_PRINT_Y 0x5f27
-#define DRAW_LINE_X 0x5f28
-#define DRAW_LINE_Y 0x5f29
+uint8_t memory[0x8000];
+uint16_t sprite[128][128];
+uint16_t pixel[128][128];
 
 typedef struct itsy_sdl_context {
   SDL_Window *window;
@@ -42,11 +45,6 @@ typedef struct itsy_sdl_context {
   int y;
 } itsy_sdl_context;
 
-typedef struct itsy_draw_state {
-  int camerax;
-  int cameray;
-} itsy_draw_state;
-
 typedef struct itsy_input_state {
   bool touch;
   int touchx;
@@ -54,18 +52,11 @@ typedef struct itsy_input_state {
 } itsy_input_state;
 
 itsy_sdl_context *sdl;
-itsy_draw_state draw = { 0, 0 };
 itsy_input_state input = { false, 0, 0 };
 
-uint8_t memory[0x8000];
 int palette[16][3];
 uint8_t pixels[128 * 128 * 4];
 bool error = false;
-
-// optimization!! e.g. sprite[20][30] contains the address in memory of the
-// spritesheet pixel at x=20 and y=30, to speed up reads & writes!
-uint16_t sprite[128][128];
-uint16_t pixel[128][128];
 
 void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 
@@ -78,16 +69,11 @@ lua_State* init_lua(lua_State *L);
 void loop(void);
 void render(void);
 
-int peek(int addr);
-void poke(int addr, int val);
-
 int nibble(int addr, bool high);
-void nobble(int addr, bool high, int val);
 
 int pget(int x, int y);
 int sget(int x, int y);
 
-void pset(int x, int y, int c);
 void sset(int x, int y, int c);
 
 void line(int x0, int y0, int x1, int y1, int col);
@@ -103,7 +89,6 @@ int draw_circfill(lua_State *L);
 int draw_cls(lua_State *L);
 int draw_line(lua_State *L);
 int draw_print(lua_State *L);
-int draw_pset(lua_State *L);
 int draw_rect(lua_State *L);
 int draw_rectfill(lua_State *L);
 int draw_sspr(lua_State *L);
@@ -114,9 +99,6 @@ int gfx_color(lua_State *L);
 int input_touch(lua_State *L);
 int input_touchx(lua_State *L);
 int input_touchy(lua_State *L);
-
-int mem_peek(lua_State *L);
-int mem_poke(lua_State *L);
 
 int misc_time(lua_State *L);
 
@@ -145,7 +127,7 @@ const luaL_Reg draw_funcs[] = {
   {"cls", draw_cls},
   {"line", draw_line},
   {"print", draw_print},
-  {"pset", draw_pset},
+  {"pset", itsy_pset},
   {"rect", draw_rect},
   {"rectfill", draw_rectfill},
   {"sspr", draw_sspr},
@@ -179,8 +161,8 @@ const luaL_Reg math[] = {
 };
 
 const luaL_Reg mem[] = {
-  {"peek", mem_peek},
-  {"poke", mem_poke},
+  {"peek", itsy_peek},
+  {"poke", itsy_poke},
   {NULL, NULL}
 };
 
@@ -558,29 +540,11 @@ void render(void)
   SDL_UpdateWindowSurface(sdl->window);
 }
 
-int peek(int addr)
-{
-  return memory[addr];
-}
-
-void poke(int addr, int val)
-{
-  memory[addr] = val;
-}
-
 int nibble(int addr, bool high)
 {
   return high
     ? peek(addr) >> 4
     : peek(addr) & 0x0f;
-}
-
-void nobble(int addr, bool high, int val)
-{
-  poke(addr, high
-    ? ((val << 4) | (peek(addr) & 0x0f))
-    : (((peek(addr) >> 4) << 4) | val)
-  );
 }
 
 int pget(int x, int y)
@@ -600,18 +564,6 @@ int sget(int x, int y)
 void sset(int x, int y, int c)
 {
   nobble(sprite[x][y], x % 2 == 1, c);
-}
-
-void pset(int x, int y, int c)
-{
-  x -= draw.camerax;
-  y -= draw.cameray;
-
-  if (x < 0 || y < 0 || x > 127 || y > 127) {
-    return;
-  }
-
-  nobble(pixel[x][y], x % 2 == 1, c);
 }
 
 void circ(int x, int y, int r, int col)
@@ -844,17 +796,6 @@ int draw_print(lua_State *L)
   return 0;
 }
 
-int draw_pset(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-  int col = luaL_optinteger(L, 3, peek(DRAW_COLOR));
-
-  pset(x, y, col);
-
-  return 0;
-}
-
 int draw_rect(lua_State *L)
 {
   int x0 = luaL_checknumber(L, 1);
@@ -908,8 +849,10 @@ int gfx_camera(lua_State *L)
   int x = luaL_checknumber(L, 1);
   int y = luaL_checknumber(L, 2);
 
-  draw.camerax = x;
-  draw.cameray = y;
+  poke(DRAW_CAMERA_X_LO, x % 256);
+  poke(DRAW_CAMERA_X_HI, (x >> 8) & 0xff);
+  poke(DRAW_CAMERA_Y_LO, y % 256);
+  poke(DRAW_CAMERA_Y_HI, (y >> 8) & 0xff);
 
   return 0;
 }
@@ -947,25 +890,6 @@ int input_touchy(lua_State *L)
     lua_pushnil(L);
   }
   return 1;
-}
-
-int mem_peek(lua_State *L)
-{
-  int addr = luaL_checknumber(L, 1);
-
-  lua_pushnumber(L, peek(addr));
-
-  return 1;
-}
-
-int mem_poke(lua_State *L)
-{
-  int addr = luaL_checknumber(L, 1);
-  int val = luaL_checknumber(L, 2);
-
-  poke(addr, val);
-
-  return 0;
 }
 
 int misc_time(lua_State *L)
