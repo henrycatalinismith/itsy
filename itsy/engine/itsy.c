@@ -22,6 +22,7 @@
 
 #include "abs/abs.h"
 #include "add/add.h"
+#include "camera/camera.h"
 #include "ceil/ceil.h"
 #include "nobble/nobble.h"
 #include "poke/poke.h"
@@ -93,7 +94,6 @@ int draw_rect(lua_State *L);
 int draw_rectfill(lua_State *L);
 int draw_sspr(lua_State *L);
 
-int gfx_camera(lua_State *L);
 int gfx_color(lua_State *L);
 
 int input_touch(lua_State *L);
@@ -135,7 +135,7 @@ const luaL_Reg draw_funcs[] = {
 };
 
 const luaL_Reg graphics[] = {
-  {"camera", gfx_camera},
+  {"camera", itsy_camera},
   {"color", gfx_color},
   {NULL, NULL}
 };
@@ -840,19 +840,6 @@ int draw_sspr(lua_State *L)
       }
     }
   }
-
-  return 0;
-}
-
-int gfx_camera(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-
-  poke(DRAW_CAMERA_X_LO, x % 256);
-  poke(DRAW_CAMERA_X_HI, (x >> 8) & 0xff);
-  poke(DRAW_CAMERA_Y_LO, y % 256);
-  poke(DRAW_CAMERA_Y_HI, (y >> 8) & 0xff);
 
   return 0;
 }
