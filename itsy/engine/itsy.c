@@ -32,6 +32,7 @@
 #include "poke/poke.h"
 #include "peek/peek.h"
 #include "print/print.h"
+#include "pget/pget.h"
 #include "pset/pset.h"
 #include "rectfill/rectfill.h"
 #include "touch/touch.h"
@@ -72,7 +73,6 @@ lua_State* init_lua(lua_State *L);
 void loop(void);
 void render(void);
 
-int pget(int x, int y);
 int sget(int x, int y);
 
 void sset(int x, int y, int c);
@@ -523,15 +523,6 @@ void render(void)
   // SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, NULL);
   SDL_RenderPresent(sdl->renderer);
   SDL_UpdateWindowSurface(sdl->window);
-}
-
-int pget(int x, int y)
-{
-  if (x < 0 || y < 0 || x > 127 || y > 127) {
-    return 0;
-  }
-
-  return nibble(pixel[x][y], x % 2 == 1);
 }
 
 int sget(int x, int y)
