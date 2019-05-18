@@ -1,7 +1,29 @@
-const width = window.innerWidth
-const height = window.innerHeight
+const ids = [
+  "canvas",
+  "lua",
+  "metadata",
+  "options",
+  "palette",
+  "spritesheet",
+]
 
-const canvas = document.querySelector("canvas")
+const elements = ids.reduce((object, id) => ({
+  ...object,
+  [id]: document.querySelector(`#${id}`),
+}), {})
+
+const canvas = elements.canvas
+const lua = elements.lua.innerText
+const metadata = JSON.parse(elements.metadata.innerText)
+const options = JSON.parse(elements.options.innerText)
+const palette = elements.palette.src.split(",")[1]
+const spritesheet = elements.spritesheet.src.split(",")[1]
+
+console.log(options)
+
+const width = options.width || window.innerWidth
+const height = options.height || window.innerHeight
+
 canvas.style.width = `${width}px`
 canvas.style.height = `${height}px`
 canvas.width = width
@@ -9,10 +31,6 @@ canvas.height = height
 // canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight)
 // canvas.width = 128
 // canvas.height = 128
-
-const lua = document.querySelector("script[type='text/lua']").innerText
-const palette = document.querySelector("#palette").src.split(",")[1]
-const spritesheet = document.querySelector("#spritesheet").src.split(",")[1]
 
 const argv = [
   lua,

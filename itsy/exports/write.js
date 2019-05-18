@@ -11,6 +11,8 @@ exports.write = ({
   palette = base64.palette,
   snapshot = base64.snapshot,
   spritesheet = base64.spritesheet,
+  width = undefined,
+  height = undefined,
 }) => `
 <!DOCTYPE html>
 <html>
@@ -29,6 +31,12 @@ ${JSON.stringify({
   name,
   created,
   updated,
+}, undefined, 2)}
+</script>
+<script id="options" type="application/json">
+${JSON.stringify({
+  width,
+  height,
 }, undefined, 2)}
 </script>
 <img id="palette" width="4" height="4" src="data:image/png;base64,${palette}" />
