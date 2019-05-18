@@ -19,6 +19,10 @@
 #include "font.h"
 #include "luahack.h"
 
+#include "abs/abs.h"
+#include "add/add.h"
+#include "ceil/ceil.h"
+
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
 #define DRAW_COLOR 0x5f25
@@ -162,8 +166,8 @@ const luaL_Reg input_funcs[] = {
 };
 
 const luaL_Reg math[] = {
-  {"abs", math_abs},
-  {"ceil", math_ceil},
+  {"abs", itsy_abs},
+  {"ceil", itsy_ceil},
   {"cos", math_cos},
   {"flr", math_floor},
   {"max", math_max},
@@ -188,7 +192,7 @@ const luaL_Reg string_funcs[] = {
 };
 
 const luaL_Reg table[] = {
-  {"add", tinsert},
+  {"add", itsy_add},
   {"del", tremove},
   {"pairs", luaB_pairs},
   {NULL, NULL}
