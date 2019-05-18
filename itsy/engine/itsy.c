@@ -31,7 +31,10 @@
 #include <coresume/coresume.h>
 #include <cos/cos.h>
 #include <costatus/costatus.h>
+#include <flr/flr.h>
 #include <line/line.h>
+#include <max/max.h>
+#include <min/min.h>
 #include <nibble/nibble.h>
 #include <nobble/nobble.h>
 #include <poke/poke.h>
@@ -41,9 +44,12 @@
 #include <pset/pset.h>
 #include <rect/rect.h>
 #include <rectfill/rectfill.h>
+#include <rnd/rnd.h>
 #include <sget/sget.h>
+#include <sin/sin.h>
 #include <sset/sset.h>
 #include <sspr/sspr.h>
+#include <tan/tan.h>
 #include <time/time.h>
 #include <tonum/tonum.h>
 #include <tostr/tostr.h>
@@ -105,14 +111,20 @@ const luaL_Reg itsy_functions[] = {
   {"coresume", itsy_coresume},
   {"cos", itsy_cos},
   {"costatus", itsy_costatus},
+  {"flr", itsy_flr},
   {"line", itsy_line},
+  {"max", itsy_max},
+  {"min", itsy_min},
   {"peek", itsy_peek},
   {"poke", itsy_poke},
   {"print", itsy_print},
   {"pset", itsy_pset},
   {"rect", itsy_rect},
   {"rectfill", itsy_rectfill},
+  {"rnd", itsy_rnd},
+  {"sin", itsy_sin},
   {"sspr", itsy_sspr},
+  {"tan", itsy_tan},
   {"time", itsy_time},
   {"tonum", itsy_tonum},
   {"tostr", itsy_tostr},
@@ -121,16 +133,6 @@ const luaL_Reg itsy_functions[] = {
   {"touchy", itsy_touchy},
   {"type", itsy_type},
   {"yield", itsy_yield},
-};
-
-const luaL_Reg math[] = {
-  {"flr", math_floor},
-  {"max", math_max},
-  {"min", math_min},
-  {"rnd", math_random},
-  {"sin", math_sin},
-  {"tan", math_tan},
-  {NULL, NULL}
 };
 
 const luaL_Reg string_funcs[] = {
@@ -360,9 +362,6 @@ lua_State* init_lua(lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, itsy_functions, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, math, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, string_funcs, 0);
