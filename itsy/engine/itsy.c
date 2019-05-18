@@ -24,6 +24,7 @@
 #include "add/add.h"
 #include "camera/camera.h"
 #include "ceil/ceil.h"
+#include "circ/circ.h"
 #include "nobble/nobble.h"
 #include "poke/poke.h"
 #include "peek/peek.h"
@@ -85,7 +86,6 @@ void rectfill(int x0, int y0, int x1, int y1, int col);
 lua_State* runtime;
 lua_State* debugger;
 
-int draw_circ(lua_State *L);
 int draw_circfill(lua_State *L);
 int draw_cls(lua_State *L);
 int draw_line(lua_State *L);
@@ -122,7 +122,7 @@ const luaL_Reg coroutines[] = {
 };
 
 const luaL_Reg draw_funcs[] = {
-  {"circ", draw_circ},
+  {"circ", itsy_circ},
   {"circfill", draw_circfill},
   {"cls", draw_cls},
   {"line", draw_line},
@@ -566,42 +566,6 @@ void sset(int x, int y, int c)
   nobble(sprite[x][y], x % 2 == 1, c);
 }
 
-void circ(int x, int y, int r, int col)
-{
-  int f = 1 - r;
-  int ddF_x = 0;
-  int ddF_y = -2 * r;
-  int cx = 0;
-  int cy = r;
-
-  pset(x, y + r, col);
-  pset(x, y - r, col);
-  pset(x + r, y, col);
-  pset(x - r, y, col);
-
-  while (cx < cy) {
-    if (f >= 0) {
-      cy--;
-      ddF_y += 2;
-      f += ddF_y;
-    }
-
-    cx++;
-    ddF_x += 2;
-    f += ddF_x + 1;
-
-    pset(x + cx, y + cy, col);
-    pset(x - cx, y + cy, col);
-    pset(x + cx, y - cy, col);
-    pset(x - cx, y - cy, col);
-    pset(x + cy, y + cx, col);
-    pset(x - cy, y + cx, col);
-    pset(x + cy, y - cx, col);
-    pset(x - cy, y - cx, col);
-  }
-
-}
-
 void circfill(int x, int y, int r, int col)
 {
   int f = 1 - r;
@@ -702,19 +666,6 @@ void rectfill(int x0, int y0, int x1, int y1, int col)
   for (int y = y0; y < y1; y++) {
     line(x0, y, x1, y, col);
   }
-}
-
-// http://rosettacode.org/wiki/Bitmap/Midpoint_circle_algorithm
-int draw_circ(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-  int r = luaL_optinteger(L, 3, 4);
-  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
-
-  circ(x, y, r, col);
-
-  return 0;
 }
 
 int draw_circfill(lua_State *L)
