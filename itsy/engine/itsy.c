@@ -34,6 +34,7 @@
 #include "print/print.h"
 #include "pget/pget.h"
 #include "pset/pset.h"
+#include "rect/rect.h"
 #include "rectfill/rectfill.h"
 #include "touch/touch.h"
 #include "touchx/touchx.h"
@@ -77,12 +78,9 @@ int sget(int x, int y);
 
 void sset(int x, int y, int c);
 
-void rect(int x0, int y0, int x1, int y1, int col);
-
 lua_State* runtime;
 lua_State* debugger;
 
-int draw_rect(lua_State *L);
 int draw_sspr(lua_State *L);
 
 int gfx_color(lua_State *L);
@@ -114,7 +112,7 @@ const luaL_Reg draw_funcs[] = {
   {"line", itsy_line},
   {"print", itsy_print},
   {"pset", itsy_pset},
-  {"rect", draw_rect},
+  {"rect", itsy_rect},
   {"rectfill", itsy_rectfill},
   {"sspr", draw_sspr},
   {NULL, NULL}
@@ -533,27 +531,6 @@ int sget(int x, int y)
 void sset(int x, int y, int c)
 {
   nobble(sprite[x][y], x % 2 == 1, c);
-}
-
-void rect(int x0, int y0, int x1, int y1, int col)
-{
-  line(x0, y0, x1, y0, col);
-  line(x1, y0, x1, y1, col);
-  line(x1, y1, x0, y1, col);
-  line(x0, y1, x0, y0, col);
-}
-
-int draw_rect(lua_State *L)
-{
-  int x0 = luaL_checknumber(L, 1);
-  int y0 = luaL_checknumber(L, 2);
-  int x1 = luaL_checknumber(L, 3);
-  int y1 = luaL_checknumber(L, 4);
-  int col = luaL_optinteger(L, 5, peek(DRAW_COLOR));
-
-  rect(x0, y0, x1, y1, col);
-
-  return 0;
 }
 
 int draw_sspr(lua_State *L)

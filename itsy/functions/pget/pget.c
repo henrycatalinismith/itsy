@@ -8,7 +8,6 @@
 
 int itsy_pget (lua_State *L)
 {
-  // not ready lol
   return 0;
 }
 
