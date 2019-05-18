@@ -41,6 +41,8 @@
 #include <sset/sset.h>
 #include <sspr/sspr.h>
 #include <time/time.h>
+#include <tonum/tonum.h>
+#include <tostr/tostr.h>
 #include <touch/touch.h>
 #include <touchx/touchx.h>
 #include <touchy/touchy.h>
@@ -102,16 +104,12 @@ const luaL_Reg itsy_functions[] = {
   {"rectfill", itsy_rectfill},
   {"sspr", itsy_sspr},
   {"time", itsy_time},
+  {"tonum", itsy_tonum},
+  {"tostr", itsy_tostr},
   {"touch", itsy_touch},
   {"touchx", itsy_touchx},
   {"touchy", itsy_touchy},
-};
-
-const luaL_Reg base[] = {
-  {"tonum", luaB_tonumber},
-  {"tostr", luaB_tostring},
-  {"type", luaB_type},
-  {NULL, NULL}
+  {"type", itsy_type},
 };
 
 const luaL_Reg coroutines[] = {
@@ -360,9 +358,6 @@ lua_State* init_lua(lua_State *L)
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, itsy_functions, 0);
-
-  lua_pushglobaltable(L);
-  luaL_setfuncs(L, base, 0);
 
   lua_pushglobaltable(L);
   luaL_setfuncs(L, coroutines, 0);
