@@ -36,6 +36,8 @@
 #include "pset/pset.h"
 #include "rect/rect.h"
 #include "rectfill/rectfill.h"
+#include "sget/sget.h"
+#include "sspr/sspr.h"
 #include "touch/touch.h"
 #include "touchx/touchx.h"
 #include "touchy/touchy.h"
@@ -74,14 +76,10 @@ lua_State* init_lua(lua_State *L);
 void loop(void);
 void render(void);
 
-int sget(int x, int y);
-
 void sset(int x, int y, int c);
 
 lua_State* runtime;
 lua_State* debugger;
-
-int draw_sspr(lua_State *L);
 
 int gfx_color(lua_State *L);
 
@@ -114,7 +112,7 @@ const luaL_Reg draw_funcs[] = {
   {"pset", itsy_pset},
   {"rect", itsy_rect},
   {"rectfill", itsy_rectfill},
-  {"sspr", draw_sspr},
+  {"sspr", itsy_sspr},
   {NULL, NULL}
 };
 
@@ -523,35 +521,9 @@ void render(void)
   SDL_UpdateWindowSurface(sdl->window);
 }
 
-int sget(int x, int y)
-{
-  return nibble(sprite[x][y], x % 2 == 1);
-}
-
 void sset(int x, int y, int c)
 {
   nobble(sprite[x][y], x % 2 == 1, c);
-}
-
-int draw_sspr(lua_State *L)
-{
-  int sx = luaL_checknumber(L, 1);
-  int sy = luaL_checknumber(L, 2);
-  int sw = luaL_checknumber(L, 3);
-  int sh = luaL_checknumber(L, 4);
-  int dx = luaL_checknumber(L, 5);
-  int dy = luaL_checknumber(L, 6);
-
-  for (int x = 0; x < sw; x++) {
-    for (int y = 0; y < sh; y++) {
-      int c = sget(sx + x, sy + y);
-      if (c != 0) {
-        pset(dx + x, dy + y, c);
-      }
-    }
-  }
-
-  return 0;
 }
 
 int gfx_color(lua_State *L)
