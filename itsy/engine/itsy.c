@@ -33,6 +33,9 @@
 #include "peek/peek.h"
 #include "pset/pset.h"
 #include "rectfill/rectfill.h"
+#include "touch/touch.h"
+#include "touchx/touchx.h"
+#include "touchy/touchy.h"
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
@@ -51,14 +54,7 @@ typedef struct itsy_sdl_context {
   int y;
 } itsy_sdl_context;
 
-typedef struct itsy_input_state {
-  bool touch;
-  int touchx;
-  int touchy;
-} itsy_input_state;
-
 itsy_sdl_context *sdl;
-itsy_input_state input = { false, 0, 0 };
 
 int palette[16][3];
 uint8_t pixels[128 * 128 * 4];
@@ -93,10 +89,6 @@ int draw_rect(lua_State *L);
 int draw_sspr(lua_State *L);
 
 int gfx_color(lua_State *L);
-
-int input_touch(lua_State *L);
-int input_touchx(lua_State *L);
-int input_touchy(lua_State *L);
 
 int misc_time(lua_State *L);
 
@@ -139,9 +131,9 @@ const luaL_Reg graphics[] = {
 };
 
 const luaL_Reg input_funcs[] = {
-  {"touch", input_touch},
-  {"touchx", input_touchx},
-  {"touchy", input_touchy},
+  {"touch", itsy_touch},
+  {"touchx", itsy_touchx},
+  {"touchy", itsy_touchy},
   {NULL, NULL}
 };
 
@@ -428,9 +420,9 @@ void loop(void)
   bool down = false;
 
   if (upagain) {
-    input.touch = false;
-    input.touchx = 0;
-    input.touchy = 0;
+    poke(TOUCH_0_B, false);
+    poke(TOUCH_0_X, 0);
+    poke(TOUCH_0_Y, 0);
     upagain = false;
   }
 
@@ -446,13 +438,13 @@ void loop(void)
 
       case SDL_MOUSEBUTTONDOWN:
         printf("mouse %d, %d\n", event.button.x, event.button.y);
-        input.touch = true;
-        input.touchx = floor(
+        poke(TOUCH_0_B, true);
+        poke(TOUCH_0_X, floor(
           (event.motion.x - sdl->dst.x) / sdl->scale
-        );
-        input.touchy = floor(
+        ));
+        poke(TOUCH_0_Y, floor(
           (event.motion.y - sdl->dst.y) / sdl->scale
-        );
+        ));
         down = true;
         break;
 
@@ -461,9 +453,9 @@ void loop(void)
         if (down) {
           upagain = true;
         } else {
-          input.touch = false;
-          input.touchx = 0;
-          input.touchy = 0;
+          poke(TOUCH_0_B, false);
+          poke(TOUCH_0_X, 0);
+          poke(TOUCH_0_Y, 0);
         }
         break;
 
@@ -472,14 +464,13 @@ void loop(void)
         //break;
 
       case SDL_MOUSEMOTION:
-        //printf("SDL_MOUSEMOTION\n");
-        if (input.touch) {
-          input.touchx = floor(
+        if (peek(TOUCH_0_B)) {
+          poke(TOUCH_0_X, floor(
             (event.motion.x - sdl->dst.x) / sdl->scale
-          );
-          input.touchy = floor(
+          ));
+          poke(TOUCH_0_Y, floor(
             (event.motion.y - sdl->dst.y) / sdl->scale
-          );
+          ));
         }
         break;
     }
@@ -654,32 +645,6 @@ int gfx_color(lua_State *L)
   poke(DRAW_COLOR, col);
 
   return 0;
-}
-
-int input_touch(lua_State *L)
-{
-  lua_pushboolean(L, input.touch);
-  return 1;
-}
-
-int input_touchx(lua_State *L)
-{
-  if (input.touch) {
-    lua_pushnumber(L, input.touchx);
-  } else {
-    lua_pushnil(L);
-  }
-  return 1;
-}
-
-int input_touchy(lua_State *L)
-{
-  if (input.touch) {
-    lua_pushnumber(L, input.touchy);
-  } else {
-    lua_pushnil(L);
-  }
-  return 1;
 }
 
 int misc_time(lua_State *L)

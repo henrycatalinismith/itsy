@@ -37,6 +37,7 @@ const pages = [
   require("./tick.md"),
   require("./draw.md"),
   require("./functions.md"),
+
   require("../functions/abs/abs.md"),
   require("../functions/add/add.md"),
   require("../functions/camera/camera.md"),
@@ -66,9 +67,9 @@ const pages = [
   require("../functions/tan.md"),
   require("../functions/tonum.md"),
   require("../functions/tostr.md"),
-  require("../functions/touch.md"),
-  require("../functions/touchx.md"),
-  require("../functions/touchy.md"),
+  require("../functions/touch/touch.md"),
+  require("../functions/touchx/touchx.md"),
+  require("../functions/touchy/touchy.md"),
   require("../functions/type.md"),
   require("../functions/upper.md"),
 ]
