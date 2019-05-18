@@ -25,6 +25,8 @@
 #include "camera/camera.h"
 #include "ceil/ceil.h"
 #include "circ/circ.h"
+#include "circfill/circfill.h"
+#include "line/line.h"
 #include "nobble/nobble.h"
 #include "poke/poke.h"
 #include "peek/peek.h"
@@ -78,7 +80,6 @@ int sget(int x, int y);
 
 void sset(int x, int y, int c);
 
-void line(int x0, int y0, int x1, int y1, int col);
 void print(const char *str, int x, int y, int col);
 void rect(int x0, int y0, int x1, int y1, int col);
 void rectfill(int x0, int y0, int x1, int y1, int col);
@@ -86,9 +87,7 @@ void rectfill(int x0, int y0, int x1, int y1, int col);
 lua_State* runtime;
 lua_State* debugger;
 
-int draw_circfill(lua_State *L);
 int draw_cls(lua_State *L);
-int draw_line(lua_State *L);
 int draw_print(lua_State *L);
 int draw_rect(lua_State *L);
 int draw_rectfill(lua_State *L);
@@ -123,9 +122,9 @@ const luaL_Reg coroutines[] = {
 
 const luaL_Reg draw_funcs[] = {
   {"circ", itsy_circ},
-  {"circfill", draw_circfill},
+  {"circfill", itsy_circfill},
   {"cls", draw_cls},
-  {"line", draw_line},
+  {"line", itsy_line},
   {"print", draw_print},
   {"pset", itsy_pset},
   {"rect", draw_rect},
@@ -566,66 +565,6 @@ void sset(int x, int y, int c)
   nobble(sprite[x][y], x % 2 == 1, c);
 }
 
-void circfill(int x, int y, int r, int col)
-{
-  int f = 1 - r;
-  int ddF_x = 0;
-  int ddF_y = -2 * r;
-  int cx = 0;
-  int cy = r;
-
-  pset(x, y + r, col);
-  pset(x, y - r, col);
-  line(x + r, y, x - r, y, col);
-
-  while (cx < cy) {
-    if (f >= 0) {
-      cy--;
-      ddF_y += 2;
-      f += ddF_y;
-    }
-
-    cx++;
-    ddF_x += 2;
-    f += ddF_x + 1;
-
-    line(x + cx, y + cy, x - cx, y + cy, col);
-    line(x + cx, y - cy, x - cx, y - cy, col);
-    line(x + cy, y + cx, x - cy, y + cx, col);
-    line(x + cy, y - cx, x - cy, y - cx, col);
-  }
-}
-
-// https://rosettacode.org/wiki/Bitmap/Bresenham%27s_line_algorithm#C
-void line(int x0, int y0, int x1, int y1, int col)
-{
-  int dx = abs(x1 - x0);
-  int dy = abs(y1 - y0);
-  int sy = y0 < y1 ? 1 : -1;
-  int sx = x0 < x1 ? 1 : -1;
-  int err = (dx > dy ? dx : -dy) / 2;
-
-  for (;;) {
-    pset(x0, y0, col);
-
-    if (x0 == x1 && y0 == y1) {
-      break;
-    }
-
-    int e2 = err;
-
-    if (e2 >- dx) {
-      err -= dy;
-      x0 += sx;
-    }
-
-    if (e2 < dy) {
-      err += dx;
-      y0 += sy;
-    }
-  }
-}
-
 void print(const char *str, int x, int y, int col)
 {
   int len = strlen(str);
@@ -668,18 +607,6 @@ void rectfill(int x0, int y0, int x1, int y1, int col)
   }
 }
 
-int draw_circfill(lua_State *L)
-{
-  int x = luaL_checknumber(L, 1);
-  int y = luaL_checknumber(L, 2);
-  int r = luaL_optinteger(L, 3, 4);
-  int col = luaL_optinteger(L, 4, peek(DRAW_COLOR));
-
-  circfill(x, y, r, col);
-
-  return 0;
-}
-
 int draw_cls(lua_State *L)
 {
   int argc = lua_gettop(L);
@@ -689,46 +616,6 @@ int draw_cls(lua_State *L)
   }
 
   rectfill(0, 0, 128, 128, color);
-
-  return 0;
-}
-
-int draw_line(lua_State *L)
-{
-  int argc = lua_gettop(L);
-
-  int x0, y0, x1, y1, col;
-
-  switch (argc) {
-    case 2:
-      x0 = peek(DRAW_LINE_X);
-      y0 = peek(DRAW_LINE_Y);
-      x1 = luaL_checknumber(L, 1);
-      y1 = luaL_checknumber(L, 2);
-      col = peek(DRAW_COLOR);
-      break;
-
-    case 4:
-      x0 = luaL_checknumber(L, 1);
-      y0 = luaL_checknumber(L, 2);
-      x1 = luaL_checknumber(L, 3);
-      y1 = luaL_checknumber(L, 4);
-      col = peek(DRAW_COLOR);
-      break;
-
-    case 5:
-      x0 = luaL_checknumber(L, 1);
-      y0 = luaL_checknumber(L, 2);
-      x1 = luaL_checknumber(L, 3);
-      y1 = luaL_checknumber(L, 4);
-      col = luaL_checknumber(L, 5);
-      break;
-  }
-
-  line(x0, y0, x1, y1, col);
-
-  poke(DRAW_LINE_X, x1);
-  poke(DRAW_LINE_Y, y1);
 
   return 0;
 }
