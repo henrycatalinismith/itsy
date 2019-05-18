@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <math.h>
+#include <time.h>
 
 #include <emscripten.h>
 
@@ -306,6 +307,8 @@ int init_sdl(int canvasWidth, int canvasHeight)
 
 int init_itsy(char *palettePng, char *spritesheetPng)
 {
+  srand((unsigned) time(NULL));
+
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
     memory[addr] = 0;
   }
