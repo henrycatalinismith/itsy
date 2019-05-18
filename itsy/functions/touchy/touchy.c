@@ -1,9 +1,6 @@
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "itsy.h"
-#include "peek/peek.h"
-#include "touchy/touchy.h"
+#include <itsy.h>
+#include <peek/peek.h>
+#include <touchy/touchy.h>
 
 int itsy_touchy (lua_State *L)
 {

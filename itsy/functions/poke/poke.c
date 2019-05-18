@@ -1,9 +1,5 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "poke/poke.h"
+#include <itsy.h>
+#include <poke/poke.h>
 
 int itsy_poke (lua_State *L)
 {

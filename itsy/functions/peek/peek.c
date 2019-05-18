@@ -1,9 +1,5 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "peek/peek.h"
+#include <itsy.h>
+#include <peek/peek.h>
 
 int itsy_peek (lua_State *L)
 {

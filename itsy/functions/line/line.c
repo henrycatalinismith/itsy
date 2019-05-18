@@ -1,14 +1,9 @@
 #include <stdlib.h>
-
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "line/line.h"
-#include "peek/peek.h"
-#include "poke/poke.h"
-#include "pset/pset.h"
+#include <itsy.h>
+#include <line/line.h>
+#include <peek/peek.h>
+#include <poke/poke.h>
+#include <pset/pset.h>
 
 int itsy_line (lua_State *L)
 {

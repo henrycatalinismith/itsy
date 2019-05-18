@@ -1,5 +1,4 @@
-#include "lua.h"
-#include "abs.h"
+#include <abs/abs.h>
 
 int itsy_abs (lua_State *L)
 {

@@ -1,10 +1,6 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "camera/camera.h"
-#include "poke/poke.h"
+#include <itsy.h>
+#include <camera/camera.h>
+#include <poke/poke.h>
 
 int itsy_camera (lua_State *L)
 {

@@ -1,11 +1,7 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "nobble/nobble.h"
-#include "peek/peek.h"
-#include "pset/pset.h"
+#include <itsy.h>
+#include <nobble/nobble.h>
+#include <peek/peek.h>
+#include <pset/pset.h>
 
 int itsy_pset (lua_State *L)
 {

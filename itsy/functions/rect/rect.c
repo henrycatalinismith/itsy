@@ -1,10 +1,7 @@
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "itsy.h"
-#include "line/line.h"
-#include "peek/peek.h"
-#include "rect/rect.h"
+#include <itsy.h>
+#include <line/line.h>
+#include <peek/peek.h>
+#include <rect/rect.h>
 
 int itsy_rect (lua_State *L)
 {

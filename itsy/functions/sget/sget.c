@@ -1,10 +1,6 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "nibble/nibble.h"
-#include "sget/sget.h"
+#include <itsy.h>
+#include <nibble/nibble.h>
+#include <sget/sget.h>
 
 int itsy_sget (lua_State *L)
 {

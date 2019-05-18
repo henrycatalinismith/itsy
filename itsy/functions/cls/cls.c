@@ -1,10 +1,6 @@
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "cls/cls.h"
-#include "rectfill/rectfill.h"
+#include <itsy.h>
+#include <cls/cls.h>
+#include <rectfill/rectfill.h>
 
 int itsy_cls (lua_State *L)
 {

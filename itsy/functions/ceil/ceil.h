@@ -1,2 +1,4 @@
-int math_ceil (lua_State *L);
-int itsy_ceil (lua_State *L);
+#include <lua.h>
+
+int itsy_ceil (lua_State *L); // ceil.c
+int math_ceil (lua_State *L); // lmathlib.c

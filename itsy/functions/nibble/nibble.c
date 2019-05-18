@@ -1,13 +1,7 @@
-#include <stdbool.h>
-
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "nibble/nibble.h"
-#include "peek/peek.h"
-#include "poke/poke.h"
+#include <itsy.h>
+#include <nibble/nibble.h>
+#include <peek/peek.h>
+#include <poke/poke.h>
 
 int nibble(int addr, bool high)
 {

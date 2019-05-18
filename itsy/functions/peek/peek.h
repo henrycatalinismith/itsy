@@ -1,2 +1,5 @@
-int itsy_peek(lua_State *L);
-extern int peek(int addr);
+#include <lua.h>
+#include <lauxlib.h>
+
+int itsy_peek (lua_State *L);
+extern int peek (int addr);

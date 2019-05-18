@@ -1,13 +1,8 @@
 #include <stdbool.h>
-
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
-
-#include "itsy.h"
-#include "nobble/nobble.h"
-#include "peek/peek.h"
-#include "poke/poke.h"
+#include <itsy.h>
+#include <nobble/nobble.h>
+#include <peek/peek.h>
+#include <poke/poke.h>
 
 void nobble(int addr, bool high, int val)
 {

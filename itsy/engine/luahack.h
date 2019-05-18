@@ -24,7 +24,7 @@ int luaB_costatus (lua_State *L);
 int luaB_yield (lua_State *L);
 
 // lmathlib.c
-int math_abs(lua_State *L);
+// int math_abs(lua_State *L);
 int math_ceil(lua_State *L);
 int math_cos(lua_State *L);
 int math_floor(lua_State *L);

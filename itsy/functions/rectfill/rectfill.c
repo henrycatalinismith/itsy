@@ -1,10 +1,7 @@
-#include <lua.h>
-#include <lauxlib.h>
-
-#include "itsy.h"
-#include "line/line.h"
-#include "peek/peek.h"
-#include "rectfill/rectfill.h"
+#include <itsy.h>
+#include <line/line.h>
+#include <peek/peek.h>
+#include <rectfill/rectfill.h>
 
 int itsy_rectfill (lua_State *L)
 {

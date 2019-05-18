@@ -1,5 +1,4 @@
-#include "lua.h"
-#include "ceil.h"
+#include <ceil/ceil.h>
 
 int itsy_ceil (lua_State *L)
 {
