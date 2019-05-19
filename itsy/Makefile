@@ -26,8 +26,7 @@ CFLAGS=\
 	-O2 \
 	-I. \
 	-I./engine \
-	-I$(B64) \
-	-I$(LUA)
+	-I$(B64)
 
 OBJS=\
 	$(B64)/decode.o \

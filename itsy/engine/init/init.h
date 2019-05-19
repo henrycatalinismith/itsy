@@ -1,4 +1,4 @@
-#include <lauxlib.h>
+#include <lua/lauxlib.h>
 
 int palette[16][3];
 

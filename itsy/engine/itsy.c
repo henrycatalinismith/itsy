@@ -8,9 +8,9 @@
 
 #include <b64.h>
 
-#include <lua.h>
-#include <lauxlib.h>
-#include <lualib.h>
+#include <lua/lua.h>
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
