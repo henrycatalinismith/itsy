@@ -142,11 +142,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => isDev && watch(
-    `${__dirname}/../engine/itsy.c`,
-    () => store.dispatch(actions.updateEngine("itsy.c"))
-  )),
-
-  after("listen", store => isDev && watch(
     `${__dirname}/../engine/template.js`,
     () => store.dispatch(actions.updateTemplate())
   )),

@@ -6,7 +6,7 @@ EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.31
 
 VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
 
-ENGINE_SRC := $(wildcard $(ENGINE)/*/*.c)
+ENGINE_SRC := $(filter-out ./engine/main/main.c, $(wildcard $(ENGINE)/*/*.c))
 ENGINE_OBJ := $(patsubst %.c, %.o, $(ENGINE_SRC))
 
 FUNCTIONS_SRC := $(wildcard $(FUNCTIONS)/*/*.c)
@@ -95,7 +95,7 @@ editor/index.html:
 	npm run build-editor
 
 engine/core.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
-	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/core.js
+	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/core.js
 
 engine/itsy.js: engine/core.js
 	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js

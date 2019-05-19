@@ -6,9 +6,8 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 
-#include <init/init.h>
-#include <sdl/sdl.h>
-
+#include <engine/init/init.h>
+#include <engine/sdl/sdl.h>
 #include <functions/abs/abs.h>
 #include <functions/add/add.h>
 #include <functions/camera/camera.h>
