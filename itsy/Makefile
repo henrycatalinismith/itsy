@@ -1,9 +1,13 @@
 B64=./node_modules/@highvalley.systems/b64
+ENGINE=./engine
 FUNCTIONS=./functions
 LUA=./lua
 EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.31
 
 VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
+
+ENGINE_SRC := $(wildcard $(ENGINE)/*/*.c)
+ENGINE_OBJ := $(patsubst %.c, %.o, $(ENGINE_SRC))
 
 FUNCTIONS_SRC := $(wildcard $(FUNCTIONS)/*/*.c)
 FUNCTIONS_OBJ := $(patsubst %.c, %.o, $(FUNCTIONS_SRC))
@@ -50,6 +54,9 @@ EMCCFLAGS=\
 $(B64)/%.o:
 	$(CC) $(B64)/$*.c -o $(B64)/$*.o
 
+$(ENGINE)/*/%.o:
+	$(CC) $(CFLAGS) $(ENGINE)/$*/$*.c $(EMCCFLAGS) -o $@
+
 $(FUNCTIONS)/*/%.o:
 	$(CC) $(CFLAGS) $(FUNCTIONS)/$*/$*.c $(EMCCFLAGS) -o $@
 
@@ -88,8 +95,8 @@ base64/stylesheet.js:
 editor/index.html:
 	npm run build-editor
 
-engine/core.js: $(OBJS) $(FUNCTIONS_OBJ)
-	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(FUNCTIONS_OBJ) $(EMCCFLAGS) -o engine/core.js
+engine/core.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) engine/itsy.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/core.js
 
 engine/itsy.js: engine/core.js
 	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js
@@ -103,6 +110,7 @@ clean:
 	rm -f base64/stylesheet.js
 	rm -f engine/core.js
 	rm -f engine/itsy.js
+	rm -f engine/*/*.o
 	rm -f functions/*/*.o
 	rm -f manual/index.html
 
