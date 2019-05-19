@@ -1,5 +1,5 @@
 #include <itsy.h>
-#include <peek/peek.h>
+#include <functions/peek/peek.h>
 
 int itsy_peek (lua_State *L)
 {

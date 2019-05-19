@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <camera/camera.h>
-#include <poke/poke.h>
+#include <functions/camera/camera.h>
+#include <functions/poke/poke.h>
 
 int itsy_camera (lua_State *L)
 {

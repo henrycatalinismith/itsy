@@ -1,7 +1,7 @@
 #include <itsy.h>
-#include <sget/sget.h>
-#include <pset/pset.h>
-#include <sspr/sspr.h>
+#include <functions/sget/sget.h>
+#include <functions/pset/pset.h>
+#include <functions/sspr/sspr.h>
 
 int itsy_sspr (lua_State *L)
 {

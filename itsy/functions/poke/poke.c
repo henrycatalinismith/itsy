@@ -1,5 +1,5 @@
 #include <itsy.h>
-#include <poke/poke.h>
+#include <functions/poke/poke.h>
 
 int itsy_poke (lua_State *L)
 {

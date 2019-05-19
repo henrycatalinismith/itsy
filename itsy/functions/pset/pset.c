@@ -1,7 +1,7 @@
 #include <itsy.h>
-#include <nobble/nobble.h>
-#include <peek/peek.h>
-#include <pset/pset.h>
+#include <functions/nobble/nobble.h>
+#include <functions/peek/peek.h>
+#include <functions/pset/pset.h>
 
 int itsy_pset (lua_State *L)
 {

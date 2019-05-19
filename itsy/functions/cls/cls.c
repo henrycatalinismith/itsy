@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <cls/cls.h>
-#include <rectfill/rectfill.h>
+#include <functions/cls/cls.h>
+#include <functions/rectfill/rectfill.h>
 
 int itsy_cls (lua_State *L)
 {

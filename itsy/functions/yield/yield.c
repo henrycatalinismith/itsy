@@ -1,4 +1,4 @@
-#include <yield/yield.h>
+#include <functions/yield/yield.h>
 
 int itsy_yield (lua_State *L)
 {

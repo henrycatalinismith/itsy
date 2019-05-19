@@ -1,7 +1,7 @@
 #include <itsy.h>
-#include <line/line.h>
-#include <peek/peek.h>
-#include <rectfill/rectfill.h>
+#include <functions/line/line.h>
+#include <functions/peek/peek.h>
+#include <functions/rectfill/rectfill.h>
 
 int itsy_rectfill (lua_State *L)
 {

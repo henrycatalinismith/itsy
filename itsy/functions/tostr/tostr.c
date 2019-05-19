@@ -1,5 +1,5 @@
 #include <itsy.h>
-#include <tostr/tostr.h>
+#include <functions/tostr/tostr.h>
 
 int itsy_tostr (lua_State *L)
 {

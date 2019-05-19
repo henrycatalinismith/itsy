@@ -1,4 +1,4 @@
-#include <max/max.h>
+#include <functions/max/max.h>
 
 int itsy_max (lua_State *L)
 {

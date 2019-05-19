@@ -1,4 +1,4 @@
-#include <pairs/pairs.h>
+#include <functions/pairs/pairs.h>
 
 int itsy_pairs (lua_State *L)
 {

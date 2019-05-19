@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <color/color.h>
-#include <poke/poke.h>
+#include <functions/color/color.h>
+#include <functions/poke/poke.h>
 
 int itsy_color (lua_State *L)
 {

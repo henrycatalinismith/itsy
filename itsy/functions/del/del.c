@@ -1,4 +1,4 @@
-#include <del/del.h>
+#include <functions/del/del.h>
 
 int itsy_del (lua_State *L)
 {

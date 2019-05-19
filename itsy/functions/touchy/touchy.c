@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <peek/peek.h>
-#include <touchy/touchy.h>
+#include <functions/peek/peek.h>
+#include <functions/touchy/touchy.h>
 
 int itsy_touchy (lua_State *L)
 {

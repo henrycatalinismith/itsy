@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 #include <itsy.h>
-#include <time/time.h>
+#include <functions/time/time.h>
 
 int itsy_time (lua_State *L)
 {

@@ -24,9 +24,9 @@ EMMAKE=$(EMSCRIPTEN)/emmake
 
 CFLAGS=\
 	-O2 \
+	-I. \
 	-I./engine \
 	-I$(B64) \
-	-I$(FUNCTIONS) \
 	-I$(LUA)
 
 OBJS=\

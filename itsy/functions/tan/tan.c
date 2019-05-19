@@ -1,4 +1,4 @@
-#include <tan/tan.h>
+#include <functions/tan/tan.h>
 
 int itsy_tan (lua_State *L)
 {

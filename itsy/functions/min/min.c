@@ -1,4 +1,4 @@
-#include <min/min.h>
+#include <functions/min/min.h>
 
 int itsy_min (lua_State *L)
 {

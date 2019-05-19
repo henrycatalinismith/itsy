@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <nibble/nibble.h>
-#include <pget/pget.h>
+#include <functions/nibble/nibble.h>
+#include <functions/pget/pget.h>
 
 int itsy_pget (lua_State *L)
 {

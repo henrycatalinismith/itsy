@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <itsy.h>
-#include <line/line.h>
-#include <peek/peek.h>
-#include <poke/poke.h>
-#include <pset/pset.h>
+#include <functions/line/line.h>
+#include <functions/peek/peek.h>
+#include <functions/poke/poke.h>
+#include <functions/pset/pset.h>
 
 int itsy_line (lua_State *L)
 {

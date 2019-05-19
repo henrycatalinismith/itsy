@@ -1,7 +1,7 @@
 #include <itsy.h>
-#include <line/line.h>
-#include <peek/peek.h>
-#include <rect/rect.h>
+#include <functions/line/line.h>
+#include <functions/peek/peek.h>
+#include <functions/rect/rect.h>
 
 int itsy_rect (lua_State *L)
 {

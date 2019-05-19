@@ -1,4 +1,4 @@
-#include <cos/cos.h>
+#include <functions/cos/cos.h>
 
 int itsy_cos (lua_State *L)
 {

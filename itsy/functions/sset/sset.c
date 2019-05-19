@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <nobble/nobble.h>
-#include <sset/sset.h>
+#include <functions/nobble/nobble.h>
+#include <functions/sset/sset.h>
 
 int itsy_sset (lua_State *L)
 {

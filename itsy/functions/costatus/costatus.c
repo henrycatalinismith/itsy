@@ -1,4 +1,4 @@
-#include <costatus/costatus.h>
+#include <functions/costatus/costatus.h>
 
 int itsy_costatus (lua_State *L)
 {

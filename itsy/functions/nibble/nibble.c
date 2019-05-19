@@ -1,7 +1,7 @@
 #include <itsy.h>
-#include <nibble/nibble.h>
-#include <peek/peek.h>
-#include <poke/poke.h>
+#include <functions/nibble/nibble.h>
+#include <functions/peek/peek.h>
+#include <functions/poke/poke.h>
 
 int nibble(int addr, bool high)
 {

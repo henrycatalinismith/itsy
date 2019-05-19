@@ -1,8 +1,8 @@
 #include <stdbool.h>
 #include <itsy.h>
-#include <nobble/nobble.h>
-#include <peek/peek.h>
-#include <poke/poke.h>
+#include <functions/nobble/nobble.h>
+#include <functions/peek/peek.h>
+#include <functions/poke/poke.h>
 
 void nobble(int addr, bool high, int val)
 {

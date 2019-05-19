@@ -1,9 +1,9 @@
 #include <string.h>
 #include <itsy.h>
-#include <print/print.h>
-#include <peek/peek.h>
-#include <poke/poke.h>
-#include <pset/pset.h>
+#include <functions/print/print.h>
+#include <functions/peek/peek.h>
+#include <functions/poke/poke.h>
+#include <functions/pset/pset.h>
 
 int itsy_print (lua_State *L)
 {

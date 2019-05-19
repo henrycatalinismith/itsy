@@ -1,4 +1,4 @@
-#include <sin/sin.h>
+#include <functions/sin/sin.h>
 
 int itsy_sin (lua_State *L)
 {

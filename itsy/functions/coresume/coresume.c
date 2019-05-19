@@ -1,4 +1,4 @@
-#include <coresume/coresume.h>
+#include <functions/coresume/coresume.h>
 
 int itsy_coresume (lua_State *L)
 {

@@ -1,8 +1,8 @@
 #include <itsy.h>
-#include <circfill/circfill.h>
-#include <line/line.h>
-#include <peek/peek.h>
-#include <pset/pset.h>
+#include <functions/circfill/circfill.h>
+#include <functions/line/line.h>
+#include <functions/peek/peek.h>
+#include <functions/pset/pset.h>
 
 int itsy_circfill (lua_State *L)
 {

@@ -1,6 +1,6 @@
 #include <itsy.h>
-#include <nibble/nibble.h>
-#include <sget/sget.h>
+#include <functions/nibble/nibble.h>
+#include <functions/sget/sget.h>
 
 int itsy_sget (lua_State *L)
 {

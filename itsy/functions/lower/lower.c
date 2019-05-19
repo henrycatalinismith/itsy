@@ -1,4 +1,4 @@
-#include <lower/lower.h>
+#include <functions/lower/lower.h>
 
 int itsy_lower (lua_State *L)
 {

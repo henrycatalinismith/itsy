@@ -1,4 +1,4 @@
-#include <rnd/rnd.h>
+#include <functions/rnd/rnd.h>
 
 int itsy_rnd (lua_State *L)
 {
