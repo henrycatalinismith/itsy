@@ -6,6 +6,7 @@
 /engine/core.js
 /engine/itsy.js
 /engine/*.o
+/engine/*/*.o
 /functions/*/*.o
 /lua/lua
 /lua/luac
