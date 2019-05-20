@@ -6,8 +6,12 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 
+
 #include <engine/init/init.h>
-#include <engine/sdl/sdl.h>
+#include <engine/memory/addresses.h>
+#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
+
 #include <functions/abs/abs.h>
 #include <functions/add/add.h>
 #include <functions/camera/camera.h>
@@ -104,7 +108,7 @@ int init_itsy (char *palettePng, char *spritesheetPng)
   srand((unsigned) time(NULL));
 
   for (int addr = 0x6000; addr <= 0x7FFF; addr++) {
-    memory[addr] = 0;
+    itsy.memory[addr] = 0;
   }
 
   for (int x = 0; x < 128; x++) {
@@ -212,30 +216,28 @@ int init_sdl (int canvasWidth, int canvasHeight)
   }
 
   int size = min(canvasWidth, canvasHeight);
-  sdl->scale = size / 128;
-  sdl->x = ceil((canvasWidth - size) / 2);
-  sdl->y = ceil((canvasHeight - size) / 2);
+  itsy.scale = size / 128;
 
-  sdl->src.x = 0;
-  sdl->src.y = 0;
-  sdl->src.w = 128;
-  sdl->src.h = 128;
+  itsy.src.x = 0;
+  itsy.src.y = 0;
+  itsy.src.w = 128;
+  itsy.src.h = 128;
 
-  sdl->dst.x = canvasWidth > canvasHeight
+  itsy.dst.x = canvasWidth > canvasHeight
     ? (canvasWidth - canvasHeight) / 2
     : 0;
-  sdl->dst.y = canvasHeight > canvasWidth
+  itsy.dst.y = canvasHeight > canvasWidth
     ? (canvasHeight - canvasWidth) / 2
     : 0;
-  sdl->dst.w = size;
-  sdl->dst.h = size;
+  itsy.dst.w = size;
+  itsy.dst.h = size;
 
   double m = (double) 128 / size;
   // printf("i%d j%d k%d l%f\n", canvasWidth, canvasHeight, size, m);
   int width = ceil(canvasWidth * m);
   int height = ceil(canvasHeight * m);
   // printf("w%d h%d\n", width, height);
-  // printf("x%d y%d\n", sdl->x, sdl->y);
+  // printf("x%d y%d\n", itsy.x, itsy.y);
 
   SDL_Window *w;
   SDL_Renderer *r;
@@ -245,17 +247,17 @@ int init_sdl (int canvasWidth, int canvasHeight)
     return 1;
   }
 
-  sdl->window = w;
-  sdl->renderer = r;
-  sdl->canvas = SDL_CreateTexture(
-    sdl->renderer,
+  itsy.window = w;
+  itsy.renderer = r;
+  itsy.canvas = SDL_CreateTexture(
+    itsy.renderer,
     SDL_PIXELFORMAT_ARGB8888,
     SDL_TEXTUREACCESS_STREAMING,
     canvasWidth,
     canvasHeight
   );
 
-  if (sdl->canvas == NULL) {
+  if (itsy.canvas == NULL) {
     SDL_Log("SDL_CreateTexture: %s", SDL_GetError());
     return 1;
   }

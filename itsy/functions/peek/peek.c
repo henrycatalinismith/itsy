@@ -1,4 +1,4 @@
-#include <itsy.h>
+#include <engine/state/state.h>
 #include <functions/peek/peek.h>
 
 int itsy_peek (lua_State *L)
@@ -12,5 +12,5 @@ int itsy_peek (lua_State *L)
 
 int peek(int addr)
 {
-  return memory[addr];
+  return itsy.memory[addr];
 }

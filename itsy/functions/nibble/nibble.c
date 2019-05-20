@@ -1,4 +1,3 @@
-#include <itsy.h>
 #include <functions/nibble/nibble.h>
 #include <functions/peek/peek.h>
 #include <functions/poke/poke.h>

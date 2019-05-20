@@ -16,10 +16,11 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 
-#include "itsy.h"
-
 #include <engine/init/init.h>
-#include <engine/sdl/sdl.h>
+#include <engine/memory/addresses.h>
+#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
+
 #include <functions/abs/abs.h>
 #include <functions/add/add.h>
 #include <functions/camera/camera.h>
@@ -64,6 +65,8 @@
 #include <functions/type/type.h>
 #include <functions/upper/upper.h>
 #include <functions/yield/yield.h>
+
+itsy_engine_state itsy;
 
 uint8_t memory[0x8000];
 uint16_t sprite[128][128];
@@ -161,10 +164,10 @@ void loop(void)
         printf("mouse %d, %d\n", event.button.x, event.button.y);
         poke(TOUCH_0_B, true);
         poke(TOUCH_0_X, floor(
-          (event.motion.x - sdl->dst.x) / sdl->scale
+          (event.motion.x - itsy.dst.x) / itsy.scale
         ));
         poke(TOUCH_0_Y, floor(
-          (event.motion.y - sdl->dst.y) / sdl->scale
+          (event.motion.y - itsy.dst.y) / itsy.scale
         ));
         down = true;
         break;
@@ -187,10 +190,10 @@ void loop(void)
       case SDL_MOUSEMOTION:
         if (peek(TOUCH_0_B)) {
           poke(TOUCH_0_X, floor(
-            (event.motion.x - sdl->dst.x) / sdl->scale
+            (event.motion.x - itsy.dst.x) / itsy.scale
           ));
           poke(TOUCH_0_Y, floor(
-            (event.motion.y - sdl->dst.y) / sdl->scale
+            (event.motion.y - itsy.dst.y) / itsy.scale
           ));
         }
         break;
@@ -221,8 +224,8 @@ void loop(void)
 
 void render(void)
 {
-  SDL_SetRenderDrawColor(sdl->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(sdl->renderer);
+  SDL_SetRenderDrawColor(itsy.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+  SDL_RenderClear(itsy.renderer);
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
@@ -236,7 +239,7 @@ void render(void)
   }
 
   SDL_UpdateTexture(
-    sdl->canvas,
+    itsy.canvas,
     NULL,
     &pixels[0],
     128 * 4
@@ -244,10 +247,10 @@ void render(void)
 
   // printf("Frame: %d\n", frame);
 
-  SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, &sdl->dst);
-  // SDL_RenderCopy(sdl->renderer, sdl->canvas, &sdl->src, NULL);
-  SDL_RenderPresent(sdl->renderer);
-  SDL_UpdateWindowSurface(sdl->window);
+  SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, &itsy.dst);
+  // SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, NULL);
+  SDL_RenderPresent(itsy.renderer);
+  SDL_UpdateWindowSurface(itsy.window);
 }
 
 void runtime_error(lua_State *L)

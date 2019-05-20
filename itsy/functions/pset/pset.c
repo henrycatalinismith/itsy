@@ -1,4 +1,5 @@
-#include <itsy.h>
+#include <engine/memory/addresses.h>
+#include <engine/memory/optimizations.h>
 #include <functions/nobble/nobble.h>
 #include <functions/peek/peek.h>
 #include <functions/pset/pset.h>

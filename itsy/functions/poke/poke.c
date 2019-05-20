@@ -1,4 +1,4 @@
-#include <itsy.h>
+#include <engine/state/state.h>
 #include <functions/poke/poke.h>
 
 int itsy_poke (lua_State *L)
@@ -13,5 +13,5 @@ int itsy_poke (lua_State *L)
 
 void poke(int addr, int val)
 {
-  memory[addr] = val;
+  itsy.memory[addr] = val;
 }

@@ -1,5 +1,5 @@
 #include <string.h>
-#include <itsy.h>
+#include <engine/memory/addresses.h>
 #include <functions/print/print.h>
 #include <functions/peek/peek.h>
 #include <functions/poke/poke.h>
