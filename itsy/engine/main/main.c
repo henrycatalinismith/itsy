@@ -68,20 +68,13 @@
 
 itsy_engine_state itsy;
 
-uint8_t memory[0x8000];
 uint16_t sprite[128][128];
 uint16_t pixel[128][128];
 
-uint8_t pixels[128 * 128 * 4];
 bool error = false;
-
-int frame = 0;
 
 void loop(void);
 void render(void);
-
-lua_State* runtime;
-lua_State* debugger;
 
 void runtime_error(lua_State *L);
 
@@ -105,27 +98,27 @@ int main(int argc, char **argv)
     return -1;
   }
 
-  runtime = init_lua(runtime);
-  debugger = init_lua(debugger);
+  itsy.lua = init_lua(itsy.lua);
+  itsy.debugger = init_lua(itsy.debugger);
 
-  lua_pushstring(debugger, code);
-  lua_setfield(debugger, -2, "lua");
+  lua_pushstring(itsy.debugger, code);
+  lua_setfield(itsy.debugger, -2, "lua");
 
-  if (luaL_dostring(runtime, code) != 0) {
-    runtime_error(runtime);
+  if (luaL_dostring(itsy.lua, code) != 0) {
+    runtime_error(itsy.lua);
     return -1;
   }
 
-  lua_getglobal(runtime, "_init");
-  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
-    runtime_error(runtime);
+  lua_getglobal(itsy.lua, "_init");
+  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
+    runtime_error(itsy.lua);
     return -1;
   }
 
-  lua_getglobal(runtime, "_tick");
-  int has_tick = lua_isfunction(runtime, -1);
-  lua_getglobal(runtime, "_draw");
-  int has_draw = lua_isfunction(runtime, -1);
+  lua_getglobal(itsy.lua, "_tick");
+  int has_tick = lua_isfunction(itsy.lua, -1);
+  lua_getglobal(itsy.lua, "_draw");
+  int has_draw = lua_isfunction(itsy.lua, -1);
 
   if (has_tick || has_draw) {
     emscripten_set_main_loop(loop, -1, 1);
@@ -200,29 +193,26 @@ void loop(void)
     }
   }
 
-  lua_getglobal(runtime, "_tick");
-  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
-    runtime_error(runtime);
+  lua_getglobal(itsy.lua, "_tick");
+  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
+    runtime_error(itsy.lua);
     return;
   }
 
-  lua_getglobal(runtime, "_draw");
-  if (lua_isfunction(runtime, -1) && lua_pcall(runtime, 0, 0, 0) != 0) {
-    runtime_error(runtime);
+  lua_getglobal(itsy.lua, "_draw");
+  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
+    runtime_error(itsy.lua);
     return;
   }
 
-  if (error == true || frame > 10000) {
+  if (error == true) {
     emscripten_cancel_main_loop();
   }
 
-
   render();
-  frame++;
-  // printf("loop: %s\n", SDL_GetError());
 }
 
-void render(void)
+void render (void)
 {
   SDL_SetRenderDrawColor(itsy.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(itsy.renderer);
@@ -231,29 +221,26 @@ void render(void)
     for (int y = 0; y < 128; y++) {
       int c = pget(x, y);
       const unsigned int offset = (128 * 4 * y ) + x * 4;
-      pixels[ offset + 0 ] = palette[c][2];        // b
-      pixels[ offset + 1 ] = palette[c][1];        // g
-      pixels[ offset + 2 ] = palette[c][0];        // r
-      pixels[ offset + 3 ] = SDL_ALPHA_OPAQUE;    // a
+      itsy.pixels[offset + 0] = palette[c][2];    // b
+      itsy.pixels[offset + 1] = palette[c][1];    // g
+      itsy.pixels[offset + 2] = palette[c][0];    // r
+      itsy.pixels[offset + 3] = SDL_ALPHA_OPAQUE; // a
     }
   }
 
   SDL_UpdateTexture(
     itsy.canvas,
     NULL,
-    &pixels[0],
+    &itsy.pixels[0],
     128 * 4
   );
 
-  // printf("Frame: %d\n", frame);
-
   SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, &itsy.dst);
-  // SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, NULL);
   SDL_RenderPresent(itsy.renderer);
   SDL_UpdateWindowSurface(itsy.window);
 }
 
-void runtime_error(lua_State *L)
+void runtime_error (lua_State *L)
 {
   const char *msg = lua_tostring(L, -1);
   printf("error error lololol\n");
@@ -350,10 +337,10 @@ void runtime_error(lua_State *L)
 
   ;
 
-  lua_pushstring(debugger, msg);
-  lua_setfield(debugger, -2, "error");
+  lua_pushstring(itsy.debugger, msg);
+  lua_setfield(itsy.debugger, -2, "error");
 
-  luaL_dostring(debugger, debug);
+  luaL_dostring(itsy.debugger, debug);
 
   luaL_traceback(L, L, NULL, 1);
   printf("%s\n", lua_tostring(L, -1));
