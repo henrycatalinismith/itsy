@@ -1,6 +1,11 @@
+#include <stdbool.h>
 #include <time.h>
 
 #include <b64.h>
+
+#include <lua/lua.h>
+#include <lua/lauxlib.h>
+#include <lua/lualib.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -8,6 +13,7 @@
 
 
 #include <engine/init/init.h>
+// #include <engine/error/error.h>
 #include <engine/memory/addresses.h>
 #include <engine/memory/optimizations.h>
 #include <engine/state/state.h>
@@ -59,7 +65,10 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-void getpixel(SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
+int init_itsy (char *palettePng, char *spritesheetPng);
+lua_State* init_lua (lua_State *L);
+int init_sdl (int canvasWidth, int canvasHeight);
+void getpixel (SDL_Surface *surface, int x, int y, Uint8 *r, Uint8 *g, Uint8 *b);
 
 const luaL_Reg itsy_functions[] = {
   {"abs", itsy_abs},
@@ -102,6 +111,46 @@ const luaL_Reg itsy_functions[] = {
   {"upper", itsy_upper},
   {"yield", itsy_yield},
 };
+
+bool init (int argc, char **argv)
+{
+  char *code = argv[1];
+  char *palettePng = argv[2];
+  char *spritesheetPng = argv[3];
+
+  int canvasWidth;
+  int canvasHeight;
+  printf("4: %s\n", argv[4]);
+  sscanf(argv[4], "%d", &canvasWidth);
+  sscanf(argv[5], "%d", &canvasHeight);
+
+  if (init_sdl(canvasWidth, canvasHeight) != 0) {
+    return false;
+  }
+
+  if (init_itsy(palettePng, spritesheetPng) != 0) {
+    return false;
+  }
+
+  itsy.lua = init_lua(itsy.lua);
+  itsy.debugger = init_lua(itsy.debugger);
+
+  lua_pushstring(itsy.debugger, code);
+  lua_setfield(itsy.debugger, -2, "lua");
+
+  if (luaL_dostring(itsy.lua, code) != 0) {
+    // runtime_error(itsy.lua);
+    return false;
+  }
+
+  lua_getglobal(itsy.lua, "_init");
+  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
+    // runtime_error(itsy.lua);
+    return false;
+  }
+
+  return true;
+}
 
 int init_itsy (char *palettePng, char *spritesheetPng)
 {

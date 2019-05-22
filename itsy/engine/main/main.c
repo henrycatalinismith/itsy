@@ -78,40 +78,10 @@ void render(void);
 
 void runtime_error(lua_State *L);
 
-int main(int argc, char **argv)
+int main (int argc, char **argv)
 {
-  char *code = argv[1];
-  char *palettePng = argv[2];
-  char *spritesheetPng = argv[3];
-
-  int canvasWidth;
-  int canvasHeight;
-  printf("4: %s\n", argv[4]);
-  sscanf(argv[4], "%d", &canvasWidth);
-  sscanf(argv[5], "%d", &canvasHeight);
-
-  if (init_sdl(canvasWidth, canvasHeight) != 0) {
-    return -1;
-  }
-
-  if (init_itsy(palettePng, spritesheetPng) != 0) {
-    return -1;
-  }
-
-  itsy.lua = init_lua(itsy.lua);
-  itsy.debugger = init_lua(itsy.debugger);
-
-  lua_pushstring(itsy.debugger, code);
-  lua_setfield(itsy.debugger, -2, "lua");
-
-  if (luaL_dostring(itsy.lua, code) != 0) {
-    runtime_error(itsy.lua);
-    return -1;
-  }
-
-  lua_getglobal(itsy.lua, "_init");
-  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
-    runtime_error(itsy.lua);
+  if (!init(argc, argv)) {
+    printf("init failed\n");
     return -1;
   }
 
