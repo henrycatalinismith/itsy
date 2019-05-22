@@ -23,51 +23,6 @@
 #include <engine/state/state.h>
 #include <engine/tick/tick.h>
 
-#include <functions/abs/abs.h>
-#include <functions/add/add.h>
-#include <functions/camera/camera.h>
-#include <functions/ceil/ceil.h>
-#include <functions/circ/circ.h>
-#include <functions/circfill/circfill.h>
-#include <functions/cls/cls.h>
-#include <functions/cocreate/cocreate.h>
-#include <functions/color/color.h>
-#include <functions/coresume/coresume.h>
-#include <functions/cos/cos.h>
-#include <functions/costatus/costatus.h>
-#include <functions/del/del.h>
-#include <functions/flr/flr.h>
-#include <functions/line/line.h>
-#include <functions/lower/lower.h>
-#include <functions/max/max.h>
-#include <functions/min/min.h>
-#include <functions/nibble/nibble.h>
-#include <functions/nobble/nobble.h>
-#include <functions/pairs/pairs.h>
-#include <functions/poke/poke.h>
-#include <functions/peek/peek.h>
-#include <functions/print/print.h>
-#include <functions/pget/pget.h>
-#include <functions/pset/pset.h>
-#include <functions/rect/rect.h>
-#include <functions/rectfill/rectfill.h>
-#include <functions/rnd/rnd.h>
-#include <functions/sget/sget.h>
-#include <functions/sin/sin.h>
-#include <functions/sset/sset.h>
-#include <functions/sspr/sspr.h>
-#include <functions/sub/sub.h>
-#include <functions/tan/tan.h>
-#include <functions/time/time.h>
-#include <functions/tonum/tonum.h>
-#include <functions/tostr/tostr.h>
-#include <functions/touch/touch.h>
-#include <functions/touchx/touchx.h>
-#include <functions/touchy/touchy.h>
-#include <functions/type/type.h>
-#include <functions/upper/upper.h>
-#include <functions/yield/yield.h>
-
 itsy_engine_state itsy;
 
 void loop (void);
