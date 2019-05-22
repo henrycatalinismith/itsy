@@ -15,7 +15,6 @@
 #include <engine/init/init.h>
 // #include <engine/error/error.h>
 #include <engine/memory/addresses.h>
-#include <engine/memory/optimizations.h>
 #include <engine/state/state.h>
 
 #include <functions/abs/abs.h>
@@ -162,8 +161,8 @@ int init_itsy (char *palettePng, char *spritesheetPng)
 
   for (int x = 0; x < 128; x++) {
     for (int y = 0; y < 128; y++) {
-      sprite[x][y] = 0x0000 + (y * 64) + floor(x / 2);
-      pixel[x][y] = 0x6000 + (y * 64) + floor(x / 2);
+      itsy.sprite_address[x][y] = 0x0000 + (y * 64) + floor(x / 2);
+      itsy.screen_address[x][y] = 0x6000 + (y * 64) + floor(x / 2);
     }
   }
 

@@ -1,4 +1,4 @@
-#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
 #include <functions/nobble/nobble.h>
 #include <functions/sset/sset.h>
 
@@ -9,5 +9,5 @@ int itsy_sset (lua_State *L)
 
 void sset(int x, int y, int c)
 {
-  nobble(sprite[x][y], x % 2 == 1, c);
+  nobble(itsy.sprite_address[x][y], x % 2 == 1, c);
 }

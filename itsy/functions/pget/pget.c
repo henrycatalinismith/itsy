@@ -1,4 +1,4 @@
-#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
 #include <functions/nibble/nibble.h>
 #include <functions/pget/pget.h>
 
@@ -13,5 +13,5 @@ int pget (int x, int y)
     return 0;
   }
 
-  return nibble(pixel[x][y], x % 2 == 1);
+  return nibble(itsy.screen_address[x][y], x % 2 == 1);
 }

@@ -1,4 +1,4 @@
-#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
 #include <functions/nibble/nibble.h>
 #include <functions/sget/sget.h>
 
@@ -13,5 +13,5 @@ int sget(int x, int y)
     return 0;
   }
 
-  return nibble(sprite[x][y], x % 2 == 1);
+  return nibble(itsy.sprite_address[x][y], x % 2 == 1);
 }

@@ -1,5 +1,5 @@
 #include <engine/memory/addresses.h>
-#include <engine/memory/optimizations.h>
+#include <engine/state/state.h>
 #include <functions/nobble/nobble.h>
 #include <functions/peek/peek.h>
 #include <functions/pset/pset.h>
@@ -24,5 +24,5 @@ void pset(int x, int y, int c)
     return;
   }
 
-  nobble(pixel[x][y], x % 2 == 1, c);
+  nobble(itsy.screen_address[x][y], x % 2 == 1, c);
 }

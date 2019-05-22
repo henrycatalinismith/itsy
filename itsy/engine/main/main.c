@@ -20,7 +20,6 @@
 #include <engine/draw/draw.h>
 #include <engine/error/error.h>
 #include <engine/memory/addresses.h>
-#include <engine/memory/optimizations.h>
 #include <engine/state/state.h>
 #include <engine/tick/tick.h>
 
@@ -71,10 +70,7 @@
 
 itsy_engine_state itsy;
 
-uint16_t sprite[128][128];
-uint16_t pixel[128][128];
-
-void loop(void);
+void loop (void);
 
 int main (int argc, char **argv)
 {
@@ -97,7 +93,7 @@ int main (int argc, char **argv)
   return 0;
 }
 
-void loop(void)
+void loop (void)
 {
   tick();
   draw();
