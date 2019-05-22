@@ -17,6 +17,7 @@
 #include <SDL2/SDL_render.h>
 
 #include <engine/init/init.h>
+#include <engine/draw/draw.h>
 #include <engine/memory/addresses.h>
 #include <engine/memory/optimizations.h>
 #include <engine/state/state.h>
@@ -74,7 +75,6 @@ uint16_t pixel[128][128];
 bool error = false;
 
 void loop(void);
-void render(void);
 
 void runtime_error(lua_State *L);
 
@@ -93,7 +93,7 @@ int main (int argc, char **argv)
   if (has_tick || has_draw) {
     emscripten_set_main_loop(loop, -1, 1);
   } else {
-    render();
+    draw();
   }
 
   return 0;
@@ -179,35 +179,7 @@ void loop(void)
     emscripten_cancel_main_loop();
   }
 
-  render();
-}
-
-void render (void)
-{
-  SDL_SetRenderDrawColor(itsy.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-  SDL_RenderClear(itsy.renderer);
-
-  for (int x = 0; x < 128; x++) {
-    for (int y = 0; y < 128; y++) {
-      int c = pget(x, y);
-      const unsigned int offset = (128 * 4 * y ) + x * 4;
-      itsy.pixels[offset + 0] = palette[c][2];    // b
-      itsy.pixels[offset + 1] = palette[c][1];    // g
-      itsy.pixels[offset + 2] = palette[c][0];    // r
-      itsy.pixels[offset + 3] = SDL_ALPHA_OPAQUE; // a
-    }
-  }
-
-  SDL_UpdateTexture(
-    itsy.canvas,
-    NULL,
-    &itsy.pixels[0],
-    128 * 4
-  );
-
-  SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, &itsy.dst);
-  SDL_RenderPresent(itsy.renderer);
-  SDL_UpdateWindowSurface(itsy.window);
+  draw();
 }
 
 void runtime_error (lua_State *L)
@@ -315,6 +287,6 @@ void runtime_error (lua_State *L)
   luaL_traceback(L, L, NULL, 1);
   printf("%s\n", lua_tostring(L, -1));
 
-  render();
+  draw();
   error = true;
 }

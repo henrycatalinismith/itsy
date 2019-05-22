@@ -194,9 +194,9 @@ int init_itsy (char *palettePng, char *spritesheetPng)
       getpixel(image, x, y, &r, &g, &b);
       int c = x + (y * 4);
       // printf("%d: rgb(%d,%d,%d)\n", c, r, g, b);
-      palette[c][0] = r;
-      palette[c][1] = g;
-      palette[c][2] = b;
+      itsy.palette[c][0] = r;
+      itsy.palette[c][1] = g;
+      itsy.palette[c][2] = b;
     }
   }
 
@@ -225,9 +225,9 @@ int init_itsy (char *palettePng, char *spritesheetPng)
       getpixel(image, x, y, &r, &g, &b);
       for (int c = 0; c < 16; c++) {
         int diff = (
-          abs(r - palette[c][0]) +
-          abs(g - palette[c][1]) +
-          abs(b - palette[c][2])
+          abs(r - itsy.palette[c][0]) +
+          abs(g - itsy.palette[c][1]) +
+          abs(b - itsy.palette[c][2])
         );
         if (diff < 200 && diff < mindiff) {
           mindiff = diff;
