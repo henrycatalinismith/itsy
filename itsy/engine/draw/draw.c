@@ -2,11 +2,20 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_render.h>
 
+#include <lua/lua.h>
+
+#include <engine/error/error.h>
 #include <engine/state/state.h>
 #include <functions/pget/pget.h>
 
 void draw (void)
 {
+  lua_getglobal(itsy.lua, "_draw");
+  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
+    error();
+    return;
+  }
+
   SDL_SetRenderDrawColor(itsy.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   SDL_RenderClear(itsy.renderer);
 

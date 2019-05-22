@@ -166,11 +166,5 @@ void loop(void)
     return;
   }
 
-  lua_getglobal(itsy.lua, "_draw");
-  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
-    error();
-    return;
-  }
-
   draw();
 }
