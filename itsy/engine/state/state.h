@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 #include <lua/lua.h>
 #include <SDL2/SDL.h>
@@ -10,6 +11,8 @@ typedef struct itsy_engine_state {
   int palette[16][3];
   uint16_t screen_address[128][128];
   uint16_t sprite_address[128][128];
+  bool did_tick;
+  bool did_draw;
   lua_State* lua;
   lua_State* debugger;
   SDL_Window *window;

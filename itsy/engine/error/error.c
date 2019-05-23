@@ -117,4 +117,5 @@ void error (void)
 
   draw();
   emscripten_cancel_main_loop();
+  exit(-1);
 }

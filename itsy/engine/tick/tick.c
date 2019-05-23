@@ -78,7 +78,13 @@ void tick (void)
   }
 
   lua_getglobal(itsy.lua, "_tick");
-  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
-    error();
+  if (lua_isfunction(itsy.lua, -1)) {
+    if (lua_pcall(itsy.lua, 0, 0, 0) == 0) {
+      itsy.did_tick = true;
+    } else {
+      error();
+    }
+  } else {
+    itsy.did_tick = false;
   }
 }

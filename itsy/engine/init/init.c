@@ -13,7 +13,7 @@
 
 
 #include <engine/init/init.h>
-// #include <engine/error/error.h>
+#include <engine/error/error.h>
 #include <engine/memory/addresses.h>
 #include <engine/state/state.h>
 
@@ -111,7 +111,7 @@ const luaL_Reg itsy_functions[] = {
   {"yield", itsy_yield},
 };
 
-bool init (int argc, char **argv)
+void init (int argc, char **argv)
 {
   char *code = argv[1];
   char *palettePng = argv[2];
@@ -124,12 +124,15 @@ bool init (int argc, char **argv)
   sscanf(argv[5], "%d", &canvasHeight);
 
   if (init_sdl(canvasWidth, canvasHeight) != 0) {
-    return false;
+    // return false;
   }
 
   if (init_itsy(palettePng, spritesheetPng) != 0) {
-    return false;
+    // return false;
   }
+
+  itsy.did_tick = false;
+  itsy.did_draw = false;
 
   itsy.lua = init_lua(itsy.lua);
   itsy.debugger = init_lua(itsy.debugger);
@@ -138,17 +141,13 @@ bool init (int argc, char **argv)
   lua_setfield(itsy.debugger, -2, "lua");
 
   if (luaL_dostring(itsy.lua, code) != 0) {
-    // runtime_error(itsy.lua);
-    return false;
+    error();
   }
 
   lua_getglobal(itsy.lua, "_init");
   if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
-    // runtime_error(itsy.lua);
-    return false;
+    error();
   }
-
-  return true;
 }
 
 int init_itsy (char *palettePng, char *spritesheetPng)

@@ -11,9 +11,14 @@
 void draw (void)
 {
   lua_getglobal(itsy.lua, "_draw");
-  if (lua_isfunction(itsy.lua, -1) && lua_pcall(itsy.lua, 0, 0, 0) != 0) {
-    error();
-    return;
+  if (lua_isfunction(itsy.lua, -1)) {
+    if (lua_pcall(itsy.lua, 0, 0, 0) == 0) {
+      itsy.did_draw = true;
+    } else {
+      error();
+    }
+  } else {
+    itsy.did_draw = false;
   }
 
   SDL_SetRenderDrawColor(itsy.renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -40,5 +45,4 @@ void draw (void)
   SDL_RenderCopy(itsy.renderer, itsy.canvas, &itsy.src, &itsy.dst);
   SDL_RenderPresent(itsy.renderer);
   SDL_UpdateWindowSurface(itsy.window);
-
 }

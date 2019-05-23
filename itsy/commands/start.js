@@ -49,9 +49,6 @@ const actions = {
   ...action("response", ["request", "response"]),
   ...action("updateLua", ["lua"]),
 
-  ...action("updateTemplate"),
-  ...action("rebuildTemplate"),
-
   ...action("updateEngine", ["filename"]),
   ...action("rebuildEngine"),
 
@@ -142,11 +139,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
   )),
 
   after("listen", store => isDev && watch(
-    `${__dirname}/../engine/template.js`,
-    () => store.dispatch(actions.updateTemplate())
-  )),
-
-  after("listen", store => isDev && watch(
     `${__dirname}/../style.css`,
     () => store.dispatch(actions.updateStylesheet())
   )),
@@ -157,10 +149,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
 
   after("updateStylesheet", store => {
     store.dispatch(actions.rebuildStylesheet())
-  }),
-
-  after("updateTemplate", store => {
-    store.dispatch(actions.rebuildTemplate())
   }),
 
   before("rebuildEngine", () => {
@@ -176,13 +164,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
     run("make base64/stylesheet.js")
   }),
 
-  before("rebuildTemplate", () => {
-    run("rm -f base64/engine.js")
-    run("rm -f engine/itsy.js")
-    run("make engine/itsy.js")
-    run("make base64/engine.js")
-  }),
-
   after("rebuildEngine", () => {
     invalidate(`${__dirname}/../base64/engine.js`)
     invalidate(`${__dirname}/../base64/index.js`)
@@ -192,13 +173,6 @@ const middlewares = redux.applyMiddleware.apply(null, [
 
   after("rebuildStylesheet", () => {
     invalidate(`${__dirname}/../base64/stylesheet.js`)
-    invalidate(`${__dirname}/../base64/index.js`)
-    invalidate(`${__dirname}/../index.js`)
-    itsy = require("../")
-  }),
-
-  after("rebuildTemplate", () => {
-    invalidate(`${__dirname}/../base64/engine.js`)
     invalidate(`${__dirname}/../base64/index.js`)
     invalidate(`${__dirname}/../index.js`)
     itsy = require("../")
@@ -304,20 +278,12 @@ const middlewares = redux.applyMiddleware.apply(null, [
     `updated ${colors.yellowBright("stylesheet.css")}`
   )),
 
-  after("updateTemplate", () => log(
-    `updated ${colors.yellowBright("template.js")}`
-  )),
-
   after("rebuildEngine", () => log(
     `rebuilt ${colors.yellowBright("base64/engine.js")}`
   )),
 
   after("rebuildStylesheet", () => log(
     `rebuilt ${colors.yellowBright("base64/stylesheet.js")}`
-  )),
-
-  after("rebuildTemplate", () => log(
-    `rebuilt ${colors.yellowBright("base64/engine.js")}`
   )),
 ])
 

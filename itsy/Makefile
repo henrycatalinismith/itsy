@@ -112,8 +112,10 @@ cleanlua:
 	rm -f $(LUA)/*.o
 	rm -f $(LUA)/liblua.a
 
+engine: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html
+
 itsy: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html manual/index.html
 
 lua: $(LUA)/liblua.a
 
-.PHONY: all itsy lua sdl clean cleanlua
+.PHONY: all itsy lua sdl clean cleanlua engine
