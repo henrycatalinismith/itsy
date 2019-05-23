@@ -29,49 +29,13 @@ marked.setOptions({
   }
 })
 
+const all = r => r.keys().map(r)
+
 const pages = [
   require("./index.md"),
   require("./intro.md"),
-  require("./game-loop.md"),
-  require("./init.md"),
-  require("./tick.md"),
-  require("./draw.md"),
-  require("./functions.md"),
-
-  require("../functions/abs/abs.md"),
-  require("../functions/add/add.md"),
-  require("../functions/camera/camera.md"),
-  require("../functions/ceil/ceil.md"),
-  require("../functions/circ/circ.md"),
-  require("../functions/circfill/circfill.md"),
-  require("../functions/cls/cls.md"),
-  require("../functions/color/color.md"),
-  require("../functions/cos/cos.md"),
-  require("../functions/del/del.md"),
-  require("../functions/flr/flr.md"),
-  require("../functions/line/line.md"),
-  require("../functions/lower/lower.md"),
-  require("../functions/max/max.md"),
-  require("../functions/min/min.md"),
-  require("../functions/pairs/pairs.md"),
-  require("../functions/peek/peek.md"),
-  require("../functions/poke/poke.md"),
-  require("../functions/print/print.md"),
-  require("../functions/pset/pset.md"),
-  require("../functions/rect/rect.md"),
-  require("../functions/rectfill/rectfill.md"),
-  require("../functions/rnd/rnd.md"),
-  require("../functions/sin/sin.md"),
-  require("../functions/sspr/sspr.md"),
-  require("../functions/sub/sub.md"),
-  require("../functions/tan/tan.md"),
-  require("../functions/tonum/tonum.md"),
-  require("../functions/tostr/tostr.md"),
-  require("../functions/touch/touch.md"),
-  require("../functions/touchx/touchx.md"),
-  require("../functions/touchy/touchy.md"),
-  require("../functions/type/type.md"),
-  require("../functions/upper/upper.md"),
+  ...all(require.context("../engine", true, /\.md$/)),
+  ...all(require.context("../functions", true, /\.md$/)),
 ]
 
 const content = {}
