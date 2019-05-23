@@ -15,7 +15,7 @@ int itsy_pset (lua_State *L)
   return 0;
 }
 
-void pset(int x, int y, int c)
+void pset (int x, int y, int c)
 {
   x -= peek(DRAW_CAMERA_X_LO) + peek(DRAW_CAMERA_X_HI) * 256;
   y -= peek(DRAW_CAMERA_Y_LO) + peek(DRAW_CAMERA_Y_HI) * 256;

@@ -16,7 +16,7 @@ int itsy_rectfill (lua_State *L)
   return 0;
 }
 
-void rectfill(int x0, int y0, int x1, int y1, int col)
+void rectfill (int x0, int y0, int x1, int y1, int col)
 {
   for (int y = y0; y < y1; y++) {
     line(x0, y, x1, y, col);

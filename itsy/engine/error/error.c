@@ -7,6 +7,7 @@
 #include <engine/draw/draw.h>
 #include <engine/state/state.h>
 
+#include <functions/camera/camera.h>
 #include <functions/print/print.h>
 #include <functions/rectfill/rectfill.h>
 
@@ -16,6 +17,7 @@ void error (void)
   printf("error error lololol\n");
   printf("%s\n", msg);
 
+  camera(0, 0);
   rectfill(0, 0, 128, 128, 0);
   print(msg, 0, 0, 7);
 
@@ -115,7 +117,7 @@ void error (void)
   luaL_traceback(itsy.lua, itsy.lua, NULL, 1);
   printf("%s\n", lua_tostring(itsy.lua, -1));
 
-  draw();
+  render();
   emscripten_cancel_main_loop();
   exit(-1);
 }
