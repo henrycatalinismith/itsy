@@ -83,7 +83,7 @@ const reducers = combineReducers({
       })
 
       const results = _.filter(scoredPages, page => {
-        return page.score > 0
+        return page.score > 0 && page.frontMatter.path !== "/'"
       })
 
       _.sortBy(results, ["score"])
@@ -104,6 +104,11 @@ const middlewares = applyMiddleware.apply(null, [
 
   after("navigate", (store, action) => {
     location.hash = action.path
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "auto",
+    })
   }),
 ])
 

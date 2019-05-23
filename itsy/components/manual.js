@@ -46,8 +46,10 @@ export default connect(
     header = (
       <Search query={query} onChange={search} onEnter={onEnter} />
     )
-    title = "search"
-    body = <Results query={query} results={results} />
+    title = query.length > 0 ? "search" : content["/"].frontMatter.title
+    body = query.length > 0
+      ? <Results query={query} results={results} />
+      : <Markdown {...content["/"]} />
   } else {
     header = <Breadcrumbs path={path} />
     title = page.frontMatter.title
