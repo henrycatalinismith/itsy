@@ -94,12 +94,8 @@ base64/stylesheet.js:
 editor/index.html:
 	npm run build-editor
 
-engine/core.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
-	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/core.js
-
-engine/itsy.js: engine/core.js
-	sed -e "/\/\/--:Module:--\/\//{r engine/core.js" -e "d" -e "}" engine/template.js > engine/itsy.js
-	./node_modules/.bin/prettier --write engine/itsy.js
+engine/itsy.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
+	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/itsy.js
 
 manual/index.html: base64/engine.js base64/stylesheet.js
 	npm run build-manual
@@ -107,7 +103,6 @@ manual/index.html: base64/engine.js base64/stylesheet.js
 clean:
 	rm -f base64/engine.js
 	rm -f base64/stylesheet.js
-	rm -f engine/core.js
 	rm -f engine/itsy.js
 	rm -f engine/*/*.o
 	rm -f functions/*/*.o
