@@ -57,10 +57,16 @@ const reducers = combineReducers({
       ...history,
     ]),
   }),
+
+  query: reducer("", {
+    search: (prev, { query: next }) => next,
+  }),
 })
 
 const initialState = {
   content,
+  query: "",
+  results: [],
 }
 
 const middlewares = applyMiddleware.apply(null, [

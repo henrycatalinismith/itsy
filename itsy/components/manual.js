@@ -12,16 +12,22 @@ import Results from "./results"
 import Search from "./search"
 
 export default connect(
-  ({ content, history }) => ({
+  ({ content, history, query, results }) => ({
     content,
     history,
+    query,
+    results,
   }), {
     ...action("navigate", ["path"]),
+    ...action("search", ["query"]),
   }
 )(({
   content,
   history,
   navigate,
+  query,
+  results,
+  search,
 }) => {
 
   const path = history[0]
@@ -36,7 +42,7 @@ export default connect(
     title = page.frontMatter.name
     body = <Function {...page.frontMatter} />
   } else if (path.match(/^\/search$/)) {
-    header = <Search />
+    header = <Search query={query} onChange={search} />
     title = "search"
     body = <Results />
   } else {
