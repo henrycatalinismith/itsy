@@ -15,10 +15,10 @@ export default ({ query, results }) => {
               <li key={`result-${i}`} className={styles.results__item}>
                 <a href={page.frontMatter.path} className={styles.results__link}>
                   <div className={styles.results__title}>
-                    {page.frontMatter.name || page.frontMatter.title}
+                    {page.frontMatter.title}
                   </div>
                   <div className={styles.results__description}>
-                    {page.frontMatter.desc}
+                    {page.frontMatter.description}
                   </div>
                 </a>
               </li>

@@ -1,6 +1,7 @@
 ---
 title: intro
 path: /intro
+description: what itsy is and how to use it
 ---
 
 itsy is a game engine for making games on mobile devices!

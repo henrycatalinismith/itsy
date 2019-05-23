@@ -1,8 +1,8 @@
 ---
-name: sub
+title: sub
 path: /functions/sub
 type: string
-desc: gets a substring
+description: gets a substring
 args:
 - name: s
   type: string

@@ -1,8 +1,8 @@
 ---
-name: print
+title: print
 path: /functions/print
 type: draw
-desc: displays a message
+description: displays a message
 args:
 - name: str
   type: string

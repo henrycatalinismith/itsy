@@ -1,6 +1,7 @@
 ---
 title: game loop
 path: /game-loop
+description: hooks to run your game at 60 fps
 css: |
   td:first-child a {
     font-size: 32px;

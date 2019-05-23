@@ -1,8 +1,8 @@
 ---
-name: rectfill
+title: rectfill
 path: /functions/rectfill
 type: draw
-desc: fills a rectangle
+description: fills a rectangle
 args:
 - name: x0
   type: number

@@ -1,8 +1,8 @@
 ---
-name: lower
+title: lower
 path: /functions/lower
 type: string
-desc: lowercases a string
+description: lowercases a string
 args:
 - name: s
   type: string

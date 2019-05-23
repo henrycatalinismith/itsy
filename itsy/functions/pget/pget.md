@@ -1,8 +1,8 @@
 ---
-name: pget
+title: pget
 path: /functions/pget
 type: graphics
-desc: gets pixel color
+description: gets pixel color
 args:
 - name: x
   type: number

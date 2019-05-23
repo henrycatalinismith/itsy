@@ -1,6 +1,7 @@
 ---
 title: _init()
 path: /game-loop/init
+description: called once during startup
 ---
 
 If you add an `_init()` function to your game, itsy will call it once:

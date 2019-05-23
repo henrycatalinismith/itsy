@@ -39,7 +39,7 @@ export default connect(
 
   if (path.match(/^\/functions\/.+/)) {
     header = <Breadcrumbs path={path} />
-    title = page.frontMatter.name
+    title = page.frontMatter.title
     body = <Function {...page.frontMatter} />
   } else if (path.match(/^\/search$/)) {
     const onEnter = () => navigate(results[0].frontMatter.path)

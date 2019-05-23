@@ -1,8 +1,8 @@
 ---
-name: rnd
+title: rnd
 path: /functions/rnd
 type: math
-desc: random number
+description: random number
 args:
 - name: m
   type: number

@@ -1,8 +1,8 @@
 ---
-name: camera
+title: camera
 path: /functions/camera
 type: graphics
-desc: moves the camera
+description: moves the camera
 args:
 - name: x
   type: number

@@ -1,6 +1,7 @@
 ---
 title: _tick()
 path: /game-loop/tick
+description: called 60 times per second
 ---
 
 If you add a `_tick()` function to your game, itsy will call it 60 times per

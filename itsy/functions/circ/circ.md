@@ -1,8 +1,8 @@
 ---
-name: circ
+title: circ
 path: /functions/circ
 type: draw
-desc: draws a circle
+description: draws a circle
 args:
 - name: x
   type: number

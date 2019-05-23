@@ -1,8 +1,8 @@
 ---
-name: del
+title: del
 path: /functions/del
 type: tables
-desc: deletes from table
+description: deletes from table
 args:
 - name: tbl
   type: table

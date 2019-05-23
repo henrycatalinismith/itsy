@@ -1,8 +1,8 @@
 ---
-name: type
+title: type
 path: /functions/type
 type: misc
-desc: gets a value's type
+description: gets a value's type
 args:
 - name: value
   type: any

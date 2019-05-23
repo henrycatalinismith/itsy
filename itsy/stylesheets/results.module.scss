@@ -21,16 +21,20 @@
   height: 64px;
   padding: 4px;
   box-sizing: border-box;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .results__title {
   color: #036EB5;
   font-weight: bold;
+  line-height: 1rem;
 }
 
 .results__description {
   color: #444;
   font-size: 14px;
+  line-height: 1rem;
   font-weight: normal;
 }

@@ -1,8 +1,8 @@
 ---
-name: cls
+title: cls
 path: /functions/cls
 type: draw
-desc: clears the screen
+description: clears the screen
 args:
 - name: col
   type: number

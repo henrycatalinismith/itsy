@@ -1,8 +1,8 @@
 ---
-name: cos
+title: cos
 path: /functions/cos
 type: math
-desc: calculates cosine
+description: calculates cosine
 args:
 - name: angle
   type: number

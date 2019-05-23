@@ -1,8 +1,8 @@
 ---
-name: circfill
+title: circfill
 path: /functions/circfill
 type: draw
-desc: draws a circle
+description: draws a circle
 args:
 - name: x
   type: number

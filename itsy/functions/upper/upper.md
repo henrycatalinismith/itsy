@@ -1,8 +1,8 @@
 ---
-name: upper
+title: upper
 path: /functions/upper
 type: string
-desc: uppercases a string
+description: uppercases a string
 args:
 - name: s
   type: string

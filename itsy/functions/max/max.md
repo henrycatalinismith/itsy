@@ -1,8 +1,8 @@
 ---
-name: max
+title: max
 path: /functions/max
 type: math
-desc: finds the biggest
+description: finds the biggest
 args:
 - name: one
   type: number

@@ -7,8 +7,8 @@ import Example from "./example"
 import styles from "../stylesheets/function.module.scss"
 
 export default ({
-  name = "",
-  desc = "",
+  title = "",
+  description = "",
   path = "",
   type = "",
   args, 
@@ -17,10 +17,10 @@ export default ({
 }) => {
   return (
     <>
-      <Signature name={name} args={args} />
+      <Signature name={title} args={args} />
 
       <p className={styles.function__desc}>
-        {desc}
+        {description}
       </p>
 
       {args && <Input>{args}</Input>}

@@ -1,8 +1,8 @@
 ---
-name: pairs
+title: pairs
 path: /functions/pairs
 type: tables
-desc: gets keys + values
+description: gets keys + values
 args:
 - name: tbl
   type: table

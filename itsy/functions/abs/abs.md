@@ -1,8 +1,8 @@
 ---
-name: abs
+title: abs
 path: /functions/abs
 type: math
-desc: removes minus sign
+description: removes minus sign
 args:
 - name: num
   type: number

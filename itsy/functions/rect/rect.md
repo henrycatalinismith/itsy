@@ -1,8 +1,8 @@
 ---
-name: rect
+title: rect
 path: /functions/rect
 type: draw
-desc: draws a rectangle
+description: draws a rectangle
 args:
 - name: x0
   type: number

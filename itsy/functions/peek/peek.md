@@ -1,8 +1,8 @@
 ---
-name: peek
+title: peek
 path: /functions/peek
 type: memory
-desc: reads a byte
+description: reads a byte
 args:
 - name: addr
   type: table

@@ -1,8 +1,8 @@
 ---
-name: tonum
+title: tonum
 path: /functions/tonum
 type: misc
-desc: converts to number
+description: converts to number
 args:
 - name: str
   type: string

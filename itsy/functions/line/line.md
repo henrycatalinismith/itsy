@@ -1,8 +1,8 @@
 ---
-name: line
+title: line
 path: /functions/line
 type: draw
-desc: draws a line
+description: draws a line
 args:
 - name: x0
   type: number

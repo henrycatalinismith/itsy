@@ -1,8 +1,8 @@
 ---
-name: sin
+title: sin
 path: /functions/sin
 type: math
-desc: calculates sine
+description: calculates sine
 args:
 - name: angle
   type: number

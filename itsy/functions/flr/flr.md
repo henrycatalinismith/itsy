@@ -1,8 +1,8 @@
 ---
-name: flr
+title: flr
 path: /functions/flr
 type: math
-desc: rounds down
+description: rounds down
 args:
 - name: num
   type: number

@@ -1,8 +1,8 @@
 ---
-name: tan
+title: tan
 path: /functions/tan
 type: math
-desc: calculates tangent
+description: calculates tangent
 args:
 - name: angle
   type: number

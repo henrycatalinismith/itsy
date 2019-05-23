@@ -1,8 +1,8 @@
 ---
-name: add
+title: add
 path: /functions/add
 type: tables
-desc: adds to table
+description: adds to table
 args:
 - name: tbl
   type: table

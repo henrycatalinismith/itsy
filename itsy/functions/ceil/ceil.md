@@ -1,8 +1,8 @@
 ---
-name: ceil
+title: ceil
 path: /functions/ceil
 type: math
-desc: rounds up
+description: rounds up
 args:
 - name: num
   type: number

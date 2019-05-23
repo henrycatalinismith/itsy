@@ -1,8 +1,8 @@
 ---
-name: sspr
+title: sspr
 path: /functions/sspr
 type: draw
-desc: draws a sprite
+description: draws a sprite
 args:
 - name: sx
   type: number

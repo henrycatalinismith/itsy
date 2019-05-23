@@ -1,8 +1,8 @@
 ---
-name: min
+title: min
 path: /functions/min
 type: math
-desc: finds the smallest
+description: finds the smallest
 args:
 - name: one
   type: number

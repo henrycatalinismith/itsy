@@ -1,8 +1,8 @@
 ---
-name: time
+title: time
 path: /functions/time
 type: misc
-desc: seconds since startup
+description: seconds since startup
 returns:
   type: number
   desc: number of seconds

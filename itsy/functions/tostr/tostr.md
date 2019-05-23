@@ -1,8 +1,8 @@
 ---
-name: tostr
+title: tostr
 path: /functions/tostr
 type: misc
-desc: converts to string
+description: converts to string
 args:
 - name: val
   type: any

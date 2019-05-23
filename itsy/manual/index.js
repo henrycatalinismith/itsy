@@ -66,19 +66,28 @@ const reducers = combineReducers({
         return []
       }
 
-      const results = _.filter(_.values(content), page => {
-        const name = _.get(page, "frontMatter.name", "")
-        if (name.includes(query)) {
-          return true
-        }
-
+      const scoredPages = _.map(_.values(content), page => {
+        page.score = 0
         const title = _.get(page, "frontMatter.title", "")
-        if (title.includes(query)) {
-          return true
+        const description = _.get(page, "frontMatter.description", "")
+        if (title === query) {
+          page.score = Infinity
+        } else if (title.startsWith(query)) {
+          page.score = query.length * Math.pow(2, 8)
+        } else if (title.includes(query)) {
+          page.score = query.length * Math.pow(2, 7)
+        } else if (description.includes(query)) {
+          page.score = query.length * Math.pow(2, 1)
         }
-
-        return false
+        return page
       })
+
+      const results = _.filter(scoredPages, page => {
+        return page.score > 0
+      })
+
+      _.sortBy(results, ["score"])
+
       return results
     }
   })

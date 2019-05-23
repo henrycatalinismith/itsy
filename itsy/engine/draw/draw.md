@@ -1,6 +1,7 @@
 ---
 title: _draw()
 path: /game-loop/draw
+description: called after every tick
 ---
 
 If you add a `_draw()` function to your game, itsy will call it 60 times per

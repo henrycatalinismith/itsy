@@ -1,6 +1,7 @@
 ---
 title: functions
 path: /functions
+description: complete api reference
 css: |
   td:first-child {
     font-family: "Overpass Mono";

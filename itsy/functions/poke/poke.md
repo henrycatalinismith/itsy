@@ -1,8 +1,8 @@
 ---
-name: poke
+title: poke
 path: /functions/poke
 type: memory
-desc: writes a byte
+description: writes a byte
 args:
 - name: addr
   type: number

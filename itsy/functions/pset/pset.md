@@ -1,8 +1,8 @@
 ---
-name: pset
+title: pset
 path: /functions/pset
 type: draw
-desc: sets one pixel
+description: sets one pixel
 args:
 - name: x
   type: number

@@ -1,8 +1,8 @@
 ---
-name: touch
+title: touch
 path: /functions/touch
 type: input
-desc: detects touches
+description: detects touches
 returns:
   type: boolean
   desc: true when the player touches the screen

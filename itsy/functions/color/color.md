@@ -1,8 +1,8 @@
 ---
-name: color
+title: color
 path: /functions/color
 type: graphics
-desc: sets default color
+description: sets default color
 args:
 - name: col
   type: number
