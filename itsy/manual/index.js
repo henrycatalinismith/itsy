@@ -55,10 +55,12 @@ const reducers = combineReducers({
   }),
 
   query: reducer("", {
+    navigate: () => "",
     search: (prev, { query }) => query,
   }),
 
   results: reducer([], {
+    navigate: () => [],
     search: (prev, { query }) => {
       if (query == "") {
         return []

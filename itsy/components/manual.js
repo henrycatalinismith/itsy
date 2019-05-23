@@ -42,7 +42,10 @@ export default connect(
     title = page.frontMatter.name
     body = <Function {...page.frontMatter} />
   } else if (path.match(/^\/search$/)) {
-    header = <Search query={query} onChange={search} />
+    const onEnter = () => navigate(results[0].frontMatter.path)
+    header = (
+      <Search query={query} onChange={search} onEnter={onEnter} />
+    )
     title = "search"
     body = <Results query={query} results={results} />
   } else {
