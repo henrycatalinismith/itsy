@@ -1,12 +1,8 @@
-import colors from "ansi-colors"
-import frontMatter from "gray-matter"
+import _ from "lodash"
 import React from "react"
 import ReactDOM from "react-dom"
 import { createLogger } from "redux-logger"
-import Text from "@highvalley.systems/spraypaint/components/text"
-import pico8 from "@highvalley.systems/spraypaint/palettes/pico8.es6"
 import Manual from "../components/manual"
-import Page from "../components/page"
 import url from "url"
 
 import marked from "marked"
@@ -59,8 +55,31 @@ const reducers = combineReducers({
   }),
 
   query: reducer("", {
-    search: (prev, { query: next }) => next,
+    search: (prev, { query }) => query,
   }),
+
+  results: reducer([], {
+    search: (prev, { query }) => {
+      if (query == "") {
+        return []
+      }
+
+      const results = _.filter(_.values(content), page => {
+        const name = _.get(page, "frontMatter.name", "")
+        if (name.includes(query)) {
+          return true
+        }
+
+        const title = _.get(page, "frontMatter.title", "")
+        if (title.includes(query)) {
+          return true
+        }
+
+        return false
+      })
+      return results
+    }
+  })
 })
 
 const initialState = {

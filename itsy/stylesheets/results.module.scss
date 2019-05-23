@@ -1,3 +1,36 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+
 .results {
-  background: blue;
+}
+
+.results__list {
+  display: grid;
+  grid-template-columns: 100%;
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #eee;
+  background: #fffeff;
+  border-radius: 4px;
+}
+
+.results__item {
+}
+
+.results__link {
+  border-bottom: 1px solid #eee;
+  height: 64px;
+  padding: 4px;
+  box-sizing: border-box;
+  display: block;
+}
+
+.results__title {
+  color: #036EB5;
+  font-weight: bold;
+}
+
+.results__description {
+  color: #444;
+  font-size: 14px;
+  font-weight: normal;
 }

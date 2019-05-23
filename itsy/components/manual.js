@@ -44,7 +44,7 @@ export default connect(
   } else if (path.match(/^\/search$/)) {
     header = <Search query={query} onChange={search} />
     title = "search"
-    body = <Results />
+    body = <Results query={query} results={results} />
   } else {
     header = <Breadcrumbs path={path} />
     title = page.frontMatter.title
