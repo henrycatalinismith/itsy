@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <engine/memory/addresses.h>
 #include <functions/circfill/circfill.h>
 #include <functions/line/line.h>

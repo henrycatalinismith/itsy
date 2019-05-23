@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <engine/memory/addresses.h>
 #include <engine/state/state.h>
 #include <functions/nobble/nobble.h>
@@ -17,12 +18,14 @@ int itsy_pset (lua_State *L)
 
 void pset (int x, int y, int c)
 {
-  x -= peek(DRAW_CAMERA_X_LO) + peek(DRAW_CAMERA_X_HI) * 256;
-  y -= peek(DRAW_CAMERA_Y_LO) + peek(DRAW_CAMERA_Y_HI) * 256;
+  int16_t xoffset = peek(DRAW_CAMERA_X_LO) + peek(DRAW_CAMERA_X_HI) * 256;
+  int16_t yoffset = peek(DRAW_CAMERA_Y_LO) + peek(DRAW_CAMERA_Y_HI) * 256;
+  int16_t px = x - xoffset;
+  int16_t py = y - yoffset;
 
-  if (x < 0 || y < 0 || x > 127 || y > 127) {
+  if (px < 0 || py < 0 || px > 127 || py > 127) {
     return;
   }
 
-  nobble(itsy.screen_address[x][y], x % 2 == 1, c);
+  nobble(itsy.screen_address[px][py], px % 2 == 1, c);
 }

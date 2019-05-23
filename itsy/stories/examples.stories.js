@@ -18,12 +18,12 @@ req.keys().forEach(filename => {
 
   if (doc.data.examples) {
     Object.entries(doc.data.examples).forEach(([name, code]) => {
-      const storyName = `${doc.data.name} [${name}]`
+      const storyName = `${doc.data.title} [${name}]`
       stories.add(storyName, () => 
         <Example id={name} code={code} />
       )
     })
   } else {
-    stories.add(`${doc.data.name} ❌`, () => "")
+    stories.add(`${doc.data.title} ❌`, () => "")
   }
 })

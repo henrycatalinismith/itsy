@@ -16,8 +16,8 @@ const req = require.context(`${__dirname}/../functions`, true, /\.md$/)
 req.keys().forEach(filename => {
   const markdown = req(filename)
   const doc = frontMatter(markdown)
-  stories.add(doc.data.name, () => (
-    <Page title={doc.data.name}>
+  stories.add(doc.data.title, () => (
+    <Page title={doc.data.title}>
       <Function {...doc.data} />
     </Page>
   ))
