@@ -2,6 +2,7 @@ import { configure } from "@storybook/react"
 
 const components = [
   "header",
+  "ident",
   "post",
 ]
 
