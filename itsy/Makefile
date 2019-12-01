@@ -2,7 +2,6 @@ B64=./node_modules/@highvalley.systems/b64
 ENGINE=./engine
 FUNCTIONS=./functions
 LUA=./lua
-EMSCRIPTEN=./node_modules/emcc/emsdk/emscripten/1.38.31
 
 VERSION := $(shell grep "version" package.json | awk '{ print substr($$2, 2, length($$2) - 3); }')
 
@@ -15,16 +14,19 @@ FUNCTIONS_OBJ := $(patsubst %.c, %.o, $(FUNCTIONS_SRC))
 LUA_SRC := $(wildcard $(LUA)/*.c)
 LUA_OBJ := $(patsubst $(LUA)/%.c, $(LUA)/%.o, $(LUA_SRC))
 
-CC=$(EMSCRIPTEN)/emcc
-AR=$(EMSCRIPTEN)/emar
-RANLIB=$(EMSCRIPTEN)/emranlib
-
-EMCONFIGURE=$(EMSCRIPTEN)/emconfigure
-EMMAKE=$(EMSCRIPTEN)/emmake
+CC=emcc
+AR=emar
+RANLIB=emranlib
+EMCONFIGURE=emconfigure
+EMMAKE=emmake
 
 CFLAGS=\
 	-O2 \
 	-I. \
+	-s USE_SDL=2 \
+	-s USE_SDL_IMAGE=2 \
+	-s SDL2_IMAGE_FORMATS='["png"]' \
+	-I/emsdk_portable/emscripten/tag-1.39.3/system/include/ \
 	-I./engine \
 	-I$(B64)
 
@@ -57,7 +59,7 @@ $(ENGINE)/*/%.o:
 	$(CC) $(CFLAGS) $(ENGINE)/$*/$*.c $(EMCCFLAGS) -o $@
 
 $(FUNCTIONS)/*/%.o:
-	$(CC) $(CFLAGS) $(FUNCTIONS)/$*/$*.c $(EMCCFLAGS) -o $@
+	$(CC) $(CFLAGS) $(EMCCFLAGS) $(FUNCTIONS)/$*/$*.c -o $@
 
 $(LUA)/%.o:
 	perl -p -i -e "s/^static int luaB_/int luaB_/g" $(LUA)/$*.c # yoink
@@ -66,10 +68,10 @@ $(LUA)/%.o:
 	perl -p -i -e "s/^static int gmatch/int gmatch/g" $(LUA)/$*.c # lololol
 	perl -p -i -e "s/^static int tinsert/int tinsert/g" $(LUA)/$*.c
 	perl -p -i -e "s/^static int tremove/int tremove/g" $(LUA)/$*.c
-	cd $(LUA) && make $*.o CC='../$(CC)'
+	cd $(LUA) && make $*.o CC='$(CC)'
 
 $(LUA)/liblua.a: $(LUA_OBJ)
-	cd $(LUA) && make generic CC='../$(CC)'
+	cd $(LUA) && make generic CC='$(CC)'
 
 base64/engine.js: engine/itsy.js
 	echo "module.exports = \"" | perl -pe "chomp" > base64/engine.js

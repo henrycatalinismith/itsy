@@ -32,7 +32,6 @@
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.2",
     "codemirror": "^5.46.0",
-    "emcc": "^0.2.2",
     "frontmatter-markdown-loader": "^1.6.0",
     "gray-matter": "^4.0.2",
     "highlight.js": "^9.15.6",
