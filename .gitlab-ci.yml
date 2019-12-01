@@ -9,8 +9,13 @@ cache:
 stages:
   - build
 
-before_script:
-  - cd itsy && npm ci
+build_itsy:
+  stage: build
+  image: node:11-stretch
+  before_script:
+    - cd itsy
+  script:
+    - npm ci
 
 #stages:
   #- deploy
