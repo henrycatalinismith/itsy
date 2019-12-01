@@ -1,8 +1,9 @@
 ---
 stages:
   - build
+  - deploy
 
-build_itsy:
+build:itsy:
   stage: build
   image: highvalleysystems/itsy:latest
   before_script:
@@ -10,20 +11,13 @@ build_itsy:
   script:
     - npm install
     - make itsy
+
+deploy:studio:
+  stage: deploy
+  image: node:11-stretch
+  dependencies:
+    - build:itsy
+  script:
+    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - npx expo publish --non-interactive
     
-#stages:
-  #- deploy
-
-#before_script:
-  #- echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
-  #- echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
-  #- echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
-  #- npm ci
-  #- npm run editor
-  #- npm run manual
-
-#expo-deployments:
-#  stage: deploy
- # script:
-  #  - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-   # - npx expo publish --non-interactive
