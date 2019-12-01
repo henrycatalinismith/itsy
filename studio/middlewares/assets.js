@@ -1,0 +1,29 @@
+import { Asset } from "expo"
+import { before, after } from "@highvalley.systems/signalbox"
+
+import actions from "../actions"
+import select from "../selectors"
+
+export default [
+  after("start", store => store.dispatch(actions.load(require(
+    "../assets/webviews/editor.html"
+    //"@highvalley.systems/itsy/editor/index.html"
+  )))),
+
+  after("start", store => store.dispatch(actions.load(require(
+    "../assets/images/robot-dev.png"
+  )))),
+
+  after("start", store => store.dispatch(actions.load(require(
+    "../assets/images/robot-prod.png"
+  )))),
+
+  after("start", store => store.dispatch(actions.load(require(
+    "../assets/webviews/manual.html"
+  )))),
+
+  before("load", (store, action) => {
+    action.asset = Asset.fromModule(action.asset)
+  }),
+]
+

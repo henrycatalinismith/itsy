@@ -1,0 +1,21 @@
+---
+image: node:11-stretch
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ~/.npm
+    - .jest
+stages:
+  - deploy
+before_script:
+  - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
+  - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
+  - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
+  - npm ci
+  - npm run editor
+  - npm run manual
+expo-deployments:
+  stage: deploy
+  script:
+    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - npx expo publish --non-interactive
