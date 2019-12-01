@@ -1,22 +1,16 @@
 ---
-image: node:11-stretch
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - ~/.npm
-    - .jest
-
 stages:
   - build
 
 build_itsy:
   stage: build
-  image: node:11-stretch
+  image: highvalleysystems/itsy:latest
   before_script:
     - cd itsy
   script:
     - npm ci
-
+    - make itsy
+    
 #stages:
   #- deploy
 
