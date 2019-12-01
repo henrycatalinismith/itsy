@@ -120,4 +120,7 @@ itsy: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html man
 
 lua: $(LUA)/liblua.a
 
-.PHONY: all itsy lua sdl clean cleanlua engine
+Dockerfile:
+	docker build -t highvalleysystems/itsy .
+
+.PHONY: all itsy lua sdl clean cleanlua engine Dockerfile
