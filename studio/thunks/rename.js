@@ -1,4 +1,4 @@
-import { FileSystem } from "expo"
+import * as FileSystem from "expo-file-system"
 
 import actions from "../actions"
 import helpers from "../helpers"

@@ -1,4 +1,4 @@
-import { FileSystem } from "expo"
+import * as FileSystem from "expo-file-system"
 import _ from "lodash"
 import itsy from "@highvalley.systems/itsy"
 import uuid from "uuid"
