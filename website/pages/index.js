@@ -16,7 +16,7 @@ export default () => {
       <Center>
         <Square>
           <div style={{ display: "flex", flex: 1, paddingLeft: 16 }}>
-            <Text>itsy studio</Text>
+            <Text>itsy studio <3</Text>
           </div>
         </Square>
       </Center>
