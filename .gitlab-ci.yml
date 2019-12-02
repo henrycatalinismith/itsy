@@ -11,6 +11,7 @@ build:itsy:
   only:
     changes:
       - itsy/**/*
+      - studio/**/*
   script:
     - yarn --pure-lockfile
     - make itsy
