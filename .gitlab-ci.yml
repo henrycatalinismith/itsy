@@ -20,6 +20,8 @@ deploy:studio:
   image: node:11-stretch
   dependencies:
     - build:itsy
+  before_script:
+    - cd studio
   only:
     changes:
       - itsy/**/*
@@ -32,6 +34,8 @@ deploy:studio:
 deploy:website:
   stage: deploy
   image: node:11-stretch
+  before_script:
+    - cd website
   only:
     changes:
       - website/**/*
