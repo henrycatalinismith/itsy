@@ -10,7 +10,7 @@ export default () => {
   return (
     <>
       <Helmet>
-        <title>itsy studio lol</title>
+        <title>itsy studio lolol</title>
       </Helmet>
 
       <Center>
