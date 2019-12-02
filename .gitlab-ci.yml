@@ -42,4 +42,4 @@ deploy:website:
   script:
     - yarn --pure-lockfile
     - yarn gatsby build
-    - yarn netlify deploy --prod --dir=public --site=633f3d71-169c-4ae8-8f3f-42139cc1f508
+    - yarn netlify deploy --prod --dir=public --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
