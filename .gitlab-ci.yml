@@ -13,7 +13,7 @@ build:itsy:
       - itsy/**/*
       - studio/**/*
   script:
-    - yarn
+    - yarn --pure-lockfile
     - make itsy
 
 deploy:studio:
