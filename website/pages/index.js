@@ -2,7 +2,6 @@ import React from "react"
 import { Helmet } from "react-helmet"
 
 import Text from "@highvalley.systems/spraypaint/components/text"
-import pico8 from "@highvalley.systems/spraypaint/palettes/pico8.es6"
 
 import Center from "../components/center"
 import Square from "../components/square"
@@ -17,11 +16,10 @@ export default () => {
       <Center>
         <Square>
           <div style={{ display: "flex", flex: 1, paddingLeft: 16 }}>
-            <Text>itsy studio</Text>
+            <Text>itsy studio <3</Text>
           </div>
         </Square>
       </Center>
-
     </>
   )
 }

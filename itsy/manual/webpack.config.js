@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const InlineSourcePlugin = require("html-webpack-inline-source-plugin")
+const Mode = require("frontmatter-markdown-loader/mode")
 
 module.exports = {
   mode: "production",
@@ -26,6 +27,9 @@ module.exports = {
       {
         test: /\.md$/,
         loader: "frontmatter-markdown-loader",
+        options: {
+          mode: [Mode.BODY],
+        }
       },
       {
         test: /\.module\.scss$/,

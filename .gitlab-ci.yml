@@ -8,8 +8,11 @@ build:itsy:
   image: highvalleysystems/itsy:latest
   before_script:
     - cd itsy
+  only:
+    changes:
+      - itsy/*
   script:
-    - npm install
+    - yarn --pure-lockfile
     - make itsy
 
 deploy:studio:
@@ -17,7 +20,22 @@ deploy:studio:
   image: node:11-stretch
   dependencies:
     - build:itsy
+  only:
+    changes:
+      - itsy/*
+      - studio/*
   script:
-    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    - npx expo publish --non-interactive
+    - yarn --pure-lockfile
+    - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - yarn expo publish --non-interactive
     
+  deploy:website:
+    stage: deploy
+    image: node:11-stretch
+    only:
+      changes:
+        - website/*
+    script:
+      - yarn --pure-lockfile
+      - yarn gatsby build
+      - yarn netlify deploy --prod --dir=public
