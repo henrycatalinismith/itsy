@@ -9,7 +9,7 @@ build:itsy:
   before_script:
     - cd itsy
   script:
-    - npm install
+    - yarn --pure-lockfile
     - make itsy
 
 deploy:studio:

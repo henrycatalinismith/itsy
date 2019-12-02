@@ -1,8 +1,7 @@
-#FROM trzeci/emscripten:1.39.3
 FROM apiaryio/emcc:1.38.11
 
 RUN apt-get update \
-    && apt-get install -y build-essential libsdl2-dev git
+    && apt-get install -y build-essential libsdl2-dev git yarn
 
 RUN mkdir -p /tmp/sdl \
     && cd /tmp/sdl \
