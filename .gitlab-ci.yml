@@ -10,7 +10,7 @@ build:itsy:
     - cd itsy
   only:
     changes:
-      - itsy/*
+      - itsy/**/*
   script:
     - yarn --pure-lockfile
     - make itsy
@@ -22,8 +22,8 @@ deploy:studio:
     - build:itsy
   only:
     changes:
-      - itsy/*
-      - studio/*
+      - itsy/**/*
+      - studio/**/*
   script:
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
@@ -34,7 +34,7 @@ deploy:website:
   image: node:11-stretch
   only:
     changes:
-      - website/*
+      - website/**/*
   script:
     - yarn --pure-lockfile
     - yarn gatsby build
