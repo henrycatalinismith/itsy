@@ -22,7 +22,7 @@ export default ({
   const activeScreen = activeRoute.routeName
 
   const title = ({
-    Home: () => "itsy studio!!!!",
+    Home: () => "itsy studio!!!!!",
     Disk: () => activeRoute.params.disk.name,
     Code: () => activeRoute.params.disk.name,
     Help: () => "itsy studio",
