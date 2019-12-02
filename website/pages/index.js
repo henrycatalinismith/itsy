@@ -10,13 +10,13 @@ export default () => {
   return (
     <>
       <Helmet>
-        <title>itsy studio</title>
+        <title>💾 itsy studio</title>
       </Helmet>
 
       <Center>
         <Square>
           <div style={{ display: "flex", flex: 1, paddingLeft: 16 }}>
-            <Text>itsy studio <3</Text>
+            <Text>itsy studio</Text>
           </div>
         </Square>
       </Center>
