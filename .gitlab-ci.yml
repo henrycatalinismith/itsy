@@ -18,6 +18,7 @@ deploy:studio:
   dependencies:
     - build:itsy
   script:
-    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
-    - npx expo publish --non-interactive
+    - yarn --pure-lockfile
+    - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - yarn expo publish --non-interactive
     
