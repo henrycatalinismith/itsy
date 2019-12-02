@@ -28,14 +28,14 @@ deploy:studio:
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - yarn expo publish --non-interactive
-    
-  deploy:website:
-    stage: deploy
-    image: node:11-stretch
-    only:
-      changes:
-        - website/*
-    script:
-      - yarn --pure-lockfile
-      - yarn gatsby build
-      - yarn netlify deploy --prod --dir=public
+  
+deploy:website:
+  stage: deploy
+  image: node:11-stretch
+  only:
+    changes:
+      - website/*
+  script:
+    - yarn --pure-lockfile
+    - yarn gatsby build
+    - yarn netlify deploy --prod --dir=public
