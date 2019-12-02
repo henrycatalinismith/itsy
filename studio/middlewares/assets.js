@@ -1,4 +1,4 @@
-import { Asset } from "expo"
+import { Asset } from "expo-asset"
 import { before, after } from "@highvalley.systems/signalbox"
 
 import actions from "../actions"

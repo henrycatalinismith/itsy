@@ -1,4 +1,4 @@
-import { Svg } from "expo"
+import { Svg, ClipPath, Defs, Path, Image as SvgImage } from "react-native-svg"
 
 import React from "react"
 
@@ -30,9 +30,9 @@ export default ({ disk, edit, size }) => {
   return (
     <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 16 16">
 
-      <Svg.Defs>
-        <Svg.ClipPath id="shape">
-          <Svg.Path
+      <Defs>
+        <ClipPath id="shape">
+          <Path
             d={[
               "M1.5,1.5",
               "L12.5,1.5",
@@ -44,10 +44,10 @@ export default ({ disk, edit, size }) => {
               "L12.5,1.5",
             ].join(" ")}
           />
-        </Svg.ClipPath>
-      </Svg.Defs>
+        </ClipPath>
+      </Defs>
 
-      <Svg.Path
+      <Path
         d={[
           "M1,1",
           "L13,1",
@@ -64,7 +64,7 @@ export default ({ disk, edit, size }) => {
       />
 
       {edit && (
-        <Svg.Image
+        <SvgImage
           href={{ uri: edit.snapshot }}
           x={1}
           y={1}

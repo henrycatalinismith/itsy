@@ -1,7 +1,5 @@
 import React from "react"
 
-import { Svg } from "expo"
-
 import {
   Button,
   StyleSheet,

@@ -1,4 +1,4 @@
-import { Svg } from "expo"
+import { Svg, Rect } from "react-native-svg"
 
 import React from "react"
 
@@ -24,15 +24,15 @@ export default ({
   return (
     <TouchableHighlight style={styles} onPress={onPress}>
       <Svg width={size} height={size} viewBox="0 0 6 6">
-        <Svg.Rect fill={colors[12]} x={1} y={1} width={4} height={4} />
-        <Svg.Rect fill={colors[0]} x={0} y={0} width={5} height={1} />
-        <Svg.Rect fill={colors[0]} x={4} y={0} width={1} height={2} />
-        <Svg.Rect fill={colors[0]} x={4} y={1} width={2} height={1} />
-        <Svg.Rect fill={colors[0]} x={0} y={0} width={1} height={5} />
-        <Svg.Rect fill={colors[0]} x={0} y={5} width={5} height={1} />
-        <Svg.Rect fill={colors[0]} x={5} y={1} width={1} height={5} />
-        <Svg.Rect fill={colors[6]} x={2} y={1} width={2} height={1} />
-        <Svg.Rect fill={colors[7]} x={2} y={3} width={2} height={2} />
+        <Rect fill={colors[12]} x={1} y={1} width={4} height={4} />
+        <Rect fill={colors[0]} x={0} y={0} width={5} height={1} />
+        <Rect fill={colors[0]} x={4} y={0} width={1} height={2} />
+        <Rect fill={colors[0]} x={4} y={1} width={2} height={1} />
+        <Rect fill={colors[0]} x={0} y={0} width={1} height={5} />
+        <Rect fill={colors[0]} x={0} y={5} width={5} height={1} />
+        <Rect fill={colors[0]} x={5} y={1} width={1} height={5} />
+        <Rect fill={colors[6]} x={2} y={1} width={2} height={1} />
+        <Rect fill={colors[7]} x={2} y={3} width={2} height={2} />
       </Svg>
     </TouchableHighlight>
   )

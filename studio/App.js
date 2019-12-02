@@ -1,12 +1,8 @@
+import { Asset } from "expo-asset"
+import * as Font from "expo-font"
 import React from "react"
 
-import {
-  AppLoading,
-  Asset,
-  FileSystem,
-  Font,
-  Icon,
-} from "expo"
+import { AppLoading } from "expo"
 
 import {
   Dimensions,
@@ -157,7 +153,6 @@ export default class App extends React.Component {
         require("./assets/images/robot-prod.png"),
       ]),
       Font.loadAsync({
-        ...Icon.Ionicons.font,
         "overpass-mono-regular": require("./assets/fonts/overpass-mono-regular.ttf"),
         "overpass-mono-bold": require("./assets/fonts/overpass-mono-bold.ttf"),
       }),

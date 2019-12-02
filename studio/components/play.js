@@ -1,6 +1,5 @@
 import React from "react"
-
-import { Svg } from "expo"
+import { Svg, Path } from "react-native-svg"
 
 import {
   Button,
@@ -16,14 +15,14 @@ export default ({ onPress }) => {
     <>
       <TouchableOpacity onPress={onPress}>
         <Svg width={26} height={32} viewBox="0 0 40 48">
-           <Svg.Path
+           <Path
             d="M8,8 L32,24 L8,40 L8,8"
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={8}
             stroke={colors[1]}
           />
-          <Svg.Path
+          <Path
             d="M8,8 L32,24 L8,40 L8,8"
             strokeLinecap="round"
             strokeLinejoin="round"

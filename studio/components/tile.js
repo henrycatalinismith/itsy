@@ -1,6 +1,5 @@
-import { Svg } from "expo"
-
 import React from "react"
+import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
 
 import {
   Button,
@@ -41,9 +40,9 @@ export default connect(mapStateToProps)(({
     <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
       <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 16 16">
 
-        <Svg.Defs>
-          <Svg.ClipPath id="shape">
-            <Svg.Path
+        <Defs>
+          <ClipPath id="shape">
+            <Path
               d={[
                 "M1.5,1.5",
                 "L12.5,1.5",
@@ -55,10 +54,10 @@ export default connect(mapStateToProps)(({
                 "L12.5,1.5",
               ].join(" ")}
             />
-          </Svg.ClipPath>
-        </Svg.Defs>
+          </ClipPath>
+        </Defs>
 
-        <Svg.Path
+        <Path
           d={[
             "M1,1",
             "L13,1",
@@ -75,7 +74,7 @@ export default connect(mapStateToProps)(({
         />
 
         {edit && (
-          <Svg.Image
+          <Image
             href={{ uri: edit.snapshot }}
             x={1}
             y={1}

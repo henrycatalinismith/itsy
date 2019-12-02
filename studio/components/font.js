@@ -1,5 +1,5 @@
 import React from "react"
-import { Svg } from "expo"
+import { Svg, G, Path } from "react-native-svg"
 
 import colors from "../constants/colors"
 
@@ -78,21 +78,21 @@ const Character = ({
   borderMultiplier = 0,
 }) => {
   const g = (...paths) => (
-    <Svg.G fill="none" strokeLinecap="square" strokeLinejoin="round">
+    <G fill="none" strokeLinecap="square" strokeLinejoin="round">
       {(borderColor && borderMultiplier > 0) && (
-        <Svg.G
+        <G
           stroke={borderColor}
           strokeWidth={borderMultiplier}
-        >{paths}</Svg.G>
+        >{paths}</G>
       )}
-      <Svg.G stroke={color} strokeWidth={scale * strokeMultiplier}>{paths}</Svg.G>
-    </Svg.G>
+      <G stroke={color} strokeWidth={scale * strokeMultiplier}>{paths}</G>
+    </G>
   )
 
   let i = 0
   const path = (...points) => {
     return (
-      <Svg.Path
+      <Path
         key={`letter-${i++}`}
         d={`M${points.map(p => [
           1 * (p[0] + x),
