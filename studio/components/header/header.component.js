@@ -8,9 +8,9 @@ import {
   View,
 } from "react-native"
 
-import Floppy from "./floppy"
-import Font from "./font"
-import colors from "../constants/colors"
+import Floppy from "../floppy"
+import Font from "../font"
+import colors from "../../constants/colors"
 
 export default ({
   disk,

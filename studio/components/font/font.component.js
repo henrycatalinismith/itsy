@@ -1,7 +1,7 @@
 import React from "react"
 import { Svg, G, Path } from "react-native-svg"
 
-import colors from "../constants/colors"
+import colors from "../../constants/colors"
 
 export default ({
   children,

@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native"
 
-import colors from "../constants/colors"
+import colors from "../../constants/colors"
 
 export default ({ onPress }) => {
   return (
@@ -28,7 +28,7 @@ export default ({ onPress }) => {
             strokeLinejoin="round"
             strokeWidth={2}
             stroke={colors[3]}
-            fill={colors[8]}
+            fill={colors[11]}
           />
         </Svg>
       </TouchableOpacity>

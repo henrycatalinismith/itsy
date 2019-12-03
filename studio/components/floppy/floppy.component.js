@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
 } from "react-native"
 
-import colors from "../constants/colors"
+import colors from "../../constants/colors"
 
 export default ({
   size = 23,

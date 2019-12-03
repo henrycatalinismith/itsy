@@ -9,7 +9,7 @@ import {
 
 import WebView from "rn-webview"
 
-import colors from "../constants/colors"
+import colors from "../../constants/colors"
 
 export default class Editor extends React.Component {
   static propTypes = {

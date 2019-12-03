@@ -13,10 +13,8 @@ import {
 
 import { connect } from "react-redux"
 
-import Font from "./font"
-
-import colors from "../constants/colors"
-import select from "../selectors"
+import colors from "../../constants/colors"
+import select from "../../selectors"
 
 export default ({ disk, edit, size }) => {
 
