@@ -29,6 +29,7 @@ import {
 import actions from "./actions"
 import middlewares from "./middlewares"
 import reducers from "./reducers"
+import Storybook from "./storybook"
 import thunks from "./thunks"
 
 import {
@@ -120,7 +121,7 @@ const AppNavigator = createStackNavigator(routes)
 
 const AppContainer = createAppContainer(AppNavigator)
 
-export default class App extends React.Component {
+class App extends React.Component {
   state = {
     isLoadingComplete: false,
   }
@@ -175,3 +176,6 @@ const styles = StyleSheet.create({
 })
 
 store.dispatch(thunks.startup())
+
+const useStorybook = false
+export default useStorybook ? Storybook : App
