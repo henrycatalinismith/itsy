@@ -48,8 +48,8 @@ build:manual:
     paths:
       - manual/webviews/index.html
 
-build:studio:
-  stage: build
+deploy:studio:
+  stage: deploy
   image: node:12-stretch
   dependencies:
     - build:editor
