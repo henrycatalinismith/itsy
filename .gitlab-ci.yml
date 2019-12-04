@@ -1,4 +1,10 @@
 ---
+
+.app-changes: &app-changes
+  - editor/**/*
+  - itsy/**/*
+  - studio/**/*
+
 stages:
   - build
   - deploy
@@ -10,13 +16,13 @@ build:editor:
     - cd editor
   only:
     changes:
-      - editor/**/*
+      <<: *app-changes
   script:
     - yarn --pure-lockfile
     - yarn build
   artifacts:
     paths:
-      - webviews/
+      - editor/webviews/
 
 build:itsy:
   stage: build
@@ -25,8 +31,7 @@ build:itsy:
     - cd itsy
   only:
     changes:
-      - itsy/**/*
-      - studio/**/*
+      <<: *app-changes
   script:
     - yarn --pure-lockfile
     - make itsy
@@ -44,9 +49,7 @@ deploy:studio:
     - cd studio
   only:
     changes:
-      - editor/**/*
-      - itsy/**/*
-      - studio/**/*
+      <<: *app-changes
   script:
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
