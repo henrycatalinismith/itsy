@@ -4,7 +4,6 @@ import { createLogger } from "redux-logger"
 import { combineReducers, applyMiddleware, createStore } from "redux"
 import { Provider } from "react-redux"
 
-import actions from "./actions"
 import {
   reducer,
   after,
@@ -15,9 +14,9 @@ import {
 import "codemirror/lib/codemirror.css"
 import "codemirror/mode/lua/lua"
 
-import "../stylesheets/codemirror.scss"
-
-import Editor from "../components/editor"
+import "./stylesheets/codemirror.scss"
+import actions from "./actions"
+import Editor from "./components/editor/editor.component"
 
 const reducers = combineReducers({
   loading: reducer(true, {

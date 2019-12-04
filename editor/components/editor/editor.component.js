@@ -1,8 +1,9 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Controlled as CodeMirror } from "react-codemirror2"
-import styles from "../stylesheets/editor.module.scss"
-import actions from "../editor/actions"
+
+import styles from "./editor.module.scss"
+import actions from "../../actions"
 
 export default connect(
   ({ loading, lua }) => ({

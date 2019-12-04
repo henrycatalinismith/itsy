@@ -54,7 +54,6 @@
     "commands/*",
     "defaults/*",
     "exports/*",
-    "editor/index.html",
     "manual/index.html"
   ],
   "scripts": {
@@ -64,9 +63,7 @@
     "start": "NODE_ENV=development node workshop/start.js",
     "tag": "node workshop/tag.js",
     "storybook": "start-storybook -p 6006",
-    "build-editor": "webpack --config editor/webpack.config.js && rm editor/build.js",
     "build-manual": "webpack --config manual/webpack.config.js && rm manual/build.js",
-    "watch-editor": "webpack --watch --config editor/webpack.config.js",
     "watch-manual": "webpack --watch --config manual/webpack.config.js",
     "build-storybook": "build-storybook"
   }

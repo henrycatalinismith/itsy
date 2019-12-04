@@ -93,9 +93,6 @@ base64/spritesheet.js:
 base64/stylesheet.js:
 	echo "module.exports = '`base64 --wrap=0 style.css`'" > base64/stylesheet.js
 
-editor/index.html:
-	npm run build-editor
-
 engine/itsy.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/itsy.js
 
@@ -114,9 +111,9 @@ cleanlua:
 	rm -f $(LUA)/*.o
 	rm -f $(LUA)/liblua.a
 
-engine: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html
+engine: engine/itsy.js base64/engine.js base64/stylesheet.js 
 
-itsy: engine/itsy.js base64/engine.js base64/stylesheet.js editor/index.html manual/index.html
+itsy: engine/itsy.js base64/engine.js base64/stylesheet.js manual/index.html
 
 lua: $(LUA)/liblua.a
 

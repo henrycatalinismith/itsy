@@ -60,8 +60,8 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname,
-    filename: "build.js",
+    path: `${__dirname}/webviews`,
+    filename: "index.js",
   },
   plugins: [
     new HtmlWebpackPlugin({

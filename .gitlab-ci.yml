@@ -3,6 +3,21 @@ stages:
   - build
   - deploy
 
+build:editor:
+  stage: build
+  image: node:12-stretch
+  before_script:
+    - cd editor
+  only:
+    changes:
+      - editor/**/*
+  script:
+    - yarn --pure-lockfile
+    - yarn build
+  artifacts:
+    paths:
+      - webviews/
+
 build:itsy:
   stage: build
   image: highvalleysystems/itsy:latest
@@ -20,6 +35,7 @@ deploy:studio:
   stage: deploy
   image: node:12-stretch
   dependencies:
+    - build:editor
     - build:itsy
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
@@ -28,6 +44,7 @@ deploy:studio:
     - cd studio
   only:
     changes:
+      - editor/**/*
       - itsy/**/*
       - studio/**/*
   script:
