@@ -3,13 +3,9 @@
 .part-of-app-build: &part-of-app-build
   only:
     changes:
-      <<: *app-change
-
-.app-changes: &app-changes
-.app-changes: &app-changes
-  - editor/**/*
-  - itsy/**/*
-  - studio/**/*
+      - editor/**/*
+      - itsy/**/*
+      - studio/**/*
 
 stages:
   - build
