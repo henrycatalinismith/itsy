@@ -6,8 +6,7 @@ import select from "../selectors"
 
 export default [
   after("start", store => store.dispatch(actions.load(require(
-    "../assets/webviews/editor.html"
-    //"@highvalley.systems/itsy/editor/index.html"
+    "../../editor/webviews/index.html"
   )))),
 
   after("start", store => store.dispatch(actions.load(require(

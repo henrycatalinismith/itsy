@@ -1429,9 +1429,6 @@
   resolved "https://registry.yarnpkg.com/@highvalley.systems/spraypaint/-/spraypaint-0.7.0.tgz#b60ef33b45670b671e1ee235f9e78d6001fa9552"
   integrity sha512-wQQhlR6zfMtZpULirXMiBTIIyvdXmHKL89R1GN30l9LlyU0IsRdC0fp/pa+kLcN7/yKlrDln9pcgpSUnLVXhbQ==
 
-"@itsy.studio/editor@file:../editor":
-  version "0.0.0"
-
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.9.0.tgz#79b1bc06fb74a8cfb01cbdedf945584b1b9707f0"
