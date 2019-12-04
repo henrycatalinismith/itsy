@@ -34,8 +34,8 @@ build:itsy:
     - yarn --pure-lockfile
     - make itsy
 
-deploy:studio:
-  stage: deploy
+build:studio:
+  stage: build
   image: node:12-stretch
   dependencies:
     - build:editor
