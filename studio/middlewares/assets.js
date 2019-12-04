@@ -6,7 +6,7 @@ import select from "../selectors"
 
 export default [
   after("start", store => store.dispatch(actions.load(require(
-    "../../editor/webviews/index.html"
+    "../assets/webviews/editor.html"
   )))),
 
   after("start", store => store.dispatch(actions.load(require(
