@@ -1,0 +1,17 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "../../stylesheets/typography";
+
+.border {
+  border: 4px solid #ddd;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: pico8(15);
+  background-color: pico8(7);
+  background-color: #fff;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  height: 32px;
+}

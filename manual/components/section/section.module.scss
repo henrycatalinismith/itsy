@@ -1,0 +1,10 @@
+@import "../../stylesheets/layout";
+@import "../../stylesheets/typography";
+
+.section {
+  @include section();
+}
+
+.section__heading {
+  @include h2();
+}

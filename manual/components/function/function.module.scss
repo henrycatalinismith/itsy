@@ -1,0 +1,12 @@
+@import "../../stylesheets/typography";
+
+.function {
+}
+
+.function__name {
+  @include h1();
+}
+
+.function__desc {
+  @include text();
+}

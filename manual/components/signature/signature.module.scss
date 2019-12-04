@@ -1,0 +1,13 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "../../stylesheets/layout";
+@import "../../stylesheets/typography";
+
+.signature {
+  @include subsection();
+  @include code();
+  font-size: 14px;
+}
+
+.signature__name {
+  color: pico8(3);
+}

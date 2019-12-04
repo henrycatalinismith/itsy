@@ -1,0 +1,18 @@
+@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "../../stylesheets/typography";
+
+.type {
+  font-family: "Overpass Mono";
+}
+
+.type__lt {
+  color: pico8(13);
+}
+
+.type__name {
+  color: pico8(14);
+}
+
+.type__gt {
+  color: pico8(13);
+}

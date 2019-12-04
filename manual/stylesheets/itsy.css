@@ -1,0 +1,52 @@
+code.language-lua {
+  background: #fceeff;
+  color: #65a085;
+}
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  background: #fceeff;
+  font-family: "Overpass Mono", monospace;
+  font-size: 14px;
+  line-height: 1.4rem;
+  color: #65a085;
+  padding: 0;
+}
+
+.hljs-comment {
+  color: #83769C;
+}
+
+.hljs-built_in,
+.hljs-params,
+.hljs-title,
+.hljs-variable {
+  color: #65a085 !important;
+}
+
+.hljs-number,
+.hljs-string {
+  color: #29ADFF;
+}
+
+.hljs-keyword {
+  color: #FF77A8;
+}
+
+/*
+
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+  color: #29ADFF
+}
+
+.hljs-built_in {
+  color: #FF77A8;
+}
+*/

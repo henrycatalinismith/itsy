@@ -5,6 +5,7 @@
     changes:
       - editor/**/*
       - itsy/**/*
+      - manual/**/*
       - studio/**/*
 
 stages:
@@ -22,7 +23,7 @@ build:editor:
     - yarn build
   artifacts:
     paths:
-      - editor/webviews/
+      - editor/webviews/index.html
 
 build:itsy:
   stage: build
@@ -34,16 +35,32 @@ build:itsy:
     - yarn --pure-lockfile
     - make itsy
 
+build:manual:
+  stage: build
+  image: node:12-stretch
+  before_script:
+    - cd manual
+  <<: *part-of-app-build
+  script:
+    - yarn --pure-lockfile
+    - yarn build
+  artifacts:
+    paths:
+      - manual/webviews/index.html
+
 build:studio:
   stage: build
   image: node:12-stretch
   dependencies:
     - build:editor
     - build:itsy
+    - build:manual
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
+    - ls editor/webviews
+    - ls manual/webviews
     - cp editor/webviews/index.html studio/assets/weviews/editor.html
     - cd studio
   <<: *part-of-app-build
