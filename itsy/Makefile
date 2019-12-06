@@ -96,16 +96,12 @@ base64/stylesheet.js:
 engine/itsy.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/itsy.js
 
-manual/index.html: base64/engine.js base64/stylesheet.js
-	npm run build-manual
-
 clean:
 	rm -f base64/engine.js
 	rm -f base64/stylesheet.js
 	rm -f engine/itsy.js
 	rm -f engine/*/*.o
 	rm -f functions/*/*.o
-	rm -f manual/index.html
 
 cleanlua:
 	rm -f $(LUA)/*.o
@@ -113,7 +109,7 @@ cleanlua:
 
 engine: engine/itsy.js base64/engine.js base64/stylesheet.js 
 
-itsy: engine/itsy.js base64/engine.js base64/stylesheet.js manual/index.html
+itsy: engine/itsy.js base64/engine.js base64/stylesheet.js
 
 lua: $(LUA)/liblua.a
 
