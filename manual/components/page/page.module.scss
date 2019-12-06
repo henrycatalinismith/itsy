@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
@@ -36,7 +36,7 @@
   }
 
   a {
-    color: pico8(12);
+    color: pico8-original-palette(12);
     color: #036EB5;
     text-decoration: none;
   }

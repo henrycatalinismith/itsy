@@ -725,6 +725,9 @@
   resolved "https://registry.yarnpkg.com/@highvalley.systems/spraypaint/-/spraypaint-0.7.0.tgz#b60ef33b45670b671e1ee235f9e78d6001fa9552"
   integrity sha512-wQQhlR6zfMtZpULirXMiBTIIyvdXmHKL89R1GN30l9LlyU0IsRdC0fp/pa+kLcN7/yKlrDln9pcgpSUnLVXhbQ==
 
+"@itsy.studio/palettes@file:../palettes":
+  version "0.0.0"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"

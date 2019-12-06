@@ -1,7 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 
-import Text from "@highvalley.systems/spraypaint/components/text"
+import Pixelflip from "@itsy.studio/pixelflip/regular"
 
 import Center from "../components/center"
 import Square from "../components/square"
@@ -16,7 +16,7 @@ export default () => {
       <Center>
         <Square>
           <div style={{ display: "flex", flex: 1, paddingLeft: 16 }}>
-            <Text>itsy studio</Text>
+            <Pixelflip fontSize={32}>itsy studio</Pixelflip>
           </div>
         </Square>
       </Center>

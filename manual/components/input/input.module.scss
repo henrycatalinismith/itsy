@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
@@ -14,7 +14,7 @@
   @include cell();
   @include code();
 
-  color: pico8(3);
+  color: pico8-original-palette(3);
 }
 
 .input__type {
@@ -26,10 +26,10 @@
 
 .input__desc {
   @include cell();
-  color: pico8(0);
+  color: pico8-original-palette(0);
 }
 
 .input__base {
-  color: pico8(13);
+  color: pico8-original-palette(13);
   font-size: 14px;
 }

@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/typography";
 
 .border {
@@ -7,8 +7,8 @@
 }
 
 .header {
-  background-color: pico8(15);
-  background-color: pico8(7);
+  background-color: pico8-original-palette(15);
+  background-color: pico8-original-palette(7);
   background-color: #fff;
   border: 2px solid #ccc;
   box-sizing: border-box;

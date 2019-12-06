@@ -1,8 +1,8 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 
 .loading {
   background: #fae4ec;
-  color: pico8(14);
+  color: pico8-original-palette(14);
   width: 100vw !important;
   height: 100vh !important;
   display: flex;

@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@highvalley.systems/spraypaint": "^0.7.0",
+    "@itsy.studio/palettes": "file:../palettes",
+    "@itsy.studio/pixelflip": "file:../pixelflip",
     "classnames": "^2.2.6",
     "gatsby": "^2.3.31",
     "gatsby-plugin-page-creator": "^2.0.12",

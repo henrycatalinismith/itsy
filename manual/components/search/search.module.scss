@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/typography";
 
 .search {
@@ -8,7 +8,7 @@
   font-family: "Overpass Mono";
   font-weight: bold;
   font-size: 18px;
-  color: pico8(13);
+  color: pico8-original-palette(13);
   display: block;
   height: 28px;
   border: 0;

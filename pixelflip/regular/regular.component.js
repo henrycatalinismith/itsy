@@ -69,10 +69,6 @@ export default function Regular ({
     props.width = `${((fontSize / 4 * xm) * lines[0].length)}px`
   }
   
-  return (
-    <Svg {...props}>
-      {glyphs}
-    </Svg>
-  )
+  return React.createElement(Svg, props, glyphs)
 }
 

@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 
 .sizeLimit {
   max-width: 400px;
@@ -9,7 +9,7 @@
 .aspectRatio {
   margin: 0 auto;
   width: 100%;
-  border: 8px solid pico8(14);
+  border: 8px solid pico8-original-palette(14);
 
   overflow: hidden;
   padding-top: 125%;
@@ -18,8 +18,8 @@
 }
 
 .square {
-  background-color: pico8(7);
-  border: 8px solid pico8(2);
+  background-color: pico8-original-palette(7);
+  border: 8px solid pico8-original-palette(2);
   position: absolute;
   top: 0;
   right: 0;

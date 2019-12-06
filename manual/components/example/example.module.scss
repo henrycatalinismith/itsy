@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
@@ -12,11 +12,11 @@
 }
 
 .example__card {
-  background: pico8(7) !important;
-  border: 1px solid pico8(6);
-  border-top: 4px solid pico8(14) !important;
+  background: pico8-original-palette(7) !important;
+  border: 1px solid pico8-original-palette(6);
+  border-top: 4px solid pico8-original-palette(14) !important;
   border-radius: 2px;
-  box-shadow: pico8(13) 1px 1px 2px;
+  box-shadow: pico8-original-palette(13) 1px 1px 2px;
   display: flex;
   flex-direction: column;
   margin: 8px 0;
@@ -30,7 +30,7 @@
 }
 
 .example__pre {
-  background: pico8(7) !important;
+  background: pico8-original-palette(7) !important;
   flex: 1;
   margin: 0;
   width: 100%;
@@ -44,7 +44,7 @@
 
 $screenBorder: 2px;
 .example__square {
-  border: $screenBorder solid pico8(0) !important;
+  border: $screenBorder solid pico8-original-palette(0) !important;
   // width: calc(100% - 8px - (#{2 * $screenBorder}) );
   // padding-top: 100%;
   position: relative;

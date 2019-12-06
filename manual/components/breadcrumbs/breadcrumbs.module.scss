@@ -1,4 +1,4 @@
-@import "~@highvalley.systems/spraypaint/palettes/pico8";
+@import "~@itsy.studio/palettes/pico8/original";
 @import "../../stylesheets/typography";
 
 .breadcrumbs {
@@ -28,16 +28,16 @@
   display: block;
   font-family: "Overpass";
   text-decoration: none;
-  color: pico8(12);
-  text-shadow: pico8(7) 1px 1px 1px;
+  color: pico8-original-palette(12);
+  text-shadow: pico8-original-palette(7) 1px 1px 1px;
   height: 32px;
   line-height: 32px;
 }
 
 .slash {
   margin: 0 4px;
-  color: pico8(13);
-  text-shadow: pico8(14) 1px 1px 1px;
+  color: pico8-original-palette(13);
+  text-shadow: pico8-original-palette(14) 1px 1px 1px;
   font-family: "Overpass Mono";
   font-weight: normal;
   font-size: 18px;

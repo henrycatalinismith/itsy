@@ -10,6 +10,7 @@
     "@babel/preset-react": "^7.7.4",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.7.0",
+    "@itsy.studio/palettes": "file:../palettes",
     "babel-loader": "^8.0.6",
     "codemirror": "^5.49.2",
     "css-loader": "^3.2.1",
