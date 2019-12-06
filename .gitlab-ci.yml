@@ -4,7 +4,7 @@ stages:
   - deploy
 
 deploy:studio:
-  stage: build
+  stage: deploy
   image: highvalleysystems/itsy:latest
   only:
     changes:
