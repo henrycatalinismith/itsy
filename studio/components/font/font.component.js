@@ -15,7 +15,12 @@ export default ({
   borderColor = undefined,
   borderMultiplier = 0,
 }) => {
-  const props = { Svg, G, Path }
+  const props = {
+    Svg,
+    G,
+    Path,
+    fontSize,
+  }
   return (
     <Pixelflip {...props}>{children}</Pixelflip>
   )

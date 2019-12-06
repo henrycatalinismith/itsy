@@ -17,6 +17,18 @@ const Center = ({
   </div>
 )
 
+const fontSizes = [16, 32, 64, 128]
+
+const examples = [
+  "nosedive",
+  "tailbone",
+  "itsy studio",
+  "Itsy Studio",
+  "highvalley systems",
+  "abcdefghijklm",
+  "ABCDEFGHIJKLMN",
+]
+
 const stories = storiesOf("Regular", module)
 
 stories.addDecorator(story => (
@@ -25,22 +37,13 @@ stories.addDecorator(story => (
   </Center>
 ))
 
-stories.add("abcdef", () => (
-  <Regular>abcdef</Regular>
-))
-
-stories.add("tailbone", () => (
-  <Regular>tailbone</Regular>
-))
-
-stories.add("nosedive", () => (
-  <Regular>nosedive</Regular>
-))
-
-stories.add("itsy studio", () => (
-  <Regular>itsy studio</Regular>
-))
-
-stories.add("highvalley.systems", () => (
-  <Regular>highvalley.systems</Regular>
-))
+fontSizes.forEach(fontSize => {
+  examples.forEach(example => {
+    const name = `[${fontSize}] [${example}]`
+    const props = {
+      fontSize,
+      children: example,
+    }
+    stories.add(name, () => <Regular {...props} />)
+  })
+})

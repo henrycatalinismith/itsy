@@ -1,5 +1,4 @@
 import React from "react"
-import { Svg, G, Path } from "react-native-svg"
 
 export default ({
   children,
@@ -10,8 +9,8 @@ export default ({
     y: 0.5,
     color: "black",
   }],
-  groupElement = "g",
-  pathElement = "path",
+  G = "g",
+  Path = "path",
 }) => {
 
   const d = (points, layer) => `M${points.map(p => [
