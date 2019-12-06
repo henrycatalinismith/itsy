@@ -1,12 +1,15 @@
 import React from "react"
 import Glyph from "../glyph"
 
-export default ({
+export default function Regular ({
   children,
   fg = "#ffffff",
   bg = "#000000",
-  fontSize = undefined,
-}) => {
+  fontSize = 16,
+  Svg = "svg",
+  G = "g",
+  Path = "path",
+}) {
   const style = {
     flex: 1,
   }
@@ -47,6 +50,8 @@ export default ({
       const props = {
         key,
         layers,
+        G,
+        Path,
       }
 
       const glyph = React.createElement(Glyph, props, [char])
@@ -64,6 +69,10 @@ export default ({
     props.width = `${((fontSize / 4 * xm) * lines[0].length)}px`
   }
   
-  const svg = React.createElement("svg", props, glyphs)
-  return svg
+  return (
+    <Svg {...props}>
+      {glyphs}
+    </Svg>
+  )
 }
+

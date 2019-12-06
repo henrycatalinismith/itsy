@@ -1,4 +1,5 @@
 import React from "react"
+import { Svg, G, Path } from "react-native-svg"
 
 export default ({
   children,
@@ -27,7 +28,7 @@ export default ({
 
   const groupChildren = layers.map((layer, i) => {
     return strokes.map((stroke, j) => React.createElement(
-      pathElement, {
+      Path, {
         d: d(stroke, layer),
         key: `${i}-${j}`,
         fill: "none",
@@ -38,7 +39,7 @@ export default ({
   })
 
   const group = React.createElement(
-    groupElement,
+    G,
     groupProps,
     groupChildren
   )

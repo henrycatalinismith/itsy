@@ -1,12 +1,7 @@
 {
-  "name": "@highvalley.systems/spraypaint",
-  "description": "highvalley systems design tokens",
+  "name": "@itsy.studio/pixelflip",
   "version": "0.6.0",
   "license": "UNLICENSED",
-  "files": [
-    "components/*",
-    "palettes/*"
-  ],
   "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.4.4",

@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@itsy.studio/editor": "file:../editor",
+    "@itsy.studio/pixelflip": "file:../pixelflip",
     "@highvalley.systems/itsy": "file:../itsy",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.7.0",
