@@ -1,0 +1,70 @@
+import React from "react"
+import pico8 from "../palettes/pico8.es6"
+import Glyph from "./glyph"
+
+export default ({
+  children,
+  fg = pico8[7],
+  bg = pico8[0],
+  fontSize = undefined,
+}) => {
+  const style = {
+    flex: 1,
+  }
+
+  const lines = children.split(/\n/)
+
+  const xm = 2.6
+
+  const viewBox = [
+    -0.5,
+    0,
+    xm * lines[0].length - 1,
+    4 * lines.length,
+  ].join(" ")
+
+  const glyphs = []
+  lines.forEach((line, y) => {
+    const chars = line.split("")
+    chars.forEach((char, x) => {
+      const xScale = 4.8
+
+      const layers = [{
+        scale: 0.5,
+        color: bg,
+        x: x * xScale,
+        y: 2,
+        width: 1.4,
+      }, {
+        scale: 0.5,
+        color: fg,
+        x: x * xScale,
+        y: 2,
+        width: 0.50,
+      }]
+
+      const key = `${x}-${y}`
+
+      const props = {
+        key,
+        layers,
+      }
+
+      const glyph = React.createElement(Glyph, props, [char])
+      glyphs.push(glyph)
+    })
+  })
+
+  const props = {
+    style,
+    viewBox,
+  }
+
+  if (fontSize) {
+    props.height = `${fontSize}px`
+    props.width = `${((fontSize / 4 * xm) * lines[0].length)}px`
+  }
+  
+  const svg = React.createElement("svg", props, glyphs)
+  return svg
+}
