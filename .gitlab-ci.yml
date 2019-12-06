@@ -12,40 +12,23 @@ stages:
   - build
   - deploy
 
-build:editor:
+build:itsy:
   stage: build
-  image: node:12-stretch
-  before_script:
-    - cd editor
+  image: highvalleysystems/itsy:latest
   <<: *part-of-app-build
   script:
+    - cd itsy
+    - yarn --pure-lockfile
+    - make itsy
+    - cd ../editor
+    - yarn --pure-lockfile
+    - yarn build
+    - cd ../manual
     - yarn --pure-lockfile
     - yarn build
   artifacts:
     paths:
       - editor/webviews/index.html
-
-build:itsy:
-  stage: build
-  image: highvalleysystems/itsy:latest
-  before_script:
-    - cd itsy
-  <<: *part-of-app-build
-  script:
-    - yarn --pure-lockfile
-    - make itsy
-
-build:manual:
-  stage: build
-  image: node:12-stretch
-  before_script:
-    - cd manual
-  <<: *part-of-app-build
-  script:
-    - yarn --pure-lockfile
-    - yarn build
-  artifacts:
-    paths:
       - manual/webviews/index.html
 
 deploy:studio:
