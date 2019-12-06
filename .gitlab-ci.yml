@@ -35,9 +35,7 @@ deploy:studio:
   stage: deploy
   image: node:12-stretch
   dependencies:
-    - build:editor
     - build:itsy
-    - build:manual
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
