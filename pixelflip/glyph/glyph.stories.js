@@ -1,9 +1,7 @@
-import React from "react"
 import { storiesOf } from "@storybook/react"
-import Center from "../components/center"
-import Grid from "../components/grid"
-import Glyph from "../components/glyph"
-import pico8 from "../palettes/pico8.es6"
+import React from "react"
+
+import Glyph from "./glyph.component"
 
 const lower = "abcdefghijklmnopqrstuvwxyz"
 const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -14,6 +12,36 @@ const all = lower + upper + numbers + symbols
 
 const stories = storiesOf("Glyph", module)
 const scale = 8
+
+const Grid = ({
+  children,
+  columns,
+  width,
+  gap = 8
+}) => (
+  <div style={{
+    display: "grid",
+    gridGap: `${gap}px`,
+    gridTemplateColumns: [...Array(columns)].map(() => `${width}px`).join(" "),
+  }}>
+    {children}
+  </div>
+)
+
+const Center = ({
+  children,
+  columns,
+  width,
+  gap = 8
+}) => (
+  <div style={{
+    display: "grid",
+    gridGap: `${gap}px`,
+    gridTemplateColumns: [...Array(columns)].map(() => `${width}px`).join(" "),
+  }}>
+    {children}
+  </div>
+)
 
 stories.addDecorator(story => (
   <Center>
@@ -54,13 +82,13 @@ stories.add("symbols", () => symbols.split("").map((letter, i) => (
 stories.add("lowercase [border]", () => lower.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 1,
-    color: pico8[0],
+    color: "#000000",
     x: 0.5,
     y: 0.5,
     width: 1,
   }, {
     scale: 0.9,
-    color: pico8[7],
+    color: "#ffffff",
     x: 0.7,
     y: 0.8,
     width: 0.3,
@@ -72,13 +100,13 @@ stories.add("lowercase [border]", () => lower.split("").map((letter, i) => (
 stories.add("uppercase [border]", () => upper.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 1,
-    color: pico8[0],
+    color: "#000000",
     x: 0.5,
     y: 0.5,
     width: 1,
   }, {
     scale: 0.9,
-    color: pico8[7],
+    color: "#ffffff",
     x: 0.7,
     y: 0.8,
     width: 0.3,
@@ -91,13 +119,13 @@ stories.add("uppercase [border]", () => upper.split("").map((letter, i) => (
 stories.add("uppercase [another]", () => upper.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 1,
-    color: pico8[0],
+    color: "#000000",
     x: 0.5,
     y: 0.5,
     width: 1,
   }, {
     scale: 1,
-    color: pico8[7],
+    color: "#ffffff",
     x: 0.5,
     y: 0.5,
     width: 0.25,
@@ -109,13 +137,13 @@ stories.add("uppercase [another]", () => upper.split("").map((letter, i) => (
 stories.add("lowercase [and another]", () => lower.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.5,
-    color: pico8[0],
+    color: "#000000",
     x: 2,
     y: 2,
     width: 1,
   }, {
     scale: 0.5,
-    color: pico8[7],
+    color: "#ffffff",
     x: 2,
     y: 2,
     width: 0.55,
@@ -127,13 +155,13 @@ stories.add("lowercase [and another]", () => lower.split("").map((letter, i) => 
 stories.add("uppercase [and another]", () => upper.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.5,
-    color: pico8[0],
+    color: "#000000",
     x: 2,
     y: 2,
     width: 1,
   }, {
     scale: 0.5,
-    color: pico8[7],
+    color: "#ffffff",
     x: 2,
     y: 2,
     width: 0.55,
@@ -145,13 +173,13 @@ stories.add("uppercase [and another]", () => upper.split("").map((letter, i) => 
 stories.add("lowercase [thicker]", () => lower.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.5,
-    color: pico8[0],
+    color: "#000000",
     x: 2,
     y: 2,
     width: 1.4,
   }, {
     scale: 0.5,
-    color: pico8[7],
+    color: "#ffffff",
     x: 2,
     y: 2,
     width: 0.50,
@@ -163,13 +191,13 @@ stories.add("lowercase [thicker]", () => lower.split("").map((letter, i) => (
 stories.add("uppercase [thicker]", () => upper.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.5,
-    color: pico8[0],
+    color: "#000000",
     x: 2,
     y: 2,
     width: 1.4,
   }, {
     scale: 0.5,
-    color: pico8[7],
+    color: "#ffffff",
     x: 2,
     y: 2,
     width: 0.50,
@@ -181,13 +209,13 @@ stories.add("uppercase [thicker]", () => upper.split("").map((letter, i) => (
 stories.add("numbers [thicker]", () => numbers.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.5,
-    color: pico8[0],
+    color: "#000000",
     x: 2,
     y: 2,
     width: 1.4,
   }, {
     scale: 0.5,
-    color: pico8[7],
+    color: "#ffffff",
     x: 2,
     y: 2,
     width: 0.50,
@@ -199,13 +227,13 @@ stories.add("numbers [thicker]", () => numbers.split("").map((letter, i) => (
 stories.add("lowercase [between]", () => lower.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.7,
-    color: pico8[0],
+    color: "#000000",
     x: 1.1,
     y: 1.6,
     width: 1.2,
   }, {
     scale: 0.7,
-    color: pico8[7],
+    color: "#ffffff",
     x: 1.1,
     y: 1.6,
     width: 0.6,
@@ -217,13 +245,13 @@ stories.add("lowercase [between]", () => lower.split("").map((letter, i) => (
 stories.add("uppercase [between]", () => upper.split("").map((letter, i) => (
   <Glyph layers={[{
     scale: 0.7,
-    color: pico8[0],
+    color: "#000000",
     x: 1.1,
     y: 1.6,
     width: 1.2,
   }, {
     scale: 0.7,
-    color: pico8[7],
+    color: "#ffffff",
     x: 1.1,
     y: 1.6,
     width: 0.6,

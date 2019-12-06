@@ -1,11 +1,10 @@
 import React from "react"
-import pico8 from "../palettes/pico8.es6"
-import Glyph from "./glyph"
+import Glyph from "../glyph"
 
 export default ({
   children,
-  fg = pico8[7],
-  bg = pico8[0],
+  fg = "#ffffff",
+  bg = "#000000",
   fontSize = undefined,
 }) => {
   const style = {

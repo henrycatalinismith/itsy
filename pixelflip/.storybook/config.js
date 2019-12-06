@@ -1,6 +1,6 @@
 import { configure } from "@storybook/react"
 
-const req = require.context("../stories", true, /\.stories\.js$/)
-const load = () => req.keys().forEach(filename => req(filename))
-
-configure(load, module)
+configure(() => {
+  require("../glyph/glyph.stories")
+  require("../regular/regular.stories")
+}, module)
