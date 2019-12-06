@@ -14,7 +14,6 @@ import {
 import "codemirror/lib/codemirror.css"
 import "codemirror/mode/lua/lua"
 
-import "./stylesheets/codemirror.scss"
 import actions from "./actions"
 import Editor from "./components/editor/editor.component"
 

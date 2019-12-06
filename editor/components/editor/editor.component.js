@@ -5,17 +5,11 @@ import { Controlled as CodeMirror } from "react-codemirror2"
 import styles from "./editor.module.scss"
 import actions from "../../actions"
 
-export default connect(
-  ({ loading, lua }) => ({
-    loading,
-    lua,
-  }), actions
-)(({
+export const Editor = ({
   change,
   loading,
   lua,
 }) => {
-
   const options = {
     autocapitalize: false,
     autocorrect: false,
@@ -45,4 +39,12 @@ export default connect(
       )}
     </>
   )
-})
+
+}
+
+export default connect(
+  ({ loading, lua }) => ({
+    loading,
+    lua,
+  }), actions
+)(Editor)
