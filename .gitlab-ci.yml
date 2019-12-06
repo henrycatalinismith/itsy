@@ -20,13 +20,18 @@ deploy:studio:
     - cd itsy
     - yarn --pure-lockfile
     - make itsy
-    - cd ../editor
+    - cd ..
+    - cd editor
     - yarn --pure-lockfile
     - yarn build
-    - cd ../manual
+    - cd ..
+    - cp editor/webviews/index.html studio/assets/weviews/editor.html
+    - cd manual
     - yarn --pure-lockfile
     - yarn build
-    - cd ../studio
+    - cd ..
+    - cp manual/webviews/index.html studio/assets/weviews/manual.html
+    - cd studio
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - yarn expo publish --non-interactive
