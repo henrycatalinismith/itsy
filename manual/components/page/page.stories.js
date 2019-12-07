@@ -6,8 +6,7 @@ import hljs from "highlight.js/lib/highlight"
 import lua from "highlight.js/lib/languages/lua"
 hljs.registerLanguage("lua", lua)
 
-import "../stylesheets/itsy.css"
-import Page from "../components/page"
+import Page from "./page.component"
 import { storiesOf, addParameters } from "@storybook/react"
 
 marked.setOptions({
@@ -16,7 +15,7 @@ marked.setOptions({
   }
 })
 
-const stories = storiesOf("Pages", module)
+const stories = storiesOf("Page", module)
 
 stories.addParameters({
   viewport: {
@@ -24,14 +23,27 @@ stories.addParameters({
   }
 })
 
-const req = require.context(`${__dirname}/../manual`, true, /\.md$/)
+stories.add("test", () => (
+  <pre>{123}</pre>
+))
+
+/*
+const req = require.context("../../pages", false, /\.md$/)
 req.keys().forEach(filename => {
   const markdown = req(filename)
+
+  stories.add(filename, () => (
+    <pre>{filename}</pre>
+  ))
+  return
+
   const doc = frontMatter(markdown)
   const content = marked(doc.content)
+
   stories.add(doc.data.title, () => (
     <Page title={doc.data.title}>
       <div dangerouslySetInnerHTML={{ __html: content }} />
     </Page>
   ))
 })
+*/
