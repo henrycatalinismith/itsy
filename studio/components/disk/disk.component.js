@@ -76,27 +76,8 @@ export default ({ disk, edit, size }) => {
 }
 
 const styles = StyleSheet.create({
-  tile: {
-    backgroundColor: colors[6],
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    margin: 8,
-    borderTopWidth: 4,
-    borderRightWidth: 4,
-    borderBottomWidth: 4,
-    borderLeftWidth: 4,
-    borderTopColor: colors[13],
-    borderRightColor: colors[13],
-    borderBottomColor: colors[13],
-    borderLeftColor: colors[13],
-    overflow: "hidden",
-  },
   disk: {
     marginBottom: 8,
     marginTop: 8,
   },
-  label: {
-    fontFamily: "overpass-mono-bold",
-  }
 })

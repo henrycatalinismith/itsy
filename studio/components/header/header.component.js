@@ -10,6 +10,7 @@ import {
 
 import Floppy from "../floppy"
 import Font from "../font"
+import styles from "./header.module.scss"
 import colors from "../../constants/colors"
 
 export default ({
@@ -75,66 +76,3 @@ export default ({
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: colors[1],
-    display: "flex",
-  },
-  inside: {
-    backgroundColor: colors[14],
-    display: "flex",
-    height: 32,
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-
-    borderTopColor: colors[2],
-    borderTopWidth: 2,
-    borderRightColor: colors[2],
-    borderLeftColor: colors[2],
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-
-  },
-  left: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    paddingLeft: 6,
-  },
-  right: {
-  },
-  floppy: {
-  },
-  wordmark: {
-    display: "flex",
-    flexDirection: "row",
-  },
-
-  help: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: colors[12],
-    borderColor: colors[5],
-    borderWidth: 2,
-    padding: 2,
-    paddingBottom: 4,
-    width: 64,
-    marginRight: 4,
-  },
-
-  back: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: colors[8],
-    borderColor: colors[5],
-    borderWidth: 2,
-    padding: 2,
-    paddingBottom: 4,
-    width: 64,
-    marginRight: 4,
-  },
-
-})

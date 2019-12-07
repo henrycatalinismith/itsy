@@ -2,10 +2,7 @@ import React from "react"
 import { Svg, Path } from "react-native-svg"
 
 import {
-  Button,
-  StyleSheet,
   TouchableOpacity,
-  View,
 } from "react-native"
 
 import colors from "../../constants/colors"
@@ -35,7 +32,3 @@ export default ({ onPress }) => {
     </>
   )
 }
-
-const styles = StyleSheet.create({
-})
-

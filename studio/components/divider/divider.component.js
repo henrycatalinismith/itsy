@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native"
 
+import styles from "./divider.module.scss"
 import colors from "../../constants/colors"
 
 export default ({
@@ -31,21 +32,3 @@ export default ({
     </>
   )
 }
-
-const styles = StyleSheet.create({
-  divider: {
-    backgroundColor: colors[14],
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  landscape: {
-    width: 4,
-  },
-  portrait: {
-    height: 4,
-  },
-  play: {
-    fontSize: 24,
-  },
-})

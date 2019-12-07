@@ -6,7 +6,8 @@
     "sdkVersion": "35.0.0",
     "packagerOpts": {
       "projectRoots": "",
-      "config": "./rn-cli.config.js"
+      "config": "./rn-cli.config.js",
+      "sourceExts": ["js", "jsx", "scss", "ts", "tsx"]
     },
     "platforms": [
       "ios",

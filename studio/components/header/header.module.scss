@@ -1,0 +1,64 @@
+@import "node_modules/@itsy.studio/palettes/pico8/_original.scss";
+
+.container {
+  background-color: pico8-original-palette(1);
+  display: flex;
+}
+
+.inside {
+  background-color: #FF77A8;
+  display: flex;
+  height: 32px;
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-top-color: #7E2553;
+  border-top-width: 2px;
+  border-right-color: #7E2553;
+  border-left-color: #7E2553;
+  border-left-width: 2px;
+  border-right-width: 2px;
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 6px;
+}
+
+.right {
+}
+
+.floppy {
+}
+
+.wordmark {
+  display: flex;
+  flex-direction: row;
+}
+
+.help {
+  display: flex;
+  align-items: center;
+  background-color: #29ADFF;
+  border-color: #5F574F;
+  border-width: 2px;
+  padding: 2px;
+  padding-bottom: 4px;
+  width: 64px;
+  margin-right: 4px;
+};
+
+.back {
+  display: flex;
+  align-items: center;
+  background-color: pico8-original-palette(8);
+  border-color: pico8-original-palette(5);
+  border-width: 2px;
+  padding: 2px;
+  padding-bottom: 4px;
+  width: 64px;
+  margin-right: 4px;
+}

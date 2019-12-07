@@ -2,13 +2,13 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import {
-  StyleSheet,
   Text,
   View,
 } from "react-native"
 
 import WebView from "rn-webview"
 
+import styles from "./editor.module.scss"
 import colors from "../../constants/colors"
 
 export default class Editor extends React.Component {
@@ -85,19 +85,3 @@ export default class Editor extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-  },
-  controls: {
-    height: 32,
-    backgroundColor: colors[15],
-    borderBottomColor: colors[13],
-    borderBottomWidth: 2,
-  },
-  code: {
-    flex: 1,
-    borderTopColor: colors[6],
-    borderTopWidth: 2,
-  },
-})

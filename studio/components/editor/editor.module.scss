@@ -1,0 +1,7 @@
+@import "node_modules/@itsy.studio/palettes/pico8/_original.scss";
+
+.editor {
+  flex: 1;
+  border-top-color: pico8-original-palette(6);
+  border-top-width: 2px;
+}

@@ -7,6 +7,7 @@ import {
   View,
 } from "react-native"
 
+import styles from "./player.module.scss"
 import colors from "../../constants/colors"
 
 export default class Player extends React.Component {
@@ -163,33 +164,3 @@ export default class Player extends React.Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    borderTopColor: colors[2],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-  },
-  screen: {
-    flex: 1,
-    backgroundColor: colors[0],
-    borderTopColor: colors[1],
-    borderRightColor: colors[1],
-    borderBottomColor: colors[1],
-    borderLeftColor: colors[1],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-  },
-  snapshot: {
-    flex: 1,
-  },
-})
-

@@ -1,12 +1,8 @@
 import React from "react"
 import { View } from "react-native"
 
-const style = {
-  flex: 1,
-  justifyContent: "center",
-  alignItems: "center",
-}
+import styles from "./center.module.scss"
 
-const Center = ({ children }) => <View style={style}>{children}</View>
+const Center = ({ children }) => <View style={styles.center}>{children}</View>
 
 export default Center
