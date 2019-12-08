@@ -1,13 +1,14 @@
+import { Asset } from "expo-asset"
 import React from "react"
-import { View } from "react-native"
-import WebView from "rn-webview"
+import { WebView, View } from "react-native"
 
 import styles from "./editor.module.scss"
+
+const html = Asset.fromModule(require("../../assets/webviews/editor.html"))
 
 export function Editor({
   lua = "",
   onChange = (lua: string): void => {},
-  sourceUri = "",
 }) {
   const webview = React.useRef() as any
 
@@ -16,9 +17,7 @@ export function Editor({
     console.log(`🏓 ${message.type}`)
     switch (message.type) {
       case "ready":
-        console.log(message)
-        return
-        webview.postMessage(JSON.stringify({
+        webview.current.postMessage(JSON.stringify({
           type: "inject",
           lua,
         }))
@@ -39,14 +38,14 @@ export function Editor({
   }
 
   return React.useMemo(() => (
-    <View style={styles.code}>
+    <View style={styles.editor}>
       <WebView
         bounces={false}
         injectedJavaScript="window.isReactNative = true;"
         onMessage={handleMessage}
         ref={webview}
         scrollEnabled={false}
-        source={{ uri: sourceUri }}
+        source={{ uri: html.uri }}
         useWebKit
       />
     </View>
