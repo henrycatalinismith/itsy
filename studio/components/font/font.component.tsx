@@ -2,7 +2,7 @@ import React from "react"
 import Pixelflip from "@itsy.studio/pixelflip/regular"
 import { Svg, G, Path } from "react-native-svg"
 
-import colors from "../../constants/colors"
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 export default ({
   children,

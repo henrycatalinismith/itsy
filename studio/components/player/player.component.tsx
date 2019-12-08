@@ -7,8 +7,8 @@ import {
   View,
 } from "react-native"
 
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 import styles from "./player.module.scss"
-import colors from "../../constants/colors"
 
 export default class Player extends React.Component {
   static propTypes = {

@@ -10,8 +10,8 @@ import { connect } from "react-redux"
 
 import Font from "../font"
 
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 import styles from "./tile.module.scss"
-import colors from "../../constants/colors"
 import select from "../../selectors"
 
 const mapStateToProps = (state, ownProps) => ({

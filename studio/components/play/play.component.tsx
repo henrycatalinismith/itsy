@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
 } from "react-native"
 
-import colors from "../../constants/colors"
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 export default ({ onPress }) => {
   return (

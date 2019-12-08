@@ -1,87 +1,57 @@
 import React from "react"
-import PropTypes from "prop-types"
-
-import {
-  Text,
-  View,
-} from "react-native"
-
+import { View } from "react-native"
 import WebView from "rn-webview"
 
 import styles from "./editor.module.scss"
-import colors from "../../constants/colors"
 
-export default class Editor extends React.Component {
-  static propTypes = {
-    lua: PropTypes.string,
-    onChange: PropTypes.func,
-    sourceUri: PropTypes.string,
-  }
+export function Editor({
+  lua = "",
+  onChange = (lua: string): void => {},
+  sourceUri = "",
+}) {
+  const webview = React.useRef() as any
 
-  shouldComponentUpdate(nextProps) {
-    return false
-  }
+  const handleMessage = event => {
+    const message = JSON.parse(event.nativeEvent.data)
+    console.log(`🏓 ${message.type}`)
+    switch (message.type) {
+      case "ready":
+        console.log(message)
+        return
+        webview.postMessage(JSON.stringify({
+          type: "inject",
+          lua,
+        }))
+        break
 
-  componentDidMount() {
-    this.webview.postMessage(JSON.stringify({
-      type: "injectLua",
-      lua: this.props.lua,
-    }))
-  }
+      case "change":
+        // console.log(lua)
+        // console.log(message.lua)
+        if (message.lua === lua) {
+          //console.log("SAME LOLOLOLOL")
+        } else {
+          onChange(message.lua)
+        }
+        return
 
-  componentDidUpdate(prevProps, prevState) {
-    this.webview.postMessage(JSON.stringify({
-      type: "init",
-      lua: this.props.lua,
-    }))
-  }w
-
-  render() {
-    const {
-      lua,
-      onChange,
-      sourceUri,
-    } = this.props
-
-    const handleMessage = event => {
-      const message = JSON.parse(event.nativeEvent.data)
-      console.log(`🏓 ${message.type}`)
-      switch (message.type) {
-        case "ready":
-          this.webview.postMessage(JSON.stringify({
-            type: "inject",
-            lua,
-          }))
-          break
-
-        case "change":
-          // console.log(lua)
-          // console.log(message.lua)
-          if (message.lua === lua) {
-            //console.log("SAME LOLOLOLOL")
-          } else {
-            onChange(message.lua)
-          }
-          return
-
-        default: return // console.log(`🤷‍♀️ ${message.type}`)
-      }
+      default: return // console.log(`🤷‍♀️ ${message.type}`)
     }
-
-    const options = { lua }
-
-    return (
-      <View style={styles.code}>
-        <WebView
-          bounces={false}
-          injectedJavaScript="window.isReactNative = true;"
-          onMessage={handleMessage}
-          ref={(view) => { this.webview = view; }}
-          scrollEnabled={false}
-          source={{ uri: sourceUri }}
-          useWebKit
-        />
-      </View>
-    )
   }
+
+  return React.useMemo(() => (
+    <View style={styles.code}>
+      <WebView
+        bounces={false}
+        injectedJavaScript="window.isReactNative = true;"
+        onMessage={handleMessage}
+        ref={webview}
+        scrollEnabled={false}
+        source={{ uri: sourceUri }}
+        useWebKit
+      />
+    </View>
+  ), [])
 }
+
+export default Editor
+

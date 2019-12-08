@@ -8,10 +8,11 @@ import {
   View,
 } from "react-native"
 
+import colors from "@itsy.studio/palettes/pico8/original.es6"
+
 import Floppy from "../floppy"
 import Font from "../font"
 import styles from "./header.module.scss"
-import colors from "../../constants/colors"
 
 export default ({
   disk,
