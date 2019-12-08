@@ -45,8 +45,6 @@ import Help from "./screens/help"
 
 import Header from "./components/header"
 
-import colors from "./constants/colors"
-
 const initialState = {
   disks: {
     abc: {

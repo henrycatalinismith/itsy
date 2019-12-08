@@ -12,6 +12,14 @@ module.exports = (async () => {
       path.resolve(__dirname, "../editor"),
     ],
 
+    getTransformModulePath: () => {
+      return require.resolve("react-native-typescript-transformer");
+    },
+
+    getSourceExts() {
+      return ["js", "ts", "tsx"]
+    },
+
     transformer: {
       babelTransformerPath: require.resolve("react-native-sass-transformer"),
     },

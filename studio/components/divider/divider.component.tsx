@@ -1,14 +1,10 @@
 import React from "react"
 
 import {
-  Button,
-  StyleSheet,
-  TouchableOpacity,
   View,
 } from "react-native"
 
 import styles from "./divider.module.scss"
-import colors from "../../constants/colors"
 
 export default ({
   children,

@@ -16,7 +16,7 @@ import { FlatGrid } from "react-native-super-grid"
 import { connect } from "react-redux"
 
 import actions from "../actions"
-import colors from "../constants/colors"
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 import select from "../selectors"
 import thunks from "../thunks"
 

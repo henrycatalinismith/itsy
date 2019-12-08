@@ -45,9 +45,12 @@
   "devDependencies": {
     "@storybook/react-native": "^5.2.8",
     "@storybook/react-native-server": "^5.2.8",
+    "@types/react": "^16.9.15",
+    "@types/react-native": "^0.60.24",
     "babel-preset-expo": "^7.0.0",
     "expo-cli": "^3.9.1",
-    "jest-expo": "^35.0.0"
+    "jest-expo": "^35.0.0",
+    "typescript": "^3.7.3"
   },
   "private": true
 }

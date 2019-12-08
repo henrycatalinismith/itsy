@@ -13,8 +13,7 @@ import {
 
 import { connect } from "react-redux"
 
-import colors from "../../constants/colors"
-import select from "../../selectors"
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 export default ({ disk, edit, size }) => {
 
