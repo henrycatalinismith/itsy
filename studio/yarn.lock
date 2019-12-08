@@ -1429,7 +1429,20 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@highvalley.systems/itsy@file:../itsy":
+"@highvalley.systems/signalbox@^0.17.0":
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/@highvalley.systems/signalbox/-/signalbox-0.17.0.tgz#68a75b62c092cb6a3d1f66ed725522ba12d7bce5"
+  integrity sha512-Kh4hThSGWMMdyHlOn4VMRP1dciNt2ErOallaLTlBuvuTrTim8SHIe/5vrLgaOlJp+w1NM6wkB5bOvEnYsYSqOQ==
+
+"@highvalley.systems/spraypaint@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@highvalley.systems/spraypaint/-/spraypaint-0.7.0.tgz#b60ef33b45670b671e1ee235f9e78d6001fa9552"
+  integrity sha512-wQQhlR6zfMtZpULirXMiBTIIyvdXmHKL89R1GN30l9LlyU0IsRdC0fp/pa+kLcN7/yKlrDln9pcgpSUnLVXhbQ==
+
+"@itsy.studio/editor@file:../editor":
+  version "0.0.0"
+
+"@itsy.studio/itsy@file:../itsy":
   version "0.72.0"
   dependencies:
     "@highvalley.systems/signalbox" "^0.17.0"
@@ -1445,19 +1458,6 @@
     redux "^4.0.1"
     uuid "^3.3.2"
     webpack "^4.30.0"
-
-"@highvalley.systems/signalbox@^0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@highvalley.systems/signalbox/-/signalbox-0.17.0.tgz#68a75b62c092cb6a3d1f66ed725522ba12d7bce5"
-  integrity sha512-Kh4hThSGWMMdyHlOn4VMRP1dciNt2ErOallaLTlBuvuTrTim8SHIe/5vrLgaOlJp+w1NM6wkB5bOvEnYsYSqOQ==
-
-"@highvalley.systems/spraypaint@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@highvalley.systems/spraypaint/-/spraypaint-0.7.0.tgz#b60ef33b45670b671e1ee235f9e78d6001fa9552"
-  integrity sha512-wQQhlR6zfMtZpULirXMiBTIIyvdXmHKL89R1GN30l9LlyU0IsRdC0fp/pa+kLcN7/yKlrDln9pcgpSUnLVXhbQ==
-
-"@itsy.studio/editor@file:../editor":
-  version "0.0.0"
 
 "@itsy.studio/palettes@file:../palettes":
   version "0.0.0"

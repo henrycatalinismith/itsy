@@ -1,6 +1,6 @@
 import * as FileSystem from "expo-file-system"
 import _ from "lodash"
-import itsy from "@highvalley.systems/itsy"
+import itsy from "@itsy.studio/itsy"
 import uuid from "uuid"
 
 import actions from "../actions"

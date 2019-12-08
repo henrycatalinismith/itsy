@@ -28,8 +28,8 @@ canvas {
   /* https://bugs.webkit.org/show_bug.cgi?id=193895 */
   image-rendering: pixelated;
   user-select: none;
-  width: 128px;
-  height: 128px;
+  /* width: 100vmin; */
+  /* height: 100vmin; */
 
   position: absolute;
   top: 50%;

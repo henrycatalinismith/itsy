@@ -1,3 +1,4 @@
+import { Asset } from "expo-asset"
 import React from "react"
 import PropTypes from "prop-types"
 
@@ -28,8 +29,10 @@ import Floppy from "../components/floppy"
 import Font from "../components/font"
 import Header from "../components/header"
 
+const manual = Asset.fromModule(require("../assets/webviews/manual.html"))
+
 const mapStateToProps = state => ({
-  asset: select.assets.from(state).forHelpScreen(),
+  // asset: select.assets.from(state).forHelpScreen(),
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -43,17 +46,11 @@ class HelpScreen extends React.Component {
   }
 
   static propTypes = {
-    asset: PropTypes.any,
     navigation: PropTypes.any,
   }
 
   render() {
-    const {
-      asset,
-    } = this.props
-
     console.log("help")
-    console.log(asset.uri)
 
     return (
       <SafeAreaView style={styles.screen}>
@@ -65,7 +62,7 @@ class HelpScreen extends React.Component {
                 bounces={false}
                 originWhitelist={["*"]}
                 scrollEnabled={true}
-                source={{ uri: asset.uri }}
+                source={{ uri: manual.uri }}
                 style={styles.webView}
                 useWebKit
               />

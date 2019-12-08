@@ -1,5 +1,5 @@
 import * as FileSystem from "expo-file-system"
-import itsy from "@highvalley.systems/itsy"
+import itsy from "@itsy.studio/itsy"
 
 import actions from "../actions"
 import helpers from "../helpers"

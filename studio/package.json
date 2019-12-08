@@ -15,10 +15,10 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "@highvalley.systems/itsy": "file:../itsy",
     "@highvalley.systems/signalbox": "^0.17.0",
     "@highvalley.systems/spraypaint": "^0.7.0",
     "@itsy.studio/editor": "file:../editor",
+    "@itsy.studio/itsy": "file:../itsy",
     "@itsy.studio/palettes": "file:../palettes",
     "@itsy.studio/pixelflip": "file:../pixelflip",
     "base-64": "^0.1.0",

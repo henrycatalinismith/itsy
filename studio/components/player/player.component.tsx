@@ -27,10 +27,12 @@ export default class Player extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     console.log(this.props.disk.id)
     if (this.props.disk.id !== nextProps.disk.id) {
+      console.log("different disk")
       return true
     }
 
     if (!this.props.edit || !nextProps.edit) {
+      console.log("different edit")
       return true
     }
 
@@ -46,6 +48,7 @@ export default class Player extends React.Component {
     const endReboot = this.state.rebooting && !nextState.rebooting
 
     if (beginReboot || endReboot) {
+      console.log("reboot started or ended")
       return true
     }
 
@@ -57,6 +60,7 @@ export default class Player extends React.Component {
           stopped: false,
         })
       }, 10)
+      console.log("rebooting to play")
       return true
     }
 
@@ -69,13 +73,16 @@ export default class Player extends React.Component {
           stopped: true,
         })
       }, 100)
+      console.log("stopping")
       return false
     }
 
     if (nextState.stopped) {
+      console.log("stopped")
       return true
     }
 
+    console.log("fuck off")
     return false
   }
 
@@ -155,8 +162,9 @@ export default class Player extends React.Component {
               bounces={false}
               scrollEnabled={false}
               onMessage={handleMessage}
-              source={{ html: edit.html }}
+              source={{ html: "<h1>hello</h1>" }}
               useWebKit
+              style={styles.screen}
             />
           )}
         </View>

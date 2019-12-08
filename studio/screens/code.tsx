@@ -29,7 +29,6 @@ const mapStateToProps = state => {
     disk: select.edits.from(state).byDiskId(diskId).pop(),
     drive: select.edits.from(state).forPlayer(diskId),
     running: select.scalars.from(state).running(),
-    editorAsset: select.assets.from(state).forEditorWebview(),
     orientation: select.scalars.from(state).orientation(),
   }
 }
@@ -50,7 +49,6 @@ class Code extends React.Component {
     const {
       disk,
       drive,
-      editorAsset,
       navigation,
       orientation,
       running,
@@ -80,7 +78,6 @@ class Code extends React.Component {
               onPlay={play}
               onStop={stop}
               running={running}
-              sourceUri={editorAsset.uri}
             />
           </View>
           <Divider orientation={orientation} onMove={onMoveDivider}>
