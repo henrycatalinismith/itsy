@@ -1,13 +1,22 @@
 import { Svg, ClipPath, Defs, Path, Image as SvgImage } from "react-native-svg"
-import { StyleSheet } from "react-native"
 import React from "react"
 
 import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
+import select from "../../selectors"
 
-export default ({ disk, edit, size }) => {
+const mapStateToProps = (state, ownProps) => {
+  const diskId = ownProps.id
+  const disk = select.disks.from(state).byId(diskId)
+  const edit = select.edits.from(state).byDiskId(diskId).pop()
+  return {
+    disk,
+    edit,
+  }
+}
 
+export function Disk ({ disk, edit, size }) {
   const dimensions = {
     width: size,
     height: size,
@@ -16,7 +25,7 @@ export default ({ disk, edit, size }) => {
   const diskSize = size / 2
 
   return (
-    <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 16 16">
+    <Svg width={diskSize} height={diskSize} viewBox="0 0 16 16">
 
       <Defs>
         <ClipPath id="shape">
@@ -65,9 +74,4 @@ export default ({ disk, edit, size }) => {
   )
 }
 
-const styles = StyleSheet.create({
-  disk: {
-    marginBottom: 8,
-    marginTop: 8,
-  },
-})
+export default connect(mapStateToProps)(Disk)

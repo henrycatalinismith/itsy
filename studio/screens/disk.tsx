@@ -29,7 +29,6 @@ const mapStateToProps = (state, ownProps) => {
   const diskId = select.scalars.from(state).diskId()
   return {
     disk: select.disks.from(state).byId(diskId),
-    edit: select.edits.from(state).byDiskId(diskId).pop(),
   }
 }
 
@@ -39,7 +38,6 @@ const mapDispatchToProps = dispatch => ({
 
 export function DiskScreen({
   disk,
-  edit,
   navigation,
   rename,
 }) {
@@ -59,40 +57,34 @@ export function DiskScreen({
   return (
     <Frame>
       <View style={styles.container}>
-        <Center>
-          <Disk
-            disk={disk}
-            edit={edit}
-            size={300}
+        <Disk id={disk.id} size={300} />
+
+        {mode === "neutral" && (
+          <TouchableHighlight onPress={onRenameStart}>
+            <Font
+              fontSize={32}
+              color={colors[7]}
+              borderColor={colors[0]}
+              borderMultiplier={3}
+              strokeMultiplier={0.9}
+            >{disk.name}</Font>
+          </TouchableHighlight>
+        )}
+
+        {mode === "rename" && (
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoFocus={true}
+            onChangeText={onRenameEdit}
+            onSubmitEditing={onRenameSubmit}
+            style={styles.rename}
+            textContentType="none"
+            value={name}
           />
+        )}
 
-          {mode === "neutral" && (
-            <TouchableHighlight onPress={onRenameStart}>
-              <Font
-                fontSize={32}
-                color={colors[7]}
-                borderColor={colors[0]}
-                borderMultiplier={3}
-                strokeMultiplier={0.9}
-              >{disk.name}</Font>
-            </TouchableHighlight>
-          )}
-
-          {mode === "rename" && (
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoFocus={true}
-              onChangeText={onRenameEdit}
-              onSubmitEditing={onRenameSubmit}
-              style={styles.rename}
-              textContentType="none"
-              value={name}
-            />
-          )}
-
-          <Button onPress={onEdit}>edit</Button>
-        </Center>
+        <Button onPress={onEdit}>edit</Button>
       </View>
     </Frame>
   )
@@ -108,18 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors[6],
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  edit: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: colors[13],
-    borderColor: colors[5],
-    borderWidth:2,
-    padding: 8,
-    paddingBottom: 4,
-    width: 64,
-    marginTop: 32,
   },
 
   landscape: {
