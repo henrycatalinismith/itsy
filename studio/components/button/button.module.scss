@@ -1,0 +1,24 @@
+@import "node_modules/@itsy.studio/palettes/pico8/_original.scss";
+
+.button {
+  display: flex;
+  align-items: center;
+  border-width: 2px;
+  padding: 2px 2px 4px 2px;
+  width: 64px;
+}
+
+.blue {
+  background-color: pico8-original-palette(12);
+  border-color: pico8-original-palette(5);
+}
+
+.gray {
+  background-color: pico8-original-palette(13);
+  border-color: pico8-original-palette(5);
+}
+
+.red {
+  background-color: pico8-original-palette(8);
+  border-color: pico8-original-palette(5);
+}

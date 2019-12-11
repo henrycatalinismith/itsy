@@ -20,11 +20,11 @@ import colors from "@itsy.studio/palettes/pico8/original.es6"
 import select from "../selectors"
 import thunks from "../thunks"
 
-import Tile from "../components/tile"
-import Floppy from "../components/floppy"
-import Frame from "../components/frame"
+import Button from "../components/button"
 import Font from "../components/font"
+import Frame from "../components/frame"
 import Header from "../components/header"
+import Tile from "../components/tile"
 
 const mapStateToProps = state => ({
   disks: select.disks.from(state).forHomeScreen(),
@@ -49,15 +49,7 @@ export function HomeScreen({
   return (
     <Frame>
       <View style={styles.controls}>
-        <TouchableOpacity style={styles.new} onPress={onNew}>
-          <Font
-            fontSize={16}
-            color={colors[7]}
-            borderColor={colors[1]}
-            strokeMultiplier={0.9}
-            borderMultiplier={3}
-          >new</Font>
-        </TouchableOpacity>
+        <Button onPress={onNew}>new</Button>
       </View>
 
       <ScrollView style={styles.container}>
@@ -98,22 +90,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors[7],
-  },
-
-  new: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: colors[13],
-    borderColor: colors[5],
-    borderWidth: 2,
-    padding: 2,
-    paddingBottom: 4,
-    width: 64,
-  },
-
-  button: {
-    width: 256,
-    height: 256,
   },
 })
 

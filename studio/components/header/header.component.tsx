@@ -10,6 +10,7 @@ import {
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
+import Button from "../button"
 import Floppy from "../floppy"
 import Font from "../font"
 import styles from "./header.module.scss"
@@ -40,6 +41,7 @@ export default ({
   }
 
   const helpStyle = activeScreen === "Help" ? styles.back : styles.help
+  const helpTheme = activeScreen === "Help" ? "red" : "blue"
   const helpText = activeScreen === "Help" ? "done" : "help"
 
   return (
@@ -63,15 +65,7 @@ export default ({
         </View>
 
         <View style={styles.right}>
-          <TouchableOpacity style={helpStyle} onPress={onHelp}>
-            <Font
-              fontSize={15}
-              color={colors[7]}
-              borderColor={colors[1]}
-              borderMultiplier={3}
-              strokeMultiplier={0.9}
-            >{helpText}</Font>
-          </TouchableOpacity>
+          <Button theme={helpTheme} onPress={onHelp}>{helpText}</Button>
         </View>
       </View>
     </SafeAreaView>

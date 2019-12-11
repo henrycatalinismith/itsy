@@ -13,6 +13,8 @@ import {
 
 import { connect } from "react-redux"
 
+import Button from "../components/button"
+import Center from "../components/center"
 import Disk from "../components/disk"
 import Font from "../components/font"
 import Frame from "../components/frame"
@@ -57,7 +59,7 @@ export function DiskScreen({
   return (
     <Frame>
       <View style={styles.container}>
-        <View style={styles.center}>
+        <Center>
           <Disk
             disk={disk}
             edit={edit}
@@ -89,16 +91,8 @@ export function DiskScreen({
             />
           )}
 
-          <TouchableOpacity style={styles.edit} onPress={onEdit}>
-            <Font
-              fontSize={16}
-              color={colors[7]}
-              borderColor={colors[1]}
-              strokeMultiplier={0.9}
-              borderMultiplier={3}
-            >edit</Font>
-          </TouchableOpacity>
-        </View>
+          <Button onPress={onEdit}>edit</Button>
+        </Center>
       </View>
     </Frame>
   )
@@ -116,20 +110,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  center: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 320,
-    height: 320,
-  },
-
   edit: {
     display: "flex",
     alignItems: "center",
     backgroundColor: colors[13],
     borderColor: colors[5],
-    borderWidth: 2,
+    borderWidth:2,
     padding: 8,
     paddingBottom: 4,
     width: 64,
@@ -151,7 +137,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     padding: 4,
   },
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiskScreen)

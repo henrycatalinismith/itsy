@@ -29,6 +29,7 @@
 }
 
 .right {
+  margin-right: 4px;
 }
 
 .floppy {
@@ -37,28 +38,4 @@
 .wordmark {
   display: flex;
   flex-direction: row;
-}
-
-.help {
-  display: flex;
-  align-items: center;
-  background-color: #29ADFF;
-  border-color: #5F574F;
-  border-width: 2px;
-  padding: 2px;
-  padding-bottom: 4px;
-  width: 64px;
-  margin-right: 4px;
-};
-
-.back {
-  display: flex;
-  align-items: center;
-  background-color: pico8-original-palette(8);
-  border-color: pico8-original-palette(5);
-  border-width: 2px;
-  padding: 2px;
-  padding-bottom: 4px;
-  width: 64px;
-  margin-right: 4px;
 }
