@@ -1,10 +1,7 @@
 import React from "react"
 import {
-  TouchableOpacity,
   SafeAreaView,
   StatusBar,
-  StyleSheet,
-  Text,
   View,
 } from "react-native"
 
@@ -15,10 +12,10 @@ import Floppy from "../floppy"
 import Font from "../font"
 import styles from "./header.module.scss"
 
-export default ({
+export function Header ({
   disk,
   navigation,
-}) => {
+}) {
 
   const activeIndex = navigation.state.index
   const activeRoute = navigation.state.routes[activeIndex]
@@ -71,3 +68,5 @@ export default ({
     </SafeAreaView>
   )
 }
+
+export default Header

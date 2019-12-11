@@ -6,6 +6,10 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "noEmit": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@itsy.studio/studio": ["./"]
+    }
   }
 }

@@ -1,15 +1,6 @@
 import { Svg, ClipPath, Defs, Path, Image as SvgImage } from "react-native-svg"
-
+import { StyleSheet } from "react-native"
 import React from "react"
-
-import {
-  Button,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
 
 import { connect } from "react-redux"
 

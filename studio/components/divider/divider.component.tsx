@@ -1,8 +1,5 @@
 import React from "react"
-
-import {
-  View,
-} from "react-native"
+import { View } from "react-native"
 
 import styles from "./divider.module.scss"
 
@@ -17,14 +14,12 @@ export default ({
   )
 
   return (
-    <>
-      <View
-        style={[styles.divider, styles[orientation]]}
-        onResponderMove={onResponderMove}
-        onStartShouldSetResponder={() => true}
-        onMoveShouldSetResponder={() => true}>
-        {children}
-      </View>
-    </>
+    <View
+      style={[styles.divider, styles[orientation]]}
+      onResponderMove={onResponderMove}
+      onStartShouldSetResponder={() => true}
+      onMoveShouldSetResponder={() => true}>
+      {children}
+    </View>
   )
 }

@@ -19,13 +19,12 @@ const mapStateToProps = (state, ownProps) => ({
   edit: select.edits.from(state).forHome(ownProps.id),
 })
 
-export default connect(mapStateToProps)(({
+export function Tile({
   disk,
   edit,
   onPress,
   size,
-}) => {
-
+}) {
   const dimensions = {
     width: size,
     height: size,
@@ -93,4 +92,6 @@ export default connect(mapStateToProps)(({
 
     </TouchableOpacity>
   )
-})
+}
+
+export default connect(mapStateToProps)(Tile)

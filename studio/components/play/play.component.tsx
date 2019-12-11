@@ -1,13 +1,11 @@
 import React from "react"
+import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
 
-import {
-  TouchableOpacity,
-} from "react-native"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-export default ({ onPress }) => {
+export function Play({ onPress }) {
   return (
     <>
       <TouchableOpacity onPress={onPress}>
@@ -32,3 +30,5 @@ export default ({ onPress }) => {
     </>
   )
 }
+
+export default Play

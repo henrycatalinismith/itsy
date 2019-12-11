@@ -1,11 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
-
-import {
-  StyleSheet,
-  WebView,
-  View,
-} from "react-native"
+import { WebView, View } from "react-native"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 import styles from "./player.module.scss"

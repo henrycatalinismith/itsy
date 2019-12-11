@@ -2,8 +2,8 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
+import Font from "@itsy.studio/studio/components/font"
 
-import Font from "../font"
 import styles from "./button.module.scss"
 
 const fontThemes: { [theme: string]: Object } = {
