@@ -12,6 +12,7 @@ import { connect } from "react-redux"
 
 import Divider from "../components/divider"
 import Editor from "../components/editor"
+import Frame from "../components/frame"
 import Header from "../components/header"
 import Play from "../components/play"
 import Player from "../components/player"
@@ -40,99 +41,58 @@ const mapDispatchToProps = dispatch => ({
   stop: () => dispatch(thunks.stop()),
 });
 
-class Code extends React.Component {
-  static navigationOptions = {
-    header: Header
-  }
+export function CodeScreen({
+  disk,
+  drive,
+  navigation,
+  orientation,
+  running,
+  play,
+  snap,
+  stop,
+  edit,
+}) {
 
-  render() {
-    const {
-      disk,
-      drive,
-      navigation,
-      orientation,
-      running,
-      play,
-      snap,
-      stop,
-      edit,
-    } = this.props
+  const onMoveDivider = (x, y) => console.log(x, y)
 
-    const onMoveDivider = (x, y) => console.log(x, y)
-    // console.log(drive)
+  return (
+    <Frame shallow>
+      <View style={[styles.container, styles[orientation]]}>
 
-    return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.frame1}>
-        <View style={[styles.container, styles[orientation]]}>
-
-          <View style={styles.editorContainer}>
-            <View style={styles.controls}>
-              <View style={styles.button}>
-                {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
-              </View>
+        <View style={styles.editorContainer}>
+          <View style={styles.controls}>
+            <View style={styles.button}>
+              {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
             </View>
-            <Editor
-              lua={disk.lua}
-              onChange={edit}
-              onPlay={play}
-              onStop={stop}
-              running={running}
-            />
           </View>
-          <Divider orientation={orientation} onMove={onMoveDivider}>
-          </Divider>
-          <Player
-            disk={disk}
-            edit={drive}
-            onSnap={snapshot => snap({
-              id: drive.id,
-              snapshot,
-            })}
+          <Editor
+            lua={disk.lua}
+            onChange={edit}
+            onPlay={play}
+            onStop={stop}
+            running={running}
           />
         </View>
-        </View>
-      </SafeAreaView>
-    )
-  }
+        <Divider orientation={orientation} onMove={onMoveDivider}>
+        </Divider>
+        <Player
+          disk={disk}
+          edit={drive}
+          onSnap={snapshot => snap({
+            id: drive.id,
+            snapshot,
+          })}
+        />
+      </View>
+    </Frame>
+  )
+}
+
+CodeScreen.navigationOptions = {
+  header: Header
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors[14],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-  },
-
-  frame1: {
-    flex: 1,
-    display: "flex",
-    borderRightColor: colors[14],
-    borderBottomColor: colors[14],
-    borderLeftColor: colors[14],
-    borderRightWidth: 4,
-    borderBottomWidth: 4,
-    borderLeftWidth: 4,
-  },
-
-  frame2: {
-    flex: 1,
-    display: "flex",
-    borderTopColor: colors[2],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-  },
-
   editorContainer: {
     flex: 1,
     display: "flex",
@@ -169,4 +129,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Code)
+export default connect(mapStateToProps, mapDispatchToProps)(CodeScreen)

@@ -15,6 +15,7 @@ import { connect } from "react-redux"
 
 import Disk from "../components/disk"
 import Font from "../components/font"
+import Frame from "../components/frame"
 import Header from "../components/header"
 
 import actions from "../actions"
@@ -34,149 +35,80 @@ const mapDispatchToProps = dispatch => ({
   rename: name => dispatch(thunks.rename(name)),
 });
 
-class DiskScreen extends React.Component {
-  static navigationOptions = {
-    header: Header
+export function DiskScreen({
+  disk,
+  edit,
+  navigation,
+  rename,
+}) {
+  const [mode, setMode] = React.useState("neutral")
+  const [name, setName] = React.useState(disk.name)
+
+  const onRenameStart = () => setMode("rename")
+  const onRenameEdit = newName => setName(newName)
+  const onRenameSubmit = () => {
+    setMode("neutral")
+    rename(name)
+  }
+  const onEdit = () => {
+    navigation.navigate("Code", { disk })
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      mode: "neutral",
-      name: props.disk.name,
-    }
-  }
+  return (
+    <Frame>
+      <View style={styles.container}>
+        <View style={styles.center}>
+          <Disk
+            disk={disk}
+            edit={edit}
+            size={300}
+          />
 
-  render() {
-    const {
-      disk,
-      edit,
-      navigation,
-      rename,
-    } = this.props
+          {mode === "neutral" && (
+            <TouchableHighlight onPress={onRenameStart}>
+              <Font
+                fontSize={32}
+                color={colors[7]}
+                borderColor={colors[0]}
+                borderMultiplier={3}
+                strokeMultiplier={0.9}
+              >{disk.name}</Font>
+            </TouchableHighlight>
+          )}
 
-    const {
-      mode,
-      name,
-    } = this.state
+          {mode === "rename" && (
+            <TextInput
+              autoCapitalize="none"
+              autoCorrect={false}
+              autoFocus={true}
+              onChangeText={onRenameEdit}
+              onSubmitEditing={onRenameSubmit}
+              style={styles.rename}
+              textContentType="none"
+              value={name}
+            />
+          )}
 
-    const onRenameStart = () => {
-      this.setState({
-        mode: "rename",
-        name: disk.name,
-      })
-    }
-
-    const onRenameEdit = newName => {
-      this.setState({
-        name: newName,
-      })
-    }
-
-    const onRenameSubmit = () => {
-      this.setState({
-        mode: "neutral",
-      })
-      rename(name)
-    }
-
-    const onEdit = () => {
-      navigation.navigate("Code", { disk })
-    }
-
-    return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.frame1}>
-          <View style={styles.frame2}>
-            <View style={styles.container}>
-              <View style={styles.center}>
-                <Disk
-                  disk={disk}
-                  edit={edit}
-                  size={300}
-                />
-
-                {mode === "neutral" && (
-                  <TouchableHighlight onPress={onRenameStart}>
-                    <Font
-                      fontSize={32}
-                      color={colors[7]}
-                      borderColor={colors[0]}
-                      borderMultiplier={3}
-                      strokeMultiplier={0.9}
-                    >{disk.name}</Font>
-                  </TouchableHighlight>
-                )}
-
-                {mode === "rename" && (
-                  <TextInput
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    autoFocus={true}
-                    onChangeText={onRenameEdit}
-                    onSubmitEditing={onRenameSubmit}
-                    style={styles.rename}
-                    textContentType="none"
-                    value={name}
-                  />
-                )}
-
-                <TouchableOpacity style={styles.edit} onPress={onEdit}>
-                  <Font
-                    fontSize={16}
-                    color={colors[7]}
-                    borderColor={colors[1]}
-                    strokeMultiplier={0.9}
-                    borderMultiplier={3}
-                  >edit</Font>
-                </TouchableOpacity>
-
-
-              </View>
-            </View>
-          </View>
+          <TouchableOpacity style={styles.edit} onPress={onEdit}>
+            <Font
+              fontSize={16}
+              color={colors[7]}
+              borderColor={colors[1]}
+              strokeMultiplier={0.9}
+              borderMultiplier={3}
+            >edit</Font>
+          </TouchableOpacity>
         </View>
-      </SafeAreaView>
-    )
-  }
+      </View>
+    </Frame>
+  )
+}
+
+DiskScreen.navigationOptions = {
+  header: Header
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors[14],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-  },
-
-  frame1: {
-    flex: 1,
-    display: "flex",
-    borderRightColor: colors[14],
-    borderBottomColor: colors[14],
-    borderLeftColor: colors[14],
-    borderRightWidth: 4,
-    borderBottomWidth: 4,
-    borderLeftWidth: 4,
-  },
-
-  frame2: {
-    flex: 1,
-    display: "flex",
-    borderTopColor: colors[2],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-  },
-
   container: {
     flex: 1,
     backgroundColor: colors[6],

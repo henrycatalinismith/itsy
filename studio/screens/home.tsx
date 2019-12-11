@@ -22,6 +22,7 @@ import thunks from "../thunks"
 
 import Tile from "../components/tile"
 import Floppy from "../components/floppy"
+import Frame from "../components/frame"
 import Font from "../components/font"
 import Header from "../components/header"
 
@@ -34,118 +35,55 @@ const mapDispatchToProps = dispatch => ({
   open: diskId => dispatch(actions.open(diskId)),
 });
 
-class HomeScreen extends React.Component {
-  static navigationOptions = {
-    header: Header
+export function HomeScreen({
+  disks,
+  navigation,
+  onNew,
+  open,
+}) {
+  const onPress = disk => () => {
+    open(disk.id)
+    navigation.navigate("Disk", { disk })
   }
 
-  static propTypes = {
-    disks: PropTypes.any,
-    navigation: PropTypes.any,
-    onNew: PropTypes.any,
-    open: PropTypes.any,
-  }
+  return (
+    <Frame>
+      <View style={styles.controls}>
+        <TouchableOpacity style={styles.new} onPress={onNew}>
+          <Font
+            fontSize={16}
+            color={colors[7]}
+            borderColor={colors[1]}
+            strokeMultiplier={0.9}
+            borderMultiplier={3}
+          >new</Font>
+        </TouchableOpacity>
+      </View>
 
-  componentDidMount() {
-    return // COMMENT HERE TO LOAD CODE SCREEN
-    this.props.open("abc")
-    this.props.navigation.navigate("Code", {
-      disk: {
-        id: "abc",
-        name: "example",
-      },
-    })
-  }
+      <ScrollView style={styles.container}>
 
-  render() {
-    const {
-      disks,
-      navigation,
-      onNew,
-      open,
-    } = this.props
+        <FlatGrid
+          itemDimension={128}
+          items={disks}
+          renderItem={({ item: disk }) => (
+            <Tile
+              key={disk.id}
+              id={disk.id}
+              onPress={onPress(disk)}
+              size={120}
+            />
+          )}
+        />
+      </ScrollView>
+    </Frame>
+  )
+}
 
-    const onPress = disk => () => {
-      open(disk.id)
-      navigation.navigate("Disk", { disk })
-    }
-
-    return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.frame1}>
-          <View style={styles.frame2}>
-
-            <View style={styles.controls}>
-              <TouchableOpacity style={styles.new} onPress={onNew}>
-                <Font
-                  fontSize={16}
-                  color={colors[7]}
-                  borderColor={colors[1]}
-                  strokeMultiplier={0.9}
-                  borderMultiplier={3}
-                >new</Font>
-              </TouchableOpacity>
-            </View>
-
-            <ScrollView style={styles.container}>
-
-              <FlatGrid
-                itemDimension={128}
-                items={disks}
-                renderItem={({ item: disk }) => (
-                  <Tile
-                    key={disk.id}
-                    id={disk.id}
-                    onPress={onPress(disk)}
-                    size={120}
-                  />
-                )}
-              />
-            </ScrollView>
-
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }
+HomeScreen.navigationOptions = {
+  header: Header
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors[14],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-  },
-
-  frame1: {
-    flex: 1,
-    display: "flex",
-    borderRightColor: colors[14],
-    borderBottomColor: colors[14],
-    borderLeftColor: colors[14],
-    borderRightWidth: 4,
-    borderBottomWidth: 4,
-    borderLeftWidth: 4,
-  },
-
-  frame2: {
-    flex: 1,
-    display: "flex",
-    borderTopColor: colors[2],
-    borderRightColor: colors[2],
-    borderBottomColor: colors[2],
-    borderLeftColor: colors[2],
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderBottomWidth: 2,
-    borderLeftWidth: 2,
-  },
-
   controls: {
     display: "flex",
     flexDirection: "row",

@@ -26,6 +26,7 @@ import thunks from "../thunks"
 
 import Tile from "../components/tile"
 import Floppy from "../components/floppy"
+import Frame from "../components/frame"
 import Font from "../components/font"
 import Header from "../components/header"
 
@@ -40,39 +41,25 @@ const mapDispatchToProps = dispatch => ({
   // open: diskId => dispatch(actions.open(diskId)),
 });
 
-class HelpScreen extends React.Component {
-  static navigationOptions = {
-    header: Header
-  }
+export function HelpScreen({ navigation }) {
+  return (
+    <Frame>
+      <View style={styles.container}>
+        <WebView
+          bounces={false}
+          originWhitelist={["*"]}
+          scrollEnabled={true}
+          source={{ uri: manual.uri }}
+          style={styles.webView}
+          useWebKit
+        />
+      </View>
+    </Frame>
+  )
+}
 
-  static propTypes = {
-    navigation: PropTypes.any,
-  }
-
-  render() {
-    console.log("help")
-
-    return (
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.frame1}>
-          <View style={styles.frame2}>
-
-            <View style={styles.container}>
-              <WebView
-                bounces={false}
-                originWhitelist={["*"]}
-                scrollEnabled={true}
-                source={{ uri: manual.uri }}
-                style={styles.webView}
-                useWebKit
-              />
-            </View>
-
-          </View>
-        </View>
-      </SafeAreaView>
-    )
-  }
+HelpScreen.navigationOptions = {
+  header: Header
 }
 
 const styles = StyleSheet.create({
@@ -121,7 +108,6 @@ const styles = StyleSheet.create({
     flex: 10,
     borderColor: colors[14],
   },
-
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HelpScreen)
