@@ -8,15 +8,13 @@ import select from "../../selectors"
 
 const mapStateToProps = (state, ownProps) => {
   const diskId = ownProps.id
-  const disk = select.disks.from(state).byId(diskId)
-  const edit = select.edits.from(state).byDiskId(diskId).pop()
+  const disk = state.disks[diskId]
   return {
     disk,
-    edit,
   }
 }
 
-export function Disk ({ disk, edit, size }) {
+export function Disk ({ disk, size }) {
   const dimensions = {
     width: size,
     height: size,
@@ -60,16 +58,14 @@ export function Disk ({ disk, edit, size }) {
         fill={colors[12]}
       />
 
-      {edit && (
-        <SvgImage
-          href={{ uri: edit.snapshot }}
-          x={1}
-          y={1}
-          width={14}
-          height={14}
-          clipPath="url(#shape)"
-        />
-      )}
+      <SvgImage
+        href={{ uri: disk.snapshot }}
+        x={1}
+        y={1}
+        width={14}
+        height={14}
+        clipPath="url(#shape)"
+      />
     </Svg>
   )
 }

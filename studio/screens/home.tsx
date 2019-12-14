@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import PropTypes from "prop-types"
 
@@ -20,6 +21,9 @@ import colors from "@itsy.studio/palettes/pico8/original.es6"
 import select from "../selectors"
 import thunks from "../thunks"
 
+import disks, { allDisks } from "../store/disks"
+import editor from "../store/editor"
+
 import Button from "../components/button"
 import Font from "../components/font"
 import Frame from "../components/frame"
@@ -27,20 +31,21 @@ import Header from "../components/header"
 import Tile from "../components/tile"
 
 const mapStateToProps = state => ({
-  disks: select.disks.from(state).forHomeScreen(),
+  disks: allDisks(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  onNew: () => dispatch(thunks.new()),
-  open: diskId => dispatch(actions.open(diskId)),
-});
+const mapDispatchToProps = {
+  create: disks.actions.create,
+  open: disks.actions.open,
+}
 
 export function HomeScreen({
   disks,
   navigation,
-  onNew,
+  create,
   open,
 }) {
+  console.log(disks)
   const onPress = disk => () => {
     open(disk.id)
     navigation.navigate("Disk", { disk })
@@ -49,7 +54,7 @@ export function HomeScreen({
   return (
     <Frame>
       <View style={styles.controls}>
-        <Button onPress={onNew}>new</Button>
+        <Button onPress={() => create()}>new</Button>
       </View>
 
       <ScrollView style={styles.container}>

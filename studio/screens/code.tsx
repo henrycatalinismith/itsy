@@ -20,19 +20,21 @@ import Stop from "../components/stop"
 
 import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../selectors"
 import thunks from "../thunks"
 
-const mapStateToProps = state => {
-  const diskId = select.scalars.from(state).diskId()
-  //console.log(diskId)
-  return {
-    disk: select.edits.from(state).byDiskId(diskId).pop(),
-    drive: select.edits.from(state).forPlayer(diskId),
-    running: select.scalars.from(state).running(),
-    orientation: select.scalars.from(state).orientation(),
-  }
-}
+import { activeDisk } from "../store/disks"
+
+import {
+  ScreenOrientation,
+  screenOrientation,
+} from "../store/screen"
+
+const mapStateToProps = state => ({
+  disk: activeDisk(state),
+  orientation: screenOrientation(state),
+  drive: undefined,
+  running: false,
+})
 
 const mapDispatchToProps = dispatch => ({
   edit: lua => dispatch(thunks.edit(lua)),
@@ -54,7 +56,6 @@ export function CodeScreen({
 }) {
 
   const onMoveDivider = (x, y) => console.log(x, y)
-
   return (
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>

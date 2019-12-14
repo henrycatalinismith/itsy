@@ -45,6 +45,8 @@ import Help from "./screens/help"
 
 import Header from "./components/header"
 
+import rtkStore from "./store"
+
 const initialState = {
   disks: {
     abc: {
@@ -135,7 +137,7 @@ class App extends React.Component {
       )
     } else {
       return (
-        <Provider store={store}>
+        <Provider store={rtkStore}>
           <AppContainer />
         </Provider>
       )

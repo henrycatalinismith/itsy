@@ -20,15 +20,17 @@ import Font from "../components/font"
 import Frame from "../components/frame"
 import Header from "../components/header"
 
+import { activeDisk } from "../store/disks"
+
 import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 import select from "../selectors"
 import thunks from "../thunks"
 
 const mapStateToProps = (state, ownProps) => {
-  const diskId = select.scalars.from(state).diskId()
+  const disk = activeDisk(state)
   return {
-    disk: select.disks.from(state).byId(diskId),
+    disk,
   }
 }
 

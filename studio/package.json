@@ -22,6 +22,7 @@
     "@itsy.studio/itsy": "file:../itsy",
     "@itsy.studio/palettes": "file:../palettes",
     "@itsy.studio/pixelflip": "file:../pixelflip",
+    "@reduxjs/toolkit": "^1.1.0",
     "base-64": "^0.1.0",
     "codemirror": "^5.45.0",
     "expo": "^35.0.0",
