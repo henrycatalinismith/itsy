@@ -1,0 +1,21 @@
+@import "node_modules/@itsy.studio/palettes/pico8/_original.scss";
+
+.snapshot {
+  flex: 1;
+  border-color: pico8-original-palette(2);
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+
+  background-color: pico8-original-palette(12);
+  display: flex;
+}
+
+.webview {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -16,24 +16,24 @@ import Frame from "../components/frame"
 import Header from "../components/header"
 import Play from "../components/play"
 import Player from "../components/player"
+import Snapshot from "../components/snapshot"
 import Stop from "../components/stop"
+import Worker from "../components/worker"
 
 import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 import thunks from "../thunks"
 
 import { activeDisk } from "../store/disks"
-
-import {
-  ScreenOrientation,
-  screenOrientation,
-} from "../store/screen"
+import { screenOrientation } from "../store/screen"
+import { WorkerState, workerSelector } from "../store/worker"
 
 const mapStateToProps = state => ({
   disk: activeDisk(state),
   orientation: screenOrientation(state),
   drive: undefined,
   running: false,
+  worker: workerSelector(state)
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -53,6 +53,7 @@ export function CodeScreen({
   snap,
   stop,
   edit,
+  worker,
 }) {
 
   const onMoveDivider = (x, y) => console.log(x, y)
@@ -75,15 +76,23 @@ export function CodeScreen({
           />
         </View>
         <Divider orientation={orientation} onMove={onMoveDivider}>
+
         </Divider>
-        <Player
-          disk={disk}
-          edit={drive}
-          onSnap={snapshot => snap({
-            id: drive.id,
-            snapshot,
-          })}
-        />
+        <Snapshot />
+        {(true) ? (
+          <></>
+        ) : worker.running ? (
+          <Worker />
+        ) : (
+          <Player
+            disk={disk}
+            edit={drive}
+            onSnap={snapshot => snap({
+              id: drive.id,
+              snapshot,
+            })}
+          />
+        )}
       </View>
     </Frame>
   )

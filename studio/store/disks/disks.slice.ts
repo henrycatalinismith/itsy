@@ -5,7 +5,7 @@ import uuid from "uuid"
 import { palette, snapshot, spritesheet } from "../../defaults"
 import words from "../../words"
 
-interface Disk {
+export interface Disk {
   id: string
   name: string
   lua: string
@@ -21,16 +21,6 @@ interface Disk {
 
 interface DiskState {
   [id: string]: Disk
-}
-
-interface DiskRename {
-  id: string
-  name: string
-}
-
-interface DiskEdit {
-  id: string
-  lua: string
 }
 
 const name = "disks"
@@ -62,22 +52,22 @@ const reducers = {
   },
 
   open(disks, action: PayloadAction<string>) {
-    _.filter(disks, { active: true }).forEach(disk => {
+    _.filter(disks, "active").forEach(disk => {
       disk.active = false
     })
     disks[action.payload].active = true
   },
 
-  rename(disks, action: PayloadAction<DiskRename>) {
-    const { id, name } = action.payload
-    disks[id].name = name
-    disks[id].updated = new Date
+  rename(disks, action: PayloadAction<string>) {
+    const disk = _.find(disks, "active")
+    disk.name = action.payload
+    disk.updated = (new Date).toISOString()
   },
 
-  edit(disks, action: PayloadAction<DiskEdit>) {
-    const { id, lua } = action.payload
-    disks[id].lua = lua
-    disks[id].updated = new Date
+  edit(disks, action: PayloadAction<string>) {
+    const disk = _.find(disks, "active")
+    disk.lua = action.payload
+    disk.updated = (new Date).toISOString()
   },
 }
 
@@ -91,7 +81,7 @@ export const allDisks = ({ disks }) => _.values(disks)
 
 export const activeDisk = createSelector(
   [allDisks],
-  (disks) => _.find(disks, { active: true })
+  (disks) => _.find(disks, "active")
 )
 
 export default slice

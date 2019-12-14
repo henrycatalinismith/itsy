@@ -10,6 +10,7 @@ import {
 import disks from "./disks"
 import editor from "./editor"
 import screen from "./screen"
+import worker from "./worker"
 
 const middleware = [...getDefaultMiddleware()]
 
@@ -17,6 +18,7 @@ const reducer = {
   disks: disks.reducer,
   editor: editor.reducer,
   screen: screen.reducer,
+  worker: worker.reducer,
 }
 
 const preloadedState = {
@@ -50,5 +52,7 @@ const store = configureStore({
 
 exports.disks = disks
 exports.editor = editor
+exports.screen = screen
+exports.worker = worker
 
 export default store

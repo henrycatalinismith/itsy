@@ -1,34 +1,16 @@
 import _ from "lodash"
 import React from "react"
-import PropTypes from "prop-types"
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native"
-
+import { ScrollView, StyleSheet, View } from "react-native"
 import { FlatGrid } from "react-native-super-grid"
-
 import { connect } from "react-redux"
 
-import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../selectors"
-import thunks from "../thunks"
-
-import disks, { allDisks } from "../store/disks"
-import editor from "../store/editor"
 
 import Button from "../components/button"
-import Font from "../components/font"
 import Frame from "../components/frame"
 import Header from "../components/header"
 import Tile from "../components/tile"
+import disks, { allDisks } from "../store/disks"
 
 const mapStateToProps = state => ({
   disks: allDisks(state)
@@ -45,7 +27,6 @@ export function HomeScreen({
   create,
   open,
 }) {
-  console.log(disks)
   const onPress = disk => () => {
     open(disk.id)
     navigation.navigate("Disk", { disk })
