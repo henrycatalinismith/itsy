@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
+import delay from "delay"
 import _ from "lodash"
 
-import { allDisks } from "../disks"
+import { Thunk } from "../"
+import player from "../player"
+import { build, workerOutput } from "../worker"
 
-interface EditorState {
+export interface EditorState {
 }
 
 const name = "editor"
@@ -20,6 +23,14 @@ const slice = createSlice({
   reducers,
 })
 
-const editorSelector = ({ editor }) => editor
+export const play = (): Thunk => async (dispatch, getState) => {
+  console.log("play")
+  dispatch(build())
+  await delay(1000);
+  const output = workerOutput(getState())
+  dispatch(player.actions.play(output))
+}
+
+export const editorSelector = ({ editor }) => editor
 
 export default slice

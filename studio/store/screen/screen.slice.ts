@@ -29,7 +29,7 @@ const reducers = {
   },
 }
 
-const screenSelector = ({ screen: { width, height }}) => ({ width, height })
+export const screenSelector = ({ screen: { width, height }}) => ({ width, height })
 
 export const screenOrientation = createSelector(screenSelector, ({ width, height }) => {
   if (width > height) {

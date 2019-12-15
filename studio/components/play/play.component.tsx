@@ -1,14 +1,22 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
+import { connect } from "react-redux"
 
-
+import { play } from "../../store/editor"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-export function Play({ onPress }) {
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = {
+  play,
+}
+
+export function Play({ play }) {
   return (
     <>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={play}>
         <Svg width={26} height={32} viewBox="0 0 40 48">
            <Path
             d="M8,8 L32,24 L8,40 L8,8"
@@ -31,4 +39,4 @@ export function Play({ onPress }) {
   )
 }
 
-export default Play
+export default connect(mapStateToProps, mapDispatchToProps)(Play)

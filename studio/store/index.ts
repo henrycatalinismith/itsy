@@ -1,5 +1,13 @@
+import {
+  Action,
+  combineReducers,
+  configureStore,
+  getDefaultMiddleware,
+  createSelector,
+} from "@reduxjs/toolkit"
+
 import { Dimensions } from "react-native"
-import { configureStore, getDefaultMiddleware, createSelector } from "@reduxjs/toolkit"
+import { ThunkAction } from "redux-thunk"
 
 import {
   palette,
@@ -9,17 +17,19 @@ import {
 
 import disks from "./disks"
 import editor from "./editor"
+import player from "./player"
 import screen from "./screen"
 import worker from "./worker"
 
 const middleware = [...getDefaultMiddleware()]
 
-const reducer = {
+const reducer = combineReducers({
   disks: disks.reducer,
   editor: editor.reducer,
+  player: player.reducer,
   screen: screen.reducer,
   worker: worker.reducer,
-}
+})
 
 const preloadedState = {
   disks: {
@@ -52,7 +62,12 @@ const store = configureStore({
 
 exports.disks = disks
 exports.editor = editor
+exports.player = player
 exports.screen = screen
 exports.worker = worker
+
+export type RootState = ReturnType<typeof reducer>
+export type Dispatch = typeof store.dispatch
+export type Thunk = ThunkAction<void, RootState, null, Action<string>>
 
 export default store

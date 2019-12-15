@@ -5,6 +5,8 @@ import uuid from "uuid"
 import { palette, snapshot, spritesheet } from "../../defaults"
 import words from "../../words"
 
+import { Thunk } from "../"
+
 export interface Disk {
   id: string
   name: string

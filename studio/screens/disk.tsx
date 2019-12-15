@@ -11,7 +11,6 @@ import Frame from "../components/frame"
 import Header from "../components/header"
 import disks, { activeDisk } from "../store/disks"
 
-
 const mapStateToProps = state => ({
   disk: activeDisk(state),
 })
