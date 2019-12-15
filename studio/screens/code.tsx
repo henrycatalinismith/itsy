@@ -1,13 +1,5 @@
 import React from "react"
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native"
-
+import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 
 import Divider from "../components/divider"
@@ -16,45 +8,37 @@ import Frame from "../components/frame"
 import Header from "../components/header"
 import Play from "../components/play"
 import Player from "../components/player"
+import Snapshot from "../components/snapshot"
 import Stop from "../components/stop"
+import Worker from "../components/worker"
 
-import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../selectors"
-import thunks from "../thunks"
 
-const mapStateToProps = state => {
-  const diskId = select.scalars.from(state).diskId()
-  //console.log(diskId)
-  return {
-    disk: select.edits.from(state).byDiskId(diskId).pop(),
-    drive: select.edits.from(state).forPlayer(diskId),
-    running: select.scalars.from(state).running(),
-    orientation: select.scalars.from(state).orientation(),
-  }
+import { activeDisk, play } from "../store/disks"
+import { screenOrientation } from "../store/screen"
+import { playerSelector } from "../store/player"
+import { workerSelector } from "../store/worker"
+
+const mapStateToProps = state => ({
+  disk: activeDisk(state),
+  orientation: screenOrientation(state),
+  drive: undefined,
+  player: playerSelector(state),
+  worker: workerSelector(state),
+})
+
+const mapDispatchToProps = {
 }
-
-const mapDispatchToProps = dispatch => ({
-  edit: lua => dispatch(thunks.edit(lua)),
-  play: () => dispatch(thunks.play()),
-  snap: edit => dispatch(actions.snap(edit)),
-  stop: () => dispatch(thunks.stop()),
-});
 
 export function CodeScreen({
   disk,
-  drive,
-  navigation,
   orientation,
-  running,
-  play,
-  snap,
-  stop,
   edit,
+  player,
+  worker,
 }) {
 
   const onMoveDivider = (x, y) => console.log(x, y)
-
   return (
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>
@@ -62,27 +46,21 @@ export function CodeScreen({
         <View style={styles.editorContainer}>
           <View style={styles.controls}>
             <View style={styles.button}>
-              {running ? <Stop onPress={stop} /> : <Play onPress={play} />}
+              {player.running ? <Stop /> : <Play />}
             </View>
           </View>
-          <Editor
-            lua={disk.lua}
-            onChange={edit}
-            onPlay={play}
-            onStop={stop}
-            running={running}
-          />
+          <Editor />
         </View>
         <Divider orientation={orientation} onMove={onMoveDivider}>
+
         </Divider>
-        <Player
-          disk={disk}
-          edit={drive}
-          onSnap={snapshot => snap({
-            id: drive.id,
-            snapshot,
-          })}
-        />
+        {worker.running ? (
+          <Worker />
+        ) : player.running ? (
+          <Player />
+        ) : (
+          <Snapshot />
+        )}
       </View>
     </Frame>
   )

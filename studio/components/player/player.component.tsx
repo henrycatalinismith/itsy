@@ -1,10 +1,40 @@
 import React from "react"
-import PropTypes from "prop-types"
-import { WebView, View } from "react-native"
+import { View } from "react-native"
+import { WebView } from "react-native-webview"
+import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
+
+import { PlayerState, playerSelector } from "../../store/player"
+
+import Font from "../font"
 import styles from "./player.module.scss"
 
+interface PlayerProps {
+  player: PlayerState
+}
+
+const mapStateToProps = state => ({
+  player: playerSelector(state),
+})
+
+export function Player({ player }: PlayerProps) {
+  console.log(player.html)
+  return (
+    <View style={styles.player}>
+      <WebView
+        bounces={false}
+        scrollEnabled={false}
+        onMessage={() => {}}
+        source={{ html: player.html }}
+      />
+    </View>
+  )
+}
+
+export default connect(mapStateToProps)(Player)
+
+/*
 export default class Player extends React.Component {
   static propTypes = {
     disk: PropTypes.any,
@@ -167,3 +197,5 @@ export default class Player extends React.Component {
     )
   }
 }
+
+*/

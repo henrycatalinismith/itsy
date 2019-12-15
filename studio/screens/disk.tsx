@@ -1,40 +1,23 @@
 import React from "react"
-
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-} from "react-native"
-
+import { StyleSheet, TextInput, TouchableHighlight, View } from "react-native"
 import { connect } from "react-redux"
 
+import colors from "@itsy.studio/palettes/pico8/original.es6"
+
 import Button from "../components/button"
-import Center from "../components/center"
 import Disk from "../components/disk"
 import Font from "../components/font"
 import Frame from "../components/frame"
 import Header from "../components/header"
+import disks, { activeDisk } from "../store/disks"
 
-import actions from "../actions"
-import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../selectors"
-import thunks from "../thunks"
+const mapStateToProps = state => ({
+  disk: activeDisk(state),
+})
 
-const mapStateToProps = (state, ownProps) => {
-  const diskId = select.scalars.from(state).diskId()
-  return {
-    disk: select.disks.from(state).byId(diskId),
-  }
+const mapDispatchToProps = {
+  rename: disks.actions.rename,
 }
-
-const mapDispatchToProps = dispatch => ({
-  rename: name => dispatch(thunks.rename(name)),
-});
 
 export function DiskScreen({
   disk,

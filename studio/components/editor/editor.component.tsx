@@ -1,15 +1,36 @@
 import { Asset } from "expo-asset"
 import React from "react"
 import { WebView, View } from "react-native"
+import { connect } from "react-redux"
+
+import disks, { Disk, activeDisk } from "../../store/disks"
+import { EditorState, editorSelector } from "../../store/editor"
 
 import styles from "./editor.module.scss"
 
+interface EditorProps {
+  disk: Disk
+  editor: EditorState
+  edit: (lua: string) => void
+}
+
 const html = Asset.fromModule(require("../../assets/webviews/editor.html"))
 
+const mapStateToProps = state => ({
+  disk: activeDisk(state),
+  editor: editorSelector(state),
+})
+
+const mapDispatchToProps = {
+  edit: disks.actions.edit,
+}
+
 export function Editor({
-  lua = "",
-  onChange = (lua: string): void => {},
-}) {
+  disk,
+  editor,
+  edit,
+}: EditorProps) {
+  const lua = disk.lua
   const webview = React.useRef() as any
 
   const handleMessage = event => {
@@ -29,7 +50,7 @@ export function Editor({
         if (message.lua === lua) {
           //console.log("SAME LOLOLOLOL")
         } else {
-          onChange(message.lua)
+          edit(message.lua)
         }
         return
 
@@ -52,5 +73,5 @@ export function Editor({
   ), [])
 }
 
-export default Editor
+export default connect(mapStateToProps, mapDispatchToProps)(Editor)
 

@@ -7,5 +7,5 @@ import scalars from "./scalars"
 export default applyMiddleware.apply(null, [
   reduxThunk,
   ...log,
-  ...scalars,
+  //...scalars,
 ])

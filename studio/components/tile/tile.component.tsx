@@ -14,10 +14,13 @@ import colors from "@itsy.studio/palettes/pico8/original.es6"
 import styles from "./tile.module.scss"
 import select from "../../selectors"
 
-const mapStateToProps = (state, ownProps) => ({
-  disk: select.disks.from(state).byId(ownProps.id),
-  edit: select.edits.from(state).forHome(ownProps.id),
-})
+const mapStateToProps = (state, ownProps) => {
+  const diskId = ownProps.id
+  const disk = state.disks[ownProps.id]
+  return {
+    disk
+  }
+}
 
 export function Tile({
   disk,
@@ -69,16 +72,14 @@ export function Tile({
           fill={colors[12]}
         />
 
-        {edit && (
-          <Image
-            href={{ uri: edit.snapshot }}
-            x={1}
-            y={1}
-            width={14}
-            height={14}
-            clipPath="url(#shape)"
-          />
-        )}
+        <Image
+          href={{ uri: disk.snapshot }}
+          x={1}
+          y={1}
+          width={14}
+          height={14}
+          clipPath="url(#shape)"
+        />
 
       </Svg>
 

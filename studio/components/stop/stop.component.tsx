@@ -1,13 +1,22 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
+import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
+import { stop } from "../../store/player"
 import styles from "./stop.module.scss"
 
-export function Stop({ onPress }) {
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = {
+  stop,
+}
+
+export function Stop({ stop }) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={stop}>
       <Svg width={26} height={32} viewBox="0 0 40 48">
           <Path
           d="M8,8 L32,24 L8,40 L8,8"
@@ -29,4 +38,4 @@ export function Stop({ onPress }) {
   )
 }
 
-export default Stop
+export default connect(mapStateToProps, mapDispatchToProps)(Stop)

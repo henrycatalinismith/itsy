@@ -1,33 +1,17 @@
 import { Asset } from "expo-asset"
 import React from "react"
-import PropTypes from "prop-types"
 
 import {
-  SafeAreaView,
-  ScrollView,
   StyleSheet,
-  Text,
-  TouchableHighlight,
-  TouchableOpacity,
   WebView,
   View,
 } from "react-native"
 
-// import WebView from "rn-webview"
-
-import { FlatGrid } from "react-native-super-grid"
-
 import { connect } from "react-redux"
 
-import actions from "../actions"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../selectors"
-import thunks from "../thunks"
 
-import Tile from "../components/tile"
-import Floppy from "../components/floppy"
 import Frame from "../components/frame"
-import Font from "../components/font"
 import Header from "../components/header"
 
 const manual = Asset.fromModule(require("../assets/webviews/manual.html"))
