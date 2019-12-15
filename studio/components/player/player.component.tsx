@@ -5,21 +5,28 @@ import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
+import disks from "../../store/disks"
 import { PlayerState, playerSelector } from "../../store/player"
 
 import Font from "../font"
 import styles from "./player.module.scss"
 import disk from "screens/disk"
+import { snapshot } from "defaults"
 
 interface PlayerProps {
   player: PlayerState
+  snapshot: (uri: string) => void
 }
 
 const mapStateToProps = state => ({
   player: playerSelector(state),
 })
 
-export function Player({ player }: PlayerProps) {
+const mapDispatchToProps = {
+  snapshot: disks.actions.snapshot
+}
+
+export function Player({ player, snapshot }: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -69,7 +76,9 @@ export function Player({ player }: PlayerProps) {
   }, [player.stopping])
 
   const onMessage = event => {
-    console.log(`💃 ${event.nativeEvent.data}`)
+    const message = JSON.parse(event.nativeEvent.data)
+    console.log(`💃 ${message.type}`)
+    snapshot(message.uri)
   }
 
   const injectedJavaScript = `(function() {
@@ -95,7 +104,7 @@ export function Player({ player }: PlayerProps) {
   ), [])
 }
 
-export default connect(mapStateToProps)(Player)
+export default connect(mapStateToProps, mapDispatchToProps)(Player)
 
 /*
 export default class Player extends React.Component {

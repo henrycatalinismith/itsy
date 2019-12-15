@@ -72,8 +72,8 @@ export function Tile({
           fill={colors[12]}
         />
 
-        <Image
-          href={{ uri: disk.snapshot }}
+        <SvgImage
+          href={disk.snapshot}
           x={1}
           y={1}
           width={14}

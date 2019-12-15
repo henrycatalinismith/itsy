@@ -71,6 +71,12 @@ const reducers = {
     disk.lua = action.payload
     disk.updated = (new Date).toISOString()
   },
+
+  snapshot(disks, action: PayloadAction<string>) {
+    const disk = _.find(disks, "active")
+    disk.snapshot = action.payload
+    disk.updated = (new Date).toISOString()
+  },
 }
 
 const slice = createSlice({
