@@ -100,10 +100,6 @@ var itsy = {
 
 ${Buffer.from(base64.engine, "base64").toString()}
 
-window.ReactNativeWebview.postMessage(JSON.stringify({
-        type: "hello",
-      }), "*")
-
 document.addEventListener("message", data => {
   window.postMessage(JSON.stringify({ type: "message", ddd: data.data  }), "*")
   const message = JSON.parse(data.data)
