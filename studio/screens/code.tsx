@@ -14,15 +14,12 @@ import Worker from "../components/worker"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import { activeDisk, play } from "../store/disks"
-import { screenOrientation } from "../store/screen"
 import { playerSelector } from "../store/player"
+import { screenOrientation } from "../store/screen"
 import { workerSelector } from "../store/worker"
 
 const mapStateToProps = state => ({
-  disk: activeDisk(state),
   orientation: screenOrientation(state),
-  drive: undefined,
   player: playerSelector(state),
   worker: workerSelector(state),
 })
@@ -31,14 +28,11 @@ const mapDispatchToProps = {
 }
 
 export function CodeScreen({
-  disk,
   orientation,
-  edit,
   player,
   worker,
 }) {
 
-  const onMoveDivider = (x, y) => console.log(x, y)
   return (
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>
@@ -51,16 +45,17 @@ export function CodeScreen({
           </View>
           <Editor />
         </View>
-        <Divider orientation={orientation} onMove={onMoveDivider}>
 
-        </Divider>
-        {worker.running ? (
+        <Divider />
+
+        {(worker.running || player.waiting) ? (
           <Worker />
-        ) : player.running ? (
+        ) : (player.running || player.stopping) ? (
           <Player />
         ) : (
           <Snapshot />
         )}
+
       </View>
     </Frame>
   )

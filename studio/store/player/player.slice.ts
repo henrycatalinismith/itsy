@@ -1,10 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import delay from "delay"
 import { Thunk } from "../"
 import worker from "../worker"
 
 export interface PlayerState {
   html: string
   running: boolean
+  stopping: boolean
   waiting: boolean
 }
 
@@ -13,6 +15,7 @@ const name = "player"
 const initialState: PlayerState = {
   html: "",
   running: false,
+  stopping: false,
   waiting: false,
 }
 
@@ -23,9 +26,15 @@ const reducers = {
     player.waiting = false
   },
 
-  stop(player) {
+  shutdown(player) {
     player.running = false
-  }
+    player.stopping = true
+  },
+
+  stop(player) {
+    player.stopping = false
+    player.running = false
+  },
 }
 
 const extraReducers = {
@@ -44,6 +53,8 @@ const slice = createSlice({
 export const actions = slice.actions
 
 export const stop = (): Thunk => async dispatch => {
+  dispatch(slice.actions.shutdown())
+  await delay(100)
   dispatch(slice.actions.stop())
 }
 

@@ -19,14 +19,39 @@ const mapStateToProps = state => ({
 })
 
 export function Player({ player }: PlayerProps) {
-  console.log(player.html)
+  const webview = React.useRef()
+
+  React.useEffect(() => {
+    if (player.stopping) {
+      console.log("triggering snapshot")
+      webview.current.postMessage(JSON.stringify({
+        type: "stop",
+      }))
+    }
+  }, [player.stopping])
+
+  const handleMessage = event => {
+    console.log(`💃 ${event.nativeEvent.data}`)
+    // switch (message.type) {
+      // case "snapshot":
+        // console.log(message.uri)
+        // return
+    // }
+  }
+
+  const inject = `(function() {
+    window.ReactNativeWebView.postMessage(JSON.stringify(window.location));
+  })();`;
+
   return (
     <View style={styles.player}>
       <WebView
+        ref={webview}
         bounces={false}
         scrollEnabled={false}
-        onMessage={() => {}}
+        onMessage={handleMessage}
         source={{ html: player.html }}
+        injectedJavaScriptBeforeContentLoaded={inject}
       />
     </View>
   )

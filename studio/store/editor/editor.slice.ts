@@ -24,7 +24,6 @@ const slice = createSlice({
 })
 
 export const play = (): Thunk => async (dispatch, getState) => {
-  console.log("play")
   dispatch(build())
   await delay(1000);
   const output = workerOutput(getState())
