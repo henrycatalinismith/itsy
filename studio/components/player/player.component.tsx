@@ -9,6 +9,7 @@ import { PlayerState, playerSelector } from "../../store/player"
 
 import Font from "../font"
 import styles from "./player.module.scss"
+import disk from "screens/disk"
 
 interface PlayerProps {
   player: PlayerState
@@ -24,37 +25,74 @@ export function Player({ player }: PlayerProps) {
   React.useEffect(() => {
     if (player.stopping) {
       console.log("triggering snapshot")
-      webview.current.postMessage(JSON.stringify({
-        type: "stop",
-      }))
+      webview.current.injectJavaScript(`
+        itsy.pauseMainLoop()
+
+        const colors = [
+          "#000000",
+          "#1D2B53",
+          "#7E2553",
+          "#008751",
+          "#AB5236",
+          "#5F574F",
+          "#C2C3C7",
+          "#FFF1E8",
+          "#FF004D",
+          "#FFA300",
+          "#FFEC27",
+          "#00E436",
+          "#29ADFF",
+          "#83769C",
+          "#FF77A8",
+          "#FFCCAA",
+        ]
+
+        const tmp = document.createElement("canvas")
+        tmp.width = 128
+        tmp.height = 128
+        const ctx = tmp.getContext("2d")
+        for (let x = 0; x < 128; x++) {
+          for (let y = 0; y < 128; y++) {
+            const c = itsy._pget(x, y)
+            ctx.fillStyle = colors[c]
+            ctx.fillRect(x, y, 128, 128)
+          }
+        }
+  
+        window.postMessage(JSON.stringify({
+          type: "snapshot",
+          uri: tmp.toDataURL("image/png"),
+        }))
+
+      `)
     }
   }, [player.stopping])
 
-  const handleMessage = event => {
+  const onMessage = event => {
     console.log(`💃 ${event.nativeEvent.data}`)
-    // switch (message.type) {
-      // case "snapshot":
-        // console.log(message.uri)
-        // return
-    // }
   }
 
-  const inject = `(function() {
-    window.ReactNativeWebView.postMessage(JSON.stringify(window.location));
-  })();`;
+  const injectedJavaScript = `(function() {
+    window.postMessage = window.ReactNativeWebView.postMessage
+  })()`;
 
-  return (
+  const source = { html: player.html }
+  // const source = { html: "<h1 style='font-size: 128px'>lol</h1>" }
+
+  const webviewProps = {
+    ref: webview,
+    bounces: false,
+    injectedJavaScript,
+    onMessage,
+    scrollEnabled: false,
+    source,
+  }
+
+  return React.useMemo(() => (
     <View style={styles.player}>
-      <WebView
-        ref={webview}
-        bounces={false}
-        scrollEnabled={false}
-        onMessage={handleMessage}
-        source={{ html: player.html }}
-        injectedJavaScriptBeforeContentLoaded={inject}
-      />
+      <WebView {...webviewProps} />
     </View>
-  )
+  ), [])
 }
 
 export default connect(mapStateToProps)(Player)

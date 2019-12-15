@@ -54,7 +54,7 @@ export const actions = slice.actions
 
 export const stop = (): Thunk => async dispatch => {
   dispatch(slice.actions.shutdown())
-  await delay(100)
+  await delay(400)
   dispatch(slice.actions.stop())
 }
 

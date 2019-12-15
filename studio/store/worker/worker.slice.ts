@@ -1,4 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import delay from "delay"
+
 import { Thunk } from "../"
 import { write } from "@itsy.studio/itsy"
 
@@ -44,9 +46,10 @@ const slice = createSlice({
 
 export const build = (): Thunk => async (dispatch, getState) => {
   console.log("build")
-  const state = getState()
   dispatch(slice.actions.build())
 
+  await delay(100)
+  const state = getState()
   const disk = activeDisk(state)
   const output = write(disk)
 
