@@ -1,9 +1,5 @@
 import React from "react"
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-} from "react-native"
+import { SafeAreaView, StatusBar, View } from "react-native"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
@@ -12,21 +8,17 @@ import Floppy from "@itsy.studio/studio/components/floppy"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "@itsy.studio/studio/components/header/header.module.scss"
 
-export function Header ({
-  disk,
-  navigation,
-}) {
-
+export function Header({ disk, navigation }) {
   const activeIndex = navigation.state.index
   const activeRoute = navigation.state.routes[activeIndex]
   const activeScreen = activeRoute.routeName
 
-  const title = ({
+  const title = {
     Home: () => "itsy studio..",
     Disk: () => activeRoute.params.disk.name,
     Code: () => activeRoute.params.disk.name,
     Help: () => "itsy studio",
-  })[activeScreen]()
+  }[activeScreen]()
 
   const onHelp = () => {
     if (activeScreen !== "Help") {
@@ -43,10 +35,7 @@ export function Header ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        backgroundColor={colors[2]}
-        barStyle="light-content"
-      />
+      <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
       <View style={styles.inside}>
         <View style={styles.left}>
           <Floppy size={18} style={styles.floppy} />
@@ -57,12 +46,16 @@ export function Header ({
               borderColor={colors[0]}
               borderMultiplier={3}
               strokeMultiplier={0.9}
-            >{title}</Font>
+            >
+              {title}
+            </Font>
           </View>
         </View>
 
         <View style={styles.right}>
-          <Button theme={helpTheme} onPress={onHelp}>{helpText}</Button>
+          <Button theme={helpTheme} onPress={onHelp}>
+            {helpText}
+          </Button>
         </View>
       </View>
     </SafeAreaView>

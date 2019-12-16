@@ -241,7 +241,7 @@ const animals = [
   "zebra",
 ]
 
-const choose = a => a[Math.floor(Math.random() * a.length)]
+const choose = (a) => a[Math.floor(Math.random() * a.length)]
 
 export default () => {
   return `${choose(adjectives)} ${choose(animals)}`

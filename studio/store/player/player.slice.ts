@@ -40,7 +40,7 @@ const reducers = {
 const extraReducers = {
   [worker.actions.build]: (player) => {
     player.waiting = true
-  }
+  },
 }
 
 const slice = createSlice({
@@ -52,7 +52,7 @@ const slice = createSlice({
 
 export const actions = slice.actions
 
-export const stop = (): Thunk => async dispatch => {
+export const stop = (): Thunk => async (dispatch) => {
   dispatch(slice.actions.shutdown())
   await delay(400)
   dispatch(slice.actions.stop())
@@ -60,6 +60,9 @@ export const stop = (): Thunk => async dispatch => {
 
 export const playerSelector = ({ player }): PlayerState => player
 
-export const playerRunning = createSelector(playerSelector, ({ running }) => running)
+export const playerRunning = createSelector(
+  playerSelector,
+  ({ running }) => running
+)
 
 export default slice

@@ -11,11 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
   disk: state.disks[ownProps.id],
 })
 
-export function Tile({
-  disk,
-  onPress,
-  size,
-}) {
+export function Tile({ disk, onPress, size }) {
   const dimensions = {
     width: size,
     height: size,
@@ -25,8 +21,12 @@ export function Tile({
 
   return (
     <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
-      <Svg style={styles.disk} width={diskSize} height={diskSize} viewBox="0 0 16 16">
-
+      <Svg
+        style={styles.disk}
+        width={diskSize}
+        height={diskSize}
+        viewBox="0 0 16 16"
+      >
         <Defs>
           <ClipPath id="shape">
             <Path
@@ -68,7 +68,6 @@ export function Tile({
           height={14}
           clipPath="url(#shape)"
         />
-
       </Svg>
 
       <Font
@@ -77,8 +76,9 @@ export function Tile({
         borderColor={colors[1]}
         borderMultiplier={3}
         strokeMultiplier={0.9}
-      >{disk.name}</Font>
-
+      >
+        {disk.name}
+      </Font>
     </TouchableOpacity>
   )
 }

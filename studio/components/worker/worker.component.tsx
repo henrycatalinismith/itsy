@@ -10,7 +10,7 @@ interface WorkerProps {
   running: boolean
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   running: workerRunning(state),
 })
 
@@ -23,7 +23,9 @@ export function Worker({ running }: WorkerProps) {
         borderColor={colors[1]}
         borderMultiplier={3}
         strokeMultiplier={0.9}
-      >{"building"}</Font>
+      >
+        {"building"}
+      </Font>
     </View>
   )
 }

@@ -7,8 +7,7 @@ import colors from "@itsy.studio/palettes/pico8/original.es6"
 import { stop } from "@itsy.studio/studio/store/player"
 // import styles from "@itsy.studio/studio/components/stop/stop.module.scss"
 
-const mapStateToProps = state => ({
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
   stop,
@@ -18,7 +17,7 @@ export function Stop({ stop }) {
   return (
     <TouchableOpacity onPress={stop}>
       <Svg width={26} height={32} viewBox="0 0 40 48">
-          <Path
+        <Path
           d="M8,8 L32,24 L8,40 L8,8"
           strokeLinecap="round"
           strokeLinejoin="round"

@@ -34,7 +34,7 @@ const reducers = {
     const html = ""
     const lua = ""
     const active = false
-    const created = (new Date).toISOString()
+    const created = new Date().toISOString()
     const updated = created
     const disk = {
       id,
@@ -52,7 +52,7 @@ const reducers = {
   },
 
   open(disks, action: PayloadAction<string>) {
-    _.filter(disks, "active").forEach(disk => {
+    _.filter(disks, "active").forEach((disk) => {
       disk.active = false
     })
     disks[action.payload].active = true
@@ -61,19 +61,19 @@ const reducers = {
   rename(disks, action: PayloadAction<string>) {
     const disk = _.find(disks, "active")
     disk.name = action.payload
-    disk.updated = (new Date).toISOString()
+    disk.updated = new Date().toISOString()
   },
 
   edit(disks, action: PayloadAction<string>) {
     const disk = _.find(disks, "active")
     disk.lua = action.payload
-    disk.updated = (new Date).toISOString()
+    disk.updated = new Date().toISOString()
   },
 
   snapshot(disks, action: PayloadAction<string>) {
     const disk = _.find(disks, "active")
     disk.snapshot = action.payload
-    disk.updated = (new Date).toISOString()
+    disk.updated = new Date().toISOString()
   },
 }
 
@@ -85,9 +85,8 @@ const slice = createSlice({
 
 export const allDisks = ({ disks }) => _.values(disks)
 
-export const activeDisk = createSelector(
-  [allDisks],
-  (disks) => _.find(disks, "active")
+export const activeDisk = createSelector([allDisks], (disks) =>
+  _.find(disks, "active")
 )
 
 export default slice

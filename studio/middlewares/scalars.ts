@@ -5,7 +5,7 @@ import actions from "../actions"
 import select from "../selectors"
 
 export default [
-  after("start", store => {
+  after("start", (store) => {
     Dimensions.addEventListener("change", () => {
       const { width, height } = Dimensions.get("window")
       store.dispatch(actions.resize(width, height))
@@ -16,5 +16,3 @@ export default [
     console.log(action.edit.snapshot)
   }),
 ]
-
-

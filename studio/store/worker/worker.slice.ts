@@ -28,14 +28,23 @@ const reducers = {
     worker.output = action.payload
     worker.running = false
     worker.success = true
-  }
+  },
 }
 
 export const workerSelector = ({ worker }): WorkerState => worker
 
-export const workerOutput = createSelector(workerSelector, ({ output }) => output)
-export const workerRunning = createSelector(workerSelector, ({ running }) => running)
-export const workerSuccess = createSelector(workerSelector, ({ success }) => success)
+export const workerOutput = createSelector(
+  workerSelector,
+  ({ output }) => output
+)
+export const workerRunning = createSelector(
+  workerSelector,
+  ({ running }) => running
+)
+export const workerSuccess = createSelector(
+  workerSelector,
+  ({ success }) => success
+)
 
 const slice = createSlice({
   name,

@@ -8,9 +8,9 @@ const orientations = ["landscape", "portrait"]
 
 const stories = storiesOf("Divider", module)
 
-stories.addDecorator(story => <Center>{story()}</Center>)
+stories.addDecorator((story) => <Center>{story()}</Center>)
 
-orientations.forEach(orientation => {
+orientations.forEach((orientation) => {
   const props = {
     orientation,
   }

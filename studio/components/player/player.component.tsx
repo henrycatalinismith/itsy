@@ -12,12 +12,12 @@ interface PlayerProps {
   snapshot: (uri: string) => void
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   player: playerSelector(state),
 })
 
 const mapDispatchToProps = {
-  snapshot: disks.actions.snapshot
+  snapshot: disks.actions.snapshot,
 }
 
 export function Player({ player, snapshot }: PlayerProps) {
@@ -69,7 +69,7 @@ export function Player({ player, snapshot }: PlayerProps) {
     }
   }, [player.stopping])
 
-  const onMessage = event => {
+  const onMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`💃 ${message.type}`)
     snapshot(message.uri)
@@ -77,7 +77,7 @@ export function Player({ player, snapshot }: PlayerProps) {
 
   const injectedJavaScript = `(function() {
     window.postMessage = window.ReactNativeWebView.postMessage
-  })()`;
+  })()`
 
   const source = { html: player.html }
   // const source = { html: "<h1 style='font-size: 128px'>lol</h1>" }
@@ -91,11 +91,14 @@ export function Player({ player, snapshot }: PlayerProps) {
     source,
   }
 
-  return React.useMemo(() => (
-    <View style={styles.player}>
-      <WebView {...webviewProps} />
-    </View>
-  ), [])
+  return React.useMemo(
+    () => (
+      <View style={styles.player}>
+        <WebView {...webviewProps} />
+      </View>
+    ),
+    []
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Player)

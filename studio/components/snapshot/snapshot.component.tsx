@@ -9,7 +9,7 @@ interface SnapshotProps {
   disk: Disk
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   disk: activeDisk(state),
 })
 
@@ -18,7 +18,8 @@ export function Snapshot({ disk }: SnapshotProps) {
     <View style={styles.snapshot}>
       <WebView
         style={styles.webview}
-        source={{ html: `
+        source={{
+          html: `
           <!DOCTYPE html>
           <html>
           <head>
@@ -52,7 +53,8 @@ export function Snapshot({ disk }: SnapshotProps) {
           <img src="${disk.snapshot}" />
           </body>
           </html>
-        ` }}
+        `,
+        }}
       />
     </View>
   )

@@ -49,7 +49,7 @@ function App({ skipLoadingScreen }): React.ReactElement {
     ])
   }
 
-  const handleLoadingError = error => {
+  const handleLoadingError = (error) => {
     console.warn(error)
   }
 

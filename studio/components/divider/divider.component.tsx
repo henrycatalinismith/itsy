@@ -9,7 +9,7 @@ interface DividerProps {
   orientation: string
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   orientation: screenOrientation(state),
 })
 

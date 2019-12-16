@@ -1,11 +1,7 @@
 import { Asset } from "expo-asset"
 import React from "react"
 
-import {
-  StyleSheet,
-  WebView,
-  View,
-} from "react-native"
+import { StyleSheet, WebView, View } from "react-native"
 
 import { connect } from "react-redux"
 
@@ -16,14 +12,14 @@ import Header from "@itsy.studio/studio/components/header"
 
 const manual = Asset.fromModule(require("../assets/webviews/manual.html"))
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   // asset: select.assets.from(state).forHelpScreen(),
 })
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // onNew: () => dispatch(thunks.new()),
   // open: diskId => dispatch(actions.open(diskId)),
-});
+})
 
 export function HelpScreen({ navigation }) {
   return (
@@ -43,7 +39,7 @@ export function HelpScreen({ navigation }) {
 }
 
 HelpScreen.navigationOptions = {
-  header: Header
+  header: Header,
 }
 
 const styles = StyleSheet.create({

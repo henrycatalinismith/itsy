@@ -29,15 +29,21 @@ const reducers = {
   },
 }
 
-export const screenSelector = ({ screen: { width, height }}) => ({ width, height })
-
-export const screenOrientation = createSelector(screenSelector, ({ width, height }) => {
-  if (width > height) {
-    return ScreenOrientation.landscape
-  } else {
-    return ScreenOrientation.portrait
-  }
+export const screenSelector = ({ screen: { width, height } }) => ({
+  width,
+  height,
 })
+
+export const screenOrientation = createSelector(
+  screenSelector,
+  ({ width, height }) => {
+    if (width > height) {
+      return ScreenOrientation.landscape
+    } else {
+      return ScreenOrientation.portrait
+    }
+  }
+)
 
 const slice = createSlice({
   name,

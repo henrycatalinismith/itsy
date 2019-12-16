@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export function Disk ({ disk, size }) {
+export function Disk({ disk, size }) {
   const dimensions = {
     width: size,
     height: size,
@@ -23,7 +23,6 @@ export function Disk ({ disk, size }) {
 
   return (
     <Svg width={diskSize} height={diskSize} viewBox="0 0 16 16">
-
       <Defs>
         <ClipPath id="shape">
           <Path

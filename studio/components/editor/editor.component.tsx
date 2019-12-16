@@ -15,7 +15,7 @@ interface EditorProps {
 
 const html = Asset.fromModule(require("../../assets/webviews/editor.html"))
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   disk: activeDisk(state),
   editor: editorSelector(state),
 })
@@ -24,23 +24,21 @@ const mapDispatchToProps = {
   edit: disks.actions.edit,
 }
 
-export function Editor({
-  disk,
-  editor,
-  edit,
-}: EditorProps) {
+export function Editor({ disk, editor, edit }: EditorProps) {
   const lua = disk.lua
   const webview = React.useRef() as any
 
-  const handleMessage = event => {
+  const handleMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`🏓 ${message.type}`)
     switch (message.type) {
       case "ready":
-        webview.current.postMessage(JSON.stringify({
-          type: "inject",
-          lua,
-        }))
+        webview.current.postMessage(
+          JSON.stringify({
+            type: "inject",
+            lua,
+          })
+        )
         break
 
       case "change":
@@ -53,24 +51,27 @@ export function Editor({
         }
         return
 
-      default: return // console.log(`🤷‍♀️ ${message.type}`)
+      default:
+        return // console.log(`🤷‍♀️ ${message.type}`)
     }
   }
 
-  return React.useMemo(() => (
-    <View style={styles.editor}>
-      <WebView
-        bounces={false}
-        injectedJavaScript="window.isReactNative = true;"
-        onMessage={handleMessage}
-        ref={webview}
-        scrollEnabled={false}
-        source={{ uri: html.uri }}
-        useWebKit
-      />
-    </View>
-  ), [])
+  return React.useMemo(
+    () => (
+      <View style={styles.editor}>
+        <WebView
+          bounces={false}
+          injectedJavaScript="window.isReactNative = true;"
+          onMessage={handleMessage}
+          ref={webview}
+          scrollEnabled={false}
+          source={{ uri: html.uri }}
+          useWebKit
+        />
+      </View>
+    ),
+    []
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)
-

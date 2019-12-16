@@ -11,7 +11,7 @@ import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
 import disks, { activeDisk } from "@itsy.studio/studio/store/disks"
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   disk: activeDisk(state),
 })
 
@@ -19,16 +19,12 @@ const mapDispatchToProps = {
   rename: disks.actions.rename,
 }
 
-export function DiskScreen({
-  disk,
-  navigation,
-  rename,
-}) {
+export function DiskScreen({ disk, navigation, rename }) {
   const [mode, setMode] = React.useState("neutral")
   const [name, setName] = React.useState(disk.name)
 
   const onRenameStart = () => setMode("rename")
-  const onRenameEdit = newName => setName(newName)
+  const onRenameEdit = (newName) => setName(newName)
   const onRenameSubmit = () => {
     setMode("neutral")
     rename(name)
@@ -50,7 +46,9 @@ export function DiskScreen({
               borderColor={colors[0]}
               borderMultiplier={3}
               strokeMultiplier={0.9}
-            >{disk.name}</Font>
+            >
+              {disk.name}
+            </Font>
           </TouchableHighlight>
         )}
 
@@ -74,7 +72,7 @@ export function DiskScreen({
 }
 
 DiskScreen.navigationOptions = {
-  header: Header
+  header: Header,
 }
 
 const styles = StyleSheet.create({

@@ -9,11 +9,7 @@ import {
 import { Dimensions } from "react-native"
 import { ThunkAction } from "redux-thunk"
 
-import {
-  palette,
-  snapshot,
-  spritesheet,
-} from "../defaults"
+import { palette, snapshot, spritesheet } from "../defaults"
 
 import disks from "./disks"
 import editor from "./editor"
@@ -37,12 +33,13 @@ const preloadedState = {
       id: "uvw",
       name: "example",
       diskId: "abc",
-      lua: "cls(12)\nrect(32, 32, 96, 96, 8)\nfunction _draw()\n  circ(64, 64, 64, rnd(15))\nend\n",
+      lua:
+        "cls(12)\nrect(32, 32, 96, 96, 8)\nfunction _draw()\n  circ(64, 64, 64, rnd(15))\nend\n",
       palette,
       snapshot,
       spritesheet,
-      created: (new Date).toISOString(),
-      updated: (new Date).toISOString(),
+      created: new Date().toISOString(),
+      updated: new Date().toISOString(),
       started: undefined,
       stopped: undefined,
     },

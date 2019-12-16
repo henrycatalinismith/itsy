@@ -9,6 +9,4 @@ const editorAsset = Asset.fromModule(editorModule)
 
 const stories = storiesOf("Editor", module)
 
-stories.add("defaults", () => (
-  <Editor sourceUri={editorAsset.uri} />
-))
+stories.add("defaults", () => <Editor sourceUri={editorAsset.uri} />)

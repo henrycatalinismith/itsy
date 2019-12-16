@@ -12,8 +12,8 @@ import Header from "@itsy.studio/studio/components/header"
 import Tile from "@itsy.studio/studio/components/tile"
 import disks, { allDisks } from "@itsy.studio/studio/store/disks"
 
-const mapStateToProps = state => ({
-  disks: allDisks(state)
+const mapStateToProps = (state) => ({
+  disks: allDisks(state),
 })
 
 const mapDispatchToProps = {
@@ -21,13 +21,8 @@ const mapDispatchToProps = {
   open: disks.actions.open,
 }
 
-export function HomeScreen({
-  disks,
-  navigation,
-  create,
-  open,
-}) {
-  const onPress = disk => () => {
+export function HomeScreen({ disks, navigation, create, open }) {
+  const onPress = (disk) => () => {
     open(disk.id)
     navigation.navigate("Disk", { disk })
   }
@@ -39,7 +34,6 @@ export function HomeScreen({
       </View>
 
       <ScrollView style={styles.container}>
-
         <FlatGrid
           itemDimension={128}
           items={disks}
@@ -58,7 +52,7 @@ export function HomeScreen({
 }
 
 HomeScreen.navigationOptions = {
-  header: Header
+  header: Header,
 }
 
 const styles = StyleSheet.create({
@@ -80,4 +74,3 @@ const styles = StyleSheet.create({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
-  

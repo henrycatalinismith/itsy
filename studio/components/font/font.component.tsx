@@ -21,7 +21,5 @@ export default ({
     Path,
     fontSize,
   }
-  return (
-    <Pixelflip {...props}>{children}</Pixelflip>
-  )
+  return <Pixelflip {...props}>{children}</Pixelflip>
 }

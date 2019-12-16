@@ -6,6 +6,6 @@ import Play from "./play.component"
 
 const stories = storiesOf("Play", module)
 
-stories.addDecorator(story => <Center>{story()}</Center>)
+stories.addDecorator((story) => <Center>{story()}</Center>)
 
 stories.add("defaults", () => <Play />)

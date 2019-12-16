@@ -18,25 +18,18 @@ import { playerSelector } from "@itsy.studio/studio/store/player"
 import { screenOrientation } from "@itsy.studio/studio/store/screen"
 import { workerSelector } from "@itsy.studio/studio/store/worker"
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   orientation: screenOrientation(state),
   player: playerSelector(state),
   worker: workerSelector(state),
 })
 
-const mapDispatchToProps = {
-}
+const mapDispatchToProps = {}
 
-export function CodeScreen({
-  orientation,
-  player,
-  worker,
-}) {
-
+export function CodeScreen({ orientation, player, worker }) {
   return (
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>
-
         <View style={styles.editorContainer}>
           <View style={styles.controls}>
             <View style={styles.button}>
@@ -48,21 +41,20 @@ export function CodeScreen({
 
         <Divider />
 
-        {(worker.running || player.waiting) ? (
+        {worker.running || player.waiting ? (
           <Worker />
-        ) : (player.running || player.stopping) ? (
+        ) : player.running || player.stopping ? (
           <Player />
         ) : (
           <Snapshot />
         )}
-
       </View>
     </Frame>
   )
 }
 
 CodeScreen.navigationOptions = {
-  header: Header
+  header: Header,
 }
 
 const styles = StyleSheet.create({
@@ -87,8 +79,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
 
-  button: {
-  },
+  button: {},
 
   container: {
     flex: 1,

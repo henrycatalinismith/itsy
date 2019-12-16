@@ -6,16 +6,13 @@ import { Thunk } from "@itsy.studio/studio/store"
 import player from "@itsy.studio/studio/store/player"
 import { build, workerOutput } from "@itsy.studio/studio/store/worker"
 
-export interface EditorState {
-}
+export interface EditorState {}
 
 const name = "editor"
 
-const initialState: EditorState = {
-}
+const initialState: EditorState = {}
 
-const reducers = {
-}
+const reducers = {}
 
 const slice = createSlice({
   name,
@@ -25,7 +22,7 @@ const slice = createSlice({
 
 export const play = (): Thunk => async (dispatch, getState) => {
   dispatch(build())
-  await delay(400);
+  await delay(400)
   const output = workerOutput(getState())
   dispatch(player.actions.play(output))
 }

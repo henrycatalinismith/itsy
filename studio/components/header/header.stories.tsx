@@ -7,7 +7,7 @@ import Header from "./header.component"
 const routes = [
   {
     routeName: "Home",
-  }
+  },
 ]
 
 const screens = {
@@ -16,8 +16,8 @@ const screens = {
       state: {
         index: 0,
         routes,
-      }
-    }
+      },
+    },
   },
 }
 
@@ -26,4 +26,3 @@ const stories = storiesOf("Header", module)
 Object.entries(screens).forEach(([routeName, screen]) => {
   stories.add(`[${routeName}]`, () => <Header {...screen} />)
 })
-

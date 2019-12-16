@@ -6,8 +6,7 @@ import { connect } from "react-redux"
 import { play } from "@itsy.studio/studio/store/editor"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-const mapStateToProps = state => ({
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
   play,
@@ -18,7 +17,7 @@ export function Play({ play }) {
     <>
       <TouchableOpacity onPress={play}>
         <Svg width={26} height={32} viewBox="0 0 40 48">
-           <Path
+          <Path
             d="M8,8 L32,24 L8,40 L8,8"
             strokeLinecap="round"
             strokeLinejoin="round"
