@@ -10,7 +10,7 @@ import Button from "@itsy.studio/studio/components/button"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
 import Tile from "@itsy.studio/studio/components/tile"
-import disks, { allDisks } from "@itsy.studio/studio/store/disks"
+import disks, { allDisks, loadAll } from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = (state) => ({
   disks: allDisks(state),
@@ -19,9 +19,14 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   create: disks.actions.create,
   open: disks.actions.open,
+  loadAll,
 }
 
-export function HomeScreen({ disks, navigation, create, open }) {
+export function HomeScreen({ disks, navigation, create, open, loadAll }) {
+  React.useEffect(() => {
+    loadAll()
+  }, [])
+
   const onPress = (disk) => () => {
     open(disk.id)
     navigation.navigate("Disk", { disk })

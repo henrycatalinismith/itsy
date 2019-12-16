@@ -1,7 +1,10 @@
+import * as FileSystem from "expo-file-system"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
 import uuid from "uuid"
 
+import itsy from "@itsy.studio/itsy"
+import { Thunk } from "@itsy.studio/studio/store"
 import { palette, snapshot, spritesheet } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
 
@@ -28,6 +31,10 @@ const name = "disks"
 const initialState: DiskState = {}
 
 const reducers = {
+  load(disks, action: PayloadAction<Disk>) {
+    disks[action.payload.id] = action.payload
+  },
+
   create(disks, action) {
     const id = uuid()
     const name = words()
@@ -82,6 +89,34 @@ const slice = createSlice({
   initialState,
   reducers,
 })
+
+export const loadAll = (): Thunk => async (dispatch) => {
+  const dir = FileSystem.documentDirectory
+  const list = await FileSystem.readDirectoryAsync(dir)
+  const diskNames = list.filter((name) => name.match(/\.html$/))
+
+  for (const name of diskNames) {
+    const uri = `${dir}${name}`
+    const html = await FileSystem.readAsStringAsync(uri)
+    const raw = itsy.read(html)
+
+    const disk: Disk = {
+      id: raw.id,
+      name: raw.name,
+      lua: raw.lua,
+      palette: raw.palette,
+      snapshot: raw.snapshot,
+      spritesheet: raw.spritesheet,
+      active: false,
+      created: raw.created,
+      updated: raw.updated,
+      started: undefined,
+      stopped: undefined,
+    }
+
+    dispatch(slice.actions.load(disk))
+  }
+}
 
 export const allDisks = ({ disks }) => _.values(disks)
 
