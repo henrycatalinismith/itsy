@@ -1,10 +1,9 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
 
-import { Thunk } from "../"
 import { write } from "@itsy.studio/itsy"
-
-import { activeDisk } from "../disks"
+import { Thunk } from "@itsy.studio/studio/store"
+import { activeDisk } from "@itsy.studio/studio/store/disks"
 
 export interface WorkerState {
   running: boolean

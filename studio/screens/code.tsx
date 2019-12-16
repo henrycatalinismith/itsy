@@ -2,21 +2,21 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 
-import Divider from "../components/divider"
-import Editor from "../components/editor"
-import Frame from "../components/frame"
-import Header from "../components/header"
-import Play from "../components/play"
-import Player from "../components/player"
-import Snapshot from "../components/snapshot"
-import Stop from "../components/stop"
-import Worker from "../components/worker"
+import Divider from "@itsy.studio/studio/components/divider"
+import Editor from "@itsy.studio/studio/components/editor"
+import Frame from "@itsy.studio/studio/components/frame"
+import Header from "@itsy.studio/studio/components/header"
+import Play from "@itsy.studio/studio/components/play"
+import Player from "@itsy.studio/studio/components/player"
+import Snapshot from "@itsy.studio/studio/components/snapshot"
+import Stop from "@itsy.studio/studio/components/stop"
+import Worker from "@itsy.studio/studio/components/worker"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import { playerSelector } from "../store/player"
-import { screenOrientation } from "../store/screen"
-import { workerSelector } from "../store/worker"
+import { playerSelector } from "@itsy.studio/studio/store/player"
+import { screenOrientation } from "@itsy.studio/studio/store/screen"
+import { workerSelector } from "@itsy.studio/studio/store/worker"
 
 const mapStateToProps = state => ({
   orientation: screenOrientation(state),

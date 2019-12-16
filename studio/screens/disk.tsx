@@ -4,12 +4,12 @@ import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import Button from "../components/button"
-import Disk from "../components/disk"
-import Font from "../components/font"
-import Frame from "../components/frame"
-import Header from "../components/header"
-import disks, { activeDisk } from "../store/disks"
+import Button from "@itsy.studio/studio/components/button"
+import Disk from "@itsy.studio/studio/components/disk"
+import Font from "@itsy.studio/studio/components/font"
+import Frame from "@itsy.studio/studio/components/frame"
+import Header from "@itsy.studio/studio/components/header"
+import disks, { activeDisk } from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = state => ({
   disk: activeDisk(state),

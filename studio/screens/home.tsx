@@ -6,11 +6,11 @@ import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import Button from "../components/button"
-import Frame from "../components/frame"
-import Header from "../components/header"
-import Tile from "../components/tile"
-import disks, { allDisks } from "../store/disks"
+import Button from "@itsy.studio/studio/components/button"
+import Frame from "@itsy.studio/studio/components/frame"
+import Header from "@itsy.studio/studio/components/header"
+import Tile from "@itsy.studio/studio/components/tile"
+import disks, { allDisks } from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = state => ({
   disks: allDisks(state)

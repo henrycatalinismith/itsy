@@ -4,8 +4,8 @@ import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import { stop } from "../../store/player"
-import styles from "./stop.module.scss"
+import { stop } from "@itsy.studio/studio/store/player"
+// import styles from "@itsy.studio/studio/components/stop/stop.module.scss"
 
 const mapStateToProps = state => ({
 })

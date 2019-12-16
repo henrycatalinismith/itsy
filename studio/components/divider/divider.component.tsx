@@ -2,9 +2,8 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import { screenOrientation } from "../../store/screen"
-
-import styles from "./divider.module.scss"
+import { screenOrientation } from "@itsy.studio/studio/store/screen"
+import styles from "@itsy.studio/studio/components/divider/divider.module.scss"
 
 interface DividerProps {
   orientation: string

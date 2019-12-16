@@ -2,9 +2,9 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import delay from "delay"
 import _ from "lodash"
 
-import { Thunk } from "../"
-import player from "../player"
-import { build, workerOutput } from "../worker"
+import { Thunk } from "@itsy.studio/studio/store"
+import player from "@itsy.studio/studio/store/player"
+import { build, workerOutput } from "@itsy.studio/studio/store/worker"
 
 export interface EditorState {
 }

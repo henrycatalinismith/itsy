@@ -2,10 +2,8 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
 import uuid from "uuid"
 
-import { palette, snapshot, spritesheet } from "../../defaults"
-import words from "../../words"
-
-import { Thunk } from "../"
+import { palette, snapshot, spritesheet } from "@itsy.studio/studio/defaults"
+import words from "@itsy.studio/studio/words"
 
 export interface Disk {
   id: string

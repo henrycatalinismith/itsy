@@ -7,10 +7,10 @@ import {
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import Button from "../button"
-import Floppy from "../floppy"
-import Font from "../font"
-import styles from "./header.module.scss"
+import Button from "@itsy.studio/studio/components/button"
+import Floppy from "@itsy.studio/studio/components/floppy"
+import Font from "@itsy.studio/studio/components/font"
+import styles from "@itsy.studio/studio/components/header/header.module.scss"
 
 export function Header ({
   disk,

@@ -11,8 +11,8 @@ import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import Frame from "../components/frame"
-import Header from "../components/header"
+import Frame from "@itsy.studio/studio/components/frame"
+import Header from "@itsy.studio/studio/components/header"
 
 const manual = Asset.fromModule(require("../assets/webviews/manual.html"))
 

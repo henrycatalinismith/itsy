@@ -1,30 +1,18 @@
 import React from "react"
 import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
-
-import {
-  Image,
-  TouchableOpacity,
-} from "react-native"
-
+import { TouchableOpacity } from "react-native"
 import { connect } from "react-redux"
 
-import Font from "../font"
-
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import styles from "./tile.module.scss"
-import select from "../../selectors"
+import Font from "@itsy.studio/studio/components/font"
+import styles from "@itsy.studio/studio/components/tile/tile.module.scss"
 
-const mapStateToProps = (state, ownProps) => {
-  const diskId = ownProps.id
-  const disk = state.disks[ownProps.id]
-  return {
-    disk
-  }
-}
+const mapStateToProps = (state, ownProps) => ({
+  disk: state.disks[ownProps.id],
+})
 
 export function Tile({
   disk,
-  edit,
   onPress,
   size,
 }) {

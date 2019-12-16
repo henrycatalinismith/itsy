@@ -1,7 +1,7 @@
 import React from "react"
 import { SafeAreaView, View } from "react-native"
 
-import styles from "./frame.module.scss"
+import styles from "@itsy.studio/studio/components/frame/frame.module.scss"
 
 export function Frame({
   children = undefined,

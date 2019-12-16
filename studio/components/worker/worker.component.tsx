@@ -2,9 +2,9 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import { workerRunning } from "../../store/worker"
-import Font from "../font"
-import styles from "./worker.module.scss"
+import { workerRunning } from "@itsy.studio/studio/store/worker"
+import Font from "@itsy.studio/studio/components/font"
+import styles from "@itsy.studio/studio/components/worker/worker.module.scss"
 
 interface WorkerProps {
   running: boolean

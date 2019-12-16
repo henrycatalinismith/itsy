@@ -3,10 +3,9 @@ import React from "react"
 import { WebView, View } from "react-native"
 import { connect } from "react-redux"
 
-import disks, { Disk, activeDisk } from "../../store/disks"
-import { EditorState, editorSelector } from "../../store/editor"
-
-import styles from "./editor.module.scss"
+import styles from "@itsy.studio/studio/components/editor/editor.module.scss"
+import disks, { Disk, activeDisk } from "@itsy.studio/studio/store/disks"
+import { EditorState, editorSelector } from "@itsy.studio/studio/store/editor"
 
 interface EditorProps {
   disk: Disk

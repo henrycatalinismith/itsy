@@ -3,15 +3,9 @@ import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
-import colors from "@itsy.studio/palettes/pico8/original.es6"
-
-import disks from "../../store/disks"
-import { PlayerState, playerSelector } from "../../store/player"
-
-import Font from "../font"
-import styles from "./player.module.scss"
-import disk from "screens/disk"
-import { snapshot } from "defaults"
+import disks from "@itsy.studio/studio/store/disks"
+import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
+import styles from "@itsy.studio/studio/components/player/player.module.scss"
 
 interface PlayerProps {
   player: PlayerState

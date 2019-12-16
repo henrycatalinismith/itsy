@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
-import { Thunk } from "../"
-import worker from "../worker"
+import { Thunk } from "@itsy.studio/studio/store"
+import worker from "@itsy.studio/studio/store/worker"
 
 export interface PlayerState {
   html: string

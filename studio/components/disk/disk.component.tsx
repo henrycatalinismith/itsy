@@ -4,7 +4,6 @@ import React from "react"
 import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import select from "../../selectors"
 
 const mapStateToProps = (state, ownProps) => {
   const diskId = ownProps.id
