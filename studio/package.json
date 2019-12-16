@@ -12,8 +12,24 @@
     "manual": "cp ../itsy/manual/index.html assets/webviews/manual.html",
     "storybook": "start-storybook"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "jest": {
     "preset": "jest-expo"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "endOfLine": "lf",
+    "jsxSingleQuote": false,
+    "semi": false,
+    "singleQuote": false,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   },
   "dependencies": {
     "@highvalley.systems/signalbox": "^0.17.0",
@@ -53,7 +69,10 @@
     "@types/react-native": "^0.60.24",
     "babel-preset-expo": "^7.0.0",
     "expo-cli": "^3.10.2",
+    "husky": "^3.1.0",
     "jest-expo": "^35.0.0",
+    "prettier": "1.19.1",
+    "pretty-quick": "^2.0.1",
     "typescript": "^3.7.3"
   },
   "private": true
