@@ -90,12 +90,20 @@ const slice = createSlice({
   reducers,
 })
 
+function filename(diskName: string): string {
+  const root = FileSystem.documentDirectory
+  const base = diskName.replace(/[^a-z0-9]/gi, "-")
+  const name = `${root}${base}.html`
+  return name
+}
+
 export const loadAll = (): Thunk => async (dispatch) => {
   const dir = FileSystem.documentDirectory
   const list = await FileSystem.readDirectoryAsync(dir)
   const diskNames = list.filter((name) => name.match(/\.html$/))
 
   for (const name of diskNames) {
+    console.log(name)
     const uri = `${dir}${name}`
     const html = await FileSystem.readAsStringAsync(uri)
     const raw = itsy.read(html)
@@ -116,6 +124,31 @@ export const loadAll = (): Thunk => async (dispatch) => {
 
     dispatch(slice.actions.load(disk))
   }
+}
+
+export const rename = (name: string): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const disk = activeDisk(state)
+
+  const action = slice.actions.rename(name)
+  const oldName = filename(disk.name)
+  const newName = filename(name)
+
+  const newDisk = { ...disk, name }
+  const newHtml = itsy.write(newDisk)
+
+  const { exists } = await FileSystem.getInfoAsync(oldName)
+  if (exists) {
+    await FileSystem.moveAsync({
+      from: oldName,
+      to: newName,
+    })
+    await FileSystem.writeAsStringAsync(newName, newHtml)
+  }
+
+  console.log(itsy.read(newHtml))
+
+  dispatch(action)
 }
 
 export const allDisks = ({ disks }) => _.values(disks)
