@@ -105,6 +105,7 @@ export const loadAll = (): Thunk => async (dispatch) => {
   for (const name of diskNames) {
     console.log(name)
     const uri = `${dir}${name}`
+    console.log(uri)
     const html = await FileSystem.readAsStringAsync(uri)
     const raw = itsy.read(html)
 
@@ -137,16 +138,8 @@ export const rename = (name: string): Thunk => async (dispatch, getState) => {
   const newDisk = { ...disk, name }
   const newHtml = itsy.write(newDisk)
 
-  const { exists } = await FileSystem.getInfoAsync(oldName)
-  if (exists) {
-    await FileSystem.moveAsync({
-      from: oldName,
-      to: newName,
-    })
-    await FileSystem.writeAsStringAsync(newName, newHtml)
-  }
-
-  console.log(itsy.read(newHtml))
+  await FileSystem.deleteAsync(oldName)
+  await FileSystem.writeAsStringAsync(newName, newHtml)
 
   dispatch(action)
 }
