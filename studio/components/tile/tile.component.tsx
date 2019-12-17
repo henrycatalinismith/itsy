@@ -61,7 +61,7 @@ export function Tile({ disk, onPress, size }) {
         />
 
         <SvgImage
-          href={disk.snapshot}
+          href={{ uri: `data:image/png;base64,${disk.snapshot}` }}
           x={1}
           y={1}
           width={14}

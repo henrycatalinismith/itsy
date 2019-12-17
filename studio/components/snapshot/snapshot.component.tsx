@@ -50,7 +50,7 @@ export function Snapshot({ disk }: SnapshotProps) {
               image-rendering: pixelated;
             }
           </style>
-          <img src="${disk.snapshot}" />
+          <img src="data:image/png;base64,${disk.snapshot}" />
           </body>
           </html>
         `,

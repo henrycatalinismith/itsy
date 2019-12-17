@@ -7,7 +7,11 @@ import uuid from "uuid"
 import itsy from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
 import worker from "@itsy.studio/studio/store/worker"
-import { palette, snapshot, spritesheet } from "@itsy.studio/studio/defaults"
+import {
+  palette,
+  snapshot as defaultSnapshot,
+  spritesheet,
+} from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
 
 export interface Disk {
@@ -51,7 +55,7 @@ const reducers = {
       html,
       lua,
       palette,
-      snapshot,
+      snapshot: defaultSnapshot,
       spritesheet,
       active,
       created,
@@ -148,6 +152,17 @@ export const build = (): Thunk => async (dispatch, getState) => {
   await FileSystem.writeAsStringAsync(name, html)
 
   dispatch(worker.actions.success(html))
+}
+
+export const snapshot = (png: string): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.snapshot(png))
+
+  const state = getState()
+  const disk = activeDisk(state)
+  const html = itsy.write(disk)
+  const name = filename(disk.name)
+
+  await FileSystem.writeAsStringAsync(name, html)
 }
 
 export const rename = (name: string): Thunk => async (dispatch, getState) => {

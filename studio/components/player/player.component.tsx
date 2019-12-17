@@ -62,7 +62,7 @@ export function Player({ player, snapshot }: PlayerProps) {
   
         window.postMessage(JSON.stringify({
           type: "snapshot",
-          uri: tmp.toDataURL("image/png"),
+          uri: tmp.toDataURL("image/png").split(",")[1],
         }))
 
       `)
