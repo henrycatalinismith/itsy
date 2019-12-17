@@ -35,11 +35,11 @@ const reducers = {
     player.stopping = false
     player.running = false
   },
-}
 
-const extraReducers = {
-  [worker.actions.build]: (player) => {
+  wait(player) {
     player.waiting = true
+    player.running = false
+    player.stopping = false
   },
 }
 
@@ -47,7 +47,6 @@ const slice = createSlice({
   name,
   initialState,
   reducers,
-  extraReducers,
 })
 
 export const actions = slice.actions

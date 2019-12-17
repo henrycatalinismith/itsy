@@ -3,7 +3,6 @@ import {
   combineReducers,
   configureStore,
   getDefaultMiddleware,
-  createSelector,
 } from "@reduxjs/toolkit"
 
 import { Dimensions } from "react-native"
@@ -15,7 +14,6 @@ import disks from "./disks"
 import editor from "./editor"
 import player from "./player"
 import screen from "./screen"
-import worker from "./worker"
 
 const middleware = [...getDefaultMiddleware()]
 
@@ -24,7 +22,6 @@ const reducer = combineReducers({
   editor: editor.reducer,
   player: player.reducer,
   screen: screen.reducer,
-  worker: worker.reducer,
 })
 
 const preloadedState = {
@@ -61,7 +58,6 @@ exports.disks = disks
 exports.editor = editor
 exports.player = player
 exports.screen = screen
-exports.worker = worker
 
 export type RootState = ReturnType<typeof reducer>
 export type Dispatch = typeof store.dispatch

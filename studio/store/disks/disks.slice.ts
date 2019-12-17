@@ -6,7 +6,7 @@ import uuid from "uuid"
 
 import itsy from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
-import worker from "@itsy.studio/studio/store/worker"
+import player from "@itsy.studio/studio/store/player"
 import {
   palette,
   snapshot as defaultSnapshot,
@@ -136,9 +136,9 @@ export const loadAll = (): Thunk => async (dispatch) => {
   }
 }
 
-export const build = (): Thunk => async (dispatch, getState) => {
+export const play = (): Thunk => async (dispatch, getState) => {
+  dispatch(player.actions.wait())
   dispatch(slice.actions.build())
-  dispatch(worker.actions.build())
 
   await delay(100)
 
@@ -151,7 +151,7 @@ export const build = (): Thunk => async (dispatch, getState) => {
   const name = filename(disk.name)
   await FileSystem.writeAsStringAsync(name, html)
 
-  dispatch(worker.actions.success(html))
+  dispatch(player.actions.play(html))
 }
 
 export const snapshot = (png: string): Thunk => async (dispatch, getState) => {

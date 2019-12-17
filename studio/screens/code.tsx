@@ -6,27 +6,25 @@ import Divider from "@itsy.studio/studio/components/divider"
 import Editor from "@itsy.studio/studio/components/editor"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
+import Loading from "@itsy.studio/studio/components/loading"
 import Play from "@itsy.studio/studio/components/play"
 import Player from "@itsy.studio/studio/components/player"
 import Snapshot from "@itsy.studio/studio/components/snapshot"
 import Stop from "@itsy.studio/studio/components/stop"
-import Worker from "@itsy.studio/studio/components/worker"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 import { playerSelector } from "@itsy.studio/studio/store/player"
 import { screenOrientation } from "@itsy.studio/studio/store/screen"
-import { workerSelector } from "@itsy.studio/studio/store/worker"
 
 const mapStateToProps = (state) => ({
   orientation: screenOrientation(state),
   player: playerSelector(state),
-  worker: workerSelector(state),
 })
 
 const mapDispatchToProps = {}
 
-export function CodeScreen({ orientation, player, worker }) {
+export function CodeScreen({ orientation, player }) {
   return (
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>
@@ -41,8 +39,8 @@ export function CodeScreen({ orientation, player, worker }) {
 
         <Divider />
 
-        {worker.running || player.waiting ? (
-          <Worker />
+        {player.waiting ? (
+          <Loading />
         ) : player.running || player.stopping ? (
           <Player />
         ) : (
