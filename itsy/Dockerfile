@@ -1,7 +1,9 @@
 FROM apiaryio/emcc:1.38.11
 
 RUN apt-get update \
-    && apt-get install -y build-essential libsdl2-dev git
+    && apt-get install -y build-essential libsdl2-dev git curl \
+    && curl -sL https://deb.nodesource.com/setup_12.x | bash - \
+    && apt-get install nodejs
 
 RUN mkdir -p /tmp/sdl \
     && cd /tmp/sdl \
