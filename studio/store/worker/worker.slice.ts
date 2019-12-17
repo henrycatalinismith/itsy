@@ -1,9 +1,4 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import delay from "delay"
-
-import { write } from "@itsy.studio/itsy"
-import { Thunk } from "@itsy.studio/studio/store"
-import { activeDisk } from "@itsy.studio/studio/store/disks"
 
 export interface WorkerState {
   running: boolean
@@ -37,10 +32,12 @@ export const workerOutput = createSelector(
   workerSelector,
   ({ output }) => output
 )
+
 export const workerRunning = createSelector(
   workerSelector,
   ({ running }) => running
 )
+
 export const workerSuccess = createSelector(
   workerSelector,
   ({ success }) => success
@@ -51,19 +48,5 @@ const slice = createSlice({
   initialState,
   reducers,
 })
-
-export const build = (): Thunk => async (dispatch, getState) => {
-  console.log("build")
-  dispatch(slice.actions.build())
-
-  await delay(100)
-  const state = getState()
-  const disk = activeDisk(state)
-  const output = write(disk)
-
-  dispatch(slice.actions.success(output))
-}
-
-export const actions = slice.actions
 
 export default slice

@@ -3,8 +3,9 @@ import delay from "delay"
 import _ from "lodash"
 
 import { Thunk } from "@itsy.studio/studio/store"
+import { build } from "@itsy.studio/studio/store/disks"
 import player from "@itsy.studio/studio/store/player"
-import { build, workerOutput } from "@itsy.studio/studio/store/worker"
+import { workerOutput } from "@itsy.studio/studio/store/worker"
 
 export interface EditorState {}
 

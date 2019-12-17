@@ -1,10 +1,12 @@
 import * as FileSystem from "expo-file-system"
+import delay from "delay"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
 import uuid from "uuid"
 
 import itsy from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
+import worker from "@itsy.studio/studio/store/worker"
 import { palette, snapshot, spritesheet } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
 
@@ -65,6 +67,11 @@ const reducers = {
     disks[action.payload].active = true
   },
 
+  build(disks) {
+    const disk = _.find(disks, "active")
+    disk.updated = new Date().toISOString()
+  },
+
   rename(disks, action: PayloadAction<string>) {
     const disk = _.find(disks, "active")
     disk.name = action.payload
@@ -103,9 +110,7 @@ export const loadAll = (): Thunk => async (dispatch) => {
   const diskNames = list.filter((name) => name.match(/\.html$/))
 
   for (const name of diskNames) {
-    console.log(name)
     const uri = `${dir}${name}`
-    console.log(uri)
     const html = await FileSystem.readAsStringAsync(uri)
     const raw = itsy.read(html)
 
@@ -125,6 +130,24 @@ export const loadAll = (): Thunk => async (dispatch) => {
 
     dispatch(slice.actions.load(disk))
   }
+}
+
+export const build = (): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.build())
+  dispatch(worker.actions.build())
+
+  await delay(100)
+
+  const state = getState()
+  const disk = activeDisk(state)
+  const html = itsy.write(disk)
+
+  await delay(100)
+
+  const name = filename(disk.name)
+  await FileSystem.writeAsStringAsync(name, html)
+
+  dispatch(worker.actions.success(html))
 }
 
 export const rename = (name: string): Thunk => async (dispatch, getState) => {
