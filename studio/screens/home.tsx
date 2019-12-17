@@ -29,7 +29,7 @@ export function HomeScreen({ disks, navigation, create, open, loadAll }) {
 
   const onPress = (disk) => () => {
     open(disk.id)
-    navigation.navigate("Disk", { disk })
+    navigation.navigate("Code", { disk })
   }
 
   return (
