@@ -3,6 +3,7 @@ import React from "react"
 import { WebView, View } from "react-native"
 import { connect } from "react-redux"
 
+import Loading from "@itsy.studio/studio/components/loading"
 import styles from "@itsy.studio/studio/components/editor/editor.module.scss"
 import disks, { Disk, activeDisk } from "@itsy.studio/studio/store/disks"
 import { EditorState, editorSelector } from "@itsy.studio/studio/store/editor"
@@ -25,6 +26,7 @@ const mapDispatchToProps = {
 }
 
 export function Editor({ disk, editor, edit }: EditorProps) {
+  const [loading, setLoading] = React.useState(true)
   const lua = disk.lua
   const webview = React.useRef() as any
 
@@ -33,6 +35,10 @@ export function Editor({ disk, editor, edit }: EditorProps) {
     console.log(`🏓 ${message.type}`)
     switch (message.type) {
       case "ready":
+        setTimeout(() => {
+          // wait a second while the lua gets injected
+          setLoading(false)
+        }, 100)
         webview.current.postMessage(
           JSON.stringify({
             type: "inject",
@@ -60,6 +66,7 @@ export function Editor({ disk, editor, edit }: EditorProps) {
     () => (
       <View style={styles.editor}>
         <WebView
+          style={styles.webview}
           bounces={false}
           injectedJavaScript="window.isReactNative = true;"
           onMessage={handleMessage}
@@ -68,9 +75,10 @@ export function Editor({ disk, editor, edit }: EditorProps) {
           source={{ uri: html.uri }}
           useWebKit
         />
+        {loading && <Loading style={styles.loading} />}
       </View>
     ),
-    []
+    [loading]
   )
 }
 

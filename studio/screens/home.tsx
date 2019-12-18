@@ -9,6 +9,7 @@ import colors from "@itsy.studio/palettes/pico8/original.es6"
 import Button from "@itsy.studio/studio/components/button"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
+import Loading from "@itsy.studio/studio/components/loading"
 import Tile from "@itsy.studio/studio/components/tile"
 import disks, { allDisks, loadAll } from "@itsy.studio/studio/store/disks"
 
@@ -23,6 +24,8 @@ const mapDispatchToProps = {
 }
 
 export function HomeScreen({ disks, navigation, create, open, loadAll }) {
+  const [loading, setLoading] = React.useState(false)
+
   React.useEffect(() => {
     loadAll()
   }, [])
@@ -34,24 +37,30 @@ export function HomeScreen({ disks, navigation, create, open, loadAll }) {
 
   return (
     <Frame>
-      <View style={styles.controls}>
-        <Button onPress={() => create()}>new</Button>
-      </View>
+      {loading ? (
+        <Loading />
+      ) : (
+        <>
+          <View style={styles.controls}>
+            <Button onPress={() => create()}>new</Button>
+          </View>
 
-      <ScrollView style={styles.container}>
-        <FlatGrid
-          itemDimension={128}
-          items={disks}
-          renderItem={({ item: disk }) => (
-            <Tile
-              key={disk.id}
-              id={disk.id}
-              onPress={onPress(disk)}
-              size={120}
+          <ScrollView style={styles.container}>
+            <FlatGrid
+              itemDimension={128}
+              items={disks}
+              renderItem={({ item: disk }) => (
+                <Tile
+                  key={disk.id}
+                  id={disk.id}
+                  onPress={onPress(disk)}
+                  size={120}
+                />
+              )}
             />
-          )}
-        />
-      </ScrollView>
+          </ScrollView>
+        </>
+      )}
     </Frame>
   )
 }
