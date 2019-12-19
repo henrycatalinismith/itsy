@@ -1,4 +1,4 @@
-@import "node_modules/@itsy.studio/palettes/pico8/_original.scss";
+@import "../../../palettes/pico8/_original.scss";
 
 .container {
   background-color: pico8-original-palette(1);
@@ -6,17 +6,17 @@
 }
 
 .inside {
-  background-color: #FF77A8;
+  background-color: #ff77a8;
   display: flex;
   height: 32px;
   flex: 1;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  border-top-color: #7E2553;
+  border-top-color: #7e2553;
   border-top-width: 2px;
-  border-right-color: #7E2553;
-  border-left-color: #7E2553;
+  border-right-color: #7e2553;
+  border-left-color: #7e2553;
   border-left-width: 2px;
   border-right-width: 2px;
 }
@@ -35,7 +35,8 @@
 .floppy {
 }
 
-.wordmark {
+.title {
   display: flex;
   flex-direction: row;
+  margin-left: 8px;
 }

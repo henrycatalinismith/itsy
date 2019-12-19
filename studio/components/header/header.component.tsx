@@ -36,10 +36,12 @@ export function Header({ disk, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
+
       <View style={styles.inside}>
         <View style={styles.left}>
-          <Floppy size={18} style={styles.floppy} />
-          <View style={styles.wordmark}>
+          <Floppy size={18} />
+
+          <View style={styles.title}>
             <Font
               fontSize={15}
               color={colors[7]}
