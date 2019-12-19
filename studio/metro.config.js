@@ -3,17 +3,20 @@ const { getDefaultConfig } = require("metro-config")
 
 module.exports = (async () => {
   const {
-    resolver: { sourceExts }
+    resolver: { sourceExts },
   } = await getDefaultConfig()
 
   return {
     getProjectRoots: () => [
       path.resolve(__dirname),
       path.resolve(__dirname, "../editor"),
+      path.resolve(__dirname, "../itsy"),
+      path.resolve(__dirname, "../palettes"),
+      path.resolve(__dirname, "../pixelflip"),
     ],
 
     getTransformModulePath: () => {
-      return require.resolve("react-native-typescript-transformer");
+      return require.resolve("react-native-typescript-transformer")
     },
 
     getSourceExts() {
@@ -27,6 +30,12 @@ module.exports = (async () => {
     resolver: {
       sourceExts: [...sourceExts, "scss"],
     },
+
+    watchFolders: [
+      path.resolve(__dirname, "../editor"),
+      path.resolve(__dirname, "../itsy"),
+      path.resolve(__dirname, "../palettes"),
+      path.resolve(__dirname, "../pixelflip"),
+    ],
   }
 })()
-

@@ -8,8 +8,10 @@
     "moduleResolution": "node",
     "noEmit": true,
     "paths": {
+      "@itsy.studio/itsy/*": ["itsy/*"],
       "@itsy.studio/studio/*": ["studio/*"]
     },
+    "rootDirs": [".", "../editor", "../itsy", "../palettes", "../pixelflip"],
     "skipLibCheck": true
   }
 }
