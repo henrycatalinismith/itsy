@@ -20,7 +20,7 @@ module.exports = (async () => {
     },
 
     getSourceExts() {
-      return ["js", "ts", "tsx"]
+      return ["js", "jsx", "ts", "tsx"]
     },
 
     transformer: {
