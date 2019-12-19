@@ -4,18 +4,18 @@ import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
-import { stop } from "@itsy.studio/studio/store/player"
+import { stopDisk } from "@itsy.studio/studio/store/disks"
 // import styles from "@itsy.studio/studio/components/stop/stop.module.scss"
 
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
-  stop,
+  stopDisk,
 }
 
-export function Stop({ stop }) {
+export function Stop({ stopDisk }) {
   return (
-    <TouchableOpacity onPress={stop}>
+    <TouchableOpacity onPress={stopDisk}>
       <Svg width={26} height={32} viewBox="0 0 40 48">
         <Path
           d="M8,8 L32,24 L8,40 L8,8"

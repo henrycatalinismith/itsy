@@ -22,10 +22,8 @@ export interface Disk {
   snapshot: string
   spritesheet: string
   active: boolean
-  created: Date
-  updated: Date
-  started: Date | undefined
-  stopped: Date | undefined
+  created: string
+  updated: string
 }
 
 interface DiskState {
@@ -41,27 +39,18 @@ const reducers = {
     disks[action.payload.id] = action.payload
   },
 
-  create(disks, action) {
-    const id = uuid()
-    const name = words()
-    const html = ""
-    const lua = ""
-    const active = false
-    const created = new Date().toISOString()
-    const updated = created
-    const disk = {
-      id,
-      name,
-      html,
-      lua,
-      palette,
-      snapshot: defaultSnapshot,
-      spritesheet,
-      active,
-      created,
-      updated,
+  create(disks, action: PayloadAction<Disk>) {
+    disks[action.payload.id] = {
+      id: action.payload.id,
+      name: action.payload.name,
+      lua: action.payload.lua,
+      palette: action.payload.palette,
+      snapshot: action.payload.snapshot,
+      spritesheet: action.payload.spritesheet,
+      active: action.payload.active,
+      created: action.payload.created,
+      updated: action.payload.updated,
     }
-    disks[id] = disk
   },
 
   open(disks, action: PayloadAction<string>) {
@@ -108,7 +97,33 @@ function filename(diskName: string): string {
   return name
 }
 
-export const loadAll = (): Thunk => async (dispatch) => {
+export const createDisk = (): Thunk => async (dispatch, getState) => {
+  const id = uuid()
+  const name = words()
+  const lua = ""
+  const active = false
+  const created = new Date().toISOString()
+  const updated = created
+  const disk: Disk = {
+    id,
+    name,
+    lua,
+    palette,
+    snapshot: defaultSnapshot,
+    spritesheet,
+    active,
+    created,
+    updated,
+  }
+
+  const html = itsy.write(disk)
+  const uri = filename(disk.name)
+  await FileSystem.writeAsStringAsync(uri, html)
+
+  dispatch(slice.actions.create(disk))
+}
+
+export const loadDisks = (): Thunk => async (dispatch) => {
   const dir = FileSystem.documentDirectory
   const list = await FileSystem.readDirectoryAsync(dir)
   const diskNames = list.filter((name) => name.match(/\.html$/))
@@ -128,15 +143,17 @@ export const loadAll = (): Thunk => async (dispatch) => {
       active: false,
       created: raw.created,
       updated: raw.updated,
-      started: undefined,
-      stopped: undefined,
     }
 
     dispatch(slice.actions.load(disk))
   }
 }
 
-export const play = (): Thunk => async (dispatch, getState) => {
+export const openDisk = (id: string): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.open(id))
+}
+
+export const playDisk = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.wait())
   dispatch(slice.actions.build())
 
@@ -154,18 +171,10 @@ export const play = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.play(html))
 }
 
-export const snapshot = (png: string): Thunk => async (dispatch, getState) => {
-  dispatch(slice.actions.snapshot(png))
-
-  const state = getState()
-  const disk = activeDisk(state)
-  const html = itsy.write(disk)
-  const name = filename(disk.name)
-
-  await FileSystem.writeAsStringAsync(name, html)
-}
-
-export const rename = (name: string): Thunk => async (dispatch, getState) => {
+export const renameDisk = (name: string): Thunk => async (
+  dispatch,
+  getState
+) => {
   const state = getState()
   const disk = activeDisk(state)
 
@@ -180,6 +189,26 @@ export const rename = (name: string): Thunk => async (dispatch, getState) => {
   await FileSystem.writeAsStringAsync(newName, newHtml)
 
   dispatch(action)
+}
+
+export const saveSnapshot = (png: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.snapshot(png))
+
+  const state = getState()
+  const disk = activeDisk(state)
+  const html = itsy.write(disk)
+  const name = filename(disk.name)
+
+  await FileSystem.writeAsStringAsync(name, html)
+}
+
+export const stopDisk = (): Thunk => async (dispatch, getState) => {
+  dispatch(player.actions.shutdown())
+  await delay(400)
+  dispatch(player.actions.stop())
 }
 
 export const allDisks = ({ disks }) => _.values(disks)

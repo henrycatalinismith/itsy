@@ -3,19 +3,19 @@ import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
-import { play } from "@itsy.studio/studio/store/disks"
+import { playDisk } from "@itsy.studio/studio/store/disks"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
-  play,
+  playDisk,
 }
 
-export function Play({ play }) {
+export function Play({ playDisk }) {
   return (
     <>
-      <TouchableOpacity onPress={play}>
+      <TouchableOpacity onPress={playDisk}>
         <Svg width={26} height={32} viewBox="0 0 40 48">
           <Path
             d="M8,8 L32,24 L8,40 L8,8"

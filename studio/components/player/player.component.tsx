@@ -3,13 +3,13 @@ import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
-import disks from "@itsy.studio/studio/store/disks"
+import { saveSnapshot } from "@itsy.studio/studio/store/disks"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
 import styles from "@itsy.studio/studio/components/player/player.module.scss"
 
 interface PlayerProps {
   player: PlayerState
-  snapshot: (uri: string) => void
+  saveSnapshot: (uri: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -17,10 +17,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  snapshot: disks.actions.snapshot,
+  saveSnapshot,
 }
 
-export function Player({ player, snapshot }: PlayerProps) {
+export function Player({ player, saveSnapshot }: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -72,7 +72,7 @@ export function Player({ player, snapshot }: PlayerProps) {
   const onMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`💃 ${message.type}`)
-    snapshot(message.uri)
+    saveSnapshot(message.uri)
   }
 
   const injectedJavaScript = `(function() {

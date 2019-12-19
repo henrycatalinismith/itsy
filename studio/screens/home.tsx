@@ -11,27 +11,38 @@ import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
 import Loading from "@itsy.studio/studio/components/loading"
 import Tile from "@itsy.studio/studio/components/tile"
-import disks, { allDisks, loadAll } from "@itsy.studio/studio/store/disks"
+import disks, {
+  allDisks,
+  createDisk,
+  loadDisks,
+  openDisk,
+} from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = (state) => ({
   disks: allDisks(state),
 })
 
 const mapDispatchToProps = {
-  create: disks.actions.create,
-  open: disks.actions.open,
-  loadAll,
+  createDisk,
+  openDisk,
+  loadDisks,
 }
 
-export function HomeScreen({ disks, navigation, create, open, loadAll }) {
+export function HomeScreen({
+  disks,
+  navigation,
+  createDisk,
+  openDisk,
+  loadDisks,
+}) {
   const [loading, setLoading] = React.useState(false)
 
   React.useEffect(() => {
-    loadAll()
+    loadDisks()
   }, [])
 
   const onPress = (disk) => () => {
-    open(disk.id)
+    openDisk(disk.id)
     navigation.navigate("Code", { disk })
   }
 
@@ -42,7 +53,7 @@ export function HomeScreen({ disks, navigation, create, open, loadAll }) {
       ) : (
         <>
           <View style={styles.controls}>
-            <Button onPress={() => create()}>new</Button>
+            <Button onPress={() => createDisk()}>new</Button>
           </View>
 
           <ScrollView style={styles.container}>

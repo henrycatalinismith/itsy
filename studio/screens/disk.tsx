@@ -9,17 +9,17 @@ import Disk from "@itsy.studio/studio/components/disk"
 import Font from "@itsy.studio/studio/components/font"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
-import disks, { activeDisk, rename } from "@itsy.studio/studio/store/disks"
+import { activeDisk, renameDisk } from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = (state) => ({
   disk: activeDisk(state),
 })
 
 const mapDispatchToProps = {
-  rename,
+  renameDisk,
 }
 
-export function DiskScreen({ disk, navigation, rename }) {
+export function DiskScreen({ disk, navigation, renameDisk }) {
   const [mode, setMode] = React.useState("neutral")
   const [name, setName] = React.useState(disk.name)
 
@@ -27,7 +27,7 @@ export function DiskScreen({ disk, navigation, rename }) {
   const onRenameEdit = (newName) => setName(newName)
   const onRenameSubmit = () => {
     setMode("neutral")
-    rename(name)
+    renameDisk(name)
   }
   const onEdit = () => {
     navigation.navigate("Code", { disk })
