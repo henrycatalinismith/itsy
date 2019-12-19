@@ -1,5 +1,4 @@
 ---
-
 stages:
   - deploy
 
@@ -21,6 +20,9 @@ deploy:studio:
     - yarn --pure-lockfile
     - make itsy
     - cd ..
+    - cd pixelflip
+    - yarn --pure-lockfile
+    - cd ..
     - cd editor
     - yarn --pure-lockfile
     - yarn build
@@ -35,7 +37,7 @@ deploy:studio:
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - yarn expo publish --non-interactive
-  
+
 deploy:website:
   stage: deploy
   image: node:12-stretch

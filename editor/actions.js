@@ -1,12 +1,13 @@
-import { action } from "@highvalley.systems/signalbox"
+import { action } from "@highvalley.systems/signalbox";
 
 export default {
   ...action("change", ["lua"]),
   ...action("impression", []),
   ...action("inject", ["lua"]),
-  ...action("ready", ["loading"]),
-}
+  ...action("ready", ["loading"])
+};
 
+// change
 // change
 // change
 // change
