@@ -28,6 +28,12 @@ module.exports = (async () => {
     },
 
     resolver: {
+      extraNodeModules: {
+        "@babel/runtime": path.resolve(
+          __dirname,
+          "node_modules/@babel/runtime"
+        ),
+      },
       sourceExts: [...sourceExts, "scss"],
     },
 
