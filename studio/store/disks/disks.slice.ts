@@ -1,7 +1,8 @@
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import * as FileSystem from "expo-file-system"
 import delay from "delay"
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
+import { Keyboard } from "react-native"
 import uuid from "uuid"
 
 import itsy from "@itsy.studio/itsy"
@@ -154,6 +155,8 @@ export const openDisk = (id: string): Thunk => async (dispatch, getState) => {
 }
 
 export const playDisk = (): Thunk => async (dispatch, getState) => {
+  Keyboard.dismiss()
+
   dispatch(player.actions.wait())
   dispatch(slice.actions.build())
 
