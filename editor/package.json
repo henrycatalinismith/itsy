@@ -5,17 +5,6 @@
     "build": "webpack --config webpack.config.js; rm -f index.js",
     "storybook": "start-storybook -p 6006"
   },
-  "prettier": {
-    "arrowParens": "always",
-    "bracketSpacing": true,
-    "endOfLine": "lf",
-    "jsxSingleQuote": false,
-    "semi": false,
-    "singleQuote": false,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
   "devDependencies": {
     "@babel/core": "^7.7.7",
     "@babel/preset-env": "^7.7.7",

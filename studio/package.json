@@ -20,17 +20,6 @@
   "jest": {
     "preset": "jest-expo"
   },
-  "prettier": {
-    "arrowParens": "always",
-    "bracketSpacing": true,
-    "endOfLine": "lf",
-    "jsxSingleQuote": false,
-    "semi": false,
-    "singleQuote": false,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
     "@highvalley.systems/signalbox": "^0.17.0",
