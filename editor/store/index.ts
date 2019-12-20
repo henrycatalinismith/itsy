@@ -8,6 +8,7 @@ import {
 import logger from "redux-logger";
 import { ThunkAction } from "redux-thunk";
 
+import cursor from "./cursor";
 import text from "./text";
 import webview from "./webview";
 
@@ -33,6 +34,7 @@ const postMessageMiddleware = store => next => action => {
 const middleware = [...getDefaultMiddleware(), logger, postMessageMiddleware];
 
 const reducer = combineReducers({
+  cursor: cursor.reducer,
   text: text.reducer,
   webview: webview.reducer
 });
