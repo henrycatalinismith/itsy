@@ -4,9 +4,22 @@ import { Controlled as CodeMirror } from "react-codemirror2";
 
 import "./codemirror.scss";
 import styles from "./editor.module.scss";
-import actions from "../../actions";
+import { changeText, textSelector } from "@itsy.studio/editor/store/text";
 
-export const Editor = ({ change, loading, lua }) => {
+interface EditorProps {
+  changeText: (text: string) => void;
+  text: string;
+}
+
+const mapStateToProps = state => ({
+  text: textSelector(state)
+});
+
+const mapDispatchToProps = {
+  changeText
+};
+
+export function Editor({ changeText, text }: EditorProps) {
   const options = {
     autocapitalize: false,
     autocorrect: false,
@@ -21,25 +34,13 @@ export const Editor = ({ change, loading, lua }) => {
   };
 
   return (
-    <>
-      {loading ? (
-        <div className={styles.loading}>loading</div>
-      ) : (
-        <CodeMirror
-          className={styles.editor}
-          value={lua}
-          options={options}
-          onBeforeChange={(...[, , value]) => change(value)}
-        />
-      )}
-    </>
+    <CodeMirror
+      className={styles.editor}
+      value={text}
+      options={options}
+      onBeforeChange={(...[, , value]) => changeText(value)}
+    />
   );
-};
+}
 
-export default connect(
-  ({ loading, lua }) => ({
-    loading,
-    lua
-  }),
-  actions
-)(Editor);
+export default connect(mapStateToProps, mapDispatchToProps)(Editor);

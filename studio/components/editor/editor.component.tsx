@@ -34,26 +34,26 @@ export function Editor({ disk, editor, edit }: EditorProps) {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`🏓 ${message.type}`)
     switch (message.type) {
-      case "ready":
+      case "webview/start":
         setTimeout(() => {
           // wait a second while the lua gets injected
           setLoading(false)
         }, 100)
         webview.current.postMessage(
           JSON.stringify({
-            type: "inject",
-            lua,
+            type: "text/change",
+            payload: lua,
           })
         )
         break
 
-      case "change":
+      case "text/change":
         // console.log(lua)
         // console.log(message.lua)
-        if (message.lua === lua) {
+        if (message.payload === lua) {
           //console.log("SAME LOLOLOLOL")
         } else {
-          edit(message.lua)
+          edit(message.payload)
         }
         return
 

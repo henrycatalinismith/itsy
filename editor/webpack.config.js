@@ -65,7 +65,7 @@ module.exports = {
     ]
   },
   output: {
-    path: `${__dirname}/webviews`,
+    path: __dirname,
     filename: "index.js"
   },
   plugins: [
