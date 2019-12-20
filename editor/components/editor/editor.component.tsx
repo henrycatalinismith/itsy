@@ -15,7 +15,11 @@ import { changeText, textSelector } from "@itsy.studio/editor/store/text"
 interface EditorProps {
   changeText: (text: string) => void
   moveCursor: (x: number, y: number) => void
-  updateSelection: (start: SelectionPoint, end: SelectionPoint) => void
+  updateSelection: (
+    start: SelectionPoint,
+    end: SelectionPoint,
+    text: string
+  ) => void
   text: string
 }
 
@@ -52,9 +56,12 @@ export function Editor({
 
   const onSelection = React.useCallback(
     (cm, { ranges: [{ anchor, head }] }) => {
-      const start = { x: head.ch, y: head.line }
-      const end = { x: anchor.ch, y: anchor.line }
-      updateSelection(start, end)
+      setTimeout(() => {
+        const selectedText = codemirror.current.getSelection()
+        const start = { x: head.ch, y: head.line }
+        const end = { x: anchor.ch, y: anchor.line }
+        updateSelection(start, end, selectedText)
+      }, 10)
     },
     []
   )
