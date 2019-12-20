@@ -1,42 +1,63 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Controlled as CodeMirror } from "react-codemirror2";
+import React from "react"
+import { connect } from "react-redux"
+import { Controlled as CodeMirror } from "react-codemirror2"
 
-import "./codemirror.scss";
-import styles from "./editor.module.scss";
-import { moveCursor, cursorSelector } from "@itsy.studio/editor/store/cursor";
-import { changeText, textSelector } from "@itsy.studio/editor/store/text";
+import "./codemirror.scss"
+import styles from "./editor.module.scss"
+import { moveCursor, cursorSelector } from "@itsy.studio/editor/store/cursor"
+import {
+  updateSelection,
+  selectionSelector,
+  SelectionPoint,
+} from "@itsy.studio/editor/store/selection"
+import { changeText, textSelector } from "@itsy.studio/editor/store/text"
 
 interface EditorProps {
-  changeText: (text: string) => void;
-  moveCursor: (x: number, y: number) => void;
-  text: string;
+  changeText: (text: string) => void
+  moveCursor: (x: number, y: number) => void
+  updateSelection: (start: SelectionPoint, end: SelectionPoint) => void
+  text: string
 }
 
-const mapStateToProps = state => ({
-  text: textSelector(state)
-});
+const mapStateToProps = (state) => ({
+  text: textSelector(state),
+})
 
 const mapDispatchToProps = {
   changeText,
-  moveCursor
-};
+  moveCursor,
+  updateSelection,
+}
 
-export function Editor({ changeText, moveCursor, text }: EditorProps) {
-  const codemirror = React.useRef<CodeMirror.Editor>();
+export function Editor({
+  changeText,
+  moveCursor,
+  text,
+  updateSelection,
+}: EditorProps) {
+  const codemirror = React.useRef<CodeMirror.Editor>()
 
-  const editorDidMount = React.useCallback(c => {
-    codemirror.current = c;
-  }, []);
+  const editorDidMount = React.useCallback((c) => {
+    codemirror.current = c
+  }, [])
 
   const onBeforeChange = React.useCallback((...[, , value]) => {
-    changeText(value);
-  }, []);
+    changeText(value)
+  }, [])
 
   const onCursor = React.useCallback(() => {
-    const { line, ch } = codemirror.current.getCursor();
-    moveCursor(ch, line);
-  }, []);
+    const { line, ch } = codemirror.current.getCursor()
+    moveCursor(ch, line)
+  }, [])
+
+  const onSelection = React.useCallback(
+    (cm, { ranges: [{ anchor, head }] }) => {
+      const start = { x: head.ch, y: head.line }
+      const end = { x: anchor.ch, y: anchor.line }
+      updateSelection(start, end)
+    },
+    []
+  )
 
   const options = {
     autocapitalize: false,
@@ -49,8 +70,8 @@ export function Editor({ changeText, moveCursor, text }: EditorProps) {
     onCursor,
     spellcheck: false,
     tabSize: 1,
-    theme: "itsy"
-  };
+    theme: "itsy",
+  }
 
   const props = {
     className: styles.editor,
@@ -58,10 +79,11 @@ export function Editor({ changeText, moveCursor, text }: EditorProps) {
     editorDidMount,
     onBeforeChange,
     onCursor,
-    options
-  };
+    onSelection,
+    options,
+  }
 
-  return <CodeMirror {...props} />;
+  return <CodeMirror {...props} />
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor);
+export default connect(mapStateToProps, mapDispatchToProps)(Editor)
