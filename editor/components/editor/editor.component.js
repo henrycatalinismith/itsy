@@ -1,15 +1,12 @@
-import React from "react"
-import { connect } from "react-redux"
-import { Controlled as CodeMirror } from "react-codemirror2"
+import React from "react";
+import { connect } from "react-redux";
+import { Controlled as CodeMirror } from "react-codemirror2";
 
-import styles from "./editor.module.scss"
-import actions from "../../actions"
+import "./codemirror.scss";
+import styles from "./editor.module.scss";
+import actions from "../../actions";
 
-export const Editor = ({
-  change,
-  loading,
-  lua,
-}) => {
+export const Editor = ({ change, loading, lua }) => {
   const options = {
     autocapitalize: false,
     autocorrect: false,
@@ -20,31 +17,29 @@ export const Editor = ({
     mode: "lua",
     spellcheck: false,
     tabSize: 1,
-    theme: "itsy",
-  }
+    theme: "itsy"
+  };
 
   return (
     <>
       {loading ? (
-        <div className={styles.loading}>
-          loading
-        </div>
+        <div className={styles.loading}>loading</div>
       ) : (
         <CodeMirror
           className={styles.editor}
           value={lua}
           options={options}
-          onBeforeChange={(...[,, value]) => change(value)}
+          onBeforeChange={(...[, , value]) => change(value)}
         />
       )}
     </>
-  )
-
-}
+  );
+};
 
 export default connect(
   ({ loading, lua }) => ({
     loading,
-    lua,
-  }), actions
-)(Editor)
+    lua
+  }),
+  actions
+)(Editor);

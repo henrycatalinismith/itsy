@@ -1,5 +1,6 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const InlineSourcePlugin = require("html-webpack-inline-source-plugin")
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const InlineSourcePlugin = require("html-webpack-inline-source-plugin");
 
 module.exports = {
   mode: "production",
@@ -8,7 +9,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.(js|jsx)$/,
@@ -16,10 +17,7 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: [
-              "@babel/preset-env",
-              "@babel/preset-react",
-            ],
+            presets: ["@babel/preset-env", "@babel/preset-react"]
           }
         }
       },
@@ -30,7 +28,7 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true,
+              modules: true
             }
           },
           {
@@ -38,7 +36,7 @@ module.exports = {
             options: {
               implementation: require("sass")
             }
-          },
+          }
         ]
       },
       {
@@ -47,29 +45,37 @@ module.exports = {
         use: [
           "style-loader",
           {
-            loader: "css-loader",
+            loader: "css-loader"
           },
           {
             loader: "sass-loader",
             options: {
               implementation: require("sass")
             }
-          },
+          }
         ]
-      },
+      }
     ]
   },
   output: {
     path: `${__dirname}/webviews`,
-    filename: "index.js",
+    filename: "index.js"
   },
   plugins: [
     new HtmlWebpackPlugin({
       inlineSource: ".(js|css)$",
       meta: {
-        viewport: "initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width",
-      },
+        viewport:
+          "initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width"
+      }
     }),
-    new InlineSourcePlugin(),
-  ]
-}
+    new InlineSourcePlugin()
+  ],
+  resolve: {
+    extensions: [".wasm", ".mjs", ".js", ".jsx", ".ts", ".tsx", ".json"],
+    modules: ["node_modules"],
+    alias: {
+      "@itsy.studio": path.resolve(__dirname, "../")
+    }
+  }
+};

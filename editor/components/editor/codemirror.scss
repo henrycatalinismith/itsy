@@ -1,0 +1,123 @@
+.CodeMirror {
+  flex: 1 !important;
+}
+
+.CodeMirror-gutters {
+  border-right: 0;
+}
+
+.CodeMirror-linenumbers {
+  background: #fae4ed;
+}
+
+.CodeMirror-linenumber {
+  color: #ccc;
+}
+
+.cm-s-itsy.CodeMirror {
+  color: #65a085;
+}
+
+.cm-s-itsy div.CodeMirror-selected {
+  background: #49483e;
+}
+
+.cm-s-itsy .CodeMirror-line::selection,
+.cm-s-itsy .CodeMirror-line > span::selection,
+.cm-s-itsy .CodeMirror-line > span > span::selection {
+  background: rgba(73, 72, 62, 0.99);
+}
+
+.cm-s-itsy .CodeMirror-line::-moz-selection,
+.cm-s-itsy .CodeMirror-line > span::-moz-selection,
+.cm-s-itsy .CodeMirror-line > span > span::-moz-selection {
+  background: rgba(73, 72, 62, 0.99);
+}
+
+.cm-s-itsy .CodeMirror-gutters {
+  background: #5f574f;
+  border-right: 0px;
+}
+
+.cm-s-itsy .CodeMirror-guttermarker {
+  color: white;
+}
+
+.cm-s-itsy .CodeMirror-guttermarker-subtle {
+  color: #d0d0d0;
+}
+
+.cm-s-itsy .CodeMirror-linenumber {
+  color: #ff77a8;
+}
+
+.cm-s-itsy .CodeMirror-cursor {
+  border-left: 2px solid #ff004d;
+}
+
+.cm-s-itsy span.cm-comment {
+  color: #83769c;
+}
+
+.cm-s-itsy span.cm-atom {
+  color: #ae81ff;
+}
+
+.cm-s-itsy span.cm-number {
+  color: #29adff;
+}
+
+.cm-s-itsy span.cm-property,
+.cm-s-itsy span.cm-attribute {
+  color: #a6e22e;
+}
+
+.cm-s-itsy span.cm-keyword {
+  color: #ff77a8;
+}
+
+.cm-s-itsy span.cm-builtin {
+  color: #66d9ef;
+}
+
+.cm-s-itsy span.cm-string {
+  color: #29adff;
+}
+
+.cm-s-itsy span.cm-variable {
+  color: #65a085;
+}
+
+.cm-s-itsy span.cm-variable-2 {
+  color: #9effff;
+}
+
+.cm-s-itsy span.cm-variable-3,
+.cm-s-itsy span.cm-type {
+  color: #66d9ef;
+}
+
+.cm-s-itsy span.cm-def {
+  color: #fd971f;
+}
+
+.cm-s-itsy span.cm-bracket {
+  color: #65a085;
+}
+
+.cm-s-itsy span.cm-tag {
+  color: #f92672;
+}
+
+.cm-s-itsy span.cm-header {
+  color: #ae81ff;
+}
+
+.cm-s-itsy span.cm-link {
+  color: #ae81ff;
+}
+
+.cm-s-itsy span.cm-error {
+  background: #f92672;
+  color: #f8f8f0;
+}
