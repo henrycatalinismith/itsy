@@ -1,17 +1,6 @@
 {
+  "extends": "../settings/tsconfig.json",
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": "../",
-    "esModuleInterop": true,
-    "jsx": "react-native",
-    "lib": ["dom", "esnext"],
-    "moduleResolution": "node",
-    "noEmit": true,
-    "paths": {
-      "@itsy.studio/itsy/*": ["itsy/*"],
-      "@itsy.studio/studio/*": ["studio/*"]
-    },
-    "rootDirs": [".", "../editor", "../itsy", "../palettes", "../pixelflip"],
-    "skipLibCheck": true
+    "jsx": "react-native"
   }
 }

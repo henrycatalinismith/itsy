@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "baseUrl": "../",
+    "esModuleInterop": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "paths": {
+      "@itsy.studio/editor/*": ["editor/*"],
+      "@itsy.studio/itsy/*": ["itsy/*"],
+      "@itsy.studio/manual/*": ["manual/*"],
+      "@itsy.studio/palettes/*": ["palettes/*"],
+      "@itsy.studio/pixelflip/*": ["pixelflip/*"],
+      "@itsy.studio/settings/*": ["settings/*"],
+      "@itsy.studio/studio/*": ["studio/*"]
+    },
+    "rootDirs": [
+      ".",
+      "../editor",
+      "../itsy",
+      "../manual",
+      "../palettes",
+      "../pixelflip",
+      "../studio"
+    ],
+    "skipLibCheck": true
+  },
+  "include": ["./*"]
+}
