@@ -22,45 +22,6 @@ marked.setOptions({
   },
 })
 
-/*
-
-const reducers = combineReducers({
-  results: reducer([], {
-    navigate: () => [],
-    search: (prev, { query }) => {
-      if (query == "") {
-        return []
-      }
-
-      const scoredPages = _.map(_.values(content), (page) => {
-        page.score = 0
-        const title = _.get(page, "frontMatter.title", "")
-        const description = _.get(page, "frontMatter.description", "")
-        if (title === query) {
-          page.score = Infinity
-        } else if (title.startsWith(query)) {
-          page.score = query.length * Math.pow(2, 8)
-        } else if (title.includes(query)) {
-          page.score = query.length * Math.pow(2, 7)
-        } else if (description.includes(query)) {
-          page.score = query.length * Math.pow(2, 1)
-        }
-        return page
-      })
-
-      const results = _.filter(scoredPages, (page) => {
-        return page.score > 0 && page.frontMatter.path !== "/'"
-      })
-
-      _.sortBy(results, ["score"])
-
-      return results
-    },
-  }),
-})
-
-*/
-
 const root = document.createElement("div")
 root.style.display = "flex"
 root.style.flexDirection = "column"

@@ -59,44 +59,4 @@ export function Manual({ navigate, page }: ManualProps): React.ReactElement {
   )
 }
 
-/*
-
-  if (path.match(/^\/functions\/.+/)) {
-    header = <Breadcrumbs path={path} />
-    title = page.frontMatter.title
-    body = <Function {...page.frontMatter} />
-  } else if (path.match(/^\/search$/)) {
-    const onEnter = () => navigate(results[0].frontMatter.path)
-    header = <Search query={query} onChange={search} onEnter={onEnter} />
-    title = query.length > 0 ? "search" : content["/"].frontMatter.title
-    body =
-      query.length > 0 ? (
-        <Results query={query} results={results} />
-      ) : (
-        <Markdown {...content["/"]} />
-      )
-  } else {
-    header = <Breadcrumbs path={path} />
-    title = page.frontMatter.title
-    body = <Markdown {...page} />
-  }
-
-  const onHeaderClick = (event) => {
-    const link = event.target.closest("a")
-    if (link) {
-      return
-    }
-    event.preventDefault()
-    navigate("/search")
-  }
-
-  return (
-    <>
-      <Header onClick={onHeaderClick}>{header}</Header>
-      <Page title={title}>{body}</Page>
-    </>
-  )
-}
-*/
-
 export default connect(mapStateToProps, mapDispatchToProps)(Manual)
