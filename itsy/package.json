@@ -35,7 +35,7 @@
     "sass-loader": "^8.0.0",
     "webpack-cli": "^3.3.1"
   },
-  "main": "exports/index.js",
+  "main": "exports/index.ts",
   "files": [
     "base64/*",
     "commands/*",

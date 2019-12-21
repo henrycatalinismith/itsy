@@ -5,7 +5,7 @@ import _ from "lodash"
 import { Keyboard } from "react-native"
 import uuid from "uuid"
 
-import itsy from "@itsy.studio/itsy"
+import { read, write } from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
 import player from "@itsy.studio/studio/store/player"
 import {
@@ -14,18 +14,7 @@ import {
   spritesheet,
 } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
-
-export interface Disk {
-  id: string
-  name: string
-  lua: string
-  palette: string
-  snapshot: string
-  spritesheet: string
-  active: boolean
-  created: string
-  updated: string
-}
+import { Disk } from "@itsy.studio/types"
 
 interface DiskState {
   [id: string]: Disk
@@ -132,7 +121,7 @@ export const loadDisks = (): Thunk => async (dispatch) => {
   for (const name of diskNames) {
     const uri = `${dir}${name}`
     const html = await FileSystem.readAsStringAsync(uri)
-    const raw = itsy.read(html)
+    const raw = read(html)
 
     const disk: Disk = {
       id: raw.id,
@@ -164,7 +153,7 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
 
   const state = getState()
   const disk = activeDisk(state)
-  const html = itsy.write(disk)
+  const html = write(disk)
 
   await delay(100)
 
@@ -202,7 +191,7 @@ export const saveSnapshot = (png: string): Thunk => async (
 
   const state = getState()
   const disk = activeDisk(state)
-  const html = itsy.write(disk)
+  const html = write(disk)
   const name = filename(disk.name)
 
   await FileSystem.writeAsStringAsync(name, html)

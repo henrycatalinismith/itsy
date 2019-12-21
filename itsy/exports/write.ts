@@ -1,20 +1,19 @@
-const uuid = require("uuid")
-const { Buffer } = require("buffer")
-const base64 = require("../base64")
+import uuid from "uuid"
+import { Buffer } from "buffer"
+import base64 from "../base64"
+import { PartialDisk } from "@itsy.studio/types"
 
-exports.write = ({
+export default function write({
   id = uuid(),
   name = "",
-  created = new Date().toISOString(),
-  updated = new Date().toISOString(),
   lua = "",
   palette = base64.palette,
   snapshot = base64.snapshot,
   spritesheet = base64.spritesheet,
-  width = undefined,
-  height = undefined,
-}) =>
-  `
+  created = new Date().toISOString(),
+  updated = created,
+}: PartialDisk): string {
+  return `
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,8 +40,8 @@ ${JSON.stringify(
 <script id="options" type="application/json">
 ${JSON.stringify(
   {
-    width,
-    height,
+    width: undefined,
+    height: undefined,
   },
   undefined,
   2
@@ -113,3 +112,4 @@ ${Buffer.from(base64.engine, "base64").toString()}
 </body>
 </html>
 `.trim()
+}

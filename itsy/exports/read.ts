@@ -1,7 +1,8 @@
-const _ = require("lodash")
-const { parse } = require("himalaya")
+import _ from "lodash"
+import { parse } from "himalaya"
+import { Disk } from "@itsy.studio/types"
 
-module.exports = (html) => {
+export default function read(html: string): Disk {
   const tree = parse(html)
 
   const document = _.find(tree, {
@@ -73,9 +74,12 @@ module.exports = (html) => {
     "attributes[3].value"
   ).split(",")[1]
 
-  return {
+  const active = false
+
+  const disk: Disk = {
     id,
     name,
+    active,
     created,
     updated,
     lua,
@@ -83,4 +87,6 @@ module.exports = (html) => {
     snapshot,
     spritesheet,
   }
+
+  return disk
 }
