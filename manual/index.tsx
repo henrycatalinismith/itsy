@@ -1,21 +1,19 @@
 import _ from "lodash"
 import React from "react"
 import ReactDOM from "react-dom"
-import Manual from "./components/manual"
 import url from "url"
 
 import marked from "marked"
 import hljs from "highlight.js/lib/highlight"
 import lua from "highlight.js/lib/languages/lua"
-import "./stylesheets/itsy.css"
+import "@itsy.studio/manual/stylesheets/itsy.css"
 
 import { Provider } from "react-redux"
 
+import Manual from "@itsy.studio/manual/components/manual"
 import store from "@itsy.studio/manual/store"
 import { navigate } from "@itsy.studio/manual/store/location"
 import { startWebview } from "@itsy.studio/manual/store/webview"
-
-console.log(store.getState())
 
 hljs.registerLanguage("lua", lua)
 marked.setOptions({
@@ -25,31 +23,8 @@ marked.setOptions({
 })
 
 /*
-const all = (r) => r.keys().map(r)
-const pages = all(require.context("./pages", true, /\.md$/))
-
-const content = {}
-pages.forEach((page) => {
-  const frontMatter = page.attributes
-  const body = page.body
-  content[frontMatter.path] = {
-    frontMatter,
-    body,
-  }
-})
 
 const reducers = combineReducers({
-  content: reducer(content, {}),
-
-  history: reducer([location.hash.substring(1) || "/"], {
-    navigate: (history, destination) => [destination.path, ...history],
-  }),
-
-  query: reducer("", {
-    navigate: () => "",
-    search: (prev, { query }) => query,
-  }),
-
   results: reducer([], {
     navigate: () => [],
     search: (prev, { query }) => {

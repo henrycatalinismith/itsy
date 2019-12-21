@@ -1,16 +1,29 @@
 import React from "react"
+import { connect } from "react-redux"
 
+import { currentPage } from "@itsy.studio/manual/store/location"
+import { Page } from "@itsy.studio/manual/store/pages"
 import styles from "./breadcrumbs.module.scss"
 
-export function Breadcrumbs({ path }): React.ReactElement {
+interface BreadcrumbsProps {
+  page: Page
+}
+
+const mapStateToProps = (state) => ({
+  page: currentPage(state),
+})
+
+const mapDispatchToProps = {}
+
+export function Breadcrumbs({ page }): React.ReactElement {
   let prev = ""
 
   const breadcrumbs = [
     {
-      text: "itsy",
+      text: "home",
       href: "/",
     },
-    ...path
+    ...page.path
       .split(/\//)
       .filter((segment) => !!segment)
       .map((segment) => {
@@ -39,4 +52,4 @@ export function Breadcrumbs({ path }): React.ReactElement {
   )
 }
 
-export default Breadcrumbs
+export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumbs)

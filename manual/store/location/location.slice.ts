@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
+import { Page } from "@itsy.studio/manual/store/pages"
 import { Thunk } from "@itsy.studio/manual/store"
 
 const name = "location"
@@ -20,6 +21,7 @@ const slice = createSlice({
 
 export const navigate = (path: string): Thunk => async (dispatch, getState) => {
   dispatch(slice.actions.navigate(path))
+  location.hash = path
   window.scrollTo({
     top: 0,
     left: 0,
@@ -29,6 +31,17 @@ export const navigate = (path: string): Thunk => async (dispatch, getState) => {
 
 export const locationSelector = ({ location }) => location
 
-export const currentPage = ({ location, pages }) => pages[location]
+export const currentPage = ({ location, pages }) => {
+  if (location === "/search") {
+    const searchPage: Page = {
+      path: "/search",
+      title: "search",
+      css: "",
+      body: "",
+    }
+    return searchPage
+  }
+  return pages[location]
+}
 
 export default slice

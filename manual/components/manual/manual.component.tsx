@@ -2,7 +2,7 @@ import React from "react"
 import marked from "marked"
 import { connect } from "react-redux"
 
-import { currentPage } from "@itsy.studio/manual/store/location"
+import { currentPage, navigate } from "@itsy.studio/manual/store/location"
 import { Page as PageType } from "@itsy.studio/manual/store/pages"
 
 import Breadcrumbs from "../breadcrumbs"
@@ -14,6 +14,7 @@ import Results from "../results"
 import Search from "../search"
 
 interface ManualProps {
+  navigate: (path: string) => void
   page: PageType
 }
 
@@ -21,14 +22,32 @@ const mapStateToProps = (state) => ({
   page: currentPage(state),
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  navigate,
+}
 
-export function Manual({ page }: ManualProps): React.ReactElement {
-  console.log(page)
+export function Manual({ navigate, page }: ManualProps): React.ReactElement {
+  const onHeaderClick = React.useCallback(
+    (event) => {
+      const link = event.target.closest("a")
+      if (link) {
+        return
+      }
+      event.preventDefault()
+      navigate("/search")
+    },
+    [page.path]
+  )
+
   return (
-    <Page title={page.title}>
-      <Markdown body={page.body} css={page.css} />
-    </Page>
+    <>
+      <Header onClick={onHeaderClick}>
+        {page.path.match(/^\/search$/) ? <Search /> : <Breadcrumbs />}
+      </Header>
+      <Page title={page.title}>
+        <Markdown body={page.body} css={page.css} />
+      </Page>
+    </>
   )
 }
 

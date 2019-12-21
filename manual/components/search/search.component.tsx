@@ -1,12 +1,27 @@
 import React from "react"
+import { connect } from "react-redux"
 
+import { querySelector, search } from "@itsy.studio/manual/store/query"
 import styles from "./search.module.scss"
 
-export function Search({ query, onChange, onEnter }): React.ReactElement {
+interface SearchProps {
+  query: string
+  search: (query: string) => void
+}
+
+const mapStateToProps = (state) => ({
+  query: querySelector(state),
+})
+
+const mapDispatchToProps = {
+  search,
+}
+
+export function Search({ query, search }): React.ReactElement {
   const element = React.useRef(undefined)
   const onKeyDown = (event) => {
     if (event.key === "Enter") {
-      onEnter()
+      // onEnter()
     }
   }
   return (
@@ -20,10 +35,10 @@ export function Search({ query, onChange, onEnter }): React.ReactElement {
       type="search"
       ref={element}
       value={query}
-      onChange={() => onChange(element.current.value)}
+      onChange={() => search(element.current.value)}
       onKeyDown={onKeyDown}
     />
   )
 }
 
-export default Search
+export default connect(mapStateToProps, mapDispatchToProps)(Search)
