@@ -8,6 +8,8 @@ import {
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
+import { Page } from "@itsy.studio/types/manual"
+
 import location from "./location"
 import pages from "./pages"
 import query from "./query"
@@ -29,16 +31,37 @@ const pagesState = {}
 markdownFiles.forEach((mardown) => {
   const frontMatter = mardown.attributes
   const body = mardown.body
-  pagesState[frontMatter.path] = {
+
+  const page: Page = {
     path: frontMatter.path,
     title: frontMatter.title || "",
     description: frontMatter.description || "",
     css: frontMatter.css || "",
     body,
   }
+
+  if (frontMatter.function) {
+    page.function = {
+      name: page.title,
+      category: frontMatter.function.category,
+      input: (frontMatter.function.input || []).map((p) => ({
+        name: p.name || "",
+        type: p.type || "",
+        desc: p.desc || "",
+        default: p.default || "",
+      })),
+      output: {
+        type: frontMatter.function.output?.type || "",
+        desc: frontMatter.function.output?.desc || "",
+      },
+    }
+  }
+
+  pagesState[frontMatter.path] = page
 })
 
 const preloadedState = {
+  location: window.location.hash.substring(1) || "/",
   pages: pagesState,
 }
 

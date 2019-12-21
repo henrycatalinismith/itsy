@@ -6,7 +6,7 @@ import { currentPage, navigate } from "@itsy.studio/manual/store/location"
 import { Page as PageType } from "@itsy.studio/types/manual"
 
 import Breadcrumbs from "../breadcrumbs"
-import Function from "../function"
+import FunctionPage from "../function"
 import Header from "../header"
 import Markdown from "../markdown"
 import Page from "../page"
@@ -39,6 +39,8 @@ export function Manual({ navigate, page }: ManualProps): React.ReactElement {
     [page.path]
   )
 
+  console.log(page)
+
   return (
     <>
       <Header onClick={onHeaderClick}>
@@ -47,6 +49,8 @@ export function Manual({ navigate, page }: ManualProps): React.ReactElement {
       <Page title={page.title}>
         {page.path.match(/^\/search$/) ? (
           <Results />
+        ) : page.function ? (
+          <FunctionPage page={page} />
         ) : (
           <Markdown body={page.body} css={page.css} />
         )}

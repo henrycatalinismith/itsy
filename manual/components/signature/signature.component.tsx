@@ -2,19 +2,21 @@ import React from "react"
 
 import styles from "./signature.module.scss"
 
-export function Signature({ name, args }): React.ReactElement {
+import { Function } from "@itsy.studio/types/manual"
+
+export function Signature(fn: Function): React.ReactElement {
   return (
     <section className={styles.signature}>
-      {name}(
-      {(args || []).map((arg, i) => (
+      {fn.name}(
+      {fn.input.map((arg, i) => (
         <span key={i}>
           {" "}
-          {arg.base ? (
+          {arg.default ? (
             <span className={styles.signature__name}>[{arg.name}]</span>
           ) : (
             <span className={styles.signature__name}>{arg.name}</span>
           )}
-          {i < args.length - 1 && <span>,</span>}
+          {i < fn.input.length - 1 && <span>,</span>}
         </span>
       ))}{" "}
       )

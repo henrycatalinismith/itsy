@@ -1,16 +1,21 @@
 import React from "react"
 
+import { FunctionParameter } from "@itsy.studio/types/manual"
 import Section from "../section"
 import Type from "../type"
 
 import styles from "./input.module.scss"
 
-export function Input({ children }): React.ReactElement {
+interface InputProps {
+  parameters: FunctionParameter[]
+}
+
+export function Input({ parameters }: InputProps): React.ReactElement {
   return (
     <Section title="parameters">
       <table className={styles.input}>
         <tbody>
-          {children.map((arg, i) => (
+          {parameters.map((arg, i) => (
             <tr key={arg.name}>
               <td className={styles.input__name}>{arg.name}</td>
               <td className={styles.input__type}>
@@ -18,11 +23,11 @@ export function Input({ children }): React.ReactElement {
               </td>
               <td className={styles.input__desc}>
                 {arg.desc}
-                {arg.base && (
+                {arg.default && (
                   <>
                     <br />
                     <span className={styles.input__base}>
-                      (default: {arg.base})
+                      (default: {arg.default})
                     </span>
                   </>
                 )}

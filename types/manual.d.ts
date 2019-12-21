@@ -1,3 +1,12 @@
+export enum DataTypes {
+  any = "any",
+  boolean = "boolean",
+  function = "function",
+  number = "number",
+  string = "string",
+  table = "table",
+}
+
 export enum FunctionCategories {
   draw = "draw",
   graphics = "graphics",
@@ -9,23 +18,22 @@ export enum FunctionCategories {
   tables = "tables",
 }
 
-export enum FunctionReturnTypes {
-  any = "any",
-  boolean = "boolean",
-  function = "function",
-  number = "number",
-  string = "string",
-  table = "table",
+export interface FunctionOutput {
+  type: DataTypes
+  desc: string
 }
 
-export interface FunctionOutput {
-  type: FunctionReturnTypes
-  description: string
+export interface FunctionParameter {
+  name: string
+  type: DataTypes
+  desc: string
+  default: string
 }
 
 export interface Function {
   name: string
   category: FunctionCategories
+  input: FunctionParameter[]
   output: FunctionOutput
 }
 

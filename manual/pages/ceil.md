@@ -1,26 +1,28 @@
 ---
 title: ceil
 path: /functions/ceil
-type: math
 description: rounds up
-args:
-- name: num
-  type: number
-  desc: number to round up
-returns:
-  type: number
-  desc: the input number rounded up to the next highest integer
-examples:
-  inputs vs outputs: |
-    print(ceil(-99.9))  -- prints -99
-    print(ceil(-50.9))  -- prints -50
-    print(ceil(-1.1))   -- prints -1
-    print(ceil(-0.1))   -- prints 0
-    print(ceil(0))      -- prints 0
-    print(ceil(0.1))    -- prints 1
-    print(ceil(1.1))    -- prints 2
-    print(ceil(50.9))   -- prints 51
-    print(ceil(99.9))   -- prints 100
+
+function:
+  category: math
+  input:
+    - name: num
+      type: number
+      desc: number to round up
+  output:
+    type: number
+    desc: the input number rounded up to the next highest integer
+  examples:
+    inputs vs outputs: |
+      print(ceil(-99.9))  -- prints -99
+      print(ceil(-50.9))  -- prints -50
+      print(ceil(-1.1))   -- prints -1
+      print(ceil(-0.1))   -- prints 0
+      print(ceil(0))      -- prints 0
+      print(ceil(0.1))    -- prints 1
+      print(ceil(1.1))    -- prints 2
+      print(ceil(50.9))   -- prints 51
+      print(ceil(99.9))   -- prints 100
 
   graph demo: |
     y1 = 96

@@ -1,2 +1,2 @@
-import _Function from "./function.component"
-export default _Function
+import FunctionPage from "./function.component"
+export default FunctionPage

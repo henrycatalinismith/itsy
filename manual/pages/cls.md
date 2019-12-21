@@ -1,17 +1,20 @@
 ---
 title: cls
 path: /functions/cls
-type: draw
 description: clears the screen
-args:
-- name: col
-  type: number
-  desc: fill color
-  base: draw state color
-examples:
-  red screen: |
-    cls(8)
-  pink screen: |
-    cls(14)
----
 
+function:
+  category: draw
+  input:
+    - name: col
+      type: number
+      desc: fill color
+      default: draw state color
+  output:
+    type: nil
+  examples:
+    red screen: |
+      cls(8)
+    pink screen: |
+      cls(14)
+---

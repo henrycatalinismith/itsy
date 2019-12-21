@@ -1,21 +1,22 @@
 ---
 title: lower
 path: /functions/lower
-type: string
 description: lowercases a string
-args:
-- name: s
-  type: string
-  desc: input string
-returns:
-  type: string
-  desc: lower case version of s
-examples:
-  inputs vs outputs: |
-    -- prints "ABCDEFGHIJKLMN"
-    print("ABCDEFGHIJKLMN")
 
-    -- prints "abcdefghijklmn"
-    print(lower("ABCDEFGHIJKLMN"))
+function:
+  category: string
+  input:
+    - name: s
+      category: string
+      desc: input string
+  output:
+    category: string
+    desc: lower case version of s
+  examples:
+    inputs vs outputs: |
+      -- prints "ABCDEFGHIJKLMN"
+      print("ABCDEFGHIJKLMN")
+
+      -- prints "abcdefghijklmn"
+      print(lower("ABCDEFGHIJKLMN"))
 ---
-

@@ -34,7 +34,6 @@ export const selectResults = createSelector(
 
     const scoredPages = _.map(_.values(pages), (page) => {
       page.score = 0
-      console.log(page.title)
       if (page.title === query) {
         page.score = Infinity
       } else if (page.title.startsWith(query)) {

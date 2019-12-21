@@ -1,13 +1,13 @@
 ---
 title: cos
 path: /functions/cos
-type: math
+category: math
 description: calculates cosine
-args:
-- name: angle
-  type: number
-  desc: from 0 to 1
-returns:
+parameters:
+  - name: angle
+    type: number
+    desc: from 0 to 1
+output:
   type: number
   desc: the cosine of the input angle
 examples:
@@ -34,4 +34,3 @@ examples:
       pset(x, y, 8)
     end
 ---
-
