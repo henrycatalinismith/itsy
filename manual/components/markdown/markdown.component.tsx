@@ -1,8 +1,7 @@
 import React from "react"
 import marked from "marked"
 
-export function Markdown({ frontMatter, body }): React.ReactElement {
-  const { css } = frontMatter
+export function Markdown({ body = "", css = "" }): React.ReactElement {
   const html = marked(body)
   return (
     <>

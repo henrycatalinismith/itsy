@@ -1,7 +1,9 @@
 import React from "react"
 import marked from "marked"
 import { connect } from "react-redux"
-import { action } from "@highvalley.systems/signalbox"
+
+import { currentPage } from "@itsy.studio/manual/store/location"
+import { Page as PageType } from "@itsy.studio/manual/store/pages"
 
 import Breadcrumbs from "../breadcrumbs"
 import Function from "../function"
@@ -11,6 +13,26 @@ import Page from "../page"
 import Results from "../results"
 import Search from "../search"
 
+interface ManualProps {
+  page: PageType
+}
+
+const mapStateToProps = (state) => ({
+  page: currentPage(state),
+})
+
+const mapDispatchToProps = {}
+
+export function Manual({ page }: ManualProps): React.ReactElement {
+  console.log(page)
+  return (
+    <Page title={page.title}>
+      <Markdown body={page.body} css={page.css} />
+    </Page>
+  )
+}
+
+/*
 const mapStateToProps = ({ content, history, query, results }) => ({
   content,
   history,
@@ -74,5 +96,6 @@ export function Manual({
     </>
   )
 }
+*/
 
 export default connect(mapStateToProps, mapDispatchToProps)(Manual)

@@ -1,7 +1,6 @@
 import _ from "lodash"
 import React from "react"
 import ReactDOM from "react-dom"
-import { createLogger } from "redux-logger"
 import Manual from "./components/manual"
 import url from "url"
 
@@ -10,9 +9,10 @@ import hljs from "highlight.js/lib/highlight"
 import lua from "highlight.js/lib/languages/lua"
 import "./stylesheets/itsy.css"
 
-import { combineReducers, applyMiddleware, createStore } from "redux"
 import { Provider } from "react-redux"
-import { reducer, after, before } from "@highvalley.systems/signalbox"
+
+import store from "./store"
+console.log(store.getState())
 
 hljs.registerLanguage("lua", lua)
 marked.setOptions({
@@ -21,6 +21,7 @@ marked.setOptions({
   },
 })
 
+/*
 const all = (r) => r.keys().map(r)
 const pages = all(require.context("./pages", true, /\.md$/))
 
@@ -119,6 +120,7 @@ window.onhashchange = () => {
     store.dispatch({ type: "navigate", path })
   }
 }
+*/
 
 const root = document.createElement("div")
 root.style.display = "flex"
