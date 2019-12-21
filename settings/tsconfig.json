@@ -13,7 +13,9 @@
       "@itsy.studio/palettes/*": ["palettes/*"],
       "@itsy.studio/pixelflip/*": ["pixelflip/*"],
       "@itsy.studio/settings/*": ["settings/*"],
-      "@itsy.studio/studio/*": ["studio/*"]
+      "@itsy.studio/studio/*": ["studio/*"],
+      "@itsy.studio/types": ["types"],
+      "@itsy.studio/types/*": ["types/*"]
     },
     "rootDirs": [
       ".",
@@ -22,7 +24,8 @@
       "../manual",
       "../palettes",
       "../pixelflip",
-      "../studio"
+      "../studio",
+      "../types"
     ],
     "skipLibCheck": true
   },

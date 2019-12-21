@@ -1,16 +1,12 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/editor/store"
-
-export interface SelectionPoint {
-  x: number
-  y: number
-}
+import { Point2D } from "@itsy.studio/types"
 
 export interface SelectionState {
   text: string
-  start: SelectionPoint
-  end: SelectionPoint
+  start: Point2D
+  end: Point2D
 }
 
 const name = "selection"
@@ -31,8 +27,8 @@ const reducers = {
   update(
     selection,
     action: PayloadAction<{
-      start: SelectionPoint
-      end: SelectionPoint
+      start: Point2D
+      end: Point2D
       text: string
     }>
   ) {
@@ -51,8 +47,8 @@ const slice = createSlice({
 })
 
 export const updateSelection = (
-  start: SelectionPoint,
-  end: SelectionPoint,
+  start: Point2D,
+  end: Point2D,
   text: string
 ): Thunk => async (dispatch, getState) => {
   dispatch(slice.actions.update({ start, end, text }))

@@ -2,24 +2,17 @@ import React from "react"
 import { connect } from "react-redux"
 import { Controlled as CodeMirror } from "react-codemirror2"
 
+import { Point2D } from "@itsy.studio/types"
 import "./codemirror.scss"
 import styles from "./editor.module.scss"
 import { moveCursor, cursorSelector } from "@itsy.studio/editor/store/cursor"
-import {
-  updateSelection,
-  selectionSelector,
-  SelectionPoint,
-} from "@itsy.studio/editor/store/selection"
+import { updateSelection } from "@itsy.studio/editor/store/selection"
 import { changeText, textSelector } from "@itsy.studio/editor/store/text"
 
 interface EditorProps {
   changeText: (text: string) => void
-  moveCursor: (x: number, y: number) => void
-  updateSelection: (
-    start: SelectionPoint,
-    end: SelectionPoint,
-    text: string
-  ) => void
+  moveCursor: (point: Point2D) => void
+  updateSelection: (start: Point2D, end: Point2D, text: string) => void
   text: string
 }
 
@@ -51,15 +44,19 @@ export function Editor({
 
   const onCursor = React.useCallback(() => {
     const { line, ch } = codemirror.current.getCursor()
-    moveCursor(ch, line)
+    const point: Point2D = {
+      x: ch,
+      y: line,
+    }
+    moveCursor(point)
   }, [])
 
   const onSelection = React.useCallback(
     (cm, { ranges: [{ anchor, head }] }) => {
       setTimeout(() => {
         const selectedText = codemirror.current.getSelection()
-        const start = { x: head.ch, y: head.line }
-        const end = { x: anchor.ch, y: anchor.line }
+        const start: Point2D = { x: head.ch, y: head.line }
+        const end: Point2D = { x: anchor.ch, y: anchor.line }
         updateSelection(start, end, selectedText)
       }, 10)
     },
