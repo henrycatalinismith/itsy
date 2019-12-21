@@ -11,7 +11,10 @@ import "./stylesheets/itsy.css"
 
 import { Provider } from "react-redux"
 
-import store from "./store"
+import store from "@itsy.studio/manual/store"
+import { navigate } from "@itsy.studio/manual/store/location"
+import { startWebview } from "@itsy.studio/manual/store/webview"
+
 console.log(store.getState())
 
 hljs.registerLanguage("lua", lua)
@@ -81,45 +84,6 @@ const reducers = combineReducers({
   }),
 })
 
-const initialState = {
-  content,
-  query: "",
-  results: [],
-}
-
-const middlewares = applyMiddleware.apply(null, [
-  createLogger({ collapsed: true }),
-
-  after("navigate", (store, action) => {
-    location.hash = action.path
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "auto",
-    })
-  }),
-])
-
-const store = createStore(reducers, initialState, middlewares)
-
-window.onclick = (event) => {
-  const link = event.target.closest("a")
-  if (!link) {
-    return
-  }
-  event.preventDefault()
-  store.dispatch({
-    type: "navigate",
-    path: url.parse(link.href).path,
-  })
-}
-
-window.onhashchange = () => {
-  const path = location.hash.substring(1) || "/"
-  if (store.getState().history[0] !== path) {
-    store.dispatch({ type: "navigate", path })
-  }
-}
 */
 
 const root = document.createElement("div")
@@ -136,4 +100,26 @@ const manual = (
   </Provider>
 )
 
+document.addEventListener("DOMContentLoaded", () => {
+  store.dispatch(startWebview())
+})
+
 ReactDOM.render(manual, root)
+
+window.onclick = (event) => {
+  const link = event.target.closest("a")
+  if (!link) {
+    return
+  }
+  const path = url.parse(link.href).path
+  event.preventDefault()
+  store.dispatch(navigate(path))
+}
+
+window.onhashchange = () => {
+  const path = location.hash.substring(1) || "/"
+
+  if (store.getState().location !== path) {
+    store.dispatch(navigate(path))
+  }
+}

@@ -18,6 +18,15 @@ const slice = createSlice({
   reducers,
 })
 
+export const navigate = (path: string): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.navigate(path))
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto",
+  })
+}
+
 export const locationSelector = ({ location }) => location
 
 export const currentPage = ({ location, pages }) => pages[location]

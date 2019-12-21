@@ -10,12 +10,16 @@ import { ThunkAction } from "redux-thunk"
 
 import location from "./location"
 import pages from "./pages"
+import query from "./query"
+import webview from "./webview"
 
 const middleware = [...getDefaultMiddleware(), logger]
 
 const reducer = combineReducers({
   location: location.reducer,
   pages: pages.reducer,
+  query: query.reducer,
+  webview: webview.reducer,
 })
 
 const all = (r) => r.keys().map(r)
