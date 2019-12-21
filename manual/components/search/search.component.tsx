@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 
-import { querySelector, search } from "@itsy.studio/manual/store/query"
+import { selectQuery, search } from "@itsy.studio/manual/store/query"
 import styles from "./search.module.scss"
 
 interface SearchProps {
@@ -10,7 +10,7 @@ interface SearchProps {
 }
 
 const mapStateToProps = (state) => ({
-  query: querySelector(state),
+  query: selectQuery(state),
 })
 
 const mapDispatchToProps = {

@@ -3,7 +3,7 @@ import marked from "marked"
 import { connect } from "react-redux"
 
 import { currentPage, navigate } from "@itsy.studio/manual/store/location"
-import { Page as PageType } from "@itsy.studio/manual/store/pages"
+import { Page as PageType } from "@itsy.studio/types/manual"
 
 import Breadcrumbs from "../breadcrumbs"
 import Function from "../function"
@@ -45,39 +45,17 @@ export function Manual({ navigate, page }: ManualProps): React.ReactElement {
         {page.path.match(/^\/search$/) ? <Search /> : <Breadcrumbs />}
       </Header>
       <Page title={page.title}>
-        <Markdown body={page.body} css={page.css} />
+        {page.path.match(/^\/search$/) ? (
+          <Results />
+        ) : (
+          <Markdown body={page.body} css={page.css} />
+        )}
       </Page>
     </>
   )
 }
 
 /*
-const mapStateToProps = ({ content, history, query, results }) => ({
-  content,
-  history,
-  query,
-  results,
-})
-
-const mapDispatchToProps = {
-  ...action("navigate", ["path"]),
-  ...action("search", ["query"]),
-}
-
-export function Manual({
-  content,
-  history,
-  navigate,
-  query,
-  results,
-  search,
-}): React.ReactElement {
-  const path = history[0]
-  const page = content[path]
-
-  let header
-  let title
-  let body
 
   if (path.match(/^\/functions\/.+/)) {
     header = <Breadcrumbs path={path} />

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
-import { Page } from "@itsy.studio/manual/store/pages"
 import { Thunk } from "@itsy.studio/manual/store"
+import { Page } from "@itsy.studio/types/manual"
 
 const name = "location"
 
@@ -36,6 +36,7 @@ export const currentPage = ({ location, pages }) => {
     const searchPage: Page = {
       path: "/search",
       title: "search",
+      description: "search",
       css: "",
       body: "",
     }

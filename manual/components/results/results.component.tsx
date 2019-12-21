@@ -1,8 +1,23 @@
 import React from "react"
-
+import { connect } from "react-redux"
 import styles from "./results.module.scss"
 
-export function Results({ query, results }): React.ReactElement {
+import { Page } from "@itsy.studio/types/manual"
+import { selectQuery, selectResults } from "@itsy.studio/manual/store/query"
+
+interface ResultsProps {
+  query: string
+  results: Page[]
+}
+
+const mapStateToProps = (state) => ({
+  query: selectQuery(state),
+  results: selectResults(state),
+})
+
+const mapDispatchToProps = {}
+
+export function Results({ query, results }: ResultsProps): React.ReactElement {
   return (
     <div className={styles.results}>
       {query === "" ? (
@@ -14,15 +29,10 @@ export function Results({ query, results }): React.ReactElement {
           {results.map((page, i) => {
             return (
               <li key={`result-${i}`} className={styles.results__item}>
-                <a
-                  href={page.frontMatter.path}
-                  className={styles.results__link}
-                >
-                  <div className={styles.results__title}>
-                    {page.frontMatter.title}
-                  </div>
+                <a href={page.path} className={styles.results__link}>
+                  <div className={styles.results__title}>{page.title}</div>
                   <div className={styles.results__description}>
-                    {page.frontMatter.description}
+                    {page.description}
                   </div>
                 </a>
               </li>
@@ -34,4 +44,4 @@ export function Results({ query, results }): React.ReactElement {
   )
 }
 
-export default Results
+export default connect(mapStateToProps, mapDispatchToProps)(Results)

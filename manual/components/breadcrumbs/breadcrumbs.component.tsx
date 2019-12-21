@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { currentPage } from "@itsy.studio/manual/store/location"
-import { Page } from "@itsy.studio/manual/store/pages"
+import { Page } from "@itsy.studio/types/manual"
 import styles from "./breadcrumbs.module.scss"
 
 interface BreadcrumbsProps {
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Breadcrumbs({ page }): React.ReactElement {
+export function Breadcrumbs({ page }: BreadcrumbsProps): React.ReactElement {
   let prev = ""
 
   const breadcrumbs = [

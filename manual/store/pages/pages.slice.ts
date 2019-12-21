@@ -1,13 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/manual/store"
-
-export interface Page {
-  path: string
-  title: string
-  css: string
-  body: string
-}
+import { Page } from "@itsy.studio/types/manual"
 
 export interface PagesState {
   [path: string]: Page

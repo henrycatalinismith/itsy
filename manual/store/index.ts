@@ -31,8 +31,9 @@ markdownFiles.forEach((mardown) => {
   const body = mardown.body
   pagesState[frontMatter.path] = {
     path: frontMatter.path,
-    title: frontMatter.title,
-    css: frontMatter.css,
+    title: frontMatter.title || "",
+    description: frontMatter.description || "",
+    css: frontMatter.css || "",
     body,
   }
 })

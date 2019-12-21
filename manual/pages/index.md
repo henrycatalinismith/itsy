@@ -1,5 +1,6 @@
 ---
 title: itsy
+description: universal fantasy console
 path: /
 css: |
   td:first-child a {
@@ -20,11 +21,11 @@ css: |
   }
 ---
 
-|                 |                                                  |
-|-----------------|--------------------------------------------------|
+|                  |                                                  |
+| ---------------- | ------------------------------------------------ |
 | ️[💖][intro]     | [intro]<br/>what itsy is and how to use it       |
 | ️[🍄][functions] | [functions]<br/>complete api reference           |
-| [♻️][game loop] | [game loop]<br/>hooks to run your game at 60 fps |
+| [♻️][game loop]  | [game loop]<br/>hooks to run your game at 60 fps |
 
 [intro]: /intro
 [functions]: /functions
