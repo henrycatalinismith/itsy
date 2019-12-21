@@ -5,6 +5,8 @@ import Pixelflip from "@itsy.studio/pixelflip/regular"
 import Center from "@itsy.studio/website/components/center"
 import Square from "@itsy.studio/website/components/square"
 
+// .
+
 export default function Index(): React.ReactElement {
   return (
     <>
