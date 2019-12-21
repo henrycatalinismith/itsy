@@ -32,7 +32,7 @@ deploy:studio:
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp manual/webviews/index.html studio/assets/webviews/manual.html
+    - cp manual/index.html studio/assets/webviews/manual.html
     - cd studio
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
