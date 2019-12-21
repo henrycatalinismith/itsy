@@ -2,11 +2,10 @@ import React from "react"
 import { Helmet } from "react-helmet"
 
 import Pixelflip from "@itsy.studio/pixelflip/regular"
+import Center from "@itsy.studio/website/components/center"
+import Square from "@itsy.studio/website/components/square"
 
-import Center from "../components/center"
-import Square from "../components/square"
-
-export default () => {
+export default function Index(): React.ReactElement {
   return (
     <>
       <Helmet>

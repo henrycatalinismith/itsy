@@ -17,6 +17,8 @@
     "start": "gatsby develop"
   },
   "devDependencies": {
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-typescript": "^2.1.23",
     "netlify-cli": "^2.21.0"
   }
 }
