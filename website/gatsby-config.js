@@ -11,6 +11,7 @@ const plugins = [
       "@itsy.studio/palettes": path.resolve(__dirname, "../palettes"),
       "@itsy.studio/pixelflip": path.resolve(__dirname, "../pixelflip"),
       "@itsy.studio/website": __dirname,
+      react: path.resolve(__dirname, "node_modules/react"),
     },
   }),
 
