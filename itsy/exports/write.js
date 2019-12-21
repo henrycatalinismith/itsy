@@ -5,15 +5,16 @@ const base64 = require("../base64")
 exports.write = ({
   id = uuid(),
   name = "",
-  created = (new Date).toISOString(),
-  updated = (new Date).toISOString(),
+  created = new Date().toISOString(),
+  updated = new Date().toISOString(),
   lua = "",
   palette = base64.palette,
   snapshot = base64.snapshot,
   spritesheet = base64.spritesheet,
   width = undefined,
   height = undefined,
-}) => `
+}) =>
+  `
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,18 +27,26 @@ exports.write = ({
 ${lua}
 </script>
 <script id="metadata" type="application/json">
-${JSON.stringify({
-  id,
-  name,
-  created,
-  updated,
-}, undefined, 2)}
+${JSON.stringify(
+  {
+    id,
+    name,
+    created,
+    updated,
+  },
+  undefined,
+  2
+)}
 </script>
 <script id="options" type="application/json">
-${JSON.stringify({
-  width,
-  height,
-}, undefined, 2)}
+${JSON.stringify(
+  {
+    width,
+    height,
+  },
+  undefined,
+  2
+)}
 </script>
 <img id="palette" width="4" height="4" src="data:image/png;base64,${palette}" />
 <img id="snapshot" width="128" height="128" src="data:image/png;base64,${snapshot}" />
@@ -104,4 +113,3 @@ ${Buffer.from(base64.engine, "base64").toString()}
 </body>
 </html>
 `.trim()
-

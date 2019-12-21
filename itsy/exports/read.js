@@ -1,24 +1,24 @@
-const _ = require("lodash");
-const { parse } = require("himalaya");
+const _ = require("lodash")
+const { parse } = require("himalaya")
 
-module.exports = html => {
-  const tree = parse(html);
+module.exports = (html) => {
+  const tree = parse(html)
 
   const document = _.find(tree, {
     type: "element",
-    tagName: "html"
-  });
+    tagName: "html",
+  })
 
   const body = _.find(document.children, {
     type: "element",
-    tagName: "body"
-  });
+    tagName: "body",
+  })
 
   const { id, name, created, updated } = JSON.parse(
     _.get(
       _.find(
         body.children,
-        node =>
+        (node) =>
           "element" === node.type &&
           "script" === node.tagName &&
           "metadata" ===
@@ -26,52 +26,52 @@ module.exports = html => {
       ),
       "children[0].content"
     )
-  );
+  )
 
   const lua = _.get(
     _.find(
       body.children,
-      node =>
+      (node) =>
         "element" === node.type &&
         "script" === node.tagName &&
         "lua" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
     ),
     "children[0].content"
-  ).trim();
+  ).trim()
 
   const palette = _.get(
     _.find(
       body.children,
-      node =>
+      (node) =>
         "element" === node.type &&
         "img" === node.tagName &&
         "palette" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
     ),
     "attributes[3].value"
-  ).split(",")[1];
+  ).split(",")[1]
 
   const snapshot = _.get(
     _.find(
       body.children,
-      node =>
+      (node) =>
         "element" === node.type &&
         "img" === node.tagName &&
         "snapshot" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
     ),
     "attributes[3].value"
-  ).split(",")[1];
+  ).split(",")[1]
 
   const spritesheet = _.get(
     _.find(
       body.children,
-      node =>
+      (node) =>
         "element" === node.type &&
         "img" === node.tagName &&
         "spritesheet" ===
           _.mapValues(_.keyBy(node.attributes, "key"), "value").id
     ),
     "attributes[3].value"
-  ).split(",")[1];
+  ).split(",")[1]
 
   return {
     id,
@@ -81,6 +81,6 @@ module.exports = html => {
     lua,
     palette,
     snapshot,
-    spritesheet
-  };
-};
+    spritesheet,
+  }
+}
