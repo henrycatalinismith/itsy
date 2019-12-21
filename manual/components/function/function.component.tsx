@@ -8,22 +8,20 @@ import Example from "../example"
 
 import styles from "./function.module.scss"
 
-export default ({
+export function Function({
   title = "",
   description = "",
   path = "",
   type = "",
-  args, 
-  examples, 
+  args,
+  examples,
   returns,
-}) => {
+}): React.ReactElement {
   return (
     <>
       <Signature name={title} args={args} />
 
-      <p className={styles.function__desc}>
-        {description}
-      </p>
+      <p className={styles.function__desc}>{description}</p>
 
       {args && <Input>{args}</Input>}
       {returns && <Output {...returns} />}
@@ -36,3 +34,5 @@ export default ({
     </>
   )
 }
+
+export default Function

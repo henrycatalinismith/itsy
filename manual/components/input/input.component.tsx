@@ -5,16 +5,14 @@ import Type from "../type"
 
 import styles from "./input.module.scss"
 
-export default ({ children }) => {
+export function Input({ children }): React.ReactElement {
   return (
     <Section title="parameters">
       <table className={styles.input}>
         <tbody>
           {children.map((arg, i) => (
             <tr key={arg.name}>
-              <td className={styles.input__name}>
-                {arg.name}
-              </td>
+              <td className={styles.input__name}>{arg.name}</td>
               <td className={styles.input__type}>
                 <Type name={arg.type} />
               </td>
@@ -36,3 +34,5 @@ export default ({ children }) => {
     </Section>
   )
 }
+
+export default Input

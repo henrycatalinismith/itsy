@@ -1,7 +1,7 @@
 import React from "react"
 import styles from "./header.module.scss"
 
-export default ({ children, onClick }) => {
+export function Header({ children, onClick }): React.ReactElement {
   return (
     <div className={styles.border}>
       <div className={styles.header} onClick={onClick}>
@@ -10,3 +10,5 @@ export default ({ children, onClick }) => {
     </div>
   )
 }
+
+export default Header

@@ -2,7 +2,7 @@ import React from "react"
 
 import styles from "./signature.module.scss"
 
-export default ({ name, args }) => {
+export function Signature({ name, args }): React.ReactElement {
   return (
     <section className={styles.signature}>
       {name}(
@@ -14,9 +14,12 @@ export default ({ name, args }) => {
           ) : (
             <span className={styles.signature__name}>{arg.name}</span>
           )}
-          {(i < args.length - 1) && <span>,</span>}
+          {i < args.length - 1 && <span>,</span>}
         </span>
-       ))}{" "})
+      ))}{" "}
+      )
     </section>
   )
 }
+
+export default Signature

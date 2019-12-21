@@ -2,7 +2,7 @@ import React from "react"
 
 import styles from "./breadcrumbs.module.scss"
 
-export default ({ path }) => {
+export function Breadcrumbs({ path }): React.ReactElement {
   let prev = ""
 
   const breadcrumbs = [
@@ -10,14 +10,17 @@ export default ({ path }) => {
       text: "itsy",
       href: "/",
     },
-    ...path.split(/\//).filter(segment => !!segment).map(segment => {
-      const href = `${prev}/${segment}`
-      prev = href
-      return {
-        text: segment,
-        href,
-      }
-    }),
+    ...path
+      .split(/\//)
+      .filter((segment) => !!segment)
+      .map((segment) => {
+        const href = `${prev}/${segment}`
+        prev = href
+        return {
+          text: segment,
+          href,
+        }
+      }),
   ]
 
   return (
@@ -35,3 +38,5 @@ export default ({ path }) => {
     </ul>
   )
 }
+
+export default Breadcrumbs

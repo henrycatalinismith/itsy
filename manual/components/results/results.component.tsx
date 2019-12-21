@@ -2,7 +2,7 @@ import React from "react"
 
 import styles from "./results.module.scss"
 
-export default ({ query, results }) => {
+export function Results({ query, results }): React.ReactElement {
   return (
     <div className={styles.results}>
       {query === "" ? (
@@ -14,7 +14,10 @@ export default ({ query, results }) => {
           {results.map((page, i) => {
             return (
               <li key={`result-${i}`} className={styles.results__item}>
-                <a href={page.frontMatter.path} className={styles.results__link}>
+                <a
+                  href={page.frontMatter.path}
+                  className={styles.results__link}
+                >
                   <div className={styles.results__title}>
                     {page.frontMatter.title}
                   </div>
@@ -30,3 +33,5 @@ export default ({ query, results }) => {
     </div>
   )
 }
+
+export default Results

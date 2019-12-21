@@ -2,11 +2,11 @@ import React from "react"
 
 import styles from "./search.module.scss"
 
-export default ({ query, onChange, onEnter }) => {
+export function Search({ query, onChange, onEnter }): React.ReactElement {
   const element = React.useRef(undefined)
-  const onKeyDown = event => {
-    if (event.key === 'Enter') {
-      onEnter();
+  const onKeyDown = (event) => {
+    if (event.key === "Enter") {
+      onEnter()
     }
   }
   return (
@@ -25,3 +25,5 @@ export default ({ query, onChange, onEnter }) => {
     />
   )
 }
+
+export default Search

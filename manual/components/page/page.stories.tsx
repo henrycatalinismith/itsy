@@ -12,7 +12,7 @@ import { storiesOf, addParameters } from "@storybook/react"
 marked.setOptions({
   highlight: (code, lang) => {
     return hljs.highlight(lang, code).value
-  }
+  },
 })
 
 const stories = storiesOf("Page", module)
@@ -20,12 +20,10 @@ const stories = storiesOf("Page", module)
 stories.addParameters({
   viewport: {
     defaultViewport: "iphone5",
-  }
+  },
 })
 
-stories.add("test", () => (
-  <pre>{123}</pre>
-))
+stories.add("test", () => <pre>{123}</pre>)
 
 /*
 const req = require.context("../../pages", false, /\.md$/)
