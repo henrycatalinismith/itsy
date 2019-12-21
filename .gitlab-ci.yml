@@ -41,12 +41,14 @@ deploy:studio:
 deploy:website:
   stage: deploy
   image: node:12-stretch
-  before_script:
-    - cd website
   only:
     changes:
       - website/**/*
   script:
+    - cd pixelflip
+    - yarn --pure-lockfile
+    - cd ..
+    - cd website
     - yarn --pure-lockfile
     - yarn gatsby build
     - yarn netlify deploy --prod --dir=public --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
