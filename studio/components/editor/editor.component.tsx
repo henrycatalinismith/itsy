@@ -1,6 +1,7 @@
 import { Asset } from "expo-asset"
 import React from "react"
-import { WebView, View } from "react-native"
+import { View } from "react-native"
+import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
 import Loading from "@itsy.studio/studio/components/loading"
@@ -39,12 +40,12 @@ export function Editor({ disk, editor, edit }: EditorProps) {
           // wait a second while the lua gets injected
           setLoading(false)
         }, 100)
-        webview.current.postMessage(
-          JSON.stringify({
-            type: "text/change",
-            payload: lua,
-          })
-        )
+
+        webview.current.injectJavaScript(`
+          const action = text.actions.change(${JSON.stringify(lua)})
+          action.__fromWebview = true
+          store.dispatch(action)
+        `)
         break
 
       case "text/change":
@@ -73,7 +74,6 @@ export function Editor({ disk, editor, edit }: EditorProps) {
           ref={webview}
           scrollEnabled={false}
           source={{ uri: html.uri }}
-          useWebKit
         />
         {loading && <Loading style={styles.loading} />}
       </View>

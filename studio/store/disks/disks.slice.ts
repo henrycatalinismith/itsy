@@ -106,7 +106,7 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
     updated,
   }
 
-  const html = itsy.write(disk)
+  const html = write(disk)
   const uri = filename(disk.name)
   await FileSystem.writeAsStringAsync(uri, html)
 
@@ -175,7 +175,7 @@ export const renameDisk = (name: string): Thunk => async (
   const newName = filename(name)
 
   const newDisk = { ...disk, name }
-  const newHtml = itsy.write(newDisk)
+  const newHtml = write(newDisk)
 
   await FileSystem.deleteAsync(oldName)
   await FileSystem.writeAsStringAsync(newName, newHtml)

@@ -33,7 +33,7 @@ module.exports = (async () => {
           __dirname,
           "node_modules/@babel/runtime"
         ),
-        react: path.resolve(__dirname, "node_modules/@babel/react"),
+        react: path.resolve(__dirname, "node_modules/react"),
       },
       sourceExts: [...sourceExts, "scss"],
     },
