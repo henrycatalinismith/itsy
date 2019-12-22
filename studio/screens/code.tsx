@@ -2,7 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 
-import DevTools from "@itsy.studio/studio/components/dev-tools"
+import Devtools from "@itsy.studio/studio/components/devtools"
 import Divider from "@itsy.studio/studio/components/divider"
 import Editor from "@itsy.studio/studio/components/editor"
 import Frame from "@itsy.studio/studio/components/frame"
@@ -39,7 +39,7 @@ export function CodeScreen({ orientation, player }) {
         </View>
 
         <Divider />
-        <DevTools />
+        <Devtools />
       </View>
     </Frame>
   )
