@@ -2,7 +2,7 @@ import { AppLoading } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
-import { Keyboard } from "react-native"
+import { EmitterSubscription, Keyboard } from "react-native"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
 import { Provider } from "react-redux"
@@ -36,6 +36,8 @@ const AppNavigator = createStackNavigator(routes)
 const AppContainer = createAppContainer(AppNavigator)
 
 function App({ skipLoadingScreen }): React.ReactElement {
+  const keyboardHideListener = React.useRef<EmitterSubscription>()
+  const keyboardShowListener = React.useRef<EmitterSubscription>()
   const [ready, setReady] = React.useState(false)
 
   const loadResourcesAsync = async (): Promise<void> => {
@@ -54,8 +56,18 @@ function App({ skipLoadingScreen }): React.ReactElement {
   }, [])
 
   React.useEffect(() => {
-    Keyboard.addListener("keyboardDidHide", keyboardDidHide)
-    Keyboard.addListener("keyboardDidShow", keyboardDidShow)
+    keyboardHideListener.current = Keyboard.addListener(
+      "keyboardDidHide",
+      keyboardDidHide
+    )
+    keyboardShowListener.current = Keyboard.addListener(
+      "keyboardDidShow",
+      keyboardDidShow
+    )
+    return () => {
+      keyboardHideListener.current.remove()
+      keyboardShowListener.current.remove()
+    }
   }, [])
 
   const handleLoadingError = (error) => {
