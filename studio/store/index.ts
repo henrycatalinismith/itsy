@@ -12,6 +12,7 @@ import { palette, snapshot, spritesheet } from "../defaults"
 
 import disks from "./disks"
 import editor from "./editor"
+import keyboard from "./keyboard"
 import player from "./player"
 import screen from "./screen"
 
@@ -20,6 +21,7 @@ const middleware = [...getDefaultMiddleware()]
 const reducer = combineReducers({
   disks: disks.reducer,
   editor: editor.reducer,
+  keyboard: keyboard.reducer,
   player: player.reducer,
   screen: screen.reducer,
 })
@@ -40,6 +42,7 @@ const store = configureStore({
 
 exports.disks = disks
 exports.editor = editor
+exports.keyboard = keyboard
 exports.player = player
 exports.screen = screen
 

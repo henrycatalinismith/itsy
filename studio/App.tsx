@@ -2,6 +2,7 @@ import { AppLoading } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
+import { Keyboard } from "react-native"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
 import { Provider } from "react-redux"
@@ -14,6 +15,7 @@ import Code from "./screens/code"
 import Help from "./screens/help"
 
 import store from "./store"
+import keyboard from "@itsy.studio/studio/store/keyboard"
 
 const routes = {
   Home: {
@@ -36,18 +38,25 @@ const AppContainer = createAppContainer(AppNavigator)
 function App({ skipLoadingScreen }): React.ReactElement {
   const [ready, setReady] = React.useState(false)
 
-  const loadResourcesAsync = async (): Promise<[void[], void]> => {
-    return Promise.all([
-      Asset.loadAsync([
-        require("./assets/images/robot-dev.png"),
-        require("./assets/images/robot-prod.png"),
-      ]),
-      Font.loadAsync({
-        "overpass-mono-regular": require("./assets/fonts/overpass-mono-regular.ttf"),
-        "overpass-mono-bold": require("./assets/fonts/overpass-mono-bold.ttf"),
-      }),
-    ])
+  const loadResourcesAsync = async (): Promise<void> => {
+    return Font.loadAsync({
+      "overpass-mono-regular": require("./assets/fonts/overpass-mono-regular.ttf"),
+      "overpass-mono-bold": require("./assets/fonts/overpass-mono-bold.ttf"),
+    })
   }
+
+  const keyboardDidHide = React.useCallback(() => {
+    store.dispatch(keyboard.actions.hide())
+  }, [])
+
+  const keyboardDidShow = React.useCallback(() => {
+    store.dispatch(keyboard.actions.show())
+  }, [])
+
+  React.useEffect(() => {
+    Keyboard.addListener("keyboardDidHide", keyboardDidHide)
+    Keyboard.addListener("keyboardDidShow", keyboardDidShow)
+  }, [])
 
   const handleLoadingError = (error) => {
     console.warn(error)
