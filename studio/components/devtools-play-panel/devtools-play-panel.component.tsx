@@ -5,9 +5,9 @@ import Loading from "@itsy.studio/studio/components/loading"
 import Player from "@itsy.studio/studio/components/player"
 import Snapshot from "@itsy.studio/studio/components/snapshot"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
-import styles from "@itsy.studio/studio/components/devtools-play-tab/devtools-play-tab.module.scss"
+import styles from "@itsy.studio/studio/components/devtools-play-panel/devtools-play-panel.module.scss"
 
-interface DevtoolsPlayTabProps {
+interface DevtoolsPlayPanelProps {
   player: PlayerState
 }
 
@@ -17,9 +17,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsPlayTab({ player }: DevtoolsPlayTabProps) {
+export function DevtoolsPlayPanel({ player }: DevtoolsPlayPanelProps) {
   return (
-    <View style={styles.devtoolsPlayTab}>
+    <View style={styles.devtoolsPlayPanel}>
       {player.waiting ? (
         <Loading />
       ) : player.running || player.stopping ? (
@@ -31,4 +31,4 @@ export function DevtoolsPlayTab({ player }: DevtoolsPlayTabProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsPlayTab)
+export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsPlayPanel)
