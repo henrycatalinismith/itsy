@@ -8,8 +8,7 @@ import {
 import { Dimensions } from "react-native"
 import { ThunkAction } from "redux-thunk"
 
-import { palette, snapshot, spritesheet } from "../defaults"
-
+import devtools from "./devtools"
 import disks from "./disks"
 import editor from "./editor"
 import keyboard from "./keyboard"
@@ -19,6 +18,7 @@ import screen from "./screen"
 const middleware = [...getDefaultMiddleware()]
 
 const reducer = combineReducers({
+  devtools: devtools.reducer,
   disks: disks.reducer,
   editor: editor.reducer,
   keyboard: keyboard.reducer,
@@ -40,6 +40,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 })
 
+exports.devtools = devtools
 exports.disks = disks
 exports.editor = editor
 exports.keyboard = keyboard
