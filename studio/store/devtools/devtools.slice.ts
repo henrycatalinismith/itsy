@@ -3,6 +3,7 @@ import { Thunk } from "@itsy.studio/studio/store"
 import { playDisk, stopDisk } from "@itsy.studio/studio/store/disks"
 import { selectKeyboardVisibility } from "@itsy.studio/studio/store/keyboard"
 import { playerRunning } from "@itsy.studio/studio/store/player"
+import { Keyboard } from "react-native"
 
 export interface DevtoolsState {}
 
@@ -18,6 +19,11 @@ const reducers = {
 
 export const onPlayTabTouch = (): Thunk => async (dispatch, getState) => {
   const state = getState()
+
+  const keyboardVisible = selectKeyboardVisibility(state)
+  if (keyboardVisible) {
+    Keyboard.dismiss()
+  }
 
   if (playerRunning(state)) {
     dispatch(stopDisk())
