@@ -1,7 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Thunk } from "@itsy.studio/studio/store"
 import { playDisk, stopDisk } from "@itsy.studio/studio/store/disks"
-import { keyboardVisibility } from "@itsy.studio/studio/store/keyboard"
+import { selectKeyboardVisibility } from "@itsy.studio/studio/store/keyboard"
 import { playerRunning } from "@itsy.studio/studio/store/player"
 
 export interface DevtoolsState {}

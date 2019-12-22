@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { selectKeyboardHeight } from "@itsy.studio/studio/store/keyboard"
 
 export enum ScreenOrientation {
   landscape = "landscape",
@@ -29,13 +30,29 @@ const reducers = {
   },
 }
 
-export const screenSelector = ({ screen: { width, height } }) => ({
+const slice = createSlice({
+  name,
+  initialState,
+  reducers,
+})
+
+export const selectScreen = ({ screen: { width, height } }) => ({
   width,
   height,
 })
 
-export const screenOrientation = createSelector(
-  screenSelector,
+export const selectScreenHeight = createSelector(
+  selectScreen,
+  ({ height }) => height
+)
+
+export const selectScreenHeightMinusKeyboardHeight = createSelector(
+  [selectScreenHeight, selectKeyboardHeight],
+  (screenHeight, keyboardHeight) => screenHeight - keyboardHeight
+)
+
+export const selectScreenOrientation = createSelector(
+  selectScreen,
   ({ width, height }) => {
     if (width > height) {
       return ScreenOrientation.landscape
@@ -44,11 +61,5 @@ export const screenOrientation = createSelector(
     }
   }
 )
-
-const slice = createSlice({
-  name,
-  initialState,
-  reducers,
-})
 
 export default slice

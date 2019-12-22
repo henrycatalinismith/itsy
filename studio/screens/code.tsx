@@ -16,10 +16,10 @@ import Stop from "@itsy.studio/studio/components/stop"
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
 import { playerSelector } from "@itsy.studio/studio/store/player"
-import { screenOrientation } from "@itsy.studio/studio/store/screen"
+import { selectScreenOrientation } from "@itsy.studio/studio/store/screen"
 
 const mapStateToProps = (state) => ({
-  orientation: screenOrientation(state),
+  orientation: selectScreenOrientation(state),
   player: playerSelector(state),
 })
 

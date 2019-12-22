@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import { screenOrientation } from "@itsy.studio/studio/store/screen"
+import { selectScreenOrientation } from "@itsy.studio/studio/store/screen"
 import styles from "@itsy.studio/studio/components/divider/divider.module.scss"
 
 interface DividerProps {
@@ -10,7 +10,7 @@ interface DividerProps {
 }
 
 const mapStateToProps = (state) => ({
-  orientation: screenOrientation(state),
+  orientation: selectScreenOrientation(state),
 })
 
 export function Divider({ orientation }: DividerProps) {

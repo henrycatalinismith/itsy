@@ -2,7 +2,7 @@ import { AppLoading } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
-import { EmitterSubscription, Keyboard } from "react-native"
+import { EmitterSubscription, Keyboard, KeyboardEvent } from "react-native"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
 import { Provider } from "react-redux"
@@ -15,7 +15,7 @@ import Code from "./screens/code"
 import Help from "./screens/help"
 
 import store from "./store"
-import keyboard from "@itsy.studio/studio/store/keyboard"
+import { hideKeyboard, showKeyboard } from "@itsy.studio/studio/store/keyboard"
 
 const routes = {
   Home: {
@@ -47,12 +47,12 @@ function App({ skipLoadingScreen }): React.ReactElement {
     })
   }
 
-  const keyboardDidHide = React.useCallback(() => {
-    store.dispatch(keyboard.actions.hide())
+  const keyboardDidHide = React.useCallback((event: KeyboardEvent) => {
+    store.dispatch(hideKeyboard(event))
   }, [])
 
-  const keyboardDidShow = React.useCallback(() => {
-    store.dispatch(keyboard.actions.show())
+  const keyboardDidShow = React.useCallback((event: KeyboardEvent) => {
+    store.dispatch(showKeyboard(event))
   }, [])
 
   React.useEffect(() => {
