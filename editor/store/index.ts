@@ -16,19 +16,16 @@ import webview from "./webview"
 const postMessageMiddleware = (store) => (next) => (action) => {
   next(action)
 
-  if (!(window as any).isReactNative || action.__postMessage) {
+  if (!(window as any).ReactNativeWebView || action.__fromWebview) {
     return
   }
 
   const message = JSON.stringify(action)
-  window.postMessage(message, "*")
+  ;(window as any).ReactNativeWebView.postMessage(message)
 
   if (action.type === "webview/start") {
-    document.addEventListener("message", (data: any) => {
-      const action = JSON.parse(data.data)
-      action.__postMessage = true
-      store.dispatch(action)
-    })
+    ;(window as any).store = store
+    ;(window as any).text = text
   }
 }
 
