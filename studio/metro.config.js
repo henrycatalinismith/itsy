@@ -7,22 +7,6 @@ module.exports = (async () => {
   } = await getDefaultConfig()
 
   return {
-    getProjectRoots: () => [
-      path.resolve(__dirname),
-      path.resolve(__dirname, "../editor"),
-      path.resolve(__dirname, "../itsy"),
-      path.resolve(__dirname, "../palettes"),
-      path.resolve(__dirname, "../pixelflip"),
-    ],
-
-    getTransformModulePath: () => {
-      return require.resolve("react-native-typescript-transformer")
-    },
-
-    getSourceExts() {
-      return ["js", "jsx", "ts", "tsx"]
-    },
-
     transformer: {
       babelTransformerPath: require.resolve("react-native-sass-transformer"),
     },
