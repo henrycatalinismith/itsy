@@ -6,6 +6,7 @@ import {
   selectDevtools,
 } from "@itsy.studio/studio/store/devtools"
 import DevtoolsPlayPanel from "@itsy.studio/studio/components/devtools-play-panel"
+import DevtoolsToolbar from "@itsy.studio/studio/components/devtools-toolbar"
 import styles from "@itsy.studio/studio/components/devtools/devtools.module.scss"
 
 interface DevtoolsProps {
@@ -21,6 +22,7 @@ const mapDispatchToProps = {}
 export function Devtools({ devtools }: DevtoolsProps) {
   return (
     <View style={styles.devtools}>
+      <DevtoolsToolbar />
       <DevtoolsPlayPanel />
     </View>
   )

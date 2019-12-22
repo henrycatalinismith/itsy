@@ -30,11 +30,6 @@ export function CodeScreen({ orientation, player }) {
     <Frame shallow>
       <View style={[styles.container, styles[orientation]]}>
         <View style={styles.editorContainer}>
-          <View style={styles.controls}>
-            <View style={styles.button}>
-              {player.running ? <Stop /> : <Play />}
-            </View>
-          </View>
           <Editor />
         </View>
 
@@ -63,15 +58,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderLeftWidth: 2,
   },
-
-  controls: {
-    height: 32,
-    backgroundColor: colors[15],
-    borderBottomColor: colors[13],
-    borderBottomWidth: 2,
-  },
-
-  button: {},
 
   container: {
     flex: 1,

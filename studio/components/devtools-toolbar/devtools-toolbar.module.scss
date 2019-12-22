@@ -1,0 +1,7 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.devtoolsToolbar {
+  display: flex;
+  background-color: pico8-original-palette(7);
+  height: 26px;
+}

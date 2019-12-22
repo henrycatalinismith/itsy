@@ -20,7 +20,11 @@ const reducers = {
   },
 }
 
-export const keyboardSelector = ({ keyboard }) => keyboard
+export const keyboardSelector = ({ keyboard }): KeyboardState => keyboard
+export const keyboardVisibility = createSelector(
+  [keyboardSelector],
+  ({ visible }) => visible
+)
 
 const slice = createSlice({
   name,
