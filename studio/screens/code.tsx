@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 
+import DevTools from "@itsy.studio/studio/components/dev-tools"
 import Divider from "@itsy.studio/studio/components/divider"
 import Editor from "@itsy.studio/studio/components/editor"
 import Frame from "@itsy.studio/studio/components/frame"
@@ -38,14 +39,7 @@ export function CodeScreen({ orientation, player }) {
         </View>
 
         <Divider />
-
-        {player.waiting ? (
-          <Loading />
-        ) : player.running || player.stopping ? (
-          <Player />
-        ) : (
-          <Snapshot />
-        )}
+        <DevTools />
       </View>
     </Frame>
   )
