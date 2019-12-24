@@ -7,6 +7,7 @@ import {
 } from "@itsy.studio/studio/store/devtools"
 import {
   KeyboardState,
+  KeyboardStatus,
   selectKeyboard,
 } from "@itsy.studio/studio/store/keyboard"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
@@ -30,13 +31,14 @@ const mapDispatchToProps = {}
 
 export function Devtools({ devtools, keyboard, screen }: DevtoolsProps) {
   let height = 26
-  if (!keyboard.visible) {
+  const keyboardVisible = keyboard.status === KeyboardStatus.visible
+  if (!keyboardVisible) {
     height += screen.width
   }
   return (
     <View style={{ ...styles.devtools, height }}>
       <DevtoolsToolbar />
-      {!keyboard.visible && <DevtoolsPlayPanel />}
+      {!keyboardVisible && <DevtoolsPlayPanel />}
     </View>
   )
 }

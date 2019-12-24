@@ -2,27 +2,43 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Thunk } from "@itsy.studio/studio/store"
 import { KeyboardEvent } from "react-native"
 
+export enum KeyboardStatus {
+  hidden = "hidden",
+  hiding = "hiding",
+  showing = "showing",
+  visible = "visible",
+}
+
 interface KeyboardState {
   height: number
-  visible: boolean
+  status: KeyboardStatus
 }
 
 const name = "keyboard"
 
 const initialState: KeyboardState = {
   height: 0,
-  visible: false,
+  status: KeyboardStatus.hidden,
 }
 
 const reducers = {
-  hide(keyboard) {
+  didHide(keyboard) {
     keyboard.height = 0
-    keyboard.visible = false
+    keyboard.status = KeyboardStatus.hidden
   },
 
-  show(keyboard, action: PayloadAction<number>) {
+  didShow(keyboard, action: PayloadAction<number>) {
     keyboard.height = action.payload
-    keyboard.visible = true
+    keyboard.status = KeyboardStatus.visible
+  },
+
+  willHide(keyboard) {
+    keyboard.status = KeyboardStatus.hiding
+  },
+
+  willShow(keyboard, action: PayloadAction<number>) {
+    keyboard.height = action.payload
+    keyboard.status = KeyboardStatus.showing
   },
 }
 
@@ -32,18 +48,28 @@ const slice = createSlice({
   reducers,
 })
 
-export const hideKeyboard = (event: KeyboardEvent): Thunk => async (
-  dispatch,
-  getState
+export const keyboardDidHide = (event: KeyboardEvent): Thunk => async (
+  dispatch
 ) => {
-  dispatch(slice.actions.hide())
+  dispatch(slice.actions.didHide())
 }
 
-export const showKeyboard = (event: KeyboardEvent): Thunk => async (
-  dispatch,
-  getState
+export const keyboardDidShow = (event: KeyboardEvent): Thunk => async (
+  dispatch
 ) => {
-  dispatch(slice.actions.show(event.endCoordinates.height))
+  dispatch(slice.actions.didShow(event.endCoordinates.height))
+}
+
+export const keyboardWillHide = (event: KeyboardEvent): Thunk => async (
+  dispatch
+) => {
+  dispatch(slice.actions.willHide())
+}
+
+export const keyboardWillShow = (event: KeyboardEvent): Thunk => async (
+  dispatch
+) => {
+  dispatch(slice.actions.willShow(event.endCoordinates.height))
 }
 
 export const selectKeyboard = ({ keyboard }): KeyboardState => keyboard
@@ -55,7 +81,7 @@ export const selectKeyboardHeight = createSelector(
 
 export const selectKeyboardVisibility = createSelector(
   [selectKeyboard],
-  ({ visible }) => visible
+  ({ status }) => status === KeyboardStatus.visible
 )
 
 export default slice

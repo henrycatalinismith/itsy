@@ -15,7 +15,12 @@ import Code from "./screens/code"
 import Help from "./screens/help"
 
 import store from "./store"
-import { hideKeyboard, showKeyboard } from "@itsy.studio/studio/store/keyboard"
+import {
+  keyboardDidHide,
+  keyboardDidShow,
+  keyboardWillHide,
+  keyboardWillShow,
+} from "@itsy.studio/studio/store/keyboard"
 
 const routes = {
   Home: {
@@ -36,8 +41,11 @@ const AppNavigator = createStackNavigator(routes)
 const AppContainer = createAppContainer(AppNavigator)
 
 function App({ skipLoadingScreen }): React.ReactElement {
-  const keyboardHideListener = React.useRef<EmitterSubscription>()
-  const keyboardShowListener = React.useRef<EmitterSubscription>()
+  const keyboardDidHideListener = React.useRef<EmitterSubscription>()
+  const keyboardDidShowListener = React.useRef<EmitterSubscription>()
+  const keyboardWillHideListener = React.useRef<EmitterSubscription>()
+  const keyboardWillShowListener = React.useRef<EmitterSubscription>()
+
   const [ready, setReady] = React.useState(false)
 
   const loadResourcesAsync = async (): Promise<void> => {
@@ -47,26 +55,28 @@ function App({ skipLoadingScreen }): React.ReactElement {
     })
   }
 
-  const keyboardDidHide = React.useCallback((event: KeyboardEvent) => {
-    store.dispatch(hideKeyboard(event))
-  }, [])
-
-  const keyboardDidShow = React.useCallback((event: KeyboardEvent) => {
-    store.dispatch(showKeyboard(event))
-  }, [])
-
   React.useEffect(() => {
-    keyboardHideListener.current = Keyboard.addListener(
+    keyboardDidHideListener.current = Keyboard.addListener(
       "keyboardDidHide",
-      keyboardDidHide
+      (event) => store.dispatch(keyboardDidHide(event))
     )
-    keyboardShowListener.current = Keyboard.addListener(
+    keyboardDidShowListener.current = Keyboard.addListener(
       "keyboardDidShow",
-      keyboardDidShow
+      (event) => store.dispatch(keyboardDidShow(event))
+    )
+    keyboardWillHideListener.current = Keyboard.addListener(
+      "keyboardWillHide",
+      (event) => store.dispatch(keyboardWillHide(event))
+    )
+    keyboardWillShowListener.current = Keyboard.addListener(
+      "keyboardWillShow",
+      (event) => store.dispatch(keyboardWillShow(event))
     )
     return () => {
-      keyboardHideListener.current.remove()
-      keyboardShowListener.current.remove()
+      keyboardDidHideListener.current.remove()
+      keyboardDidShowListener.current.remove()
+      keyboardWillHideListener.current.remove()
+      keyboardWillShowListener.current.remove()
     }
   }, [])
 
