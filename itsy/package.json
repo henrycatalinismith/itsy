@@ -34,10 +34,6 @@
   ],
   "scripts": {
     "build": "make clean itsy.js",
-    "bump": "node workshop/bump.js",
-    "ship": "node workshop/ship.js",
-    "start": "NODE_ENV=development node workshop/start.js",
-    "tag": "node workshop/tag.js",
     "storybook": "start-storybook -p 6006",
     "build-manual": "webpack --config manual/webpack.config.js && rm manual/build.js",
     "watch-manual": "webpack --watch --config manual/webpack.config.js",
