@@ -2,22 +2,15 @@
   "name": "@itsy.studio/itsy",
   "version": "0.72.0",
   "description": "universal fantasy console",
-  "license": "MIT",
-  "repository": "https://itsy.glitch.me/",
+  "license": "PRIVATE",
   "bin": {
     "itsy": "./commands/start.js"
   },
   "dependencies": {
-    "@highvalley.systems/signalbox": "^0.17.0",
-    "@highvalley.systems/spraypaint": "^0.7.0",
-    "ansi-colors": "^4.1.1",
     "buffer": "^5.2.1",
     "cheerio": "^1.0.0-rc.3",
-    "dotenv": "^8.2.0",
-    "express": "^4.16.4",
     "himalaya": "^1.1.0",
     "lodash": "^4.17.11",
-    "node-fetch": "^2.3.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
@@ -25,13 +18,6 @@
     "prettier": "^1.16.4"
   },
   "main": "exports/index.ts",
-  "files": [
-    "base64/*",
-    "commands/*",
-    "defaults/*",
-    "exports/*",
-    "manual/index.html"
-  ],
   "scripts": {
     "build": "make clean itsy.js",
     "storybook": "start-storybook -p 6006",
