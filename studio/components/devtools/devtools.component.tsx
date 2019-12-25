@@ -1,5 +1,5 @@
 import React from "react"
-import { View } from "react-native"
+import { Animated, Easing, View } from "react-native"
 import { connect } from "react-redux"
 import {
   DevtoolsState,
@@ -35,6 +35,17 @@ export function Devtools({ devtools, keyboard, screen }: DevtoolsProps) {
   if (!keyboardVisible) {
     height += screen.width
   }
+
+  const offset = React.useRef(new Animated.Value(0)).current
+  React.useEffect(() => {
+    Animated.timing(offset, {
+      toValue: 1,
+      duration: 250,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start()
+  }, [keyboard.status])
+
   return (
     <View style={{ ...styles.devtools, height }}>
       <DevtoolsToolbar />
