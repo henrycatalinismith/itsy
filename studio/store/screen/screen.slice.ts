@@ -1,30 +1,23 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { selectKeyboardHeight } from "@itsy.studio/studio/store/keyboard"
+import { Rect } from "@itsy.studio/types/geometry"
 
 export enum ScreenOrientation {
   landscape = "landscape",
   portrait = "portrait",
 }
 
-interface ScreenState {
-  width: number
-  height: number
-}
-
-interface ScreenResize {
-  width: number
-  height: number
-}
-
 const name = "screen"
 
-const initialState: ScreenState = {
+const initialState: Rect = {
+  x: 0,
+  y: 0,
   width: 0,
   height: 0,
 }
 
 const reducers = {
-  resize(screen, action: PayloadAction<ScreenResize>) {
+  resize(screen, action: PayloadAction<Rect>) {
     screen.width = action.payload.width
     screen.height = action.payload.height
   },
@@ -36,10 +29,7 @@ const slice = createSlice({
   reducers,
 })
 
-export const selectScreen = ({ screen: { width, height } }) => ({
-  width,
-  height,
-})
+export const selectScreen = ({ screen }): Rect => screen
 
 export const selectScreenHeight = createSelector(
   selectScreen,

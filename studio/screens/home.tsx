@@ -10,7 +10,9 @@ import Button from "@itsy.studio/studio/components/button"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
 import Loading from "@itsy.studio/studio/components/loading"
+import SafeArea from "@itsy.studio/studio/components/safe-area"
 import Tile from "@itsy.studio/studio/components/tile"
+
 import disks, {
   allDisks,
   createDisk,
@@ -47,7 +49,7 @@ export function HomeScreen({
   }
 
   return (
-    <Frame>
+    <SafeArea>
       {loading ? (
         <Loading />
       ) : (
@@ -72,7 +74,7 @@ export function HomeScreen({
           </ScrollView>
         </>
       )}
-    </Frame>
+    </SafeArea>
   )
 }
 

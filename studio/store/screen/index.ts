@@ -1,6 +1,3 @@
-import screen, {
-  ScreenOrientation,
-  selectScreenOrientation,
-} from "./screen.slice"
+import screen from "./screen.slice"
 export * from "./screen.slice"
 export default screen

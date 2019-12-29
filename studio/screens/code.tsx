@@ -7,6 +7,7 @@ import Divider from "@itsy.studio/studio/components/divider"
 import Editor from "@itsy.studio/studio/components/editor"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
+import SafeArea from "@itsy.studio/studio/components/safe-area"
 import Loading from "@itsy.studio/studio/components/loading"
 import Play from "@itsy.studio/studio/components/play"
 import Player from "@itsy.studio/studio/components/player"
@@ -27,7 +28,7 @@ const mapDispatchToProps = {}
 
 export function CodeScreen({ orientation, player }) {
   return (
-    <Frame shallow>
+    <SafeArea>
       <View style={[styles.container, styles[orientation]]}>
         <View style={styles.editorContainer}>
           <Editor />
@@ -36,7 +37,7 @@ export function CodeScreen({ orientation, player }) {
         <Divider />
         <Devtools />
       </View>
-    </Frame>
+    </SafeArea>
   )
 }
 

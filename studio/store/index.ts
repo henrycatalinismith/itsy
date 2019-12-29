@@ -13,6 +13,7 @@ import disks from "./disks"
 import editor from "./editor"
 import keyboard from "./keyboard"
 import player from "./player"
+import safeArea from "./safe-area"
 import screen from "./screen"
 
 const middleware = [...getDefaultMiddleware()]
@@ -23,11 +24,14 @@ const reducer = combineReducers({
   editor: editor.reducer,
   keyboard: keyboard.reducer,
   player: player.reducer,
+  safeArea: safeArea.reducer,
   screen: screen.reducer,
 })
 
 const preloadedState = {
   screen: {
+    x: 0,
+    y: 0,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
@@ -45,6 +49,7 @@ exports.disks = disks
 exports.editor = editor
 exports.keyboard = keyboard
 exports.player = player
+exports.safeArea = safeArea
 exports.screen = screen
 
 export type RootState = ReturnType<typeof reducer>

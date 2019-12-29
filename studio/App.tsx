@@ -3,6 +3,7 @@ import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
 import { EmitterSubscription, Keyboard, KeyboardEvent } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
 import { Provider } from "react-redux"
@@ -95,9 +96,11 @@ function App({ skipLoadingScreen }): React.ReactElement {
   }
 
   return (
-    <Provider store={store}>
-      <AppContainer />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
+    </SafeAreaProvider>
   )
 }
 
