@@ -3,11 +3,15 @@ import { StyleSheet, View } from "react-native"
 import { connect } from "react-redux"
 
 import Devtools from "@itsy.studio/studio/components/devtools"
+import DevtoolsCodePanel from "@itsy.studio/studio/components/devtools-code-panel"
+import DevtoolsHelpPanel from "@itsy.studio/studio/components/devtools-help-panel"
+import DevtoolsPlayPanel from "@itsy.studio/studio/components/devtools-play-panel"
 import Divider from "@itsy.studio/studio/components/divider"
 import Editor from "@itsy.studio/studio/components/editor"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
 import SafeArea from "@itsy.studio/studio/components/safe-area"
+import Toolbar from "@itsy.studio/studio/components/toolbar"
 import Loading from "@itsy.studio/studio/components/loading"
 import Play from "@itsy.studio/studio/components/play"
 import Player from "@itsy.studio/studio/components/player"
@@ -27,15 +31,21 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function CodeScreen({ orientation, player }) {
+  const [tool, chooseTool] = React.useState("code")
+
+  const onSelect = React.useCallback((t: string) => {
+    chooseTool(t)
+  }, [])
+
   return (
     <SafeArea>
       <View style={[styles.container, styles[orientation]]}>
         <View style={styles.editorContainer}>
-          <Editor />
+          {tool === "code" && <DevtoolsCodePanel />}
+          {tool === "play" && <DevtoolsPlayPanel />}
+          {tool === "help" && <DevtoolsHelpPanel />}
         </View>
-
-        <Divider />
-        <Devtools />
+        <Toolbar onSelect={onSelect} />
       </View>
     </SafeArea>
   )

@@ -3,7 +3,6 @@ import { SafeAreaView, StatusBar, View } from "react-native"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 
-import Button from "@itsy.studio/studio/components/button"
 import Floppy from "@itsy.studio/studio/components/floppy"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "@itsy.studio/studio/components/header/header.module.scss"
@@ -52,12 +51,6 @@ export function Header({ disk, navigation }) {
               {title}
             </Font>
           </View>
-        </View>
-
-        <View style={styles.right}>
-          <Button theme={helpTheme} onPress={onHelp}>
-            {helpText}
-          </Button>
         </View>
       </View>
     </SafeAreaView>
