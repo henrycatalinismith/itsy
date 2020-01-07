@@ -4,3 +4,21 @@
   display: flex;
   flex: 1;
 }
+
+.player {
+  display: flex;
+}
+
+.controls {
+  display: flex;
+  height: 32px;
+  background-color: pico8-original-palette(14);
+  border-top: 2px solid pico8-original-palette(2);
+  border-bottom: 2px solid pico8-original-palette(2);
+}
+
+.console {
+  display: flex;
+  flex: 1;
+  background-color: pico8-original-palette(0);
+}
