@@ -5,11 +5,12 @@ import {
   DevtoolsState,
   selectDevtools,
 } from "@itsy.studio/studio/store/devtools"
-import DevtoolsPlayTab from "@itsy.studio/studio/components/devtools-play-tab"
-import styles from "@itsy.studio/studio/components/devtools-toolbar/devtools-toolbar.module.scss"
+import Button from "@itsy.studio/studio/components/button"
+import styles from "./devtools-toolbar.module.scss"
 
 interface DevtoolsToolbarProps {
   devtools: DevtoolsState
+  onSelect: (tool: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -18,10 +19,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsToolbar({ devtools }: DevtoolsToolbarProps) {
+export function DevtoolsToolbar({ devtools, onSelect }: DevtoolsToolbarProps) {
   return (
     <View style={styles.devtoolsToolbar}>
-      <DevtoolsPlayTab />
+      <Button onPress={() => onSelect("code")}>{"code"}</Button>
+      <Button onPress={() => onSelect("play")}>{"play"}</Button>
+      <Button onPress={() => onSelect("help")}>{"help"}</Button>
     </View>
   )
 }

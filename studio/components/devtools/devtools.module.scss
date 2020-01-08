@@ -2,4 +2,14 @@
 
 .devtools {
   display: flex;
+  flex: 1;
+}
+
+.panels {
+  display: flex;
+  flex: 1;
+}
+
+.toolbar {
+  height: 32px;
 }

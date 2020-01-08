@@ -1,45 +1,36 @@
 import React from "react"
-import { Animated, Easing, View } from "react-native"
+import { View } from "react-native"
 import { connect } from "react-redux"
-import {
-  DevtoolsState,
-  selectDevtools,
-} from "@itsy.studio/studio/store/devtools"
-import {
-  KeyboardState,
-  KeyboardStatus,
-  selectKeyboard,
-} from "@itsy.studio/studio/store/keyboard"
-import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
+
+import DevtoolsCodePanel from "@itsy.studio/studio/components/devtools-code-panel"
+import DevtoolsHelpPanel from "@itsy.studio/studio/components/devtools-help-panel"
 import DevtoolsPlayPanel from "@itsy.studio/studio/components/devtools-play-panel"
 import DevtoolsToolbar from "@itsy.studio/studio/components/devtools-toolbar"
-import styles from "@itsy.studio/studio/components/devtools/devtools.module.scss"
+import styles from "./devtools.module.scss"
 
-interface DevtoolsProps {
-  devtools: DevtoolsState
-  keyboard: KeyboardState
-  screen: ScreenState
-}
+interface DevtoolsProps {}
 
-const mapStateToProps = (state) => ({
-  devtools: selectDevtools(state),
-  keyboard: selectKeyboard(state),
-  screen: selectScreen(state),
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
-export function Devtools({ devtools, keyboard, screen }: DevtoolsProps) {
-  let height = 26
-  const keyboardVisible = keyboard.status === KeyboardStatus.visible
-  if (!keyboardVisible) {
-    height += screen.width
-  }
+export function Devtools({}: DevtoolsProps) {
+  const [tool, chooseTool] = React.useState("code")
+
+  const onSelect = React.useCallback((t: string) => {
+    chooseTool(t)
+  }, [])
 
   return (
-    <View style={{ ...styles.devtools, height }}>
-      <DevtoolsToolbar />
-      {!keyboardVisible && <DevtoolsPlayPanel />}
+    <View style={styles.devtools}>
+      <View style={styles.panels}>
+        {tool === "code" && <DevtoolsCodePanel />}
+        {tool === "play" && <DevtoolsPlayPanel />}
+        {tool === "help" && <DevtoolsHelpPanel />}
+      </View>
+      <View style={styles.toolbar}>
+        <DevtoolsToolbar onSelect={onSelect} />
+      </View>
     </View>
   )
 }

@@ -2,6 +2,9 @@
 
 .devtoolsToolbar {
   display: flex;
-  background-color: pico8-original-palette(7);
-  height: 26px;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: pico8-original-palette(14);
+  height: 32px;
+  padding: 4px;
 }
