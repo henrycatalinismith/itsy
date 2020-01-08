@@ -1,0 +1,9 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.devtoolsPlayPanelControls {
+  display: flex;
+  height: 32px;
+  background-color: pico8-original-palette(14);
+  border-top: 2px solid pico8-original-palette(2);
+  border-bottom: 2px solid pico8-original-palette(2);
+}
