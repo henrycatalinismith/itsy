@@ -1,6 +1,13 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .devtoolsPanels {
-  display: flex;
   flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.slider {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
 }

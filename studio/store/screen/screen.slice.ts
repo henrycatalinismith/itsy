@@ -36,6 +36,11 @@ export const selectScreenHeight = createSelector(
   ({ height }) => height
 )
 
+export const selectScreenWidth = createSelector(
+  selectScreen,
+  ({ width }) => width
+)
+
 export const selectScreenHeightMinusKeyboardHeight = createSelector(
   [selectScreenHeight, selectKeyboardHeight],
   (screenHeight, keyboardHeight) => screenHeight - keyboardHeight
