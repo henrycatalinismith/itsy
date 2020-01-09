@@ -2,9 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import DevtoolsCodePanel from "@itsy.studio/studio/components/devtools-code-panel"
-import DevtoolsHelpPanel from "@itsy.studio/studio/components/devtools-help-panel"
-import DevtoolsPlayPanel from "@itsy.studio/studio/components/devtools-play-panel"
+import DevtoolsPanels from "@itsy.studio/studio/components/devtools-panels"
 import DevtoolsToolbar from "@itsy.studio/studio/components/devtools-toolbar"
 import styles from "./devtools.module.scss"
 
@@ -24,12 +22,10 @@ export function Devtools({}: DevtoolsProps) {
   return (
     <View style={styles.devtools}>
       <View style={styles.panels}>
-        {tool === "code" && <DevtoolsCodePanel />}
-        {tool === "play" && <DevtoolsPlayPanel />}
-        {tool === "help" && <DevtoolsHelpPanel />}
+        <DevtoolsPanels />
       </View>
       <View style={styles.toolbar}>
-        <DevtoolsToolbar onSelect={onSelect} />
+        <DevtoolsToolbar />
       </View>
     </View>
   )

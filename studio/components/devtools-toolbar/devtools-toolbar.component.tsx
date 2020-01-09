@@ -2,29 +2,42 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 import {
+  DevtoolsPanelId,
   DevtoolsState,
   selectDevtools,
+  togglePanel,
 } from "@itsy.studio/studio/store/devtools"
 import Button from "@itsy.studio/studio/components/button"
 import styles from "./devtools-toolbar.module.scss"
 
 interface DevtoolsToolbarProps {
   devtools: DevtoolsState
-  onSelect: (tool: string) => void
+  togglePanel: (id: DevtoolsPanelId) => void
 }
 
 const mapStateToProps = (state) => ({
   devtools: selectDevtools(state),
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  togglePanel,
+}
 
-export function DevtoolsToolbar({ devtools, onSelect }: DevtoolsToolbarProps) {
+export function DevtoolsToolbar({
+  devtools,
+  togglePanel,
+}: DevtoolsToolbarProps) {
   return (
     <View style={styles.devtoolsToolbar}>
-      <Button onPress={() => onSelect("code")}>{"code"}</Button>
-      <Button onPress={() => onSelect("play")}>{"play"}</Button>
-      <Button onPress={() => onSelect("help")}>{"help"}</Button>
+      <Button onPress={() => togglePanel(DevtoolsPanelId.code)}>
+        {"code"}
+      </Button>
+      <Button onPress={() => togglePanel(DevtoolsPanelId.play)}>
+        {"play"}
+      </Button>
+      <Button onPress={() => togglePanel(DevtoolsPanelId.help)}>
+        {"help"}
+      </Button>
     </View>
   )
 }

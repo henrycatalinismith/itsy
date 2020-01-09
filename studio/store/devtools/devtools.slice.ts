@@ -5,16 +5,33 @@ import { selectKeyboardVisibility } from "@itsy.studio/studio/store/keyboard"
 import { playerRunning } from "@itsy.studio/studio/store/player"
 import { Keyboard } from "react-native"
 
-export interface DevtoolsState {}
+export enum DevtoolsPanelId {
+  code = "code",
+  play = "play",
+  help = "help",
+}
+
+export interface DevtoolsState {
+  panel: DevtoolsPanelId
+}
 
 const name = "devtools"
 
-const initialState: DevtoolsState = {}
+const initialState: DevtoolsState = {
+  panel: DevtoolsPanelId.code,
+}
 
 const reducers = {
-  // show(devtools) {
-  // devtools.visible = true
-  // },
+  togglePanel(devtools, action: PayloadAction<DevtoolsPanelId>) {
+    devtools.panel = action.payload
+  },
+}
+
+export const togglePanel = (id: DevtoolsPanelId): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.togglePanel(id))
 }
 
 export const onPlayTabTouch = (): Thunk => async (dispatch, getState) => {
@@ -33,6 +50,11 @@ export const onPlayTabTouch = (): Thunk => async (dispatch, getState) => {
 }
 
 export const selectDevtools = ({ devtools }) => devtools
+
+export const selectDevtoolsPanel = createSelector(
+  [selectDevtools],
+  ({ panel }): DevtoolsPanelId => panel
+)
 
 const slice = createSlice({
   name,
