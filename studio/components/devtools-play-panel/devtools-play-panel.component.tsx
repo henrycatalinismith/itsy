@@ -21,12 +21,16 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function DevtoolsPlayPanel({ player, screen }: DevtoolsPlayPanelProps) {
+  const panelWidth = {
+    width: screen.width,
+  }
+
   const screenHeight = {
     height: screen.width - 4,
   }
 
   return (
-    <View style={styles.devtoolsPlayPanel}>
+    <View style={[styles.devtoolsPlayPanel, panelWidth]}>
       <View style={[styles.screen, screenHeight]}>
         <DevtoolsPlayPanelScreen />
       </View>

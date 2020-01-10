@@ -45,7 +45,7 @@ export function DevtoolsPanels({ panel, screen }: DevtoolsPanelsProps) {
   }, [panel])
 
   const minus = {
-    marginLeft: screen.width * offsetMap[panel] * -3,
+    marginLeft: screen.width * offsetMap[panel] * -1,
   }
 
   console.log(panel, translateX)
