@@ -1,8 +1,14 @@
-import { AppLoading } from "expo"
+import { AppLoading, ScreenOrientation } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
-import { EmitterSubscription, Keyboard, KeyboardEvent } from "react-native"
+import {
+  EmitterSubscription,
+  Keyboard,
+  KeyboardEvent,
+  EventSubscription,
+  Dimensions,
+} from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
@@ -16,12 +22,15 @@ import Code from "./screens/code"
 import Help from "./screens/help"
 
 import store from "./store"
+
 import {
   keyboardDidHide,
   keyboardDidShow,
   keyboardWillHide,
   keyboardWillShow,
 } from "@itsy.studio/studio/store/keyboard"
+
+import { resizeScreen } from "@itsy.studio/studio/store/screen"
 
 const routes = {
   Home: {
@@ -46,6 +55,7 @@ function App({ skipLoadingScreen }): React.ReactElement {
   const keyboardDidShowListener = React.useRef<EmitterSubscription>()
   const keyboardWillHideListener = React.useRef<EmitterSubscription>()
   const keyboardWillShowListener = React.useRef<EmitterSubscription>()
+  const orientationChangeListener = React.useRef<any>()
 
   const [ready, setReady] = React.useState(false)
 
@@ -78,6 +88,20 @@ function App({ skipLoadingScreen }): React.ReactElement {
       keyboardDidShowListener.current.remove()
       keyboardWillHideListener.current.remove()
       keyboardWillShowListener.current.remove()
+    }
+  }, [])
+
+  React.useEffect(() => {
+    orientationChangeListener.current = ScreenOrientation.addOrientationChangeListener(
+      (event) => {
+        const size = Dimensions.get("window")
+        store.dispatch(resizeScreen(size.width, size.height))
+      }
+    )
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(
+        orientationChangeListener.current
+      )
     }
   }, [])
 

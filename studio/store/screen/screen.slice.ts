@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { selectKeyboardHeight } from "@itsy.studio/studio/store/keyboard"
+import { Thunk } from "@itsy.studio/studio/store"
 import { Rect } from "@itsy.studio/types/geometry"
 
 export enum ScreenOrientation {
@@ -28,6 +29,20 @@ const slice = createSlice({
   initialState,
   reducers,
 })
+
+export const resizeScreen = (width: number, height: number): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(
+    slice.actions.resize({
+      width,
+      height,
+      x: 0,
+      y: 0,
+    })
+  )
+}
 
 export const selectScreen = ({ screen }): Rect => screen
 
