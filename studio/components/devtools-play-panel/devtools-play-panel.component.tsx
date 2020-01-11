@@ -1,6 +1,7 @@
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
+import DevtoolsPanel from "@itsy.studio/studio/components/devtools-panel"
 import DevtoolsPlayPanelConsole from "@itsy.studio/studio/components/devtools-play-panel-console"
 import DevtoolsPlayPanelControls from "@itsy.studio/studio/components/devtools-play-panel-controls"
 import DevtoolsPlayPanelScreen from "@itsy.studio/studio/components/devtools-play-panel-screen"
@@ -30,7 +31,7 @@ export function DevtoolsPlayPanel({ player, screen }: DevtoolsPlayPanelProps) {
   }
 
   return (
-    <View style={[styles.devtoolsPlayPanel, panelWidth]}>
+    <DevtoolsPanel width={screen.width}>
       <View style={[styles.screen, screenHeight]}>
         <DevtoolsPlayPanelScreen />
       </View>
@@ -40,7 +41,7 @@ export function DevtoolsPlayPanel({ player, screen }: DevtoolsPlayPanelProps) {
       <View style={styles.console}>
         <DevtoolsPlayPanelConsole />
       </View>
-    </View>
+    </DevtoolsPanel>
   )
 }
 
