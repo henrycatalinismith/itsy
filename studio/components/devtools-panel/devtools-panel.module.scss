@@ -1,5 +1,14 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.devtoolsPanel {
+.outer {
+  border: 2px solid pico8-original-palette(2);
+  border-top-width: 0;
+  border-bottom-width: 0;
+  padding: 2px;
+  background-color: pico8-original-palette(14);
+}
+
+.inner {
+  flex: 1;
   border: 2px solid pico8-original-palette(2);
 }

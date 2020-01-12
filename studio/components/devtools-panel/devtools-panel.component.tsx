@@ -13,7 +13,11 @@ const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
 export function DevtoolsPanel({ children, width }: DevtoolsPanelProps) {
-  return <View style={[styles.devtoolsPanel, { width }]}>{children}</View>
+  return (
+    <View style={[styles.outer, { width }]}>
+      <View style={[styles.inner, { width: width - 8 }]}>{children}</View>
+    </View>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsPanel)
