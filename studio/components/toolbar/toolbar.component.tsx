@@ -10,9 +10,9 @@ import {
 import { PanelId, togglePanel } from "@itsy.studio/studio/store/panels"
 
 import Button from "@itsy.studio/studio/components/button"
-import styles from "./devtools-toolbar.module.scss"
+import styles from "./toolbar.module.scss"
 
-interface DevtoolsToolbarProps {
+interface ToolbarProps {
   devtools: DevtoolsState
   togglePanel: (id: PanelId) => void
 }
@@ -25,12 +25,9 @@ const mapDispatchToProps = {
   togglePanel,
 }
 
-export function DevtoolsToolbar({
-  devtools,
-  togglePanel,
-}: DevtoolsToolbarProps) {
+export function Toolbar({ devtools, togglePanel }: ToolbarProps) {
   return (
-    <View style={styles.devtoolsToolbar}>
+    <View style={styles.toolbar}>
       <Button onPress={() => togglePanel(PanelId.code)}>{"code"}</Button>
       <Button onPress={() => togglePanel(PanelId.play)}>{"play"}</Button>
       <Button onPress={() => togglePanel(PanelId.help)}>{"help"}</Button>
@@ -38,4 +35,4 @@ export function DevtoolsToolbar({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsToolbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Toolbar)

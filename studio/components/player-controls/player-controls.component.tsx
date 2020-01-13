@@ -4,9 +4,9 @@ import { connect } from "react-redux"
 import Play from "@itsy.studio/studio/components/play"
 import Stop from "@itsy.studio/studio/components/stop"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
-import styles from "./devtools-play-panel-controls.module.scss"
+import styles from "./player-controls.module.scss"
 
-interface DevtoolsPlayPanelControlsProps {
+interface PlayerControlsProps {
   player: PlayerState
 }
 
@@ -16,11 +16,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsPlayPanelControls({
-  player,
-}: DevtoolsPlayPanelControlsProps) {
+export function PlayerControls({ player }: PlayerControlsProps) {
   return (
-    <View style={styles.devtoolsPlayPanelControls}>
+    <View style={styles.playerControls}>
       {player.running || player.waiting || player.stopping ? (
         <Stop />
       ) : (
@@ -30,7 +28,4 @@ export function DevtoolsPlayPanelControls({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DevtoolsPlayPanelControls)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayerControls)

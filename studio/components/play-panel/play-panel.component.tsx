@@ -1,9 +1,9 @@
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
-import DevtoolsPlayPanelConsole from "@itsy.studio/studio/components/devtools-play-panel-console"
-import DevtoolsPlayPanelControls from "@itsy.studio/studio/components/devtools-play-panel-controls"
-import DevtoolsPlayPanelScreen from "@itsy.studio/studio/components/devtools-play-panel-screen"
+import Console from "@itsy.studio/studio/components/console"
+import PlayerControls from "@itsy.studio/studio/components/player-controls"
+import Screen from "@itsy.studio/studio/components/screen"
 import Panel from "@itsy.studio/studio/components/panel"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
@@ -33,13 +33,13 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
   return (
     <Panel width={screen.width}>
       <View style={[styles.screen, screenHeight]}>
-        <DevtoolsPlayPanelScreen />
+        <Screen />
       </View>
       <View style={styles.controls}>
-        <DevtoolsPlayPanelControls />
+        <PlayerControls />
       </View>
       <View style={styles.console}>
-        <DevtoolsPlayPanelConsole />
+        <Console />
       </View>
     </Panel>
   )

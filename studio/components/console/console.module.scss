@@ -1,6 +1,7 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.devtoolsPlayTab {
+.console {
   display: flex;
   flex: 1;
+  background-color: pico8-original-palette(0);
 }

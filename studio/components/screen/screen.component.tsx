@@ -5,9 +5,9 @@ import Loading from "@itsy.studio/studio/components/loading"
 import Player from "@itsy.studio/studio/components/player"
 import Snapshot from "@itsy.studio/studio/components/snapshot"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
-import styles from "./devtools-play-panel-screen.module.scss"
+import styles from "./screen.module.scss"
 
-interface DevtoolsPlayPanelScreenProps {
+interface ScreenProps {
   player: PlayerState
 }
 
@@ -17,11 +17,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsPlayPanelScreen({
-  player,
-}: DevtoolsPlayPanelScreenProps) {
+export function Screen({ player }: ScreenProps) {
   return (
-    <View style={styles.devtoolsPlayPanelScreen}>
+    <View style={styles.screen}>
       {player.waiting ? (
         <Loading />
       ) : player.running || player.stopping ? (
@@ -33,7 +31,4 @@ export function DevtoolsPlayPanelScreen({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DevtoolsPlayPanelScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(Screen)
