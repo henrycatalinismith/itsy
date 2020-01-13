@@ -7,30 +7,39 @@ import {
   selectDevtools,
 } from "@itsy.studio/studio/store/devtools"
 
-import { PanelId, togglePanel } from "@itsy.studio/studio/store/panels"
+import {
+  PanelId,
+  Panel,
+  selectRankedPanels,
+  togglePanel,
+} from "@itsy.studio/studio/store/panels"
 
 import Button from "@itsy.studio/studio/components/button"
 import styles from "./toolbar.module.scss"
 
 interface ToolbarProps {
   devtools: DevtoolsState
+  panels: Panel[]
   togglePanel: (id: PanelId) => void
 }
 
 const mapStateToProps = (state) => ({
   devtools: selectDevtools(state),
+  panels: selectRankedPanels(state),
 })
 
 const mapDispatchToProps = {
   togglePanel,
 }
 
-export function Toolbar({ devtools, togglePanel }: ToolbarProps) {
+export function Toolbar({ devtools, panels, togglePanel }: ToolbarProps) {
   return (
     <View style={styles.toolbar}>
-      <Button onPress={() => togglePanel(PanelId.code)}>{"code"}</Button>
-      <Button onPress={() => togglePanel(PanelId.play)}>{"play"}</Button>
-      <Button onPress={() => togglePanel(PanelId.help)}>{"help"}</Button>
+      {panels.map((panel) => (
+        <Button key={panel.id} onPress={() => togglePanel(panel.id)}>
+          {panel.id}
+        </Button>
+      ))}
     </View>
   )
 }

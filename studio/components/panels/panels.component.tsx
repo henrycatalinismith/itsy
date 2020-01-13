@@ -47,9 +47,14 @@ export function Panels({ activePanel, panels, screen }: PanelsProps) {
   return (
     <View style={[styles.panels, superwide]}>
       <Animated.View style={{ ...styles.slider, ...minus }}>
-        <CodePanel />
-        <PlayPanel />
-        <HelpPanel />
+        {panels.map(
+          (panel) =>
+            ({
+              [PanelId.code]: <CodePanel key={panel.id} />,
+              [PanelId.play]: <PlayPanel key={panel.id} />,
+              [PanelId.help]: <HelpPanel key={panel.id} />,
+            }[panel.id])
+        )}
       </Animated.View>
     </View>
   )

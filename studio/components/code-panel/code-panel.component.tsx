@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function CodePanel({ screen }: CodePanelProps) {
+  console.log("codepanel")
   return (
     <Panel width={screen.width}>
       <Editor />
