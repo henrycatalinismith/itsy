@@ -24,7 +24,7 @@ export function HelpPanel({ screen }: HelpPanelProps) {
   }
 
   return (
-    <Panel width={screen.width}>
+    <Panel>
       <WebView
         bounces={false}
         originWhitelist={["*"]}

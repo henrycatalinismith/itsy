@@ -2,23 +2,21 @@ import React from "react"
 import { connect } from "react-redux"
 import Editor from "@itsy.studio/studio/components/editor"
 import Panel from "@itsy.studio/studio/components/panel"
-import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
 import styles from "./code-panel.module.scss"
 
 interface CodePanelProps {
-  screen: ScreenState
+  // screen: ScreenState
 }
 
 const mapStateToProps = (state) => ({
-  screen: selectScreen(state),
+  // screen: selectScreen(state),
 })
 
 const mapDispatchToProps = {}
 
-export function CodePanel({ screen }: CodePanelProps) {
-  console.log("codepanel")
+export function CodePanel({}: CodePanelProps) {
   return (
-    <Panel width={screen.width}>
+    <Panel>
       <Editor />
     </Panel>
   )

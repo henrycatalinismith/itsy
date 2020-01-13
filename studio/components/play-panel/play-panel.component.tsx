@@ -22,16 +22,12 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function PlayPanel({ player, screen }: PlayPanelProps) {
-  const panelWidth = {
-    width: screen.width,
-  }
-
   const screenHeight = {
     height: screen.width - 4,
   }
 
   return (
-    <Panel width={screen.width}>
+    <Panel>
       <View style={[styles.screen, screenHeight]}>
         <Screen />
       </View>
