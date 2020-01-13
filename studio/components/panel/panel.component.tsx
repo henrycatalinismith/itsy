@@ -1,10 +1,9 @@
-import { Asset } from "expo-asset"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./devtools-panel.module.scss"
+import styles from "./panel.module.scss"
 
-interface DevtoolsPanelProps {
+interface PanelProps {
   children: any
   width: number
 }
@@ -12,7 +11,7 @@ interface DevtoolsPanelProps {
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
-export function DevtoolsPanel({ children, width }: DevtoolsPanelProps) {
+export function Panel({ children, width }: PanelProps) {
   return (
     <View style={[styles.outer, { width }]}>
       <View style={[styles.inner, { width: width - 8 }]}>{children}</View>
@@ -20,4 +19,4 @@ export function DevtoolsPanel({ children, width }: DevtoolsPanelProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(Panel)
