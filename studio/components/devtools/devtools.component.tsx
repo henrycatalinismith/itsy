@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import DevtoolsPanels from "@itsy.studio/studio/components/devtools-panels"
+import Panels from "@itsy.studio/studio/components/panels"
 import DevtoolsToolbar from "@itsy.studio/studio/components/devtools-toolbar"
 import styles from "./devtools.module.scss"
 
@@ -22,7 +22,7 @@ export function Devtools({}: DevtoolsProps) {
   return (
     <View style={styles.devtools}>
       <View style={styles.panels}>
-        <DevtoolsPanels />
+        <Panels />
       </View>
       <View style={styles.toolbar}>
         <DevtoolsToolbar />

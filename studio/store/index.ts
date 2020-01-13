@@ -12,6 +12,7 @@ import devtools from "./devtools"
 import disks from "./disks"
 import editor from "./editor"
 import keyboard from "./keyboard"
+import panels from "./panels"
 import player from "./player"
 import safeArea from "./safe-area"
 import screen from "./screen"
@@ -23,6 +24,7 @@ const reducer = combineReducers({
   disks: disks.reducer,
   editor: editor.reducer,
   keyboard: keyboard.reducer,
+  panels: panels.reducer,
   player: player.reducer,
   safeArea: safeArea.reducer,
   screen: screen.reducer,
@@ -48,6 +50,7 @@ exports.devtools = devtools
 exports.disks = disks
 exports.editor = editor
 exports.keyboard = keyboard
+exports.panels = panels
 exports.player = player
 exports.safeArea = safeArea
 exports.screen = screen

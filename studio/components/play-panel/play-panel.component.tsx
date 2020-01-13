@@ -7,9 +7,9 @@ import DevtoolsPlayPanelControls from "@itsy.studio/studio/components/devtools-p
 import DevtoolsPlayPanelScreen from "@itsy.studio/studio/components/devtools-play-panel-screen"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
-import styles from "@itsy.studio/studio/components/devtools-play-panel/devtools-play-panel.module.scss"
+import styles from "./play-panel.module.scss"
 
-interface DevtoolsPlayPanelProps {
+interface PlayPanelProps {
   player: PlayerState
   screen: ScreenState
 }
@@ -21,7 +21,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsPlayPanel({ player, screen }: DevtoolsPlayPanelProps) {
+export function PlayPanel({ player, screen }: PlayPanelProps) {
   const panelWidth = {
     width: screen.width,
   }
@@ -45,4 +45,4 @@ export function DevtoolsPlayPanel({ player, screen }: DevtoolsPlayPanelProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsPlayPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayPanel)

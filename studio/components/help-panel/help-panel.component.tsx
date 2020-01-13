@@ -4,11 +4,11 @@ import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 import DevtoolsPanel from "@itsy.studio/studio/components/devtools-panel"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
-import styles from "@itsy.studio/studio/components/devtools-play-panel/devtools-play-panel.module.scss"
+import styles from "./help-panel.module.scss"
 
 const manual = Asset.fromModule(require("../../assets/webviews/manual.html"))
 
-interface DevtoolsHelpPanelProps {
+interface HelpPanelProps {
   screen: ScreenState
 }
 
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsHelpPanel({ screen }: DevtoolsHelpPanelProps) {
+export function HelpPanel({ screen }: HelpPanelProps) {
   const panelWidth = {
     width: screen.width,
   }
@@ -36,4 +36,4 @@ export function DevtoolsHelpPanel({ screen }: DevtoolsHelpPanelProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsHelpPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(HelpPanel)

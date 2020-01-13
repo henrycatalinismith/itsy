@@ -3,9 +3,9 @@ import { connect } from "react-redux"
 import DevtoolsPanel from "@itsy.studio/studio/components/devtools-panel"
 import Editor from "@itsy.studio/studio/components/editor"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
-import styles from "@itsy.studio/studio/components/devtools-code-panel/devtools-code-panel.module.scss"
+import styles from "./code-panel.module.scss"
 
-interface DevtoolsCodePanelProps {
+interface CodePanelProps {
   screen: ScreenState
 }
 
@@ -15,7 +15,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DevtoolsCodePanel({ screen }: DevtoolsCodePanelProps) {
+export function CodePanel({ screen }: CodePanelProps) {
   return (
     <DevtoolsPanel width={screen.width}>
       <Editor />
@@ -23,4 +23,4 @@ export function DevtoolsCodePanel({ screen }: DevtoolsCodePanelProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DevtoolsCodePanel)
+export default connect(mapStateToProps, mapDispatchToProps)(CodePanel)
