@@ -13,12 +13,6 @@ const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
 export function Devtools({}: DevtoolsProps) {
-  const [tool, chooseTool] = React.useState("code")
-
-  const onSelect = React.useCallback((t: string) => {
-    chooseTool(t)
-  }, [])
-
   return (
     <View style={styles.devtools}>
       <View style={styles.panels}>

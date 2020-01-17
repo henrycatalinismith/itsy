@@ -19,19 +19,6 @@ export function Header({ disk, navigation }) {
     Help: () => "itsy studio",
   }[activeScreen]()
 
-  const onHelp = () => {
-    if (activeScreen !== "Help") {
-      navigation.navigate("Help", {})
-    } else {
-      console.log("goBack")
-      navigation.pop()
-    }
-  }
-
-  const helpStyle = activeScreen === "Help" ? styles.back : styles.help
-  const helpTheme = activeScreen === "Help" ? "red" : "blue"
-  const helpText = activeScreen === "Help" ? "done" : "help"
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />

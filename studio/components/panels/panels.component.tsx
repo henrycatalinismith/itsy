@@ -45,7 +45,7 @@ export function Panels({ activePanel, panels, safeArea }: PanelsProps) {
   }
 
   const onLayout = (event) => {
-    console.log(event)
+    // console.log(event)
   }
 
   return (

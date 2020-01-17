@@ -27,7 +27,7 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
   }
 
   return (
-    <Panel>
+    <Panel id="play">
       <View style={[styles.screen, screenHeight]}>
         <Screen />
       </View>

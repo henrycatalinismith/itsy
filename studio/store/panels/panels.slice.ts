@@ -61,7 +61,7 @@ export const togglePanel = (id: PanelId): Thunk => async (
   dispatch(slice.actions.togglePanel(id))
 }
 
-export const selectPanels = ({ panels }) => panels
+export const selectPanels = ({ panels }): PanelsState => panels
 
 export const selectActivePanel = createSelector(
   [selectPanels],

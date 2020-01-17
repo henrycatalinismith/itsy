@@ -16,7 +16,7 @@ const mapDispatchToProps = {}
 
 export function CodePanel({}: CodePanelProps) {
   return (
-    <Panel>
+    <Panel id="code">
       <Editor />
     </Panel>
   )
