@@ -31,6 +31,13 @@ const reducer = combineReducers({
 })
 
 const preloadedState = {
+  safeArea: {
+    x: 0,
+    y: 0,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+  },
+
   screen: {
     x: 0,
     y: 0,

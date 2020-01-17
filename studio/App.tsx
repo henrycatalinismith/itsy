@@ -1,14 +1,7 @@
 import { AppLoading, ScreenOrientation } from "expo"
-import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import React from "react"
-import {
-  EmitterSubscription,
-  Keyboard,
-  KeyboardEvent,
-  EventSubscription,
-  Dimensions,
-} from "react-native"
+import { EmitterSubscription, Keyboard, Dimensions } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"

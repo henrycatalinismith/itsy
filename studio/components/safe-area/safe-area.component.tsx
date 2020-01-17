@@ -1,6 +1,12 @@
 import React from "react"
 import { connect } from "react-redux"
-import { SafeAreaView, StyleSheet, View } from "react-native"
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  LayoutChangeEvent,
+  LayoutRectangle,
+} from "react-native"
 import { useSafeArea } from "react-native-safe-area-context"
 import { EdgeInsets } from "react-native-safe-area-context"
 
@@ -9,8 +15,7 @@ import styles from "@itsy.studio/studio/components/safe-area/safe-area.module.sc
 
 interface SafeAreaProps {
   children: any
-  updateSafeArea: (insets: EdgeInsets) => void
-  //shallow: boolean
+  updateSafeArea: (layout: LayoutRectangle) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -25,22 +30,21 @@ export function SafeArea({
   children = undefined,
   updateSafeArea,
 }: SafeAreaProps) {
-  const insets = useSafeArea()
-  React.useEffect(() => {
-    updateSafeArea(insets)
-  }, [insets.top, insets.right, insets.bottom, insets.left])
-
   const styles = StyleSheet.create({
     safeArea: {
-      position: "absolute",
-      top: 0,
-      right: insets.right,
-      bottom: insets.bottom,
-      left: insets.left,
+      flex: 1,
     },
   })
 
-  return <View style={{ ...styles.safeArea }}>{children}</View>
+  const onLayout = (event: LayoutChangeEvent) => {
+    updateSafeArea(event.nativeEvent.layout)
+  }
+
+  return (
+    <SafeAreaView style={{ ...styles.safeArea }} onLayout={onLayout}>
+      {children}
+    </SafeAreaView>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SafeArea)

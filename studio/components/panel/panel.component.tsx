@@ -1,22 +1,23 @@
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
-import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
+import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
+import { Rect } from "@itsy.studio/types/geometry"
 import styles from "./panel.module.scss"
 
 interface PanelProps {
   children: any
-  screen: ScreenState
+  safeArea: Rect
 }
 
 const mapStateToProps = (state) => ({
-  screen: selectScreen(state),
+  safeArea: selectSafeArea(state),
 })
 
 const mapDispatchToProps = {}
 
-export function Panel({ children, screen }: PanelProps) {
-  const { width } = screen
+export function Panel({ children, safeArea }: PanelProps) {
+  const { width } = safeArea
   return (
     <View style={[styles.outer, { width }]}>
       <View style={[styles.inner, { width: width - 8 }]}>{children}</View>

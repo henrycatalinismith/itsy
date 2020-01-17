@@ -10,7 +10,7 @@ import {
   selectRankedPanels,
 } from "@itsy.studio/studio/store/panels"
 
-import { selectScreen } from "@itsy.studio/studio/store/screen"
+import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
 
 import CodePanel from "@itsy.studio/studio/components/code-panel"
 import HelpPanel from "@itsy.studio/studio/components/help-panel"
@@ -20,20 +20,20 @@ import styles from "./panels.module.scss"
 interface PanelsProps {
   activePanel: Panel
   panels: Panel[]
-  screen: Rect
+  safeArea: Rect
 }
 
 const mapStateToProps = (state) => ({
   activePanel: selectActivePanel(state),
   panels: selectRankedPanels(state),
-  screen: selectScreen(state),
+  safeArea: selectSafeArea(state),
 })
 
 const mapDispatchToProps = {}
 
-export function Panels({ activePanel, panels, screen }: PanelsProps) {
+export function Panels({ activePanel, panels, safeArea }: PanelsProps) {
   const superwide = {
-    width: screen.width * panels.length,
+    width: safeArea.width * panels.length,
   }
 
   React.useEffect(() => {
@@ -41,11 +41,15 @@ export function Panels({ activePanel, panels, screen }: PanelsProps) {
   }, [activePanel.id])
 
   const minus = {
-    marginLeft: screen.width * activePanel.rank * -1,
+    marginLeft: safeArea.width * activePanel.rank * -1,
+  }
+
+  const onLayout = (event) => {
+    console.log(event)
   }
 
   return (
-    <View style={[styles.panels, superwide]}>
+    <View style={[styles.panels, superwide]} onLayout={onLayout}>
       <Animated.View style={{ ...styles.slider, ...minus }}>
         {panels.map(
           (panel) =>
