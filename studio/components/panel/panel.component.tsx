@@ -35,8 +35,6 @@ export function Panel({ children, panel, panelMode, safeArea }: PanelProps) {
       : { width: 0, display: "none" },
   }[panelMode]
 
-  console.log(outerWidth)
-
   const innerWidth = {
     [PanelMode.slide]: { width: safeArea.width - 8 },
     [PanelMode.tiles]: undefined,

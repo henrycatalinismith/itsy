@@ -49,12 +49,8 @@ export function PanelSlider({
     marginLeft: safeArea.width * activePanel.rank * -1,
   }
 
-  const onLayout = (event) => {
-    // console.log(event)
-  }
-
   return (
-    <View style={[styles.panels, superwide]} onLayout={onLayout}>
+    <View style={[styles.panels, superwide]}>
       <Animated.View style={{ ...styles.slider, ...minus }}>
         {panels.map(
           (panel) =>
