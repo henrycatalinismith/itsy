@@ -1,21 +1,14 @@
+import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  LayoutChangeEvent,
-  LayoutRectangle,
-} from "react-native"
-import { useSafeArea } from "react-native-safe-area-context"
-import { EdgeInsets } from "react-native-safe-area-context"
+import { SafeAreaView, LayoutChangeEvent, LayoutRectangle } from "react-native"
 
 import { updateSafeArea } from "@itsy.studio/studio/store/safe-area"
-import styles from "@itsy.studio/studio/components/safe-area/safe-area.module.scss"
+import styles from "./safe-area.module.scss"
 
 interface SafeAreaProps {
   children: any
-  updateSafeArea: (layout: LayoutRectangle) => void
+  updateSafeArea: (layout: LayoutRectangle) => any
 }
 
 const mapStateToProps = (state) => ({
@@ -30,18 +23,12 @@ export function SafeArea({
   children = undefined,
   updateSafeArea,
 }: SafeAreaProps) {
-  const styles = StyleSheet.create({
-    safeArea: {
-      flex: 1,
-    },
-  })
-
-  const onLayout = (event: LayoutChangeEvent) => {
+  const onLayout = React.useCallback((event: LayoutChangeEvent) => {
     updateSafeArea(event.nativeEvent.layout)
-  }
+  }, [])
 
   return (
-    <SafeAreaView style={{ ...styles.safeArea }} onLayout={onLayout}>
+    <SafeAreaView style={styles.safeArea} onLayout={onLayout}>
       {children}
     </SafeAreaView>
   )

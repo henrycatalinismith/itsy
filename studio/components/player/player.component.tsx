@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 
 import { saveSnapshot } from "@itsy.studio/studio/store/disks"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
-import styles from "@itsy.studio/studio/components/player/player.module.scss"
+import styles from "./player.module.scss"
 
 interface PlayerProps {
   player: PlayerState
