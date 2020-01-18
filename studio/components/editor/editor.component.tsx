@@ -6,7 +6,7 @@ import { connect } from "react-redux"
 
 import Loading from "@itsy.studio/studio/components/loading"
 import styles from "@itsy.studio/studio/components/editor/editor.module.scss"
-import disks, { Disk, activeDisk } from "@itsy.studio/studio/store/disks"
+import disks, { Disk, selectActiveDisk } from "@itsy.studio/studio/store/disks"
 import { EditorState, editorSelector } from "@itsy.studio/studio/store/editor"
 
 interface EditorProps {
@@ -18,7 +18,7 @@ interface EditorProps {
 const html = Asset.fromModule(require("../../assets/webviews/editor.html"))
 
 const mapStateToProps = (state) => ({
-  disk: activeDisk(state),
+  disk: selectActiveDisk(state),
   editor: editorSelector(state),
 })
 

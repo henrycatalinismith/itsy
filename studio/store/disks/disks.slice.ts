@@ -185,7 +185,7 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
   await delay(100)
 
   const state = getState()
-  const disk = activeDisk(state)
+  const disk = selectActiveDisk(state)
   const html = write(disk)
 
   await delay(100)
@@ -201,7 +201,7 @@ export const renameDisk = (name: string): Thunk => async (
   getState
 ) => {
   const state = getState()
-  const disk = activeDisk(state)
+  const disk = selectActiveDisk(state)
 
   const action = slice.actions.rename(name)
   const oldName = filename(disk.name)
@@ -223,7 +223,7 @@ export const saveSnapshot = (png: string): Thunk => async (
   dispatch(slice.actions.snapshot(png))
 
   const state = getState()
-  const disk = activeDisk(state)
+  const disk = selectActiveDisk(state)
   const html = write(disk)
   const name = filename(disk.name)
 
@@ -242,7 +242,7 @@ export const selectNormalDisks = createSelector([selectDisks], (disks) =>
   _.filter(disks, { type: DiskType.normal })
 )
 
-export const activeDisk = createSelector([selectDisks], (disks) =>
+export const selectActiveDisk = createSelector([selectDisks], (disks) =>
   _.find(disks, "active")
 )
 

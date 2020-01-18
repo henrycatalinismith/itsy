@@ -9,10 +9,10 @@ import Disk from "@itsy.studio/studio/components/disk"
 import Font from "@itsy.studio/studio/components/font"
 import Frame from "@itsy.studio/studio/components/frame"
 import Header from "@itsy.studio/studio/components/header"
-import { activeDisk, renameDisk } from "@itsy.studio/studio/store/disks"
+import { selectActiveDisk, renameDisk } from "@itsy.studio/studio/store/disks"
 
 const mapStateToProps = (state) => ({
-  disk: activeDisk(state),
+  disk: selectActiveDisk(state),
 })
 
 const mapDispatchToProps = {

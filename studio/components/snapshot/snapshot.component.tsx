@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-import { Disk, activeDisk } from "@itsy.studio/studio/store/disks"
+import { Disk, selectActiveDisk } from "@itsy.studio/studio/store/disks"
 import styles from "@itsy.studio/studio/components/snapshot/snapshot.module.scss"
 
 interface SnapshotProps {
@@ -10,7 +10,7 @@ interface SnapshotProps {
 }
 
 const mapStateToProps = (state) => ({
-  disk: activeDisk(state),
+  disk: selectActiveDisk(state),
 })
 
 export function Snapshot({ disk }: SnapshotProps) {
