@@ -1,12 +1,18 @@
 import _ from "lodash"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Thunk } from "@itsy.studio/studio/store"
+import { selectDevice } from "@itsy.studio/studio/store/device"
 
 export enum PanelId {
   code = "code",
   disks = "disks",
   play = "play",
   help = "help",
+}
+
+export enum PanelMode {
+  slide = "slide",
+  tiles = "tiles",
 }
 
 export interface Panel {
@@ -64,8 +70,15 @@ export const togglePanel = (id: PanelId): Thunk => async (
   dispatch,
   getState
 ) => {
-  console.log("toggle", id)
-  dispatch(slice.actions.togglePanel(id))
+  const state = getState()
+  const panelMode = selectPanelMode(state)
+
+  if (panelMode === PanelMode.slide) {
+    dispatch(slice.actions.togglePanel(id))
+    return
+  }
+
+  console.log("tile time")
 }
 
 export const selectPanels = ({ panels }): PanelsState => panels
@@ -76,6 +89,14 @@ export const selectActivePanel = createSelector(
     return _.find(panels, "active")
   }
 )
+
+export const selectPanelMode = createSelector([selectDevice], (device) => {
+  if (device.modelName.match(/iPad/)) {
+    return PanelMode.tiles
+  } else {
+    return PanelMode.slide
+  }
+})
 
 export const selectRankedPanels = createSelector(
   [selectPanels],

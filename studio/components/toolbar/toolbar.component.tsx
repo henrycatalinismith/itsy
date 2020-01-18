@@ -3,11 +3,6 @@ import { View } from "react-native"
 import { connect } from "react-redux"
 
 import {
-  DevtoolsState,
-  selectDevtools,
-} from "@itsy.studio/studio/store/devtools"
-
-import {
   PanelId,
   Panel,
   selectRankedPanels,
@@ -18,13 +13,11 @@ import Button from "@itsy.studio/studio/components/button"
 import styles from "./toolbar.module.scss"
 
 interface ToolbarProps {
-  devtools: DevtoolsState
   panels: Panel[]
   togglePanel: (id: PanelId) => void
 }
 
 const mapStateToProps = (state) => ({
-  devtools: selectDevtools(state),
   panels: selectRankedPanels(state),
 })
 
@@ -32,7 +25,7 @@ const mapDispatchToProps = {
   togglePanel,
 }
 
-export function Toolbar({ devtools, panels, togglePanel }: ToolbarProps) {
+export function Toolbar({ panels, togglePanel }: ToolbarProps) {
   return (
     <View style={styles.toolbar}>
       {panels.map((panel) => (

@@ -5,10 +5,11 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit"
 
+import * as Device from "expo-device"
 import { Dimensions } from "react-native"
 import { ThunkAction } from "redux-thunk"
 
-import devtools from "./devtools"
+import device from "./device"
 import disks from "./disks"
 import editor from "./editor"
 import keyboard from "./keyboard"
@@ -20,7 +21,7 @@ import screen from "./screen"
 const middleware = [...getDefaultMiddleware()]
 
 const reducer = combineReducers({
-  devtools: devtools.reducer,
+  device: device.reducer,
   disks: disks.reducer,
   editor: editor.reducer,
   keyboard: keyboard.reducer,
@@ -31,6 +32,14 @@ const reducer = combineReducers({
 })
 
 const preloadedState = {
+  device: {
+    brand: Device.brand,
+    manufacturer: Device.manufacturer,
+    modelName: Device.modelName,
+    osName: Device.osName,
+    osVersion: Device.osVersion,
+  },
+
   safeArea: {
     x: 0,
     y: 0,
@@ -53,7 +62,7 @@ const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
 })
 
-exports.devtools = devtools
+exports.device = device
 exports.disks = disks
 exports.editor = editor
 exports.keyboard = keyboard

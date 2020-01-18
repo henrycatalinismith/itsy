@@ -16,9 +16,9 @@ import CodePanel from "@itsy.studio/studio/components/code-panel"
 import DisksPanel from "@itsy.studio/studio/components/disks-panel"
 import HelpPanel from "@itsy.studio/studio/components/help-panel"
 import PlayPanel from "@itsy.studio/studio/components/play-panel"
-import styles from "./panels.module.scss"
+import styles from "./panel-slider.module.scss"
 
-interface PanelsProps {
+interface PanelSliderProps {
   activePanel: Panel
   panels: Panel[]
   safeArea: Rect
@@ -32,7 +32,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Panels({ activePanel, panels, safeArea }: PanelsProps) {
+export function PanelSlider({
+  activePanel,
+  panels,
+  safeArea,
+}: PanelSliderProps) {
   const superwide = {
     width: safeArea.width * panels.length,
   }
@@ -66,4 +70,4 @@ export function Panels({ activePanel, panels, safeArea }: PanelsProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Panels)
+export default connect(mapStateToProps, mapDispatchToProps)(PanelSlider)

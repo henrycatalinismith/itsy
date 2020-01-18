@@ -1,0 +1,55 @@
+import React from "react"
+import { Animated, LayoutAnimation, View } from "react-native"
+import { connect } from "react-redux"
+import { Rect } from "@itsy.studio/types/geometry"
+
+import {
+  PanelId,
+  Panel,
+  selectActivePanel,
+  selectRankedPanels,
+} from "@itsy.studio/studio/store/panels"
+
+import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
+
+import CodePanel from "@itsy.studio/studio/components/code-panel"
+import DisksPanel from "@itsy.studio/studio/components/disks-panel"
+import HelpPanel from "@itsy.studio/studio/components/help-panel"
+import PlayPanel from "@itsy.studio/studio/components/play-panel"
+import styles from "./panel-tiler.module.scss"
+
+interface PanelTilerProps {
+  activePanel: Panel
+  panels: Panel[]
+  safeArea: Rect
+}
+
+const mapStateToProps = (state) => ({
+  activePanel: selectActivePanel(state),
+  panels: selectRankedPanels(state),
+  safeArea: selectSafeArea(state),
+})
+
+const mapDispatchToProps = {}
+
+export function PanelTiler({ activePanel, panels, safeArea }: PanelTilerProps) {
+  const onLayout = (event) => {
+    // console.log(event)
+  }
+
+  return (
+    <View style={[styles.panels]}>
+      {panels.map(
+        (panel) =>
+          ({
+            [PanelId.code]: <CodePanel key={panel.id} />,
+            [PanelId.disks]: <DisksPanel key={panel.id} />,
+            [PanelId.play]: <PlayPanel key={panel.id} />,
+            [PanelId.help]: <HelpPanel key={panel.id} />,
+          }[panel.id])
+      )}
+    </View>
+  )
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PanelTiler)
