@@ -27,34 +27,18 @@ export interface PanelsState {
 
 const name = "panels"
 
-const initialState: PanelsState = {
-  disks: {
-    id: PanelId.disks,
-    active: true,
-    rank: 0,
-  },
-
-  code: {
-    id: PanelId.code,
-    active: false,
-    rank: 1,
-  },
-
-  play: {
-    id: PanelId.play,
-    active: false,
-    rank: 2,
-  },
-
-  help: {
-    id: PanelId.help,
-    active: false,
-    rank: 3,
-  },
-}
+const initialState: PanelsState = {}
 
 const reducers = {
-  togglePanel(panels, action: PayloadAction<PanelId>) {
+  hide(panels, action: PayloadAction<PanelId>) {
+    panels[action.payload].active = false
+  },
+
+  show(panels, action: PayloadAction<PanelId>) {
+    panels[action.payload].active = true
+  },
+
+  swap(panels, action: PayloadAction<PanelId>) {
     _.find(panels, "active").active = false
     panels[action.payload].active = true
   },
@@ -72,13 +56,18 @@ export const togglePanel = (id: PanelId): Thunk => async (
 ) => {
   const state = getState()
   const panelMode = selectPanelMode(state)
+  const panel: Panel = state.panels[id]
 
   if (panelMode === PanelMode.slide) {
-    dispatch(slice.actions.togglePanel(id))
+    dispatch(slice.actions.swap(id))
     return
   }
 
-  console.log("tile time")
+  if (panel.active) {
+    dispatch(slice.actions.hide(id))
+  } else {
+    dispatch(slice.actions.show(id))
+  }
 }
 
 export const selectPanels = ({ panels }): PanelsState => panels

@@ -27,11 +27,15 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {}
 
-export function Panel({ children, panelMode, safeArea }: PanelProps) {
+export function Panel({ children, panel, panelMode, safeArea }: PanelProps) {
   const outerWidth = {
     [PanelMode.slide]: { width: safeArea.width },
-    [PanelMode.tiles]: { flex: 1 },
+    [PanelMode.tiles]: panel.active
+      ? { flex: 1 }
+      : { width: 0, display: "none" },
   }[panelMode]
+
+  console.log(outerWidth)
 
   const innerWidth = {
     [PanelMode.slide]: { width: safeArea.width - 8 },

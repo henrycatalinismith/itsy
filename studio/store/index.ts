@@ -13,7 +13,7 @@ import device from "./device"
 import disks from "./disks"
 import editor from "./editor"
 import keyboard from "./keyboard"
-import panels from "./panels"
+import panels, { PanelId } from "./panels"
 import player from "./player"
 import safeArea from "./safe-area"
 import screen from "./screen"
@@ -38,6 +38,32 @@ const preloadedState = {
     modelName: Device.modelName,
     osName: Device.osName,
     osVersion: Device.osVersion,
+  },
+
+  panels: {
+    disks: {
+      id: PanelId.disks,
+      active: true,
+      rank: 0,
+    },
+
+    code: {
+      id: PanelId.code,
+      active: !!Device.modelName.match(/iPad/),
+      rank: 1,
+    },
+
+    play: {
+      id: PanelId.play,
+      active: false,
+      rank: 2,
+    },
+
+    help: {
+      id: PanelId.help,
+      active: false,
+      rank: 3,
+    },
   },
 
   safeArea: {
