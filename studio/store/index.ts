@@ -55,7 +55,7 @@ const preloadedState = {
 
     play: {
       id: PanelId.play,
-      active: false,
+      active: !!Device.modelName.match(/iPad/),
       rank: 2,
     },
 
