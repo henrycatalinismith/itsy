@@ -14,7 +14,24 @@ import {
   spritesheet,
 } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
-import { Disk } from "@itsy.studio/types"
+
+export enum DiskType {
+  empty = "empty",
+  normal = "normal",
+}
+
+export interface Disk {
+  id: string
+  name: string
+  lua: string
+  palette: string
+  snapshot: string
+  spritesheet: string
+  active: boolean
+  type: DiskType
+  created: string
+  updated: string
+}
 
 interface DiskState {
   [id: string]: Disk
@@ -22,7 +39,20 @@ interface DiskState {
 
 const name = "disks"
 
-const initialState: DiskState = {}
+const initialState: DiskState = {
+  empty: {
+    id: "empty",
+    name: "",
+    lua: "",
+    palette,
+    snapshot: defaultSnapshot,
+    spritesheet,
+    type: DiskType.empty,
+    active: true,
+    created: new Date().toISOString(),
+    updated: new Date().toISOString(),
+  },
+}
 
 const reducers = {
   load(disks, action: PayloadAction<Disk>) {
@@ -38,6 +68,7 @@ const reducers = {
       snapshot: action.payload.snapshot,
       spritesheet: action.payload.spritesheet,
       active: action.payload.active,
+      type: action.payload.type,
       created: action.payload.created,
       updated: action.payload.updated,
     }
@@ -101,6 +132,7 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
     palette,
     snapshot: defaultSnapshot,
     spritesheet,
+    type: DiskType.normal,
     active,
     created,
     updated,
@@ -131,6 +163,7 @@ export const loadDisks = (): Thunk => async (dispatch) => {
       snapshot: raw.snapshot,
       spritesheet: raw.spritesheet,
       active: false,
+      type: DiskType.normal,
       created: raw.created,
       updated: raw.updated,
     }
@@ -203,9 +236,13 @@ export const stopDisk = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.stop())
 }
 
-export const allDisks = ({ disks }) => _.values(disks)
+export const selectDisks = ({ disks }) => _.values(disks)
 
-export const activeDisk = createSelector([allDisks], (disks) =>
+export const selectNormalDisks = createSelector([selectDisks], (disks) =>
+  _.filter(disks, { type: DiskType.normal })
+)
+
+export const activeDisk = createSelector([selectDisks], (disks) =>
   _.find(disks, "active")
 )
 

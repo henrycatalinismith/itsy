@@ -27,9 +27,18 @@ const mapDispatchToProps = {
 }
 
 export function Editor({ disk, editor, edit }: EditorProps) {
+  const renders = React.useRef(0)
   const [loading, setLoading] = React.useState(true)
+  const [reloading, setReloading] = React.useState(false)
   const lua = disk.lua
   const webview = React.useRef() as any
+
+  React.useEffect(() => {
+    if (renders.current > 1) {
+      setReloading(true)
+      setTimeout(() => setReloading(false), 300)
+    }
+  }, [disk.id])
 
   const handleMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
@@ -63,22 +72,26 @@ export function Editor({ disk, editor, edit }: EditorProps) {
     }
   }
 
+  renders.current += 1
+
   return React.useMemo(
     () => (
       <View style={styles.editor}>
-        <WebView
-          style={styles.webview}
-          bounces={false}
-          injectedJavaScript="window.isReactNative = true;"
-          onMessage={handleMessage}
-          ref={webview}
-          scrollEnabled={false}
-          source={{ uri: html.uri }}
-        />
-        {loading && <Loading style={styles.loading} />}
+        {!reloading && (
+          <WebView
+            style={styles.webview}
+            bounces={false}
+            injectedJavaScript="window.isReactNative = true;"
+            onMessage={handleMessage}
+            ref={webview}
+            scrollEnabled={false}
+            source={{ uri: html.uri }}
+          />
+        )}
+        {(loading || reloading) && <Loading style={styles.loading} />}
       </View>
     ),
-    [loading]
+    [loading, reloading]
   )
 }
 

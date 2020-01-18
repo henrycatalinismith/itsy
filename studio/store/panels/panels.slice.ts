@@ -4,6 +4,7 @@ import { Thunk } from "@itsy.studio/studio/store"
 
 export enum PanelId {
   code = "code",
+  disks = "disks",
   play = "play",
   help = "help",
 }
@@ -21,22 +22,28 @@ export interface PanelsState {
 const name = "panels"
 
 const initialState: PanelsState = {
-  code: {
-    id: PanelId.code,
+  disks: {
+    id: PanelId.disks,
     active: true,
     rank: 0,
+  },
+
+  code: {
+    id: PanelId.code,
+    active: false,
+    rank: 1,
   },
 
   play: {
     id: PanelId.play,
     active: false,
-    rank: 1,
+    rank: 2,
   },
 
   help: {
     id: PanelId.help,
     active: false,
-    rank: 2,
+    rank: 3,
   },
 }
 

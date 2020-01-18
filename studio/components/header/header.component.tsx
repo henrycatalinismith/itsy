@@ -14,8 +14,8 @@ export function Header({ disk, navigation }) {
 
   const title = {
     Home: () => "itsy studio..",
-    Disk: () => activeRoute.params.disk.name,
-    Code: () => activeRoute.params.disk.name,
+    Disk: () => "itsy studio",
+    Code: () => "itsy studio",
     Help: () => "itsy studio",
   }[activeScreen]()
 

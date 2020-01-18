@@ -19,8 +19,12 @@ export function Tile({ disk, onPress, size }) {
 
   const diskSize = size / 2
 
+  const bg = {
+    backgroundColor: disk.active ? colors[12] : colors[6],
+  }
+
   return (
-    <TouchableOpacity style={[styles.tile, dimensions]} onPress={onPress}>
+    <TouchableOpacity style={[styles.tile, dimensions, bg]} onPress={onPress}>
       <Svg
         style={styles.disk}
         width={diskSize}

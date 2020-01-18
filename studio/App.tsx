@@ -16,6 +16,8 @@ import Help from "./screens/help"
 
 import store from "./store"
 
+import { loadDisks } from "@itsy.studio/studio/store/disks"
+
 import {
   keyboardDidHide,
   keyboardDidShow,
@@ -26,14 +28,11 @@ import {
 import { resizeScreen } from "@itsy.studio/studio/store/screen"
 
 const routes = {
-  Home: {
-    screen: Home,
+  Code: {
+    screen: Code,
   },
   Disk: {
     screen: Disk,
-  },
-  Code: {
-    screen: Code,
   },
   Help: {
     screen: Help,
@@ -51,6 +50,10 @@ function App({ skipLoadingScreen }): React.ReactElement {
   const orientationChangeListener = React.useRef<any>()
 
   const [ready, setReady] = React.useState(false)
+
+  React.useEffect(() => {
+    store.dispatch(loadDisks())
+  }, [])
 
   const loadResourcesAsync = async (): Promise<void> => {
     return Font.loadAsync({
