@@ -74,9 +74,12 @@ export const selectPanels = ({ panels }): PanelsState => panels
 
 export const selectActivePanel = createSelector(
   [selectPanels],
-  (panels): Panel => {
-    return _.find(panels, "active")
-  }
+  (panels): Panel => _.find(panels, "active")
+)
+
+export const selectActivePanels = createSelector(
+  [selectPanels],
+  (panels): Panel[] => _.filter(panels, "active")
 )
 
 export const selectPanelMode = createSelector([selectDevice], (device) => {
