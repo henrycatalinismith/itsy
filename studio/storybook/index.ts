@@ -1,7 +1,6 @@
 import { getStorybookUI, configure } from "@storybook/react-native"
 
 configure(() => {
-  require("../components/disk/disk.stories")
   require("../components/divider/divider.stories")
   require("../components/editor/editor.stories")
   require("../components/floppy/floppy.stories")

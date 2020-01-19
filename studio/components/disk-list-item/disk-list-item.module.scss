@@ -1,0 +1,17 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.diskListItem {
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  margin: 4px;
+  padding: 4px;
+}
+
+.active {
+  background-color: pico8-original-palette(12);
+}
+
+.disk {
+  margin-right: 4px;
+}

@@ -9,10 +9,7 @@ import { Provider } from "react-redux"
 
 import Storybook from "./storybook"
 
-import Home from "./screens/home"
-import Disk from "./screens/disk"
 import Code from "./screens/code"
-import Help from "./screens/help"
 
 import store from "./store"
 
@@ -30,12 +27,6 @@ import { resizeScreen } from "@itsy.studio/studio/store/screen"
 const routes = {
   Code: {
     screen: Code,
-  },
-  Disk: {
-    screen: Disk,
-  },
-  Help: {
-    screen: Help,
   },
 }
 
