@@ -3,10 +3,21 @@
 .toolbar {
   border: 2px solid pico8-original-palette(2);
   border-top-width: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   background-color: pico8-original-palette(14);
   height: 32px;
   padding: 4px;
+}
+
+.slide {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tiles {
+}
+
+.corner {
+  flex-direction: row;
+  justify-content: space-between;
+  width: 256px;
 }
