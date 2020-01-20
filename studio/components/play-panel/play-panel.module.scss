@@ -2,6 +2,15 @@
 
 .playPanel {
   display: flex;
+  flex: 1;
+}
+
+.landscape {
+  flex-direction: row;
+}
+
+.portrait {
+  flex-direction: column;
 }
 
 .screen {

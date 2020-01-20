@@ -1,10 +1,10 @@
 import React from "react"
-import { View } from "react-native"
+import { LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
 import Console from "@itsy.studio/studio/components/console"
 import PlayerControls from "@itsy.studio/studio/components/player-controls"
 import Screen from "@itsy.studio/studio/components/screen"
-import Panel from "@itsy.studio/studio/components/panel"
+import LayoutContext from "@itsy.studio/studio/contexts/layout"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
 import styles from "./play-panel.module.scss"
@@ -22,13 +22,24 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function PlayPanel({ player, screen }: PlayPanelProps) {
-  const screenHeight = {
-    height: screen.width - 4,
+  const panelLayout = React.useContext<LayoutRectangle>(LayoutContext)
+
+  const panelStyles = [styles.playPanel]
+
+  const screenHeight: { [k: string]: any } = {}
+  const screenStyles = [styles.screen]
+
+  if (panelLayout.width > panelLayout.height) {
+    panelStyles.push(styles.landscape)
+    screenStyles.push({ width: panelLayout.height - 4 })
+  } else {
+    panelStyles.push(styles.portrait)
+    screenStyles.push({ height: panelLayout.width - 4 })
   }
 
   return (
-    <Panel id="play">
-      <View style={[styles.screen, screenHeight]}>
+    <View style={panelStyles}>
+      <View style={screenStyles}>
         <Screen />
       </View>
       <View style={styles.controls}>
@@ -37,7 +48,7 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
       <View style={styles.console}>
         <Console />
       </View>
-    </Panel>
+    </View>
   )
 }
 

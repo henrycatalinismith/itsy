@@ -24,7 +24,7 @@ export function SafeArea({
   updateSafeArea,
 }: SafeAreaProps) {
   const onLayout = React.useCallback((event: LayoutChangeEvent) => {
-    updateSafeArea(event.nativeEvent.layout)
+    updateSafeArea(_.clone(event.nativeEvent.layout))
   }, [])
 
   return (

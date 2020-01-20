@@ -1,6 +1,6 @@
 import _ from "lodash"
 import React from "react"
-import { LayoutAnimation, View } from "react-native"
+import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
 import {
   PanelMode,
@@ -9,6 +9,7 @@ import {
   selectPanelMode,
   selectPanels,
 } from "@itsy.studio/studio/store/panels"
+import LayoutContext from "@itsy.studio/studio/contexts/layout"
 import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
 import { Rect } from "@itsy.studio/types/geometry"
 import styles from "./panel.module.scss"
@@ -38,12 +39,30 @@ export function Panel({
   panelMode,
   safeArea,
 }: PanelProps) {
+  const [layout, setLayout] = React.useState<LayoutRectangle>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  })
+
+  const onLayout = React.useCallback((event: LayoutChangeEvent) => {
+    setLayout(event.nativeEvent.layout)
+  }, [])
+
+  console.log(layout)
+
   switch (panelMode) {
     case PanelMode.slide:
       return (
         <View style={[styles.slide, { width: safeArea.width }]}>
-          <View style={[styles.inner, { width: safeArea.width - 8 }]}>
-            {children}
+          <View
+            style={[styles.inner, { width: safeArea.width - 8 }]}
+            onLayout={onLayout}
+          >
+            <LayoutContext.Provider value={layout}>
+              {children}
+            </LayoutContext.Provider>
           </View>
         </View>
       )
@@ -67,7 +86,11 @@ export function Panel({
 
       return (
         <View style={tileStyles}>
-          <View style={[styles.inner]}>{children}</View>
+          <View style={[styles.inner]} onLayout={onLayout}>
+            <LayoutContext.Provider value={layout}>
+              {children}
+            </LayoutContext.Provider>
+          </View>
         </View>
       )
   }
