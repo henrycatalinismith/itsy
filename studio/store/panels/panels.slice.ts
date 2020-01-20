@@ -56,6 +56,7 @@ export const togglePanel = (id: PanelId): Thunk => async (
 ) => {
   const state = getState()
   const panelMode = selectPanelMode(state)
+  const activePanels = selectActivePanels(state)
   const panel: Panel = state.panels[id]
 
   if (panelMode === PanelMode.slide) {
@@ -64,7 +65,9 @@ export const togglePanel = (id: PanelId): Thunk => async (
   }
 
   if (panel.active) {
-    dispatch(slice.actions.hide(id))
+    if (activePanels.length > 1) {
+      dispatch(slice.actions.hide(id))
+    }
   } else {
     dispatch(slice.actions.show(id))
   }
