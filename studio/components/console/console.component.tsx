@@ -1,10 +1,10 @@
 import React from "react"
-import { View } from "react-native"
+import { Text, View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./console.module.scss"
 
 interface ConsoleProps {
-  // player: PlayerState
+  text: string
 }
 
 const mapStateToProps = (state) => ({
@@ -13,8 +13,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Console({}: ConsoleProps) {
-  return <View style={styles.console}></View>
+export function Console({ text }: ConsoleProps) {
+  return (
+    <View style={styles.console}>
+      <Text style={styles.text}>{text}</Text>
+    </View>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Console)

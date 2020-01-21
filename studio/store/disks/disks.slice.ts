@@ -56,6 +56,9 @@ const initialState: DiskState = {
 
 const reducers = {
   load(disks, action: PayloadAction<Disk>) {
+    if (action.payload.id === "empty") {
+      return
+    }
     disks[action.payload.id] = action.payload
   },
 

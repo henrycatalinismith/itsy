@@ -9,6 +9,7 @@ import styles from "./screen.module.scss"
 
 interface ScreenProps {
   player: PlayerState
+  appendConsoleText: (text: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -17,13 +18,13 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Screen({ player }: ScreenProps) {
+export function Screen({ appendConsoleText, player }: ScreenProps) {
   return (
     <View style={styles.screen}>
       {player.waiting ? (
         <Loading />
       ) : player.running || player.stopping ? (
-        <Player />
+        <Player appendConsoleText={appendConsoleText} />
       ) : (
         <Snapshot />
       )}

@@ -55,59 +55,72 @@ ${JSON.stringify(
 ${Buffer.from(base64.stylesheet, "base64").toString()}
 </style>
 <script id="itsy" type="text/javascript">
-console.log("test1")
-const ids = [
-  "canvas",
-  "lua",
-  "metadata",
-  "options",
-  "palette",
-  "spritesheet",
-]
-
-const elements = ids.reduce((object, id) => ({
-  ...object,
-  [id]: document.querySelector(\`#\${id}\`),
-}), {})
-
-const canvas = elements.canvas
-const lua = elements.lua.innerText
-const metadata = JSON.parse(elements.metadata.innerText)
-const options = JSON.parse(elements.options.innerText)
-const palette = elements.palette.src.split(",")[1]
-const spritesheet = elements.spritesheet.src.split(",")[1]
-
-console.log(options)
-
-const width = options.width || window.innerWidth
-const height = options.height || window.innerHeight
-
-canvas.style.width = \`\${width}px\`
-canvas.style.height = \`\${height}px\`
-canvas.width = width
-canvas.height = height
-// canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight)
-// canvas.width = 128
-// canvas.height = 128
-
-const argv = [
-  lua,
-  palette,
-  spritesheet,
-  \`\${canvas.width}\`,
-  \`\${canvas.height}\`,
-]
-
-var itsy = {
-  arguments: argv,
-  canvas,
-  webglContextAttributes: {
-    preserveDrawingBuffer: true,
-  },
+if (typeof window.ReactNativeWebView !== "undefined") {
+  window.console.log = l => {
+    window.ReactNativeWebView.postMessage(JSON.stringify({
+      type: "console.log",
+      payload: JSON.stringify(l)
+    }));
+  };
 }
 
-${Buffer.from(base64.engine, "base64").toString()}
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("lol")
 
+  const ids = [
+    "canvas",
+    "lua",
+    "metadata",
+    "options",
+    "palette",
+    "spritesheet",
+  ]
+
+  const elements = ids.reduce((object, id) => ({
+    ...object,
+    [id]: document.querySelector(\`#\${id}\`),
+  }), {})
+
+  const canvas = elements.canvas
+  const lua = elements.lua.innerText
+  const metadata = JSON.parse(elements.metadata.innerText)
+  const options = JSON.parse(elements.options.innerText)
+  const palette = elements.palette.src.split(",")[1]
+  const spritesheet = elements.spritesheet.src.split(",")[1]
+
+  console.log(options)
+
+  const width = options.width || window.innerWidth
+  const height = options.height || window.innerHeight
+
+  canvas.style.width = \`\${width}px\`
+  canvas.style.height = \`\${height}px\`
+  canvas.width = width
+  canvas.height = height
+  // canvas.width = canvas.height * (canvas.clientWidth / canvas.clientHeight)
+  // canvas.width = 128
+  // canvas.height = 128
+
+  const argv = [
+    lua,
+    palette,
+    spritesheet,
+    \`\${canvas.width}\`,
+    \`\${canvas.height}\`,
+  ]
+
+  var itsy = {
+    arguments: argv,
+    canvas,
+    webglContextAttributes: {
+      preserveDrawingBuffer: true,
+    },
+  }
+  window.itsy = itsy
+
+  ${Buffer.from(base64.engine, "base64").toString()}
+
+})
 </script>
 </body>
 </html>

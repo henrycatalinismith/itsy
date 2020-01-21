@@ -24,6 +24,12 @@ const mapDispatchToProps = {}
 export function PlayPanel({ player, screen }: PlayPanelProps) {
   const panelLayout = React.useContext<LayoutRectangle>(LayoutContext)
 
+  const [consoleText, setConsoleText] = React.useState("console\n")
+
+  const appendConsoleText = (text) => {
+    setConsoleText(`${consoleText}\n${text}`)
+  }
+
   const panelStyles = [styles.playPanel]
 
   const screenHeight: { [k: string]: any } = {}
@@ -40,13 +46,13 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
   return (
     <View style={panelStyles}>
       <View style={screenStyles}>
-        <Screen />
+        <Screen appendConsoleText={appendConsoleText} />
       </View>
       <View style={styles.controls}>
         <PlayerControls />
       </View>
       <View style={styles.console}>
-        <Console />
+        <Console text={consoleText} />
       </View>
     </View>
   )

@@ -10,6 +10,7 @@ import styles from "./player.module.scss"
 interface PlayerProps {
   player: PlayerState
   saveSnapshot: (uri: string) => void
+  appendConsoleText: (text: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -20,7 +21,11 @@ const mapDispatchToProps = {
   saveSnapshot,
 }
 
-export function Player({ player, saveSnapshot }: PlayerProps) {
+export function Player({
+  appendConsoleText,
+  player,
+  saveSnapshot,
+}: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -60,11 +65,12 @@ export function Player({ player, saveSnapshot }: PlayerProps) {
           }
         }
   
-        window.postMessage(JSON.stringify({
+        window.ReactNativeWebView.postMessage(JSON.stringify({
           type: "snapshot",
           uri: tmp.toDataURL("image/png").split(",")[1],
-        }))
+        }));
 
+        true;
       `)
     }
   }, [player.stopping])
@@ -72,12 +78,22 @@ export function Player({ player, saveSnapshot }: PlayerProps) {
   const onMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`💃 ${message.type}`)
-    saveSnapshot(message.uri)
+
+    switch (message.type) {
+      case "console.log":
+        console.log(JSON.parse(message.payload))
+        appendConsoleText(message.payload)
+        break
+
+      case "snapshot":
+        saveSnapshot(message.uri)
+        break
+    }
   }
 
-  const injectedJavaScript = `(function() {
-    window.postMessage = window.ReactNativeWebView.postMessage
-  })()`
+  const onError = () => {
+    console.log("ERROR")
+  }
 
   const source = { html: player.html }
   // const source = { html: "<h1 style='font-size: 128px'>lol</h1>" }
@@ -85,7 +101,7 @@ export function Player({ player, saveSnapshot }: PlayerProps) {
   const webviewProps = {
     ref: webview,
     bounces: false,
-    injectedJavaScript,
+    onError,
     onMessage,
     scrollEnabled: false,
     source,
