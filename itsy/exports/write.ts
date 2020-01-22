@@ -65,7 +65,9 @@ if (typeof window.ReactNativeWebView !== "undefined") {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("lol")
+  //for (let i = 0; i < 32; i++) {
+    //console.log("lol" + i)
+  //}
 
   const ids = [
     "canvas",

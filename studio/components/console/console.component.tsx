@@ -1,5 +1,5 @@
 import React from "react"
-import { Text, View } from "react-native"
+import { Text, ScrollView } from "react-native"
 import { connect } from "react-redux"
 import { selectOutput } from "@itsy.studio/studio/store/output"
 import styles from "./console.module.scss"
@@ -15,10 +15,20 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 export function Console({ output }: ConsoleProps) {
+  const scrollView = React.useRef<ScrollView>()
+
+  React.useEffect(() => {
+    if (scrollView.current) {
+      scrollView.current.scrollToEnd({
+        animated: false,
+      })
+    }
+  }, [output])
+
   return (
-    <View style={styles.console}>
+    <ScrollView style={styles.console} ref={scrollView}>
       <Text style={styles.text}>{output}</Text>
-    </View>
+    </ScrollView>
   )
 }
 
