@@ -1,22 +1,23 @@
 import React from "react"
 import { Text, View } from "react-native"
 import { connect } from "react-redux"
+import { selectOutput } from "@itsy.studio/studio/store/output"
 import styles from "./console.module.scss"
 
 interface ConsoleProps {
-  text: string
+  output: string
 }
 
 const mapStateToProps = (state) => ({
-  // player: playerSelector(state),
+  output: selectOutput(state),
 })
 
 const mapDispatchToProps = {}
 
-export function Console({ text }: ConsoleProps) {
+export function Console({ output }: ConsoleProps) {
   return (
     <View style={styles.console}>
-      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.text}>{output}</Text>
     </View>
   )
 }

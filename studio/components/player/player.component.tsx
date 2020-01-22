@@ -4,13 +4,14 @@ import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
 import { saveSnapshot } from "@itsy.studio/studio/store/disks"
+import { appendOutput } from "@itsy.studio/studio/store/output"
 import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
 import styles from "./player.module.scss"
 
 interface PlayerProps {
   player: PlayerState
   saveSnapshot: (uri: string) => void
-  appendConsoleText: (text: string) => void
+  appendOutput: (text: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -18,14 +19,11 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
+  appendOutput,
   saveSnapshot,
 }
 
-export function Player({
-  appendConsoleText,
-  player,
-  saveSnapshot,
-}: PlayerProps) {
+export function Player({ appendOutput, player, saveSnapshot }: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -81,8 +79,7 @@ export function Player({
 
     switch (message.type) {
       case "console.log":
-        console.log(JSON.parse(message.payload))
-        appendConsoleText(message.payload)
+        appendOutput(message.payload)
         break
 
       case "snapshot":

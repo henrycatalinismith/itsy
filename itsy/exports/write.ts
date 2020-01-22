@@ -59,7 +59,7 @@ if (typeof window.ReactNativeWebView !== "undefined") {
   window.console.log = l => {
     window.ReactNativeWebView.postMessage(JSON.stringify({
       type: "console.log",
-      payload: JSON.stringify(l)
+      payload: l,
     }));
   };
 }
