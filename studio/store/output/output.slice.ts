@@ -8,7 +8,7 @@ const initialState = ""
 
 const reducers = {
   append(output, action: PayloadAction<string>) {
-    return output + "\n" + action.payload
+    return output + action.payload
   },
 }
 

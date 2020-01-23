@@ -56,11 +56,20 @@ ${Buffer.from(base64.stylesheet, "base64").toString()}
 </style>
 <script id="itsy" type="text/javascript">
 if (typeof window.ReactNativeWebView !== "undefined") {
+  window.buffer = ""
+
+  setInterval(() => {
+    if (window.buffer.length > 0) {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "console.log",
+        payload: buffer,
+      }));
+      window.buffer = ""
+    }
+  }, 100)
+
   window.console.log = l => {
-    window.ReactNativeWebView.postMessage(JSON.stringify({
-      type: "console.log",
-      payload: l,
-    }));
+    window.buffer += l + "\\n"
   };
 }
 
