@@ -1,5 +1,6 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .safeArea {
+  background-color: pico8-original-palette(0);
   flex: 1;
 }
