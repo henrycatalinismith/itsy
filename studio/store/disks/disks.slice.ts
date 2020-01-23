@@ -61,9 +61,6 @@ const initialState: DiskState = {
 
 const reducers = {
   load(disks, action: PayloadAction<Disk[]>) {
-    if (action.payload.id === "empty") {
-      return
-    }
     action.payload.forEach((disk) => {
       console.log(disk)
       disks[disk.id] = disk
@@ -91,11 +88,6 @@ const reducers = {
       disk.active = false
     })
     disks[action.payload].active = true
-  },
-
-  build(disks) {
-    const disk = _.find(disks, "active")
-    disk.updated = new Date().toISOString()
   },
 
   rename(disks, action: PayloadAction<string>) {
@@ -152,8 +144,14 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
 
 export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
   dispatch(slice.actions.edit(lua))
+
   const state = getState()
   const disk = selectActiveDisk(state)
+
+  if (disk.type === DiskType.empty) {
+    return
+  }
+
   await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 }
 
@@ -181,15 +179,12 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
   Keyboard.dismiss()
 
   dispatch(player.actions.wait())
-  dispatch(slice.actions.build())
 
-  await delay(100)
+  await delay(Math.pow(2, 4))
 
   const state = getState()
   const disk = selectActiveDisk(state)
   const html = write(disk)
-
-  await delay(100)
 
   dispatch(player.actions.play(html))
 }
