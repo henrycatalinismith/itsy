@@ -1,8 +1,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import * as FileSystem from "expo-file-system"
 import delay from "delay"
 import _ from "lodash"
-import { Keyboard } from "react-native"
+import { AsyncStorage, Keyboard } from "react-native"
 import uuid from "uuid"
 
 import { read, write } from "@itsy.studio/itsy"
@@ -15,6 +14,10 @@ import {
 } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
 
+function makeUri(id = uuid()): string {
+  return `itsystudio://disk/${id}`
+}
+
 export enum DiskType {
   empty = "empty",
   normal = "normal",
@@ -22,6 +25,7 @@ export enum DiskType {
 
 export interface Disk {
   id: string
+  uri: string
   name: string
   lua: string
   palette: string
@@ -42,6 +46,7 @@ const name = "disks"
 const initialState: DiskState = {
   empty: {
     id: "empty",
+    uri: "itsystudio://disk/empty",
     name: "",
     lua: "",
     palette,
@@ -55,16 +60,20 @@ const initialState: DiskState = {
 }
 
 const reducers = {
-  load(disks, action: PayloadAction<Disk>) {
+  load(disks, action: PayloadAction<Disk[]>) {
     if (action.payload.id === "empty") {
       return
     }
-    disks[action.payload.id] = action.payload
+    action.payload.forEach((disk) => {
+      console.log(disk)
+      disks[disk.id] = disk
+    })
   },
 
   create(disks, action: PayloadAction<Disk>) {
     disks[action.payload.id] = {
       id: action.payload.id,
+      uri: action.payload.uri,
       name: action.payload.name,
       lua: action.payload.lua,
       palette: action.payload.palette,
@@ -114,15 +123,9 @@ const slice = createSlice({
   reducers,
 })
 
-function filename(diskName: string): string {
-  const root = FileSystem.documentDirectory
-  const base = diskName.replace(/[^a-z0-9]/gi, "-")
-  const name = `${root}${base}.html`
-  return name
-}
-
 export const createDisk = (): Thunk => async (dispatch, getState) => {
   const id = uuid()
+  const uri = makeUri(id)
   const name = words()
   const lua = ""
   const active = false
@@ -130,6 +133,7 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
   const updated = created
   const disk: Disk = {
     id,
+    uri,
     name,
     lua,
     palette,
@@ -141,38 +145,32 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
     updated,
   }
 
-  const html = write(disk)
-  const uri = filename(disk.name)
-  await FileSystem.writeAsStringAsync(uri, html)
+  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 
   dispatch(slice.actions.create(disk))
 }
 
+export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.edit(lua))
+  const state = getState()
+  const disk = selectActiveDisk(state)
+  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
+}
+
 export const loadDisks = (): Thunk => async (dispatch) => {
-  const dir = FileSystem.documentDirectory
-  const list = await FileSystem.readDirectoryAsync(dir)
-  const diskNames = list.filter((name) => name.match(/\.html$/))
+  const keys = await AsyncStorage.getAllKeys()
+  const diskUris = keys.filter((key) => key.match(/^itsystudio:\/\/disk/))
 
-  for (const name of diskNames) {
-    const uri = `${dir}${name}`
-    const html = await FileSystem.readAsStringAsync(uri)
-    const raw = read(html)
-
-    const disk: Disk = {
-      id: raw.id,
-      name: raw.name,
-      lua: raw.lua,
-      palette: raw.palette,
-      snapshot: raw.snapshot,
-      spritesheet: raw.spritesheet,
-      active: false,
-      type: DiskType.normal,
-      created: raw.created,
-      updated: raw.updated,
+  const diskStrings = await AsyncStorage.multiGet(diskUris)
+  const disks = diskStrings.map(
+    ([uri, diskString]): Disk => {
+      const disk: Disk = JSON.parse(diskString)
+      disk.active = false
+      return disk
     }
+  )
 
-    dispatch(slice.actions.load(disk))
-  }
+  dispatch(slice.actions.load(disks))
 }
 
 export const openDisk = (id: string): Thunk => async (dispatch, getState) => {
@@ -193,9 +191,6 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
 
   await delay(100)
 
-  const name = filename(disk.name)
-  await FileSystem.writeAsStringAsync(name, html)
-
   dispatch(player.actions.play(html))
 }
 
@@ -203,20 +198,13 @@ export const renameDisk = (name: string): Thunk => async (
   dispatch,
   getState
 ) => {
-  const state = getState()
-  const disk = selectActiveDisk(state)
-
   const action = slice.actions.rename(name)
-  const oldName = filename(disk.name)
-  const newName = filename(name)
-
-  const newDisk = { ...disk, name }
-  const newHtml = write(newDisk)
-
-  await FileSystem.deleteAsync(oldName)
-  await FileSystem.writeAsStringAsync(newName, newHtml)
 
   dispatch(action)
+
+  const state = getState()
+  const disk = selectActiveDisk(state)
+  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 }
 
 export const saveSnapshot = (png: string): Thunk => async (
@@ -227,10 +215,7 @@ export const saveSnapshot = (png: string): Thunk => async (
 
   const state = getState()
   const disk = selectActiveDisk(state)
-  const html = write(disk)
-  const name = filename(disk.name)
-
-  await FileSystem.writeAsStringAsync(name, html)
+  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 }
 
 export const stopDisk = (): Thunk => async (dispatch, getState) => {

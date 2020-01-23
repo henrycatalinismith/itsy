@@ -1,5 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import delay from "delay"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Thunk } from "@itsy.studio/studio/store"
 
 const name = "output"

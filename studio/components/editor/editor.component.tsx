@@ -6,13 +6,17 @@ import { connect } from "react-redux"
 
 import Loading from "@itsy.studio/studio/components/loading"
 import styles from "@itsy.studio/studio/components/editor/editor.module.scss"
-import disks, { Disk, selectActiveDisk } from "@itsy.studio/studio/store/disks"
+import {
+  Disk,
+  editDisk,
+  selectActiveDisk,
+} from "@itsy.studio/studio/store/disks"
 import { EditorState, editorSelector } from "@itsy.studio/studio/store/editor"
 
 interface EditorProps {
   disk: Disk
   editor: EditorState
-  edit: (lua: string) => void
+  editDisk: (lua: string) => void
 }
 
 const html = Asset.fromModule(require("../../assets/webviews/editor.html"))
@@ -23,10 +27,10 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  edit: disks.actions.edit,
+  editDisk,
 }
 
-export function Editor({ disk, editor, edit }: EditorProps) {
+export function Editor({ disk, editor, editDisk }: EditorProps) {
   const renders = React.useRef(0)
   const [loading, setLoading] = React.useState(true)
   const [reloading, setReloading] = React.useState(false)
@@ -63,7 +67,7 @@ export function Editor({ disk, editor, edit }: EditorProps) {
         if (message.payload === lua) {
           //console.log("SAME LOLOLOLOL")
         } else {
-          edit(message.payload)
+          editDisk(message.payload)
         }
         return
 

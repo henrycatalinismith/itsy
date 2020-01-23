@@ -50,8 +50,6 @@ export function Panel({
     setLayout(event.nativeEvent.layout)
   }, [])
 
-  console.log(layout)
-
   switch (panelMode) {
     case PanelMode.slide:
       return (
