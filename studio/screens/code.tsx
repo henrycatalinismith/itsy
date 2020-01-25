@@ -16,7 +16,7 @@ export function CodeScreen({}) {
 }
 
 CodeScreen.navigationOptions = {
-  header: Header,
+  header: <></>,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CodeScreen)
