@@ -37,7 +37,7 @@ const manual = (
 )
 
 document.addEventListener("DOMContentLoaded", () => {
-  store.dispatch(startWebview())
+  ;(store.dispatch as any)(startWebview())
 })
 
 ReactDOM.render(manual, root)
@@ -49,13 +49,13 @@ window.onclick = (event) => {
   }
   const path = url.parse(link.href).path
   event.preventDefault()
-  store.dispatch(navigate(path))
+  ;(store.dispatch as any)(navigate(path))
 }
 
 window.onhashchange = () => {
   const path = location.hash.substring(1) || "/"
 
   if (store.getState().location !== path) {
-    store.dispatch(navigate(path))
+    ;(store.dispatch as any)(navigate(path))
   }
 }

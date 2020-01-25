@@ -1,8 +1,8 @@
-@import "~@itsy.studio/palettes/pico8/original";
+@import "../../../palettes/pico8/_original.scss";
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
-@mixin cell () {
+@mixin cell() {
   padding-top: 8px;
 }
 

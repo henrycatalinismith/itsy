@@ -1,3 +1,4 @@
+/*
 import React from "react"
 import frontMatter from "gray-matter"
 import marked from "marked"
@@ -6,7 +7,7 @@ import hljs from "highlight.js/lib/highlight"
 import lua from "highlight.js/lib/languages/lua"
 hljs.registerLanguage("lua", lua)
 
-import Page from "./page.component"
+// import Page from "./page.component"
 import { storiesOf, addParameters } from "@storybook/react"
 
 marked.setOptions({
@@ -23,8 +24,11 @@ stories.addParameters({
   },
 })
 
-stories.add("test", () => <pre>{123}</pre>)
+console.log("lol")
+// stories.add("test", () => <pre>{123}</pre>)
 
+
+*/
 /*
 const req = require.context("../../pages", false, /\.md$/)
 req.keys().forEach(filename => {

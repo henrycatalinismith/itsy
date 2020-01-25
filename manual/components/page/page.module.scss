@@ -1,4 +1,4 @@
-@import "~@itsy.studio/palettes/pico8/original";
+@import "../../../palettes/pico8/_original.scss";
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
@@ -37,7 +37,7 @@
 
   a {
     color: pico8-original-palette(12);
-    color: #036EB5;
+    color: #036eb5;
     text-decoration: none;
   }
 
@@ -51,9 +51,8 @@
   }
 
   // td:first-child > a {
-    // display: block;
-    // text-decoration: none;
-    // width: 70px;
+  // display: block;
+  // text-decoration: none;
+  // width: 70px;
   // }
 }
-
