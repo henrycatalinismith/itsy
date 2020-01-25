@@ -1,5 +1,5 @@
 import React from "react"
-import { TouchableOpacity, TouchableOpacityProps } from "react-native"
+import { TouchableOpacity, TouchableOpacityProps, View } from "react-native"
 import { connect } from "react-redux"
 
 import { Disk, inspectDisk, openDisk } from "@itsy.studio/studio/store/disks"
@@ -51,8 +51,12 @@ export function DiskListItem({
 
   return (
     <TouchableOpacity {...touchableOpacity}>
-      <DiskIcon id={disk.id} size={64} />
-      <Font fontSize={20}>{disk.name}</Font>
+      <View style={styles.icon}>
+        <DiskIcon id={disk.id} size={64} />
+      </View>
+      <View style={styles.name}>
+        <Font fontSize={20}>{disk.name}</Font>
+      </View>
     </TouchableOpacity>
   )
 }
