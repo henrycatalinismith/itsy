@@ -109,7 +109,7 @@ const reducers = {
   },
 
   rename(disks, action: PayloadAction<string>) {
-    const disk = _.find(disks, "active")
+    const disk = _.find(disks, "inspect")
     disk.name = action.payload
     disk.updated = new Date().toISOString()
   },
@@ -232,7 +232,7 @@ export const renameDisk = (name: string): Thunk => async (
   dispatch(action)
 
   const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = selectInspectedDisk(state)
   await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 }
 

@@ -1,17 +1,18 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.diskListItem {
-  flex-direction: row;
+.diskInspector {
+  background-color: pico8-original-palette(6);
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   flex: 1;
-  margin: 4px;
+}
+
+.rename {
+  background-color: pico8-original-palette(7);
+  border-color: pico8-original-palette(0);
+  border-width: 2px;
+  font-family: "overpass-mono-regular";
+  font-size: 16px;
   padding: 4px;
-}
-
-.active {
-  background-color: pico8-original-palette(12);
-}
-
-.disk {
-  margin-right: 4px;
 }
