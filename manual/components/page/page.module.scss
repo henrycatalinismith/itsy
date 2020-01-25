@@ -4,8 +4,11 @@
 
 .page {
   background-color: #fceeff;
+  box-sizing: border-box;
   font-family: "Helvetica";
   padding: 0 8px;
+  max-width: 100vw;
+  overflow: hidden;
 }
 
 .page__title {
