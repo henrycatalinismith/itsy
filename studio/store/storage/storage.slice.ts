@@ -1,3 +1,4 @@
+import _ from "lodash"
 import uuid from "uuid"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AsyncStorage } from "react-native"
@@ -39,7 +40,7 @@ const reducers = {
   },
 
   readSuccess(storage, action: PayloadAction<string>) {
-    delete storage.writes[action.payload]
+    delete storage.reads[action.payload]
   },
 
   writeAttempt(storage, action: PayloadAction<StorageWrite>) {
@@ -85,9 +86,15 @@ export const writeValue = (key: string, value: any): Thunk => async (
 
 export const selectStorage = ({ storage }): StorageState => storage
 
-// export const selectScreenHeight = createSelector(
-// selectScreen,
-// ({ height }) => height
-// )
+export const selectStorageReads = ({ storage }): StorageRead[] => storage.reads
+
+export const selectStorageWrites = ({ storage }): StorageWrite[] =>
+  storage.writes
+
+export const selectStorageBusy = createSelector(
+  selectStorageReads,
+  selectStorageWrites,
+  (reads, writes) => !(_.isEmpty(reads) && _.isEmpty(writes))
+)
 
 export default slice

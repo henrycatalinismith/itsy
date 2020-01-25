@@ -6,6 +6,7 @@
   background-color: pico8-original-palette(14);
   height: 32px;
   padding: 4px;
+  position: relative;
 }
 
 .slide {
@@ -20,4 +21,10 @@
   flex-direction: row;
   justify-content: space-between;
   width: 256px;
+}
+
+.storage {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
 }

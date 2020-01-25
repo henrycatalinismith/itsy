@@ -9,6 +9,7 @@ import {
   selectRankedPanels,
 } from "@itsy.studio/studio/store/panels"
 
+import Storage from "@itsy.studio/studio/components/storage"
 import Tab from "@itsy.studio/studio/components/tab"
 import styles from "./toolbar.module.scss"
 
@@ -42,6 +43,9 @@ export function Toolbar({ panelMode, panels }: ToolbarProps) {
             {panels.map((panel) => (
               <Tab key={panel.id} id={panel.id} />
             ))}
+          </View>
+          <View style={styles.storage}>
+            <Storage />
           </View>
         </View>
       )
