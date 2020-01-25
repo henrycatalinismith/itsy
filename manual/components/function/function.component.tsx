@@ -21,15 +21,13 @@ export function FunctionPage({ page }: FunctionProps): React.ReactElement {
       <p className={styles.function__desc}>{page.description}</p>
       <Input parameters={page.function.input} />
       <Output {...page.function.output} />
-    </>
-  )
-  /*
       <Section title="examples">
-        {Object.entries(examples).map(([id, code]) => (
-          <Example key={id} id={id} code={code} />
+        {Object.entries(page.function.examples).map(([name, example]) => (
+          <Example key={name} {...example} />
         ))}
       </Section>
-  */
+    </>
+  )
 }
 
 export default FunctionPage

@@ -54,6 +54,12 @@ markdownFiles.forEach((mardown) => {
         type: frontMatter.function.output?.type || "",
         desc: frontMatter.function.output?.desc || "",
       },
+      examples: Object.entries(frontMatter.function.examples || []).map(
+        ([name, lua]) => ({
+          name: name as string,
+          lua: lua as string,
+        })
+      ),
     }
   }
 

@@ -18,6 +18,11 @@ export enum FunctionCategories {
   tables = "tables",
 }
 
+export interface FunctionExample {
+  name: string
+  lua: string
+}
+
 export interface FunctionOutput {
   type: DataTypes
   desc: string
@@ -35,6 +40,7 @@ export interface Function {
   category: FunctionCategories
   input: FunctionParameter[]
   output: FunctionOutput
+  examples: FunctionExample[]
 }
 
 export interface Page {
