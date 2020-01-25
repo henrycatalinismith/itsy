@@ -1,18 +1,23 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
 import _ from "lodash"
-import { AsyncStorage, Keyboard } from "react-native"
+import { Keyboard } from "react-native"
 import uuid from "uuid"
 
-import { read, write } from "@itsy.studio/itsy"
+import * as itsy from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
 import player from "@itsy.studio/studio/store/player"
+import { readValues, writeValue } from "@itsy.studio/studio/store/storage"
 import {
   palette,
   snapshot as defaultSnapshot,
   spritesheet,
 } from "@itsy.studio/studio/defaults"
 import words from "@itsy.studio/studio/words"
+
+const dWrite = _.debounce((dispatch: any, disk: any) => {
+  dispatch(writeValue(disk.uri, disk))
+}, Math.pow(2, 9))
 
 function makeUri(id = uuid()): string {
   return `itsystudio://disk/${id}`
@@ -64,7 +69,6 @@ const initialState: DiskState = {
 const reducers = {
   load(disks, action: PayloadAction<Disk[]>) {
     action.payload.forEach((disk) => {
-      console.log(disk)
       disks[disk.id] = {
         ...disk,
         active: false,
@@ -157,9 +161,8 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
     updated,
   }
 
-  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
-
   dispatch(slice.actions.create(disk))
+  dispatch(writeValue(disk.uri, disk))
 }
 
 export const dismissDisk = (id: string): Thunk => async (
@@ -179,7 +182,7 @@ export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
     return
   }
 
-  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
+  dWrite(dispatch, disk)
 }
 
 export const inspectDisk = (id: string): Thunk => async (
@@ -190,10 +193,7 @@ export const inspectDisk = (id: string): Thunk => async (
 }
 
 export const loadDisks = (): Thunk => async (dispatch) => {
-  const keys = await AsyncStorage.getAllKeys()
-  const diskUris = keys.filter((key) => key.match(/^itsystudio:\/\/disk/))
-
-  const diskStrings = await AsyncStorage.multiGet(diskUris)
+  const diskStrings = await dispatch(readValues(/^itsystudio:\/\/disk/))
   const disks = diskStrings.map(
     ([uri, diskString]): Disk => {
       const disk: Disk = JSON.parse(diskString)
@@ -218,7 +218,7 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
 
   const state = getState()
   const disk = selectActiveDisk(state)
-  const html = write(disk)
+  const html = itsy.write(disk)
 
   dispatch(player.actions.play(html))
 }
@@ -233,7 +233,7 @@ export const renameDisk = (name: string): Thunk => async (
 
   const state = getState()
   const disk = selectInspectedDisk(state)
-  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
+  dispatch(writeValue(disk.uri, disk))
 }
 
 export const saveSnapshot = (png: string): Thunk => async (
@@ -244,7 +244,7 @@ export const saveSnapshot = (png: string): Thunk => async (
 
   const state = getState()
   const disk = selectActiveDisk(state)
-  await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
+  dispatch(writeValue(disk.uri, disk))
 }
 
 export const stopDisk = (): Thunk => async (dispatch, getState) => {

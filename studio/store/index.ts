@@ -18,6 +18,7 @@ import output from "./output"
 import player from "./player"
 import safeArea from "./safe-area"
 import screen from "./screen"
+import storage from "./storage"
 
 const middleware = [...getDefaultMiddleware()]
 
@@ -31,6 +32,7 @@ const reducer = combineReducers({
   player: player.reducer,
   safeArea: safeArea.reducer,
   screen: screen.reducer,
+  storage: storage.reducer,
 })
 
 const preloadedState = {
@@ -99,6 +101,7 @@ exports.panels = panels
 exports.player = player
 exports.safeArea = safeArea
 exports.screen = screen
+exports.storage = storage
 
 export type RootState = ReturnType<typeof reducer>
 export type Dispatch = typeof store.dispatch
