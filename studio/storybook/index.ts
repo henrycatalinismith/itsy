@@ -5,7 +5,6 @@ configure(() => {
   require("../components/editor/editor.stories")
   require("../components/floppy/floppy.stories")
   require("../components/font/font.stories")
-  require("../components/header/header.stories")
   require("../components/play/play.stories")
   require("../components/stop/stop.stories")
 }, module)
