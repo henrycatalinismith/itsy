@@ -1,33 +1,23 @@
 import React from "react"
-import { View } from "react-native"
+import { Text } from "react-native"
 import { connect } from "react-redux"
-import Button from "@itsy.studio/studio/components/button"
+import DiskInspector from "@itsy.studio/studio/components/disk-inspector"
 import DiskList from "@itsy.studio/studio/components/disk-list"
-import { createDisk, selectNormalDisks } from "@itsy.studio/studio/store/disks"
-import styles from "./disks-panel.module.scss"
+import { Disk, selectInspectedDisk } from "@itsy.studio/studio/store/disks"
+// import styles from "./disks-panel.module.scss"
 
 interface DisksPanelProps {
-  createDisk: () => void
+  inspectedDisk: Disk
 }
 
 const mapStateToProps = (state) => ({
-  disks: selectNormalDisks(state),
+  inspectedDisk: selectInspectedDisk(state),
 })
 
-const mapDispatchToProps = {
-  createDisk,
-}
+const mapDispatchToProps = {}
 
-export function DisksPanel({ createDisk }: DisksPanelProps) {
-  return (
-    <>
-      <View style={styles.controls}>
-        <Button onPress={() => createDisk()}>new</Button>
-      </View>
-
-      <DiskList />
-    </>
-  )
+export function DisksPanel({ inspectedDisk }: DisksPanelProps) {
+  return <>{inspectedDisk ? <DiskInspector /> : <DiskList />}</>
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DisksPanel)

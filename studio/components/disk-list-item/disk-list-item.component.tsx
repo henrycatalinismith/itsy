@@ -1,9 +1,9 @@
 import React from "react"
 import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
-import { TouchableOpacity } from "react-native"
+import { TouchableOpacity, TouchableOpacityProps } from "react-native"
 import { connect } from "react-redux"
 
-import { Disk, openDisk } from "@itsy.studio/studio/store/disks"
+import { Disk, inspectDisk, openDisk } from "@itsy.studio/studio/store/disks"
 
 import colors from "@itsy.studio/palettes/pico8/original.es6"
 import Font from "@itsy.studio/studio/components/font"
@@ -12,6 +12,7 @@ import styles from "./disk-list-item.module.scss"
 interface DiskListItemProps {
   id: string
   disk: Disk
+  inspectDisk: (id: string) => void
   openDisk: (id: string) => void
 }
 
@@ -20,15 +21,24 @@ const mapStateToProps = (state, { id }) => ({
 })
 
 const mapDispatchToProps = {
+  inspectDisk,
   openDisk,
 }
 
-export function DiskListItem({ disk, openDisk }: DiskListItemProps) {
+export function DiskListItem({
+  disk,
+  inspectDisk,
+  openDisk,
+}: DiskListItemProps) {
   const diskListItemStyles = [styles.diskListItem]
 
   if (disk.active) {
     diskListItemStyles.push(styles.active)
   }
+
+  const onLongPress = React.useCallback(() => {
+    inspectDisk(disk.id)
+  }, [])
 
   const onPress = React.useCallback(() => {
     openDisk(disk.id)
@@ -36,8 +46,14 @@ export function DiskListItem({ disk, openDisk }: DiskListItemProps) {
 
   const diskSize = 64
 
+  const touchableOpacity: TouchableOpacityProps = {
+    style: diskListItemStyles,
+    onLongPress,
+    onPress: onPress,
+  }
+
   return (
-    <TouchableOpacity style={[diskListItemStyles]} onPress={onPress}>
+    <TouchableOpacity {...touchableOpacity}>
       <Svg
         style={styles.disk}
         width={diskSize}

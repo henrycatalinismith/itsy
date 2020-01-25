@@ -32,6 +32,7 @@ export interface Disk {
   snapshot: string
   spritesheet: string
   active: boolean
+  inspect: boolean
   type: DiskType
   created: string
   updated: string
@@ -54,6 +55,7 @@ const initialState: DiskState = {
     spritesheet,
     type: DiskType.empty,
     active: true,
+    inspect: false,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),
   },
@@ -63,7 +65,11 @@ const reducers = {
   load(disks, action: PayloadAction<Disk[]>) {
     action.payload.forEach((disk) => {
       console.log(disk)
-      disks[disk.id] = disk
+      disks[disk.id] = {
+        ...disk,
+        active: false,
+        inspect: false,
+      }
     })
   },
 
@@ -77,10 +83,22 @@ const reducers = {
       snapshot: action.payload.snapshot,
       spritesheet: action.payload.spritesheet,
       active: action.payload.active,
+      inspect: action.payload.inspect,
       type: action.payload.type,
       created: action.payload.created,
       updated: action.payload.updated,
     }
+  },
+
+  dismiss(disks, action: PayloadAction<string>) {
+    disks[action.payload].inspect = false
+  },
+
+  inspect(disks, action: PayloadAction<string>) {
+    _.filter(disks, "inspect").forEach((disk) => {
+      disk.inspect = false
+    })
+    disks[action.payload].inspect = true
   },
 
   open(disks, action: PayloadAction<string>) {
@@ -121,6 +139,7 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
   const name = words()
   const lua = ""
   const active = false
+  const inspect = false
   const created = new Date().toISOString()
   const updated = created
   const disk: Disk = {
@@ -133,6 +152,7 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
     spritesheet,
     type: DiskType.normal,
     active,
+    inspect,
     created,
     updated,
   }
@@ -140,6 +160,13 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
   await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
 
   dispatch(slice.actions.create(disk))
+}
+
+export const dismissDisk = (id: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.dismiss(id))
 }
 
 export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
@@ -153,6 +180,13 @@ export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
   }
 
   await AsyncStorage.setItem(disk.uri, JSON.stringify(disk))
+}
+
+export const inspectDisk = (id: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.inspect(id))
 }
 
 export const loadDisks = (): Thunk => async (dispatch) => {
@@ -227,6 +261,10 @@ export const selectNormalDisks = createSelector([selectDisks], (disks) =>
 
 export const selectActiveDisk = createSelector([selectDisks], (disks) =>
   _.find(disks, "active")
+)
+
+export const selectInspectedDisk = createSelector([selectDisks], (disks) =>
+  _.find(disks, "inspect")
 )
 
 export default slice
