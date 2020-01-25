@@ -39,8 +39,9 @@ export function Editor({ disk, editor, editDisk }: EditorProps) {
 
   React.useEffect(() => {
     if (renders.current > 1) {
+      setLoading(true)
       setReloading(true)
-      setTimeout(() => setReloading(false), 300)
+      setTimeout(() => setReloading(false), Math.pow(2, 8))
     }
   }, [disk.id])
 
@@ -52,7 +53,7 @@ export function Editor({ disk, editor, editDisk }: EditorProps) {
         setTimeout(() => {
           // wait a second while the lua gets injected
           setLoading(false)
-        }, 100)
+        }, Math.pow(2, 8))
 
         webview.current.injectJavaScript(`
           const action = text.actions.change(${JSON.stringify(lua)})
