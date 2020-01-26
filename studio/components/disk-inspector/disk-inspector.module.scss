@@ -13,7 +13,7 @@
 
 .header {
   flex-direction: row;
-  margin: 8px 4px;
+  margin: 32px 4px 32px 4px;
 }
 
 .headerIconColumn {
@@ -46,4 +46,29 @@
 
 .headerNameButton {
   margin-right: 8px;
+}
+
+.spritesheetSection {
+  border-top-color: pico8-original-palette(13);
+  border-top-width: 2px;
+  flex: 1;
+  margin: 0 8px 0 8px;
+  padding: 32px 0 0 0;
+  flex-direction: row;
+}
+
+.spritesheetImageColumn {
+  margin-right: 8px;
+}
+
+.spritesheetButtonsColumn {
+  flex-direction: column;
+}
+
+.spritesheetTitle {
+  margin-bottom: 8px;
+}
+
+.spritesheetButtons {
+  flex-direction: row;
 }

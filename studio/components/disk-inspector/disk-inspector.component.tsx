@@ -1,14 +1,13 @@
 import React from "react"
-import {
-  View,
-  TextInput,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native"
+import { View, TextInput } from "react-native"
 import { connect } from "react-redux"
+
+import * as DocumentPicker from "expo-document-picker"
+import * as FileSystem from "expo-file-system"
 
 import {
   Disk,
+  changeDiskSpritesheet,
   deleteDisk,
   dismissDisk,
   renameDisk,
@@ -17,7 +16,9 @@ import {
 
 import Button from "@itsy.studio/studio/components/button"
 import DiskIcon from "@itsy.studio/studio/components/disk-icon"
+import DiskSpritesheet from "@itsy.studio/studio/components/disk-spritesheet"
 import Font from "@itsy.studio/studio/components/font"
+import colors from "@itsy.studio/palettes/pico8/original.es6"
 import styles from "./disk-inspector.module.scss"
 
 enum DiskInspectorMode {
@@ -28,6 +29,7 @@ enum DiskInspectorMode {
 
 interface DiskInspectorProps {
   disk: Disk
+  changeDiskSpritesheet: (uri: string) => void
   deleteDisk: (id: string) => void
   dismissDisk: (id: string) => void
   renameDisk: (id: string) => void
@@ -38,12 +40,14 @@ const mapStateToProps = (state, { id }) => ({
 })
 
 const mapDispatchToProps = {
+  changeDiskSpritesheet,
   deleteDisk,
   dismissDisk,
   renameDisk,
 }
 
 export function DiskInspector({
+  changeDiskSpritesheet,
   deleteDisk,
   disk,
   dismissDisk,
@@ -82,6 +86,14 @@ export function DiskInspector({
     renameDisk(name)
     setMode(DiskInspectorMode.neutral)
   }, [name])
+
+  const onSpritesheetChange = React.useCallback(async () => {
+    const image = await DocumentPicker.getDocumentAsync({ type: "image/png" })
+    const uri = await FileSystem.readAsStringAsync(image.uri, {
+      encoding: FileSystem.EncodingType.Base64,
+    })
+    changeDiskSpritesheet(uri)
+  }, [])
 
   return (
     <View style={styles.diskInspector}>
@@ -151,6 +163,20 @@ export function DiskInspector({
               </>
             ),
           }[mode]()}
+        </View>
+      </View>
+
+      <View style={styles.spritesheetSection}>
+        <View style={styles.spritesheetImageColumn}>
+          <DiskSpritesheet id={disk.id} size={128} />
+        </View>
+        <View style={styles.spritesheetButtonsColumn}>
+          <View style={styles.spritesheetTitle}>
+            <Font fontSize={24}>spritesheet</Font>
+          </View>
+          <View style={styles.spritesheetButtons}>
+            <Button onPress={onSpritesheetChange}>change</Button>
+          </View>
         </View>
       </View>
     </View>

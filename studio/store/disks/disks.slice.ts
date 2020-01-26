@@ -137,6 +137,12 @@ const reducers = {
     disk.snapshot = action.payload
     disk.updated = new Date().toISOString()
   },
+
+  spritesheet(disks, action: PayloadAction<string>) {
+    const disk = _.find(disks, "active")
+    disk.spritesheet = action.payload
+    disk.updated = new Date().toISOString()
+  },
 }
 
 const slice = createSlice({
@@ -144,6 +150,19 @@ const slice = createSlice({
   initialState,
   reducers,
 })
+
+export const changeDiskSpritesheet = (uri: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const action = slice.actions.spritesheet(uri)
+
+  dispatch(action)
+
+  const state = getState()
+  const disk = selectInspectedDisk(state)
+  dispatch(writeValue(disk.uri, disk))
+}
 
 export const createDisk = (): Thunk => async (dispatch, getState) => {
   const id = uuid()
