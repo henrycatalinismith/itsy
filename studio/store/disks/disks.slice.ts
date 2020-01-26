@@ -94,6 +94,10 @@ const reducers = {
     }
   },
 
+  delete(disks, action: PayloadAction<string>) {
+    delete disks[action.payload]
+  },
+
   dismiss(disks, action: PayloadAction<string>) {
     disks[action.payload].inspect = false
   },
@@ -163,6 +167,10 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
 
   dispatch(slice.actions.create(disk))
   dispatch(writeValue(disk.uri, disk))
+}
+
+export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.delete(id))
 }
 
 export const dismissDisk = (id: string): Thunk => async (

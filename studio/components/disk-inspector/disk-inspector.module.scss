@@ -3,16 +3,47 @@
 .diskInspector {
   background-color: pico8-original-palette(6);
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   flex: 1;
 }
 
-.rename {
+.navigation {
+  align-items: flex-start;
+  margin: 8px 8px 0 8px;
+}
+
+.header {
+  flex-direction: row;
+  margin: 8px 4px;
+}
+
+.headerIconColumn {
+}
+
+.headerNameColumn {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.headerNameInput {
   background-color: pico8-original-palette(7);
   border-color: pico8-original-palette(0);
   border-width: 2px;
   font-family: "overpass-mono-regular";
   font-size: 16px;
   padding: 4px;
+  margin: 22px 0 8px 8px;
+  width: 100%;
+}
+
+.headerNameOutput {
+  margin: 16px 0 8px 8px;
+}
+
+.headerNameButtons {
+  flex-direction: row;
+  margin: 0 0 0 8px;
+}
+
+.headerNameButton {
+  margin-right: 8px;
 }

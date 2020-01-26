@@ -9,6 +9,7 @@ import { connect } from "react-redux"
 
 import {
   Disk,
+  deleteDisk,
   dismissDisk,
   renameDisk,
   selectInspectedDisk,
@@ -22,10 +23,12 @@ import styles from "./disk-inspector.module.scss"
 enum DiskInspectorMode {
   neutral = "neutral",
   rename = "rename",
+  delete = "delete",
 }
 
 interface DiskInspectorProps {
   disk: Disk
+  deleteDisk: (id: string) => void
   dismissDisk: (id: string) => void
   renameDisk: (id: string) => void
 }
@@ -35,11 +38,13 @@ const mapStateToProps = (state, { id }) => ({
 })
 
 const mapDispatchToProps = {
+  deleteDisk,
   dismissDisk,
   renameDisk,
 }
 
 export function DiskInspector({
+  deleteDisk,
   disk,
   dismissDisk,
   renameDisk,
@@ -48,6 +53,18 @@ export function DiskInspector({
     DiskInspectorMode.neutral
   )
   const [name, setName] = React.useState(disk.name)
+
+  const onDeleteStart = React.useCallback(() => {
+    setMode(DiskInspectorMode.delete)
+  }, [])
+
+  const onDeleteCancel = React.useCallback(() => {
+    setMode(DiskInspectorMode.neutral)
+  }, [])
+
+  const onDeleteConfirm = React.useCallback(() => {
+    deleteDisk(disk.id)
+  }, [])
 
   const onDismiss = React.useCallback(() => {
     dismissDisk(disk.id)
@@ -68,30 +85,74 @@ export function DiskInspector({
 
   return (
     <View style={styles.diskInspector}>
-      <DiskIcon id={disk.id} size={128} />
+      <View style={styles.navigation}>
+        <Button onPress={onDismiss}>done</Button>
+      </View>
 
-      {{
-        [DiskInspectorMode.neutral]: () => (
-          <TouchableOpacity onPress={onRenameStart}>
-            <Font fontSize={20}>{disk.name}</Font>
-          </TouchableOpacity>
-        ),
+      <View style={styles.header}>
+        <View style={styles.headerIconColumn}>
+          <DiskIcon id={disk.id} size={128} />
+        </View>
+        <View style={styles.headerNameColumn}>
+          {{
+            [DiskInspectorMode.neutral]: () => (
+              <>
+                <View style={styles.headerNameOutput}>
+                  <Font fontSize={24}>{disk.name}</Font>
+                </View>
+                <View style={styles.headerNameButtons}>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onRenameStart}>rename</Button>
+                  </View>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onDeleteStart} theme="red">
+                      delete
+                    </Button>
+                  </View>
+                </View>
+              </>
+            ),
 
-        [DiskInspectorMode.rename]: () => (
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            autoFocus={true}
-            onChangeText={onRenameEdit}
-            onSubmitEditing={onRenameSubmit}
-            style={styles.rename}
-            textContentType="none"
-            value={name}
-          />
-        ),
-      }[mode]()}
+            [DiskInspectorMode.rename]: () => (
+              <>
+                <TextInput
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoFocus={true}
+                  onChangeText={onRenameEdit}
+                  onSubmitEditing={onRenameSubmit}
+                  style={styles.headerNameInput}
+                  textContentType="none"
+                  value={name}
+                />
+                <View style={styles.headerNameButtons}>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onRenameSubmit}>save</Button>
+                  </View>
+                </View>
+              </>
+            ),
 
-      <Button onPress={onDismiss}>done</Button>
+            [DiskInspectorMode.delete]: () => (
+              <>
+                <View style={styles.headerNameOutput}>
+                  <Font fontSize={24}>really delete?</Font>
+                </View>
+                <View style={styles.headerNameButtons}>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onDeleteCancel}>no</Button>
+                  </View>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onDeleteConfirm} theme="red">
+                      yes
+                    </Button>
+                  </View>
+                </View>
+              </>
+            ),
+          }[mode]()}
+        </View>
+      </View>
     </View>
   )
 }

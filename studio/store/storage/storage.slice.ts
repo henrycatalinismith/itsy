@@ -4,6 +4,11 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AsyncStorage } from "react-native"
 import { Thunk } from "@itsy.studio/studio/store"
 
+export interface StorageDelete {
+  id: string
+  key: string
+}
+
 export interface StorageRead {
   id: string
   key: string
@@ -16,6 +21,9 @@ export interface StorageWrite {
 }
 
 export interface StorageState {
+  deletes: {
+    [id: string]: StorageDelete
+  }
   reads: {
     [id: string]: StorageRead
   }
@@ -27,11 +35,23 @@ export interface StorageState {
 const name = "storage"
 
 const initialState: StorageState = {
+  deletes: {},
   reads: {},
   writes: {},
 }
 
 const reducers = {
+  deleteAttempt(storage, action: PayloadAction<StorageDelete>) {
+    storage.deletes[action.payload.id] = {
+      id: action.payload.id,
+      key: action.payload.key,
+    }
+  },
+
+  deleteSuccess(storage, action: PayloadAction<string>) {
+    delete storage.deletes[action.payload]
+  },
+
   readAttempt(storage, action: PayloadAction<StorageRead>) {
     storage.reads[action.payload.id] = {
       id: action.payload.id,
@@ -61,6 +81,13 @@ const slice = createSlice({
   initialState,
   reducers,
 })
+
+export const deleteValue = (key: string): Thunk => async (dispatch) => {
+  const id = uuid()
+  dispatch(slice.actions.deleteAttempt({ id, key }))
+  await AsyncStorage.removeItem(key)
+  dispatch(slice.actions.deleteSuccess(id))
+}
 
 export const readValues = (key: RegExp): Thunk => async (dispatch) => {
   const id = uuid()
