@@ -7,7 +7,11 @@ import uuid from "uuid"
 import * as itsy from "@itsy.studio/itsy"
 import { Thunk } from "@itsy.studio/studio/store"
 import player from "@itsy.studio/studio/store/player"
-import { readValues, writeValue } from "@itsy.studio/studio/store/storage"
+import {
+  deleteValue,
+  readValues,
+  writeValue,
+} from "@itsy.studio/studio/store/storage"
 import {
   palette,
   snapshot as defaultSnapshot,
@@ -170,7 +174,11 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
 }
 
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const disk = selectInspectedDisk(state)
+
   dispatch(slice.actions.delete(id))
+  dispatch(deleteValue(disk.uri))
 }
 
 export const dismissDisk = (id: string): Thunk => async (
