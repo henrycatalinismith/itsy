@@ -20,9 +20,9 @@ export function Storage({ busy }: StorageProps): React.ReactElement {
   return (
     <View
       style={{
-        width: 16,
-        height: 16,
-        backgroundColor: busy ? "white" : "transparent",
+        width: 24,
+        height: 24,
+        backgroundColor: busy ? "black" : "transparent",
       }}
     />
   )

@@ -1,6 +1,7 @@
 import React from "react"
 import { StatusBar, View } from "react-native"
 import { connect } from "react-redux"
+import Header from "@itsy.studio/studio/components/header"
 import PanelSlider from "@itsy.studio/studio/components/panel-slider"
 import PanelTiler from "@itsy.studio/studio/components/panel-tiler"
 import Toolbar from "@itsy.studio/studio/components/toolbar"
@@ -24,6 +25,9 @@ export function Devtools({ panelMode }: DevtoolsProps) {
   return (
     <>
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
+      <View style={styles.header}>
+        <Header />
+      </View>
       <View style={styles.devtools}>
         <View style={styles.panels}>
           {

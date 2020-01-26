@@ -1,24 +1,22 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.toolbar {
+.header {
   border: 2px solid pico8-original-palette(2);
-  border-top-width: 0;
   background-color: pico8-original-palette(14);
+  border-bottom-width: 0;
+  flex-direction: row;
+  align-items: center;
   height: 32px;
   padding: 4px;
   position: relative;
 }
 
-.slide {
-  flex-direction: row;
-  justify-content: space-between;
+.icon {
+  margin-right: 8px;
 }
 
-.tiles {
-}
-
-.corner {
-  flex-direction: row;
-  justify-content: space-between;
-  width: 256px;
+.storage {
+  position: absolute;
+  top: 4px;
+  right: 4px;
 }
