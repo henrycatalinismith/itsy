@@ -259,8 +259,9 @@ export const selectNormalDisks = createSelector([selectDisks], (disks) =>
   _.filter(disks, { type: DiskType.normal })
 )
 
-export const selectActiveDisk = createSelector([selectDisks], (disks) =>
-  _.find(disks, "active")
+export const selectActiveDisk = createSelector(
+  [selectDisks],
+  (disks) => _.find(disks, "active") || _.find(disks, { type: DiskType.empty })
 )
 
 export const selectInspectedDisk = createSelector([selectDisks], (disks) =>
