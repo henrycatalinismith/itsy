@@ -35,18 +35,17 @@ export function DiskListItem({
     diskListItemStyles.push(styles.active)
   }
 
-  const onLongPress = React.useCallback(() => {
-    inspectDisk(disk.id)
-  }, [])
-
   const onPress = React.useCallback(() => {
-    openDisk(disk.id)
-  }, [])
+    if (disk.active) {
+      inspectDisk(disk.id)
+    } else {
+      openDisk(disk.id)
+    }
+  }, [disk.active])
 
   const touchableOpacity: TouchableOpacityProps = {
     style: diskListItemStyles,
-    onLongPress,
-    onPress: onPress,
+    onPress,
   }
 
   return (
