@@ -8,6 +8,7 @@
     "moduleResolution": "node",
     "paths": {
       "@itsy.studio/editor/*": ["editor/*"],
+      "@itsy.studio/graphics/*": ["graphics/*"],
       "@itsy.studio/itsy/*": ["itsy/*"],
       "@itsy.studio/manual/*": ["manual/*"],
       "@itsy.studio/palettes/*": ["palettes/*"],
@@ -20,6 +21,7 @@
     "rootDirs": [
       ".",
       "../editor",
+      "../graphics",
       "../itsy",
       "../manual",
       "../palettes",
