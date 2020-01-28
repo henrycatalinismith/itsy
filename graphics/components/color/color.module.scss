@@ -3,6 +3,10 @@
   padding: 100% 0 0 0;
   position: relative;
   width: 100%;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .square {

@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import {
   PaletteIndex,
   PaletteColor,
+  activateColor,
   selectPalette,
 } from "@itsy.studio/graphics/store/palette"
 import styles from "./color.module.scss"
@@ -10,17 +11,27 @@ import styles from "./color.module.scss"
 interface ColorProps {
   id: PaletteIndex
   color: PaletteColor
+  activateColor: (i: PaletteIndex) => void
 }
 
 const mapStateToProps = (state, ownProps) => ({
   color: selectPalette(state)[ownProps.id],
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  activateColor,
+}
 
-export function Color({ color }: ColorProps): React.ReactElement {
+export function Color({
+  activateColor,
+  id,
+  color,
+}: ColorProps): React.ReactElement {
+  const onClick = React.useCallback(() => {
+    activateColor(id)
+  }, [])
   return (
-    <button className={styles.color}>
+    <button className={styles.color} onClick={onClick}>
       <span className={styles.square} style={{ backgroundColor: color.hex }} />
     </button>
   )
