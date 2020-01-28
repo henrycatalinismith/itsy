@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
 import {
@@ -7,28 +8,29 @@ import {
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {
-  palette: PaletteState
+  spritesheet: SpritesheetState
 }
 
 const mapStateToProps = (state) => ({
-  palette: selectPalette(state),
+  spritesheet: selectSpritesheet(state),
 })
 
 const mapDispatchToProps = {}
 
-export function Spritesheet({}: SpritesheetProps): React.ReactElement {
-  return <></>
-  /*
+export function Spritesheet({
+  spritesheet,
+}: SpritesheetProps): React.ReactElement {
   return (
-    <ol className={styles.palette}>
-      {Object.entries(palette).map(([id, color]) => (
-        <li key={id} className={styles.color}>
-          <Color key={id} id={id} />
-        </li>
+    <table className={styles.spritesheet}>
+      {_.map(spritesheet, (column, x) => (
+        <tr>
+          {_.map(column, (pixel, y) => (
+            <td>{pixel}</td>
+          ))}
+        </tr>
       ))}
-    </ol>
+    </table>
   )
-  */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Spritesheet)

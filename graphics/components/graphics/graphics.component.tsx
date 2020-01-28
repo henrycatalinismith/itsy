@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 // import { currentPage, navigate } from "@itsy.studio/manual/store/location"
 
 import Palette from "@itsy.studio/graphics/components/palette"
+import Spritesheet from "@itsy.studio/graphics/components/spritesheet"
 
 interface GraphicsProps {}
 
@@ -15,6 +16,7 @@ export function Graphics({}: GraphicsProps): React.ReactElement {
   return (
     <>
       <Palette />
+      <Spritesheet />
     </>
   )
 }
