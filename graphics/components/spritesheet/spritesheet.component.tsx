@@ -1,7 +1,5 @@
 import _ from "lodash"
 import React from "react"
-import { Stage, Layer, Rect } from "react-konva"
-import { ReactReduxContext, Provider } from "react-redux"
 import { connect } from "react-redux"
 import {
   PaletteIndex,
@@ -36,38 +34,42 @@ export function Spritesheet({
   spritesheet,
   drawPixel,
 }: SpritesheetProps): React.ReactElement {
-  const { store } = React.useContext(ReactReduxContext)
-  const size = window.innerWidth
-  const scale = (window.innerWidth / 128) * 2
+  const scale = 4
+  const ref = React.useRef<HTMLCanvasElement>()
 
-  return (
-    <Stage width={size} height={size}>
-      <Provider store={store}>
-        <Layer scale={{ x: scale, y: scale }}>
-          {Object.entries(spritesheet).map(([x, column]) => (
-            <>
-              {Object.entries(column).map(([y, pixel]) => {
-                const onMouseEnter = React.useCallback(() => {
-                  drawPixel(x, y)
-                }, [])
-                return (
-                  <Rect
-                    key={`${x}-${y}`}
-                    x={parseInt(x.toString(), 10)}
-                    y={parseInt(y.toString(), 10)}
-                    width={1}
-                    height={1}
-                    fill={palette[pixel].hex}
-                    onMouseEnter={onMouseEnter}
-                  />
-                )
-              })}
-            </>
-          ))}
-        </Layer>
-      </Provider>
-    </Stage>
-  )
+  const onMouseMove = React.useCallback((event: MouseEvent) => {
+    const rect = ref.current.getBoundingClientRect()
+    const x = (event.clientX - rect.left) / scale
+    const y = (event.clientY - rect.top) / scale
+    console.log(x, y)
+  }, [])
+
+  const props: any = {
+    ref,
+    onMouseMove,
+  }
+
+  React.useEffect(() => {
+    if (!ref.current) {
+      return
+    }
+
+    const ctx = ref.current.getContext("2d")
+    Object.entries(spritesheet).map(([x, column]) => {
+      Object.entries(column).map(([y, pixel]) => {
+        const color = palette[pixel].hex
+        ctx.fillStyle = color
+        ctx.fillRect(
+          parseInt(x.toString(), 10) * scale,
+          parseInt(y.toString(), 10) * scale,
+          1 * scale,
+          1 * scale
+        )
+      })
+    })
+  }, [])
+
+  return <canvas {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Spritesheet)
