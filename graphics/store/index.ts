@@ -9,6 +9,7 @@ import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
 import palette from "./palette"
+import spritesheet from "./spritesheet"
 import webview from "./webview"
 
 const postMessageMiddleware = (store) => (next) => (action) => {
@@ -30,6 +31,7 @@ const middleware = [...getDefaultMiddleware(), logger, postMessageMiddleware]
 
 const reducer = combineReducers({
   palette: palette.reducer,
+  spritesheet: spritesheet.reducer,
   webview: webview.reducer,
 })
 
