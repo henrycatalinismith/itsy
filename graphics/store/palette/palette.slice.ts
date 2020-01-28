@@ -9,6 +9,7 @@ export type PaletteIndex =
   |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15
 
 export interface PaletteColor {
+  id: PaletteIndex
   hex: string
   active: boolean
 }
@@ -21,9 +22,10 @@ const name = "palette"
 
 const initialState: PaletteState = _.zipObject(
   _.range(16),
-  _.range(16).map((i) => ({
-    hex: pico8[i],
-    active: i === 0,
+  _.range(16).map((id) => ({
+    id,
+    hex: pico8[id],
+    active: id === 0,
   }))
 )
 
@@ -53,7 +55,7 @@ export const selectPalette = ({ palette }) => palette
 
 export const selectActiveColor = createSelector(
   [selectPalette],
-  (palette): PaletteState => _.find(palette, "active")
+  (palette): PaletteColor => _.find(palette, "active")
 )
 
 export default slice

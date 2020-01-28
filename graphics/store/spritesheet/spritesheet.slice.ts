@@ -1,7 +1,10 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/graphics/store"
-import { PaletteIndex } from "@itsy.studio/graphics/store/palette"
+import {
+  PaletteIndex,
+  selectActiveColor,
+} from "@itsy.studio/graphics/store/palette"
 
 // prettier-ignore
 export type SpritesheetPixelIndex =
@@ -29,7 +32,18 @@ const initialState: SpritesheetState = _.zipObject(
 
 console.log(initialState)
 
-const reducers = {}
+const reducers = {
+  draw(
+    spritesheet,
+    action: PayloadAction<{
+      x: SpritesheetPixelIndex
+      y: SpritesheetPixelIndex
+      color: PaletteIndex
+    }>
+  ) {
+    spritesheet[action.payload.x][action.payload.y] = action.payload.color
+  },
+}
 
 const slice = createSlice({
   name,
@@ -37,10 +51,14 @@ const slice = createSlice({
   reducers,
 })
 
-export const somethingSpritesheet = (): Thunk => async (
-  dispatch,
-  getState
-) => {}
+export const drawPixel = (
+  x: SpritesheetPixelIndex,
+  y: SpritesheetPixelIndex
+): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const color = selectActiveColor(state)
+  dispatch(slice.actions.draw({ x, y, color: color.id }))
+}
 
 export const selectSpritesheet = ({ spritesheet }) => spritesheet
 

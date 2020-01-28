@@ -35,14 +35,43 @@ export function Spritesheet({
   const { store } = React.useContext(ReactReduxContext)
   const size = window.innerWidth
   const scale = (window.innerWidth / 128) * 2
+
+  const chunkSize = 4
+  const chunkCount = 128 / chunkSize
+
   return (
     <Stage width={size} height={size}>
       <Provider store={store}>
         <Layer scale={{ x: scale, y: scale }}>
           {Object.entries(spritesheet).map(([x, column]) => (
             <>
-              {Object.entries(column).map(([y, pixel]) => (
-                <Pixel key={`${x}-${y}`} x={x} y={y} />
+              {_.range(0, chunkCount).map((chunkIndex) => (
+                <>
+                  {React.useMemo(
+                    () => (
+                      <>
+                        {console.log(`${chunkIndex}`)}
+                        {Object.entries(column)
+                          .slice(
+                            chunkIndex * chunkSize,
+                            (chunkIndex + 1) * chunkSize
+                          )
+                          .map(([y, pixel]) => (
+                            <Pixel
+                              key={`${x}-${y}`}
+                              x={x}
+                              y={y}
+                              color={palette[pixel].hex}
+                            />
+                          ))}
+                      </>
+                    ),
+                    _.values(column).slice(
+                      chunkIndex * chunkSize,
+                      (chunkIndex + 1) * chunkSize
+                    )
+                  )}
+                </>
               ))}
             </>
           ))}
@@ -50,6 +79,24 @@ export function Spritesheet({
       </Provider>
     </Stage>
   )
+
+  /*
+  return (
+    <Stage width={size} height={size}>
+      <Provider store={store}>
+        <Layer scale={{ x: scale, y: scale }}>
+          {Object.entries(spritesheet).map(([x, column]) => (
+            <>
+              {Object.entries(column).map(([y, pixel]) => (
+                <Pixel key={`${x}-${y}`} x={x} y={y} color={palette[pixel].hex} />
+              ))}
+            </>
+          ))}
+        </Layer>
+      </Provider>
+    </Stage>
+  )
+  */
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Spritesheet)
