@@ -1,21 +1,21 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from "react"
+import { connect } from "react-redux"
 import {
   PaletteState,
-  selectPalette
-} from "@itsy.studio/graphics/store/palette";
-import Color from "@itsy.studio/graphics/components/color";
-import styles from "./palette.module.scss";
+  selectPalette,
+} from "@itsy.studio/graphics/store/palette"
+import Color from "@itsy.studio/graphics/components/color"
+import styles from "./palette.module.scss"
 
 interface PaletteProps {
-  palette: PaletteState;
+  palette: PaletteState
 }
 
-const mapStateToProps = state => ({
-  palette: selectPalette(state)
-});
+const mapStateToProps = (state) => ({
+  palette: selectPalette(state),
+})
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {}
 
 export function Palette({ palette }: PaletteProps): React.ReactElement {
   return (
@@ -26,7 +26,7 @@ export function Palette({ palette }: PaletteProps): React.ReactElement {
         </li>
       ))}
     </ol>
-  );
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Palette);
+export default connect(mapStateToProps, mapDispatchToProps)(Palette)

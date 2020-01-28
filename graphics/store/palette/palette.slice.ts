@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit";
-import _ from "lodash";
-import { Thunk } from "@itsy.studio/graphics/store";
-import pico8 from "@itsy.studio/palettes/pico8/original.es6";
+import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
+import _ from "lodash"
+import { Thunk } from "@itsy.studio/graphics/store"
+import pico8 from "@itsy.studio/palettes/pico8/original.es6"
 
 export type PaletteIndex =
   | 0
@@ -19,17 +19,17 @@ export type PaletteIndex =
   | 12
   | 13
   | 14
-  | 15;
+  | 15
 
 export interface PaletteColor {
-  hex: string;
+  hex: string
 }
 
 export type PaletteState = {
-  [i in PaletteIndex]: PaletteColor;
-};
+  [i in PaletteIndex]: PaletteColor
+}
 
-const name = "palette";
+const name = "palette"
 
 const initialState: PaletteState = {
   0: { hex: pico8[0] },
@@ -47,19 +47,19 @@ const initialState: PaletteState = {
   12: { hex: pico8[12] },
   13: { hex: pico8[13] },
   14: { hex: pico8[14] },
-  15: { hex: pico8[15] }
-};
+  15: { hex: pico8[15] },
+}
 
-const reducers = {};
+const reducers = {}
 
 const slice = createSlice({
   name,
   initialState,
-  reducers
-});
+  reducers,
+})
 
-export const somethingPalette = (): Thunk => async (dispatch, getState) => {};
+export const somethingPalette = (): Thunk => async (dispatch, getState) => {}
 
-export const selectPalette = ({ palette }) => palette;
+export const selectPalette = ({ palette }) => palette
 
-export default slice;
+export default slice

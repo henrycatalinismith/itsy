@@ -1,2 +1,2 @@
-import Graphics from "./graphics.component";
-export default Graphics;
+import Graphics from "./graphics.component"
+export default Graphics

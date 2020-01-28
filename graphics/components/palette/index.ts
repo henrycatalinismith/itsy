@@ -1,2 +1,2 @@
-import Palette from "./palette.component";
-export default Palette;
+import Palette from "./palette.component"
+export default Palette
