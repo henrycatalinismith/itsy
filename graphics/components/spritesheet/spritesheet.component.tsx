@@ -39,9 +39,9 @@ export function Spritesheet({
 
   const onMouseMove = React.useCallback((event: MouseEvent) => {
     const rect = ref.current.getBoundingClientRect()
-    const x = (event.clientX - rect.left) / scale
-    const y = (event.clientY - rect.top) / scale
-    console.log(x, y)
+    const x = Math.floor((event.clientX - rect.left) / scale)
+    const y = Math.floor((event.clientY - rect.top) / scale)
+    drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
   }, [])
 
   const props: any = {
@@ -67,7 +67,7 @@ export function Spritesheet({
         )
       })
     })
-  }, [])
+  })
 
   return <canvas {...props} />
 }
