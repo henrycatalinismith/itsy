@@ -1,6 +1,7 @@
 import _ from "lodash"
 import React from "react"
 import { Stage, Layer, Rect } from "react-konva"
+import { ReactReduxContext, Provider } from "react-redux"
 import { connect } from "react-redux"
 import {
   PaletteIndex,
@@ -12,6 +13,7 @@ import {
   SpritesheetState,
   selectSpritesheet,
 } from "@itsy.studio/graphics/store/spritesheet"
+import Pixel from "@itsy.studio/graphics/components/pixel"
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {
@@ -30,24 +32,22 @@ export function Spritesheet({
   palette,
   spritesheet,
 }: SpritesheetProps): React.ReactElement {
+  const { store } = React.useContext(ReactReduxContext)
   const size = window.innerWidth
   const scale = (window.innerWidth / 128) * 2
   return (
     <Stage width={size} height={size}>
-      <Layer scale={{ x: scale, y: scale }}>
-        {_.map(spritesheet, (column, x: SpritesheetPixelIndex) =>
-          _.map(column, (pixel: PaletteIndex, y: SpritesheetPixelIndex) => (
-            <Rect
-              key={`${x}-${y}`}
-              x={parseInt(x.toString(), 10)}
-              y={parseInt(y.toString(), 10)}
-              width={1}
-              height={1}
-              fill={palette[pixel].hex}
-            />
-          ))
-        )}
-      </Layer>
+      <Provider store={store}>
+        <Layer scale={{ x: scale, y: scale }}>
+          {Object.entries(spritesheet).map(([x, column]) => (
+            <>
+              {Object.entries(column).map(([y, pixel]) => (
+                <Pixel key={`${x}-${y}`} x={x} y={y} />
+              ))}
+            </>
+          ))}
+        </Layer>
+      </Provider>
     </Stage>
   )
 }

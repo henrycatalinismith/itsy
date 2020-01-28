@@ -1,3 +1,4 @@
+import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import {
@@ -30,8 +31,16 @@ export function Color({
   const onClick = React.useCallback(() => {
     activateColor(id)
   }, [])
+
+  const button = {
+    className: cx(styles.color, {
+      [styles.active]: color.active,
+    }),
+    onClick,
+  }
+
   return (
-    <button className={styles.color} onClick={onClick}>
+    <button {...button}>
       <span className={styles.square} style={{ backgroundColor: color.hex }} />
     </button>
   )
