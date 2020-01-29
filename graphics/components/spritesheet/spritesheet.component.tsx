@@ -59,6 +59,15 @@ export function Spritesheet({
     repaint()
   }, [scale])
 
+  const cls = React.useCallback(
+    (i = 0) => {
+      const color = palette[i].hex
+      ctx.current.fillStyle = color
+      ctx.current.fillRect(0, 0, 64, 64)
+    },
+    [scale]
+  )
+
   const pset = React.useCallback(
     (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
       const color = palette[i].hex
@@ -106,6 +115,7 @@ export function Spritesheet({
   )
 
   const repaint = React.useCallback(() => {
+    cls(0)
     Object.entries(spritesheet).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
         pset(x as any, y as any, pixel)
