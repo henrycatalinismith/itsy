@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import styles from "./graphics.module.scss"
 
 // import { currentPage, navigate } from "@itsy.studio/manual/store/location"
 
@@ -14,10 +15,14 @@ const mapDispatchToProps = {}
 
 export function Graphics({}: GraphicsProps): React.ReactElement {
   return (
-    <>
-      <Palette />
-      <Spritesheet />
-    </>
+    <div className={styles.graphics}>
+      <div className={styles.palette}>
+        <Palette />
+      </div>
+      <div className={styles.spritesheet}>
+        <Spritesheet />
+      </div>
+    </div>
   )
 }
 

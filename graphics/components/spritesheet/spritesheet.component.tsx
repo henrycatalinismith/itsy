@@ -1,3 +1,4 @@
+import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
@@ -34,40 +35,70 @@ export function Spritesheet({
   spritesheet,
   drawPixel,
 }: SpritesheetProps): React.ReactElement {
-  const scale = 4
-  const ref = React.useRef<HTMLCanvasElement>()
-
-  const onMouseMove = React.useCallback((event: MouseEvent) => {
-    const rect = ref.current.getBoundingClientRect()
-    const x = Math.floor((event.clientX - rect.left) / scale)
-    const y = Math.floor((event.clientY - rect.top) / scale)
-    drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
-  }, [])
-
-  const props: any = {
-    ref,
-    onMouseMove,
-  }
+  const canvas = React.useRef<HTMLCanvasElement>()
+  const ctx = React.useRef<CanvasRenderingContext2D>()
+  const [scale, setScale] = React.useState(1)
 
   React.useEffect(() => {
-    if (!ref.current) {
-      return
+    if (canvas.current) {
+      canvas.current.width = canvas.current.clientWidth
+      canvas.current.height = canvas.current.clientHeight
+      ctx.current = canvas.current.getContext("2d")
+      setScale((canvas.current.clientWidth / 128) * 2)
+      repaint()
     }
+  }, [])
 
-    const ctx = ref.current.getContext("2d")
+  React.useEffect(() => {
+    console.log("repaint")
+    ctx.current.scale(scale, scale)
+    repaint()
+  }, [scale])
+
+  const draw = React.useCallback(
+    (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
+      const color = palette[i].hex
+      ctx.current.strokeStyle = color
+      ctx.current.fillStyle = color
+      ctx.current.fillRect(
+        parseInt(x.toString(), 10),
+        parseInt(y.toString(), 10),
+        1,
+        1
+      )
+    },
+    [scale]
+  )
+
+  const repaint = React.useCallback(() => {
     Object.entries(spritesheet).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
-        const color = palette[pixel].hex
-        ctx.fillStyle = color
-        ctx.fillRect(
-          parseInt(x.toString(), 10) * scale,
-          parseInt(y.toString(), 10) * scale,
-          1 * scale,
-          1 * scale
-        )
+        draw(x as any, y as any, pixel)
       })
     })
-  })
+  }, [scale])
+
+  const onMouseMove = React.useCallback(
+    (event: MouseEvent) => {
+      const rect = canvas.current.getBoundingClientRect()
+      const x = Math.floor((event.clientX - rect.left) / scale)
+      const y = Math.floor((event.clientY - rect.top) / scale)
+
+      if (x < 0 || x > 63 || y < 0 || y > 63) {
+        return
+      }
+
+      // drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
+      draw(x as any, y as any, 12)
+    },
+    [scale]
+  )
+
+  const props: any = {
+    className: cx(styles.canvas),
+    ref: canvas,
+    onMouseMove,
+  }
 
   return <canvas {...props} />
 }
