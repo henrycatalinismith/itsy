@@ -37,6 +37,11 @@ export function Spritesheet({
 }: SpritesheetProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
+  const drawing = React.useRef(false)
+  const last = React.useRef<{
+    x: SpritesheetPixelIndex
+    y: SpritesheetPixelIndex
+  }>({ x: undefined, y: undefined })
   const [scale, setScale] = React.useState(1)
 
   React.useEffect(() => {
@@ -50,12 +55,11 @@ export function Spritesheet({
   }, [])
 
   React.useEffect(() => {
-    console.log("repaint")
     ctx.current.scale(scale, scale)
     repaint()
   }, [scale])
 
-  const draw = React.useCallback(
+  const pset = React.useCallback(
     (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
       const color = palette[i].hex
       ctx.current.strokeStyle = color
@@ -70,10 +74,41 @@ export function Spritesheet({
     [scale]
   )
 
+  const line = React.useCallback(
+    (
+      x0: SpritesheetPixelIndex,
+      y0: SpritesheetPixelIndex,
+      x1: SpritesheetPixelIndex,
+      y1: SpritesheetPixelIndex,
+      i: PaletteIndex
+    ) => {
+      const dx = Math.abs(x1 - x0),
+        sx = x0 < x1 ? 1 : -1
+      const dy = Math.abs(y1 - y0),
+        sy = y0 < y1 ? 1 : -1
+      let err = (dx > dy ? dx : -dy) / 2
+
+      while (true) {
+        pset(x0, y0, i)
+        if (x0 === x1 && y0 === y1) break
+        var e2 = err
+        if (e2 > -dx) {
+          err -= dy
+          x0 += sx
+        }
+        if (e2 < dy) {
+          err += dx
+          y0 += sy
+        }
+      }
+    },
+    [scale]
+  )
+
   const repaint = React.useCallback(() => {
     Object.entries(spritesheet).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
-        draw(x as any, y as any, pixel)
+        pset(x as any, y as any, pixel)
       })
     })
   }, [scale])
@@ -81,15 +116,27 @@ export function Spritesheet({
   const onMouseMove = React.useCallback(
     (event: MouseEvent) => {
       const rect = canvas.current.getBoundingClientRect()
-      const x = Math.floor((event.clientX - rect.left) / scale)
-      const y = Math.floor((event.clientY - rect.top) / scale)
+      const x = Math.floor(
+        (event.clientX - rect.left) / scale
+      ) as SpritesheetPixelIndex
+      const y = Math.floor(
+        (event.clientY - rect.top) / scale
+      ) as SpritesheetPixelIndex
 
       if (x < 0 || x > 63 || y < 0 || y > 63) {
         return
       }
 
+      drawing.current = true
+
       // drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
-      draw(x as any, y as any, 12)
+      if (last.current.x === undefined) {
+        pset(x, y, 12)
+      } else {
+        line(last.current.x, last.current.y, x, y, 12)
+      }
+
+      last.current = { x, y }
     },
     [scale]
   )
