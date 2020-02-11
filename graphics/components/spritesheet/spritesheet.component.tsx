@@ -125,14 +125,14 @@ export function Spritesheet({
     })
   }, [scale])
 
-  const onMouseMove = React.useCallback(
-    (event: MouseEvent) => {
+  const onTouchMove = React.useCallback(
+    (event: TouchEvent) => {
       const rect = canvas.current.getBoundingClientRect()
       const x = Math.floor(
-        (event.clientX - rect.left) / scale
+        (event.touches[0].clientX - rect.left) / scale
       ) as SpritesheetPixelIndex
       const y = Math.floor(
-        (event.clientY - rect.top) / scale
+        (event.touches[0].clientY - rect.top) / scale
       ) as SpritesheetPixelIndex
 
       if (x < 0 || x > 63 || y < 0 || y > 63) {
@@ -153,10 +153,10 @@ export function Spritesheet({
     [scale, color]
   )
 
-  const props: any = {
+  const props: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
     ref: canvas,
-    onMouseMove,
+    onTouchMove,
   }
 
   return <canvas {...props} />
