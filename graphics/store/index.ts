@@ -8,6 +8,7 @@ import {
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
+import color from "./color"
 import palette from "./palette"
 import spritesheet from "./spritesheet"
 import webview from "./webview"
@@ -30,6 +31,7 @@ const postMessageMiddleware = (store) => (next) => (action) => {
 const middleware = [...getDefaultMiddleware(), logger, postMessageMiddleware]
 
 const reducer = combineReducers({
+  color: color.reducer,
   palette: palette.reducer,
   spritesheet: spritesheet.reducer,
   webview: webview.reducer,

@@ -11,7 +11,6 @@ export type PaletteIndex =
 export interface PaletteColor {
   id: PaletteIndex
   hex: string
-  active: boolean
 }
 
 export type PaletteState = {
@@ -25,18 +24,10 @@ const initialState: PaletteState = _.zipObject(
   _.range(16).map((id) => ({
     id,
     hex: pico8[id],
-    active: id === 0,
   }))
 )
 
-const reducers = {
-  activate(palette, action: PayloadAction<PaletteIndex>) {
-    _.filter(palette, "active").forEach((color) => {
-      color.active = false
-    })
-    palette[action.payload].active = true
-  },
-}
+const reducers = {}
 
 const slice = createSlice({
   name,
@@ -44,18 +35,6 @@ const slice = createSlice({
   reducers,
 })
 
-export const activateColor = (i: PaletteIndex): Thunk => async (
-  dispatch,
-  getState
-) => {
-  dispatch(slice.actions.activate(i))
-}
-
 export const selectPalette = ({ palette }) => palette
-
-export const selectActiveColor = createSelector(
-  [selectPalette],
-  (palette): PaletteColor => _.find(palette, "active")
-)
 
 export default slice

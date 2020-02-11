@@ -1,21 +1,26 @@
 import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
+
+import { selectColor, activateColor } from "@itsy.studio/graphics/store/color"
+
 import {
   PaletteIndex,
   PaletteColor,
-  activateColor,
   selectPalette,
 } from "@itsy.studio/graphics/store/palette"
+
 import styles from "./color.module.scss"
 
 interface ColorProps {
   id: PaletteIndex
+  active: boolean
   color: PaletteColor
   activateColor: (i: PaletteIndex) => void
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  active: selectColor(state) === ownProps.id,
   color: selectPalette(state)[ownProps.id],
 })
 
@@ -24,6 +29,7 @@ const mapDispatchToProps = {
 }
 
 export function Color({
+  active,
   activateColor,
   id,
   color,
@@ -34,7 +40,7 @@ export function Color({
 
   const button = {
     className: cx(styles.color, {
-      [styles.active]: color.active,
+      [styles.active]: active,
     }),
     onClick,
   }

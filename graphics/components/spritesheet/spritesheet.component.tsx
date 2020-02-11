@@ -2,11 +2,15 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
+
+import { selectColor } from "@itsy.studio/graphics/store/color"
+
 import {
   PaletteIndex,
   PaletteState,
   selectPalette,
 } from "@itsy.studio/graphics/store/palette"
+
 import {
   SpritesheetPixelIndex,
   SpritesheetState,
@@ -16,12 +20,14 @@ import {
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {
+  color: PaletteIndex
   palette: PaletteState
   spritesheet: SpritesheetState
   drawPixel: (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex) => void
 }
 
 const mapStateToProps = (state) => ({
+  color: selectColor(state),
   palette: selectPalette(state),
   spritesheet: selectSpritesheet(state),
 })
@@ -31,6 +37,7 @@ const mapDispatchToProps = {
 }
 
 export function Spritesheet({
+  color,
   palette,
   spritesheet,
   drawPixel,
@@ -141,14 +148,14 @@ export function Spritesheet({
 
       // drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
       if (last.current.x === undefined) {
-        pset(x, y, 12)
+        pset(x, y, color)
       } else {
-        line(last.current.x, last.current.y, x, y, 12)
+        line(last.current.x, last.current.y, x, y, color)
       }
 
       last.current = { x, y }
     },
-    [scale]
+    [scale, color]
   )
 
   const props: any = {
