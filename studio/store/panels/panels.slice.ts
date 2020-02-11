@@ -7,6 +7,7 @@ export enum PanelId {
   code = "code",
   disks = "disks",
   play = "play",
+  draw = "draw",
   help = "help",
 }
 

@@ -14,6 +14,7 @@ import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
 
 import CodePanel from "@itsy.studio/studio/components/code-panel"
 import DisksPanel from "@itsy.studio/studio/components/disks-panel"
+import DrawPanel from "@itsy.studio/studio/components/draw-panel"
 import HelpPanel from "@itsy.studio/studio/components/help-panel"
 import Panel from "@itsy.studio/studio/components/panel"
 import PlayPanel from "@itsy.studio/studio/components/play-panel"
@@ -59,6 +60,7 @@ export function PanelSlider({
               {
                 [PanelId.code]: <CodePanel key={panel.id} />,
                 [PanelId.disks]: <DisksPanel key={panel.id} />,
+                [PanelId.draw]: <DrawPanel key={panel.id} />,
                 [PanelId.play]: <PlayPanel key={panel.id} />,
                 [PanelId.help]: <HelpPanel key={panel.id} />,
               }[panel.id]

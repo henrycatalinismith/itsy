@@ -63,10 +63,16 @@ const preloadedState = {
       rank: 2,
     },
 
+    draw: {
+      id: PanelId.draw,
+      active: false,
+      rank: 3,
+    },
+
     help: {
       id: PanelId.help,
       active: false,
-      rank: 3,
+      rank: 4,
     },
   },
 
