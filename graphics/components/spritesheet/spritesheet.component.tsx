@@ -126,7 +126,7 @@ export function Spritesheet({
   }, [scale])
 
   const onTouchMove = React.useCallback(
-    (event: TouchEvent<HTMLCanvasElement>) => {
+    (event: React.TouchEvent<HTMLCanvasElement>) => {
       const rect = canvas.current.getBoundingClientRect()
       const x = Math.floor(
         (event.touches[0].clientX - rect.left) / scale
