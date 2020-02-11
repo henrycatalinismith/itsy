@@ -27,6 +27,10 @@ deploy:studio:
     - yarn --pure-lockfile
     - yarn build
     - cd ..
+    - cd graphics
+    - yarn --pure-lockfile
+    - yarn build
+    - cd ..
     - cp editor/index.html studio/assets/webviews/editor.html
     - cd manual
     - yarn --pure-lockfile
