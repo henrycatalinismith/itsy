@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@itsy.studio/graphics/store"
 
 import {
@@ -10,10 +9,10 @@ import {
 
 const name = "color"
 
-const initialState: PaletteIndex = 0
+const initialState: any = 0
 
 const reducers = {
-  activate(color, action: PayloadAction<PaletteIndex>) {
+  activate(color, action: PayloadAction<PaletteIndex>): PaletteIndex {
     return action.payload
   },
 }
@@ -25,7 +24,7 @@ const slice = createSlice({
 })
 
 export const activateColor = (i: PaletteIndex): Thunk => async (dispatch) => {
-  dispatch(slice.actions.activate(i))
+  dispatch(slice.actions.activate(i as PaletteIndex))
 }
 
 export const selectColor = ({ color }) => color

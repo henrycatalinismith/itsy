@@ -14,7 +14,6 @@ import {
 import {
   SpritesheetPixelIndex,
   SpritesheetState,
-  drawPixel,
   selectSpritesheet,
 } from "@itsy.studio/graphics/store/spritesheet"
 import styles from "./spritesheet.module.scss"
@@ -23,7 +22,6 @@ interface SpritesheetProps {
   color: PaletteIndex
   palette: PaletteState
   spritesheet: SpritesheetState
-  drawPixel: (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -32,15 +30,12 @@ const mapStateToProps = (state) => ({
   spritesheet: selectSpritesheet(state),
 })
 
-const mapDispatchToProps = {
-  drawPixel,
-}
+const mapDispatchToProps = {}
 
 export function Spritesheet({
   color,
   palette,
   spritesheet,
-  drawPixel,
 }: SpritesheetProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
