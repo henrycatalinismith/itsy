@@ -15,6 +15,8 @@ import {
   SpritesheetPixelIndex,
   SpritesheetState,
   selectSpritesheet,
+  drawLine,
+  drawPixel,
 } from "@itsy.studio/graphics/store/spritesheet"
 import styles from "./spritesheet.module.scss"
 
@@ -22,6 +24,18 @@ interface SpritesheetProps {
   color: PaletteIndex
   palette: PaletteState
   spritesheet: SpritesheetState
+  drawLine: (
+    x0: SpritesheetPixelIndex,
+    y0: SpritesheetPixelIndex,
+    x1: SpritesheetPixelIndex,
+    y1: SpritesheetPixelIndex,
+    color: PaletteIndex
+  ) => void
+  drawPixel: (
+    x: SpritesheetPixelIndex,
+    y: SpritesheetPixelIndex,
+    color: PaletteIndex
+  ) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -30,12 +44,17 @@ const mapStateToProps = (state) => ({
   spritesheet: selectSpritesheet(state),
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  drawLine,
+  drawPixel,
+}
 
 export function Spritesheet({
   color,
   palette,
   spritesheet,
+  drawPixel,
+  drawLine,
 }: SpritesheetProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
@@ -45,6 +64,8 @@ export function Spritesheet({
     y: SpritesheetPixelIndex
   }>({ x: undefined, y: undefined })
   const [scale, setScale] = React.useState(1)
+
+  console.log("RENDER")
 
   React.useEffect(() => {
     if (canvas.current) {
@@ -125,6 +146,33 @@ export function Spritesheet({
     })
   }, [scale])
 
+  const onTouchStart = React.useCallback(
+    (event: React.TouchEvent<HTMLCanvasElement>) => {
+      const rect = canvas.current.getBoundingClientRect()
+      const x = Math.floor(
+        (event.touches[0].clientX - rect.left) / scale
+      ) as SpritesheetPixelIndex
+      const y = Math.floor(
+        (event.touches[0].clientY - rect.top) / scale
+      ) as SpritesheetPixelIndex
+
+      if (x < 0 || x > 63 || y < 0 || y > 63) {
+        return
+      }
+
+      if (x === last.current.x && y === last.current.y) {
+        return
+      }
+
+      drawing.current = true
+
+      pset(x, y, color)
+      drawPixel(x, y, color)
+      last.current = { x, y }
+    },
+    [scale, color]
+  )
+
   const onTouchMove = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const rect = canvas.current.getBoundingClientRect()
@@ -139,13 +187,18 @@ export function Spritesheet({
         return
       }
 
+      if (x === last.current.x && y === last.current.y) {
+        return
+      }
+
       drawing.current = true
 
-      // drawPixel(x as SpritesheetPixelIndex, y as SpritesheetPixelIndex)
       if (last.current.x === undefined) {
         pset(x, y, color)
+        drawPixel(x, y, color)
       } else {
         line(last.current.x, last.current.y, x, y, color)
+        drawLine(last.current.x, last.current.y, x, y, color)
       }
 
       last.current = { x, y }
@@ -156,6 +209,7 @@ export function Spritesheet({
   const props: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
     ref: canvas,
+    onTouchStart,
     onTouchMove,
   }
 

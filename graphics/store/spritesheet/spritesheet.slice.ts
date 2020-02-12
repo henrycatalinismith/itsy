@@ -28,10 +28,41 @@ const initialState: SpritesheetState = _.zipObject(
   _.range(64).map(() => _.zipObject(_.range(64), _.fill(Array(64), 0)))
 )
 
-console.log(initialState)
-
 const reducers = {
-  draw(
+  line(
+    spritesheet,
+    action: PayloadAction<{
+      x0: SpritesheetPixelIndex
+      y0: SpritesheetPixelIndex
+      x1: SpritesheetPixelIndex
+      y1: SpritesheetPixelIndex
+      color: PaletteIndex
+    }>
+  ) {
+    const { color } = action.payload
+    let { x0, x1, y0, y1 } = action.payload
+    const dx = Math.abs(x1 - x0)
+    const dy = Math.abs(y1 - y0)
+    const sx = x0 < x1 ? 1 : -1
+    const sy = y0 < y1 ? 1 : -1
+    let err = (dx > dy ? dx : -dy) / 2
+
+    while (true) {
+      spritesheet[x0][y0] = color
+      if (x0 === x1 && y0 === y1) break
+      var e2 = err
+      if (e2 > -dx) {
+        err -= dy
+        x0 += sx
+      }
+      if (e2 < dy) {
+        err += dx
+        y0 += sy
+      }
+    }
+  },
+
+  pset(
     spritesheet,
     action: PayloadAction<{
       x: SpritesheetPixelIndex
@@ -50,5 +81,23 @@ const slice = createSlice({
 })
 
 export const selectSpritesheet = ({ spritesheet }) => spritesheet
+
+export const drawLine = (
+  x0: SpritesheetPixelIndex,
+  y0: SpritesheetPixelIndex,
+  x1: SpritesheetPixelIndex,
+  y1: SpritesheetPixelIndex,
+  color: PaletteIndex
+): Thunk => async (dispatch) => {
+  dispatch(slice.actions.line({ x0, x1, y0, y1, color }))
+}
+
+export const drawPixel = (
+  x: SpritesheetPixelIndex,
+  y: SpritesheetPixelIndex,
+  color: PaletteIndex
+): Thunk => async (dispatch) => {
+  dispatch(slice.actions.pset({ x, y, color }))
+}
 
 export default slice
