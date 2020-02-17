@@ -2,15 +2,25 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/graphics/store"
 
-export interface WebviewState {}
+export interface WebviewState {
+  started: boolean
+  imported: boolean
+}
 
 const name = "webview"
 
-const initialState: WebviewState = {}
+const initialState: WebviewState = {
+  started: false,
+  imported: false,
+}
 
 const reducers = {
   start(webview) {
-    return webview
+    webview.started = true
+  },
+
+  import(webview) {
+    webview.imported = true
   },
 }
 
@@ -28,6 +38,11 @@ export const startWebview = (): Thunk => async (dispatch, getState) => {
   }, 300)
 }
 
+export const importWebview = (): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.import())
+}
+
+export const selectWebview = ({ webview }) => webview
 export const webviewSelector = ({ webview }) => webview
 
 export default slice

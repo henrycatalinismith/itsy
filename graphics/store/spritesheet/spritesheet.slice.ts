@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
+import didYouMean from "didyoumean2"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/graphics/store"
 
@@ -6,7 +7,7 @@ import palette, {
   PaletteIndex,
   PaletteState,
 } from "@itsy.studio/graphics/store/palette"
-import spritesheet from "."
+import webview from "@itsy.studio/graphics/store/webview"
 
 // prettier-ignore
 export type SpritesheetPixelIndex =
@@ -33,6 +34,10 @@ const initialState: SpritesheetState = _.zipObject(
 )
 
 const reducers = {
+  import(spritesheet, action: PayloadAction<SpritesheetState>) {
+    return action.payload
+  },
+
   line(
     spritesheet,
     action: PayloadAction<{
@@ -132,13 +137,12 @@ const pngColors = (
     console.log(image.src)
 
     canvas.style.imageRendering = "pixelated"
-    canvas.style.position = "absolute"
-    canvas.style.bottom = "128px"
-    canvas.style.left = "128px"
+    // canvas.style.position = 'absolute'
+    // canvas.style.bottom = "128px"
+    // canvas.style.left = "128px"
     // canvas.style.width = "128px"
     // canvas.style.height = "128px"
-
-    document.body.appendChild(canvas)
+    // document.body.appendChild(canvas)
   })
 }
 
@@ -147,7 +151,7 @@ export const importSpritesheet = (
   paletteSource: string
 ): Thunk => async (dispatch) => {
   const spritesheetPixels = await pngColors(spritesheetSource, 128, 1)
-  const palettePixels = await pngColors(paletteSource, 4, 2)
+  const palettePixels = await pngColors(paletteSource, 4, 1)
 
   const paletteState: PaletteState = _.zipObject(
     _.range(16),
@@ -161,12 +165,31 @@ export const importSpritesheet = (
   for (let x = 0; x < 64; x++) {
     for (let y = 0; y < 64; y++) {
       const spritePixel = spritesheetPixels[x][y]
-      const paletteIndex = _.find(paletteState, { hex: spritePixel })
-      console.log(paletteIndex)
+      let paletteColor = _.find(paletteState, { hex: spritePixel })
+
+      if (!paletteColor) {
+        const closest = didYouMean(spritePixel, _.map(paletteState, "hex"))
+        if (closest) {
+          paletteColor = _.find(paletteState, { hex: closest })
+        }
+      }
+
+      if (!paletteColor) {
+        console.log(spritePixel)
+        paletteColor = paletteState[0]
+      }
+
+      if (!spritesheet[x]) {
+        spritesheet[x] = {}
+      }
+
+      spritesheet[x][y] = paletteColor.id
     }
   }
 
   dispatch(palette.actions.import(paletteState))
+  dispatch(slice.actions.import(spritesheet as SpritesheetState))
+  dispatch(webview.actions.import())
 }
 
 export const drawLine = (

@@ -77,6 +77,11 @@ export function Spritesheet({
     }
   }, [])
 
+  // React.useEffect(() => {
+  // console.log(spritesheet[2][11])
+  // repaint()
+  // })
+
   React.useEffect(() => {
     ctx.current.scale(scale, scale)
     repaint()

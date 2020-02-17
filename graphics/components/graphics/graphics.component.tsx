@@ -6,21 +6,29 @@ import styles from "./graphics.module.scss"
 
 import Palette from "@itsy.studio/graphics/components/palette"
 import Spritesheet from "@itsy.studio/graphics/components/spritesheet"
+import {
+  WebviewState,
+  selectWebview,
+} from "@itsy.studio/graphics/store/webview"
 
-interface GraphicsProps {}
+interface GraphicsProps {
+  webview: WebviewState
+}
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  webview: selectWebview(state),
+})
 
 const mapDispatchToProps = {}
 
-export function Graphics({}: GraphicsProps): React.ReactElement {
+export function Graphics({ webview }: GraphicsProps): React.ReactElement {
   return (
     <div className={styles.graphics}>
       <div className={styles.palette}>
         <Palette />
       </div>
       <div className={styles.spritesheet}>
-        <Spritesheet />
+        {webview.imported && <Spritesheet />}
       </div>
     </div>
   )
