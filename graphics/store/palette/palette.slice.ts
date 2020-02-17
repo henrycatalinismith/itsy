@@ -27,7 +27,11 @@ const initialState: PaletteState = _.zipObject(
   }))
 )
 
-const reducers = {}
+const reducers = {
+  import(palette, action: PayloadAction<PaletteState>) {
+    return action.payload
+  },
+}
 
 const slice = createSlice({
   name,

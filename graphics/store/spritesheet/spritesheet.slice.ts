@@ -2,7 +2,11 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@itsy.studio/graphics/store"
 
-import { PaletteIndex } from "@itsy.studio/graphics/store/palette"
+import palette, {
+  PaletteIndex,
+  PaletteState,
+} from "@itsy.studio/graphics/store/palette"
+import spritesheet from "."
 
 // prettier-ignore
 export type SpritesheetPixelIndex =
@@ -81,6 +85,89 @@ const slice = createSlice({
 })
 
 export const selectSpritesheet = ({ spritesheet }) => spritesheet
+
+// const hex = (red: number, blue: number, green: number) => ((blue | green << 8 | red << 16) | 1 << 24).toString(16).slice(1)
+
+function hex(red, green, blue) {
+  var rgb = blue | (green << 8) | (red << 16)
+  return "#" + (0x1000000 + rgb).toString(16).slice(1)
+}
+
+const pngColors = (
+  base64: string,
+  size: number,
+  scale: number
+): Promise<string[][]> => {
+  return new Promise((resolve) => {
+    const image = new Image()
+    const canvas = document.createElement("canvas")
+    const context = canvas.getContext("2d")
+
+    canvas.width = size
+    canvas.height = size
+
+    image.onload = () => {
+      context.scale(scale, scale)
+      context.drawImage(image, 0, 0, size, size)
+      const { data } = context.getImageData(0, 0, size, size)
+
+      const grid = []
+      for (let x = 0; x < size; x++) {
+        grid[x] = []
+        for (let y = 0; y < size; y++) {
+          const index = (y * size + x) * 4
+          const red = data[index]
+          const green = data[index + 1]
+          const blue = data[index + 2]
+          grid[x][y] = hex(red, green, blue)
+          // console.log(x, y, index, red, green, blue, grid[x][y])
+          // console.log('%c Oh my heavens! ', `background: ${grid[x][y]}`);
+          // console.log('%c --- %s', `color: ${grid[x][y]};`)
+        }
+      }
+
+      resolve(grid)
+    }
+    image.src = `data:image/png;base64,${base64}`
+    console.log(image.src)
+
+    canvas.style.imageRendering = "pixelated"
+    canvas.style.position = "absolute"
+    canvas.style.bottom = "128px"
+    canvas.style.left = "128px"
+    // canvas.style.width = "128px"
+    // canvas.style.height = "128px"
+
+    document.body.appendChild(canvas)
+  })
+}
+
+export const importSpritesheet = (
+  spritesheetSource: string,
+  paletteSource: string
+): Thunk => async (dispatch) => {
+  const spritesheetPixels = await pngColors(spritesheetSource, 128, 1)
+  const palettePixels = await pngColors(paletteSource, 4, 2)
+
+  const paletteState: PaletteState = _.zipObject(
+    _.range(16),
+    _.range(16).map((id) => ({
+      id,
+      hex: palettePixels[id % 4][Math.floor(id / 4)],
+    }))
+  )
+
+  const spritesheet = {}
+  for (let x = 0; x < 64; x++) {
+    for (let y = 0; y < 64; y++) {
+      const spritePixel = spritesheetPixels[x][y]
+      const paletteIndex = _.find(paletteState, { hex: spritePixel })
+      console.log(paletteIndex)
+    }
+  }
+
+  dispatch(palette.actions.import(paletteState))
+}
 
 export const drawLine = (
   x0: SpritesheetPixelIndex,

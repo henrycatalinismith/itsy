@@ -3,26 +3,45 @@ import React from "react"
 import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
+
+import {
+  Disk,
+  editDisk,
+  selectActiveDisk,
+} from "@itsy.studio/studio/store/disks"
+
 import styles from "./draw-panel.module.scss"
 
 interface DrawPanelProps {
-  // screen: ScreenState
+  disk: Disk
 }
 
 const mapStateToProps = (state) => ({
-  // screen: selectScreen(state),
+  disk: selectActiveDisk(state),
 })
 
 const html = Asset.fromModule(require("../../assets/webviews/graphics.html"))
 
 const mapDispatchToProps = {}
 
-export function DrawPanel({}: DrawPanelProps) {
+export function DrawPanel({ disk }: DrawPanelProps) {
   const webview = React.useRef() as any
 
   const handleMessage = React.useCallback((event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`🏓 ${message.type}`)
+
+    switch (message.type) {
+      case "webview/start":
+        console.log(disk.spritesheet)
+        console.log(disk.palette)
+        // webview.current.injectJavaScript(`
+        // const action = text.actions.change(${JSON.stringify(lua)})
+        // action.__fromWebview = true
+        // // store.dispatch(action)
+        // `)
+        break
+    }
   }, [])
 
   return React.useMemo(
