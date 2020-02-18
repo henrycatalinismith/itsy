@@ -35,11 +35,12 @@ export function DrawPanel({ disk }: DrawPanelProps) {
       case "webview/start":
         console.log(disk.spritesheet)
         console.log(disk.palette)
-        // webview.current.injectJavaScript(`
-        // const action = text.actions.change(${JSON.stringify(lua)})
-        // action.__fromWebview = true
-        // // store.dispatch(action)
-        // `)
+        webview.current.injectJavaScript(`
+          store.dispatch(importSpriteSheet(
+            "${disk.spritesheet}",
+            "${disk.palette}",
+          ))
+        `)
         break
     }
   }, [])

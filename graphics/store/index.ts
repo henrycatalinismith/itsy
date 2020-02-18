@@ -36,6 +36,7 @@ const postMessageMiddleware = (store) => (next) => (action) => {
 
   if (action.type === "webview/start") {
     ;(window as any).store = store
+    ;(window as any).importSpritesheet = importSpritesheet
   }
 }
 

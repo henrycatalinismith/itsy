@@ -72,7 +72,7 @@ export function Spritesheet({
       canvas.current.width = canvas.current.clientWidth
       canvas.current.height = canvas.current.clientHeight
       ctx.current = canvas.current.getContext("2d")
-      setScale((canvas.current.clientWidth / 128) * 2)
+      setScale((canvas.current.clientWidth / 128) * 1)
       repaint()
     }
   }, [])
@@ -91,7 +91,7 @@ export function Spritesheet({
     (i = 0) => {
       const color = palette[i].hex
       ctx.current.fillStyle = color
-      ctx.current.fillRect(0, 0, 64, 64)
+      ctx.current.fillRect(0, 0, 128, 128)
     },
     [scale]
   )
@@ -161,7 +161,7 @@ export function Spritesheet({
         (event.touches[0].clientY - rect.top) / scale
       ) as SpritesheetPixelIndex
 
-      if (x < 0 || x > 63 || y < 0 || y > 63) {
+      if (x < 0 || x > 127 || y < 0 || y > 127) {
         return
       }
 
@@ -188,7 +188,7 @@ export function Spritesheet({
         (event.touches[0].clientY - rect.top) / scale
       ) as SpritesheetPixelIndex
 
-      if (x < 0 || x > 63 || y < 0 || y > 63) {
+      if (x < 0 || x > 127 || y < 0 || y > 127) {
         return
       }
 
