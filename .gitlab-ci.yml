@@ -2,16 +2,16 @@
 stages:
   - deploy
 
-deploy:studio:
+deploy:itsyexpo:
   stage: deploy
   image: highvalleysystems/itsy:latest
   only:
     changes:
-      - itsydraw/**/*
       - itsycode/**/*
+      - itsydraw/**/*
+      - itsyexpo/**/*
       - itsyhelp/**/*
       - itsyplay/**/*
-      - studio/**/*
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
@@ -28,18 +28,18 @@ deploy:studio:
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp itsycode/index.html studio/assets/webviews/itsycode.html
+    - cp itsycode/index.html itsyexpo/assets/webviews/itsycode.html
     - cd itsydraw
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp itsydraw/index.html studio/assets/webviews/itsydraw.html
+    - cp itsydraw/index.html itsyexpo/assets/webviews/itsydraw.html
     - cd itsyhelp
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp itsyhelp/index.html studio/assets/webviews/itsyhelp.html
-    - cd studio
+    - cp itsyhelp/index.html itsyexpo/assets/webviews/itsyhelp.html
+    - cd itsyexpo
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - yarn expo publish --non-interactive
