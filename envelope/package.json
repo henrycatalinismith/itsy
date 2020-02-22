@@ -1,0 +1,22 @@
+{
+  "name": "@highvalley.systems/envelope",
+  "scripts": {
+    "start": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
+  "peerDependencies": {
+    "react": "16.9.0",
+    "react-dom": "16.9.0"
+  },
+  "dependencies": {
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "sass": "^1.23.3",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0"
+  }
+}
