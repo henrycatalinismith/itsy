@@ -19,7 +19,7 @@ deploy:studio:
   script:
     - cd itsyplay
     - yarn --pure-lockfile
-    - make itsyplay
+    - make itsy
     - cd ..
     - cd pixlflip
     - yarn --pure-lockfile
