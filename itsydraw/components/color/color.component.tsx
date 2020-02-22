@@ -2,13 +2,16 @@ import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 
-import { selectColor, activateColor } from "@itsy.studio/graphics/store/color"
+import {
+  selectColor,
+  activateColor,
+} from "@highvalley.systems/itsydraw/store/color"
 
 import {
   PaletteIndex,
   PaletteColor,
   selectPalette,
-} from "@itsy.studio/graphics/store/palette"
+} from "@highvalley.systems/itsydraw/store/palette"
 
 import styles from "./color.module.scss"
 

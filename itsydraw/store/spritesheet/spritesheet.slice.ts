@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import didYouMean from "didyoumean2"
 import _ from "lodash"
-import { Thunk } from "@itsy.studio/graphics/store"
+import { Thunk } from "@highvalley.systems/itsydraw/store"
 
 import palette, {
   PaletteIndex,
   PaletteState,
-} from "@itsy.studio/graphics/store/palette"
-import webview from "@itsy.studio/graphics/store/webview"
+} from "@highvalley.systems/itsydraw/store/palette"
+import webview from "@highvalley.systems/itsydraw/store/webview"
 
 // prettier-ignore
 export type SpritesheetPixelIndex =

@@ -2,9 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 
-import Graphics from "@itsy.studio/graphics/components/graphics"
-import store from "@itsy.studio/graphics/store"
-import { startWebview } from "@itsy.studio/graphics/store/webview"
+import Graphics from "@highvalley.systems/itsydraw/components/graphics"
+import store from "@highvalley.systems/itsydraw/store"
+import { startWebview } from "@highvalley.systems/itsydraw/store/webview"
 
 const root = document.createElement("div")
 document.body.appendChild(root)

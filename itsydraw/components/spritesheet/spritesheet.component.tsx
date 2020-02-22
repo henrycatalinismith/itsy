@@ -3,13 +3,13 @@ import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
 
-import { selectColor } from "@itsy.studio/graphics/store/color"
+import { selectColor } from "@highvalley.systems/itsydraw/store/color"
 
 import {
   PaletteIndex,
   PaletteState,
   selectPalette,
-} from "@itsy.studio/graphics/store/palette"
+} from "@highvalley.systems/itsydraw/store/palette"
 
 import {
   SpritesheetPixelIndex,
@@ -17,7 +17,7 @@ import {
   selectSpritesheet,
   drawLine,
   drawPixel,
-} from "@itsy.studio/graphics/store/spritesheet"
+} from "@highvalley.systems/itsydraw/store/spritesheet"
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {

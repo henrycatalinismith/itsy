@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
-import { Thunk } from "@itsy.studio/graphics/store"
+import { Thunk } from "@highvalley.systems/itsydraw/store"
 
 export interface WebviewState {
   started: boolean

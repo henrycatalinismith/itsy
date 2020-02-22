@@ -3,8 +3,8 @@ import { connect } from "react-redux"
 import {
   PaletteState,
   selectPalette,
-} from "@itsy.studio/graphics/store/palette"
-import Color from "@itsy.studio/graphics/components/color"
+} from "@highvalley.systems/itsydraw/store/palette"
+import Color from "@highvalley.systems/itsydraw/components/color"
 import styles from "./palette.module.scss"
 
 interface PaletteProps {

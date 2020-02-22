@@ -1,5 +1,5 @@
 {
-  "name": "@itsy.studio/graphics",
+  "name": "@highvalley.systems/itsydraw",
   "version": "0.0.0",
   "scripts": {
     "build": "webpack --config webpack.config.js; rm -f index.js"

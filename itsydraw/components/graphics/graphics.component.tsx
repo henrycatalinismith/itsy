@@ -4,12 +4,12 @@ import styles from "./graphics.module.scss"
 
 // import { currentPage, navigate } from "@itsy.studio/manual/store/location"
 
-import Palette from "@itsy.studio/graphics/components/palette"
-import Spritesheet from "@itsy.studio/graphics/components/spritesheet"
+import Palette from "@highvalley.systems/itsydraw/components/palette"
+import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
 import {
   WebviewState,
   selectWebview,
-} from "@itsy.studio/graphics/store/webview"
+} from "@highvalley.systems/itsydraw/store/webview"
 
 interface GraphicsProps {
   webview: WebviewState

@@ -28,11 +28,11 @@ deploy:studio:
     - yarn build
     - cd ..
     - cp itsyedit/index.html studio/assets/webviews/itsyedit.html
-    - cd graphics
+    - cd itsydraw
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp graphics/index.html studio/assets/webviews/graphics.html
+    - cp itsydraw/index.html studio/assets/webviews/itsydraw.html
     - cd manual
     - yarn --pure-lockfile
     - yarn build

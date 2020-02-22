@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import { Thunk } from "@itsy.studio/graphics/store"
+import { Thunk } from "@highvalley.systems/itsydraw/store"
 
 import {
   PaletteColor,
   PaletteIndex,
   selectPalette,
-} from "@itsy.studio/graphics/store/palette"
+} from "@highvalley.systems/itsydraw/store/palette"
 
 const name = "color"
 

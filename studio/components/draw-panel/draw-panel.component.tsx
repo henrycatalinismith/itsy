@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
   disk: selectActiveDisk(state),
 })
 
-const html = Asset.fromModule(require("../../assets/webviews/graphics.html"))
+const html = Asset.fromModule(require("../../assets/webviews/itsydraw.html"))
 
 const mapDispatchToProps = {}
 
