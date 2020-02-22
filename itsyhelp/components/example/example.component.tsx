@@ -5,7 +5,7 @@ import AspectRatio from "react-aspect-ratio"
 import "react-aspect-ratio/aspect-ratio.css"
 
 import write from "@highvalley.systems/itsyplay/exports/write"
-import { FunctionExample } from "@itsy.studio/types/manual"
+import { FunctionExample } from "@highvalley.systems/typedefs/manual"
 
 import "../../stylesheets/itsy.css"
 import styles from "./example.module.scss"

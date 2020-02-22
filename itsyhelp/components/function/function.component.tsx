@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Page, Function } from "@itsy.studio/types/manual"
+import { Page, Function } from "@highvalley.systems/typedefs/manual"
 
 import Section from "../section"
 import Signature from "../signature"

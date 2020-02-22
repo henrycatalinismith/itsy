@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./results.module.scss"
 
-import { Page } from "@itsy.studio/types/manual"
+import { Page } from "@highvalley.systems/typedefs/manual"
 import {
   selectQuery,
   selectResults,

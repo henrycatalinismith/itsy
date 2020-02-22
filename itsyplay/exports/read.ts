@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { parse } from "himalaya"
-import { Disk } from "@itsy.studio/types"
+import { Disk } from "@highvalley.systems/typedefs"
 
 export default function read(html: string): Disk {
   const tree = parse(html)

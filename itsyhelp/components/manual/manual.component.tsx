@@ -6,7 +6,7 @@ import {
   currentPage,
   navigate,
 } from "@highvalley.systems/itsyhelp/store/location"
-import { Page as PageType } from "@itsy.studio/types/manual"
+import { Page as PageType } from "@highvalley.systems/typedefs/manual"
 
 import Breadcrumbs from "../breadcrumbs"
 import FunctionPage from "../function"

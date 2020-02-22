@@ -1,6 +1,6 @@
 import React from "react"
 
-import { FunctionOutput } from "@itsy.studio/types/manual"
+import { FunctionOutput } from "@highvalley.systems/typedefs/manual"
 import Section from "../section"
 import Type from "../type"
 

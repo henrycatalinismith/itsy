@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsyhelp/store"
-import { Page } from "@itsy.studio/types/manual"
+import { Page } from "@highvalley.systems/typedefs/manual"
 
 const name = "location"
 

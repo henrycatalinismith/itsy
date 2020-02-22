@@ -84,7 +84,6 @@ module.exports = {
     modules: ["node_modules"],
     alias: {
       "@highvalley.systems": path.resolve(__dirname, "../"),
-      "@itsy.studio": path.resolve(__dirname, "../"),
     },
   },
 }

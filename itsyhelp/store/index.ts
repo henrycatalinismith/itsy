@@ -8,7 +8,7 @@ import {
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
-import { Page } from "@itsy.studio/types/manual"
+import { Page } from "@highvalley.systems/typedefs/manual"
 
 import location from "./location"
 import pages from "./pages"

@@ -2,7 +2,7 @@ import React from "react"
 
 import styles from "./signature.module.scss"
 
-import { Function } from "@itsy.studio/types/manual"
+import { Function } from "@highvalley.systems/typedefs/manual"
 
 export function Signature(fn: Function): React.ReactElement {
   return (

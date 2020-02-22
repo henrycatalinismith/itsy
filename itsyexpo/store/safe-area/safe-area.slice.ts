@@ -2,7 +2,7 @@ import _ from "lodash"
 import { LayoutRectangle } from "react-native"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { selectKeyboardHeight } from "@highvalley.systems/itsyexpo/store/keyboard"
-import { Rect } from "@itsy.studio/types/geometry"
+import { Rect } from "@highvalley.systems/typedefs/geometry"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { selectScreen } from "@highvalley.systems/itsyexpo/store/screen"
 

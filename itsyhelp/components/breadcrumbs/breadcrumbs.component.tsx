@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { currentPage } from "@highvalley.systems/itsyhelp/store/location"
-import { Page } from "@itsy.studio/types/manual"
+import { Page } from "@highvalley.systems/typedefs/manual"
 import styles from "./breadcrumbs.module.scss"
 
 interface BreadcrumbsProps {

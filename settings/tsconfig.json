@@ -9,27 +9,27 @@
     "paths": {
       "@highvalley.systems/itsycode/*": ["itsycode/*"],
       "@highvalley.systems/itsydraw/*": ["itsydraw/*"],
+      "@highvalley.systems/itsyexpo/*": ["itsyexpo/*"],
       "@highvalley.systems/itsyhelp/*": ["itsyhelp/*"],
       "@highvalley.systems/itsyplay/*": ["itsyplay/*"],
       "@highvalley.systems/itsysite/*": ["itsysite/*"],
       "@highvalley.systems/palettes/*": ["palettes/*"],
       "@highvalley.systems/pixlflip/*": ["pixlflip/*"],
-      "@itsy.studio/settings/*": ["settings/*"],
-      "@highvalley.systems/itsyexpo/*": ["studio/*"],
-      "@itsy.studio/types": ["types"],
-      "@itsy.studio/types/*": ["types/*"]
+      "@highvalley.systems/settings/*": ["settings/*"],
+      "@highvalley.systems/typedefs": ["typedefs"],
+      "@highvalley.systems/typedefs/*": ["typedefs/*"]
     },
     "rootDirs": [
       ".",
       "../itsycode",
       "../itsydraw",
+      "../itsyexpo",
       "../itsyhelp",
       "../itsyplay",
       "../itsysite",
       "../palettes",
       "../pixlflip",
-      "../studio",
-      "../types"
+      "../typedefs"
     ],
     "skipLibCheck": true
   },

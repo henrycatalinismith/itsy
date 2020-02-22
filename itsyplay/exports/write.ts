@@ -1,7 +1,7 @@
 import uuid from "uuid"
 import { Buffer } from "buffer"
 import base64 from "../base64"
-import { PartialDisk } from "@itsy.studio/types"
+import { PartialDisk } from "@highvalley.systems/typedefs"
 
 export default function write({
   id = uuid(),

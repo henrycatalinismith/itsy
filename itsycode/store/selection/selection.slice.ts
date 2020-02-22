@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsycode/store"
-import { Point2D } from "@itsy.studio/types"
+import { Point2D } from "@highvalley.systems/typedefs"
 
 export interface SelectionState {
   text: string

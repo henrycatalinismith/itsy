@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { Controlled as CodeMirror } from "react-codemirror2"
 
-import { Point2D } from "@itsy.studio/types"
+import { Point2D } from "@highvalley.systems/typedefs"
 import "./codemirror.scss"
 import styles from "./editor.module.scss"
 import {
