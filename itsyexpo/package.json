@@ -9,8 +9,7 @@
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
     "build": "npm run manual; expo build:ios",
     "editor": "cp ../itsy/editor/index.html assets/webviews/editor.html",
-    "manual": "cp ../itsy/manual/index.html assets/webviews/manual.html",
-    "storybook": "start-storybook"
+    "manual": "cp ../itsy/manual/index.html assets/webviews/manual.html"
   },
   "husky": {
     "hooks": {
@@ -50,8 +49,6 @@
     "rn-webview": "^0.1.0"
   },
   "devDependencies": {
-    "@storybook/react-native": "^5.2.8",
-    "@storybook/react-native-server": "^5.2.8",
     "@types/react": "^16.9.17",
     "@types/react-native": "^0.60.25",
     "babel-preset-expo": "^8.0.0",

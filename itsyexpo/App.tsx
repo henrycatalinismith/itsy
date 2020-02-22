@@ -7,8 +7,6 @@ import { createAppContainer } from "react-navigation"
 import { createStackNavigator } from "react-navigation-stack"
 import { Provider } from "react-redux"
 
-import Storybook from "./storybook"
-
 import Code from "./screens/code"
 
 import store from "./store"
@@ -115,5 +113,4 @@ function App({ skipLoadingScreen }): React.ReactElement {
   )
 }
 
-const useStorybook = false
-export default useStorybook ? Storybook : App
+export default App
