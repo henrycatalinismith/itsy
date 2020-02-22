@@ -7,18 +7,19 @@ deploy:studio:
   image: highvalleysystems/itsy:latest
   only:
     changes:
-      - itsy/**/*
+      - itsydraw/**/*
       - itsyedit/**/*
       - itsyhelp/**/*
+      - itsyplay/**/*
       - studio/**/*
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
   script:
-    - cd itsy
+    - cd itsyplay
     - yarn --pure-lockfile
-    - make itsy
+    - make itsyplay
     - cd ..
     - cd pixelflip
     - yarn --pure-lockfile

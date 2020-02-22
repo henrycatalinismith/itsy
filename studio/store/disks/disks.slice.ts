@@ -4,7 +4,7 @@ import _ from "lodash"
 import { Keyboard } from "react-native"
 import uuid from "uuid"
 
-import * as itsy from "@itsy.studio/itsy"
+import * as itsy from "@highvalley.systems/itsyplay"
 import { Thunk } from "@itsy.studio/studio/store"
 import player from "@itsy.studio/studio/store/player"
 import {

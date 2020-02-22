@@ -4,7 +4,7 @@ import lua from "highlight.js/lib/languages/lua"
 import AspectRatio from "react-aspect-ratio"
 import "react-aspect-ratio/aspect-ratio.css"
 
-import write from "@itsy.studio/itsy/exports/write"
+import write from "@highvalley.systems/itsyplay/exports/write"
 import { FunctionExample } from "@itsy.studio/types/manual"
 
 import "../../stylesheets/itsy.css"
