@@ -9,7 +9,7 @@ module.exports = (api) => {
         "module-resolver",
         {
           alias: {
-            "@highvalley.systems/itsyedit": path.resolve(
+            "@highvalley.systems/itsycode": path.resolve(
               __dirname,
               "../editor"
             ),

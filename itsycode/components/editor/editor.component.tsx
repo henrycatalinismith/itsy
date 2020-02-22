@@ -8,12 +8,12 @@ import styles from "./editor.module.scss"
 import {
   moveCursor,
   cursorSelector,
-} from "@highvalley.systems/itsyedit/store/cursor"
-import { updateSelection } from "@highvalley.systems/itsyedit/store/selection"
+} from "@highvalley.systems/itsycode/store/cursor"
+import { updateSelection } from "@highvalley.systems/itsycode/store/selection"
 import {
   changeText,
   textSelector,
-} from "@highvalley.systems/itsyedit/store/text"
+} from "@highvalley.systems/itsycode/store/text"
 
 interface EditorProps {
   changeText: (text: string) => void

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
-import { Thunk } from "@highvalley.systems/itsyedit/store"
+import { Thunk } from "@highvalley.systems/itsycode/store"
 import { Point2D } from "@itsy.studio/types"
 
 const name = "cursor"

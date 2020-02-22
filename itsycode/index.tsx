@@ -5,8 +5,8 @@ import "codemirror/lib/codemirror.css"
 import "codemirror/mode/lua/lua"
 import Editor from "./components/editor/editor.component"
 
-import store from "@highvalley.systems/itsyedit/store"
-import { startWebview } from "@highvalley.systems/itsyedit/store/webview"
+import store from "@highvalley.systems/itsycode/store"
+import { startWebview } from "@highvalley.systems/itsycode/store/webview"
 
 const root = document.createElement("div")
 document.body.appendChild(root)

@@ -19,7 +19,7 @@ interface EditorProps {
   editDisk: (lua: string) => void
 }
 
-const html = Asset.fromModule(require("../../assets/webviews/itsyedit.html"))
+const html = Asset.fromModule(require("../../assets/webviews/itsycode.html"))
 
 const mapStateToProps = (state) => ({
   disk: selectActiveDisk(state),
