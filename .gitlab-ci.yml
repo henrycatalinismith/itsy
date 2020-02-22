@@ -44,17 +44,17 @@ deploy:studio:
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
     - yarn expo publish --non-interactive
 
-deploy:website:
+deploy:itsysite:
   stage: deploy
   image: node:12-stretch
   only:
     changes:
-      - website/**/*
+      - itsysite/**/*
   script:
     - cd pixlflip
     - yarn --pure-lockfile
     - cd ..
-    - cd website
+    - cd itsysite
     - yarn --pure-lockfile
     - yarn gatsby build
     - yarn netlify deploy --prod --dir=public --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN

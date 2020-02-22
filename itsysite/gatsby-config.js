@@ -9,8 +9,8 @@ const plugins = [
   plugin("gatsby-plugin-alias-imports", {
     alias: {
       "@highvalley.systems/palettes": path.resolve(__dirname, "../palettes"),
-      "@highvalley.systems/pixlflip": path.resolve(__dirname, "../pixelflip"),
-      "@itsy.studio/website": __dirname,
+      "@highvalley.systems/pixlflip": path.resolve(__dirname, "../pixlflip"),
+      "@highvalley.systems/itsysite": __dirname,
       react: path.resolve(__dirname, "node_modules/react"),
     },
   }),
