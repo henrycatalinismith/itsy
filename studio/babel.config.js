@@ -9,7 +9,10 @@ module.exports = (api) => {
         "module-resolver",
         {
           alias: {
-            "@itsy.studio/editor": path.resolve(__dirname, "../editor"),
+            "@highvalley.systems/itsyedit": path.resolve(
+              __dirname,
+              "../editor"
+            ),
             "@itsy.studio/itsy": path.resolve(__dirname, "../itsy"),
             "@itsy.studio/studio": path.resolve(__dirname),
             "@itsy.studio/palettes": path.resolve(__dirname, "../palettes"),

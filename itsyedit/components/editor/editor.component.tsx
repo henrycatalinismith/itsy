@@ -5,9 +5,15 @@ import { Controlled as CodeMirror } from "react-codemirror2"
 import { Point2D } from "@itsy.studio/types"
 import "./codemirror.scss"
 import styles from "./editor.module.scss"
-import { moveCursor, cursorSelector } from "@itsy.studio/editor/store/cursor"
-import { updateSelection } from "@itsy.studio/editor/store/selection"
-import { changeText, textSelector } from "@itsy.studio/editor/store/text"
+import {
+  moveCursor,
+  cursorSelector,
+} from "@highvalley.systems/itsyedit/store/cursor"
+import { updateSelection } from "@highvalley.systems/itsyedit/store/selection"
+import {
+  changeText,
+  textSelector,
+} from "@highvalley.systems/itsyedit/store/text"
 
 interface EditorProps {
   changeText: (text: string) => void

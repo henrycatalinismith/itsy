@@ -1,6 +1,6 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const InlineSourcePlugin = require("html-webpack-inline-source-plugin");
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
+const InlineSourcePlugin = require("html-webpack-inline-source-plugin")
 
 module.exports = {
   mode: "production",
@@ -9,14 +9,14 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader"
-        }
+          loader: "ts-loader",
+        },
       },
       {
         test: /\.(js|jsx)$/,
@@ -24,9 +24,9 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
-          }
-        }
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
         test: /\.module\.scss$/,
@@ -35,16 +35,16 @@ module.exports = {
           {
             loader: "css-loader",
             options: {
-              modules: true
-            }
+              modules: true,
+            },
           },
           {
             loader: "sass-loader",
             options: {
-              implementation: require("sass")
-            }
-          }
-        ]
+              implementation: require("sass"),
+            },
+          },
+        ],
       },
       {
         test: /\.scss$/,
@@ -52,31 +52,31 @@ module.exports = {
         use: [
           "style-loader",
           {
-            loader: "css-loader"
+            loader: "css-loader",
           },
           {
             loader: "sass-loader",
             options: {
-              implementation: require("sass")
-            }
-          }
-        ]
-      }
-    ]
+              implementation: require("sass"),
+            },
+          },
+        ],
+      },
+    ],
   },
   output: {
     path: __dirname,
-    filename: "index.js"
+    filename: "index.js",
   },
   plugins: [
     new HtmlWebpackPlugin({
       inlineSource: ".(js|css)$",
       meta: {
         viewport:
-          "initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width"
-      }
+          "initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, width=device-width",
+      },
     }),
-    new InlineSourcePlugin()
+    new InlineSourcePlugin(),
   ],
   resolve: {
     extensions: [
@@ -87,11 +87,12 @@ module.exports = {
       ".ts",
       ".tsx",
       ".json",
-      ".scss"
+      ".scss",
     ],
     modules: ["node_modules"],
     alias: {
-      "@itsy.studio": path.resolve(__dirname, "../")
-    }
-  }
-};
+      "@highvalley.systems": path.resolve(__dirname, "../"),
+      "@itsy.studio": path.resolve(__dirname, "../"),
+    },
+  },
+}

@@ -1,5 +1,5 @@
 {
-  "name": "@itsy.studio/editor",
+  "name": "@highvalley.systems/itsyedit",
   "version": "0.0.0",
   "scripts": {
     "build": "webpack --config webpack.config.js && cp index.html ../studio/assets/webviews/editor.html; rm -f index.js",

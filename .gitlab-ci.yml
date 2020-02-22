@@ -7,7 +7,7 @@ deploy:studio:
   image: highvalleysystems/itsy:latest
   only:
     changes:
-      - editor/**/*
+      - itsyedit/**/*
       - itsy/**/*
       - manual/**/*
       - studio/**/*
@@ -23,11 +23,11 @@ deploy:studio:
     - cd pixelflip
     - yarn --pure-lockfile
     - cd ..
-    - cd editor
+    - cd itsyedit
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp editor/index.html studio/assets/webviews/editor.html
+    - cp itsyedit/index.html studio/assets/webviews/itsyedit.html
     - cd graphics
     - yarn --pure-lockfile
     - yarn build

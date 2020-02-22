@@ -7,7 +7,7 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
     "paths": {
-      "@itsy.studio/editor/*": ["editor/*"],
+      "@highvalley.systems/itsyedit/*": ["editor/*"],
       "@itsy.studio/graphics/*": ["graphics/*"],
       "@itsy.studio/itsy/*": ["itsy/*"],
       "@itsy.studio/manual/*": ["manual/*"],
