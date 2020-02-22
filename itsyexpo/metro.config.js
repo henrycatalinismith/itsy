@@ -26,7 +26,7 @@ module.exports = (async () => {
       path.resolve(__dirname, "../itsycode"),
       path.resolve(__dirname, "../itsyplay"),
       path.resolve(__dirname, "../palettes"),
-      path.resolve(__dirname, "../pixelflip"),
+      path.resolve(__dirname, "../pixlflip"),
     ],
   }
 })()
