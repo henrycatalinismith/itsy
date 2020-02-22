@@ -2,7 +2,7 @@ import React from "react"
 import { Animated, Easing, View } from "react-native"
 import { Svg, G, Path } from "react-native-svg"
 import { connect } from "react-redux"
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "@itsy.studio/studio/components/loading/loading.module.scss"
 

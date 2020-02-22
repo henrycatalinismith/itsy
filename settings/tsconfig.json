@@ -11,7 +11,7 @@
       "@highvalley.systems/itsydraw/*": ["itsydraw/*"],
       "@highvalley.systems/itsyhelp/*": ["itsyhelp/*"],
       "@highvalley.systems/itsyplay/*": ["itsyplay/*"],
-      "@itsy.studio/palettes/*": ["palettes/*"],
+      "@highvalley.systems/palettes/*": ["palettes/*"],
       "@highvalley.systems/pixlflip/*": ["pixlflip/*"],
       "@itsy.studio/settings/*": ["settings/*"],
       "@itsy.studio/studio/*": ["studio/*"],

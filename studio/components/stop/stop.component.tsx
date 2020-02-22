@@ -3,7 +3,7 @@ import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import { stopDisk } from "@itsy.studio/studio/store/disks"
 // import styles from "@itsy.studio/studio/components/stop/stop.module.scss"
 

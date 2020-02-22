@@ -3,7 +3,7 @@ import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
 import { TouchableOpacity } from "react-native"
 import { connect } from "react-redux"
 
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "@itsy.studio/studio/components/tile/tile.module.scss"
 

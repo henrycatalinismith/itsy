@@ -8,7 +8,7 @@ import {
   togglePanel,
 } from "@itsy.studio/studio/store/panels"
 
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "./tab.module.scss"
 

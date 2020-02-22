@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import pico8 from "@itsy.studio/palettes/pico8/original.es6"
+import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
 
 // prettier-ignore
 export type PaletteIndex =

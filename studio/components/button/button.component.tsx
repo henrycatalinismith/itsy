@@ -1,7 +1,7 @@
 import React from "react"
 import { TouchableOpacity } from "react-native"
 
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import Font from "@itsy.studio/studio/components/font"
 import styles from "@itsy.studio/studio/components/button/button.module.scss"
 

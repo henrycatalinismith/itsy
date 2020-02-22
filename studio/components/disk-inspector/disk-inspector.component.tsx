@@ -18,7 +18,7 @@ import Button from "@itsy.studio/studio/components/button"
 import DiskIcon from "@itsy.studio/studio/components/disk-icon"
 import DiskSpritesheet from "@itsy.studio/studio/components/disk-spritesheet"
 import Font from "@itsy.studio/studio/components/font"
-import colors from "@itsy.studio/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import styles from "./disk-inspector.module.scss"
 
 enum DiskInspectorMode {
