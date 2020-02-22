@@ -23,8 +23,8 @@ module.exports = (async () => {
     },
 
     watchFolders: [
-      path.resolve(__dirname, "../editor"),
-      path.resolve(__dirname, "../itsy"),
+      path.resolve(__dirname, "../itsyedit"),
+      path.resolve(__dirname, "../itsyplay"),
       path.resolve(__dirname, "../palettes"),
       path.resolve(__dirname, "../pixelflip"),
     ],
