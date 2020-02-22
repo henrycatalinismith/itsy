@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { selectKeyboardHeight } from "@itsy.studio/studio/store/keyboard"
-import { Thunk } from "@itsy.studio/studio/store"
+import { selectKeyboardHeight } from "@highvalley.systems/itsyexpo/store/keyboard"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { Rect } from "@itsy.studio/types/geometry"
 
 export enum ScreenOrientation {

@@ -3,8 +3,8 @@ import { Animated, Easing, View } from "react-native"
 import { Svg, G, Path } from "react-native-svg"
 import { connect } from "react-redux"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import Font from "@itsy.studio/studio/components/font"
-import styles from "@itsy.studio/studio/components/loading/loading.module.scss"
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import styles from "@highvalley.systems/itsyexpo/components/loading/loading.module.scss"
 
 interface LoadingProps {
   style?: any

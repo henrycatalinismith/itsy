@@ -4,8 +4,8 @@ import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import { stopDisk } from "@itsy.studio/studio/store/disks"
-// import styles from "@itsy.studio/studio/components/stop/stop.module.scss"
+import { stopDisk } from "@highvalley.systems/itsyexpo/store/disks"
+// import styles from "@highvalley.systems/itsyexpo/components/stop/stop.module.scss"
 
 const mapStateToProps = (state) => ({})
 

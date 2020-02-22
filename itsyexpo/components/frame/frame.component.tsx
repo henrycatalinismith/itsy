@@ -2,8 +2,8 @@ import React from "react"
 import { connect } from "react-redux"
 import { SafeAreaView, View } from "react-native"
 
-import { selectScreenHeightMinusKeyboardHeight } from "@itsy.studio/studio/store/screen"
-import styles from "@itsy.studio/studio/components/frame/frame.module.scss"
+import { selectScreenHeightMinusKeyboardHeight } from "@highvalley.systems/itsyexpo/store/screen"
+import styles from "@highvalley.systems/itsyexpo/components/frame/frame.module.scss"
 
 interface FrameProps {
   children: any

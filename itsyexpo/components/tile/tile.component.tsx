@@ -4,8 +4,8 @@ import { TouchableOpacity } from "react-native"
 import { connect } from "react-redux"
 
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import Font from "@itsy.studio/studio/components/font"
-import styles from "@itsy.studio/studio/components/tile/tile.module.scss"
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import styles from "@highvalley.systems/itsyexpo/components/tile/tile.module.scss"
 
 const mapStateToProps = (state, ownProps) => ({
   disk: state.disks[ownProps.id],

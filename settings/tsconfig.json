@@ -15,7 +15,7 @@
       "@highvalley.systems/palettes/*": ["palettes/*"],
       "@highvalley.systems/pixlflip/*": ["pixlflip/*"],
       "@itsy.studio/settings/*": ["settings/*"],
-      "@itsy.studio/studio/*": ["studio/*"],
+      "@highvalley.systems/itsyexpo/*": ["studio/*"],
       "@itsy.studio/types": ["types"],
       "@itsy.studio/types/*": ["types/*"]
     },

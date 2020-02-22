@@ -9,8 +9,8 @@ import {
   ScrollViewProps,
 } from "react-native"
 import { connect } from "react-redux"
-import { selectOutput } from "@itsy.studio/studio/store/output"
-import Button from "@itsy.studio/studio/components/button"
+import { selectOutput } from "@highvalley.systems/itsyexpo/store/output"
+import Button from "@highvalley.systems/itsyexpo/components/button"
 import styles from "./console.module.scss"
 
 interface ConsoleProps {

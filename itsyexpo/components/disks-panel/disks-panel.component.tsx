@@ -1,9 +1,9 @@
 import React from "react"
 import { Text } from "react-native"
 import { connect } from "react-redux"
-import DiskInspector from "@itsy.studio/studio/components/disk-inspector"
-import DiskList from "@itsy.studio/studio/components/disk-list"
-import { Disk, selectInspectedDisk } from "@itsy.studio/studio/store/disks"
+import DiskInspector from "@highvalley.systems/itsyexpo/components/disk-inspector"
+import DiskList from "@highvalley.systems/itsyexpo/components/disk-list"
+import { Disk, selectInspectedDisk } from "@highvalley.systems/itsyexpo/store/disks"
 // import styles from "./disks-panel.module.scss"
 
 interface DisksPanelProps {

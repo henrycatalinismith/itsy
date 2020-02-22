@@ -5,19 +5,19 @@ import { Keyboard } from "react-native"
 import uuid from "uuid"
 
 import * as itsy from "@highvalley.systems/itsyplay"
-import { Thunk } from "@itsy.studio/studio/store"
-import player from "@itsy.studio/studio/store/player"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import player from "@highvalley.systems/itsyexpo/store/player"
 import {
   deleteValue,
   readValues,
   writeValue,
-} from "@itsy.studio/studio/store/storage"
+} from "@highvalley.systems/itsyexpo/store/storage"
 import {
   palette,
   snapshot as defaultSnapshot,
   spritesheet,
-} from "@itsy.studio/studio/defaults"
-import words from "@itsy.studio/studio/words"
+} from "@highvalley.systems/itsyexpo/defaults"
+import words from "@highvalley.systems/itsyexpo/words"
 
 const dWrite = _.debounce((dispatch: any, disk: any) => {
   dispatch(writeValue(disk.uri, disk))

@@ -7,9 +7,9 @@ import {
   Panel,
   selectPanelMode,
   selectRankedPanels,
-} from "@itsy.studio/studio/store/panels"
+} from "@highvalley.systems/itsyexpo/store/panels"
 
-import Tab from "@itsy.studio/studio/components/tab"
+import Tab from "@highvalley.systems/itsyexpo/components/tab"
 import styles from "./toolbar.module.scss"
 
 interface ToolbarProps {

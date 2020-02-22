@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Thunk } from "@itsy.studio/studio/store"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
 
 const name = "output"
 

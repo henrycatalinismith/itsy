@@ -3,7 +3,7 @@ import { TouchableOpacity } from "react-native"
 import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 
-import { playDisk } from "@itsy.studio/studio/store/disks"
+import { playDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 
 const mapStateToProps = (state) => ({})

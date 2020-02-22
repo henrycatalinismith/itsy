@@ -1,7 +1,7 @@
 import React from "react"
 import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
 import { connect } from "react-redux"
-import { Disk } from "@itsy.studio/studio/store/disks"
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import styles from "./disk-spritesheet.module.scss"
 

@@ -1,5 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Thunk } from "@itsy.studio/studio/store"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { KeyboardEvent } from "react-native"
 
 export enum KeyboardStatus {

@@ -1,10 +1,10 @@
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
-import Loading from "@itsy.studio/studio/components/loading"
-import Player from "@itsy.studio/studio/components/player"
-import Snapshot from "@itsy.studio/studio/components/snapshot"
-import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
+import Player from "@highvalley.systems/itsyexpo/components/player"
+import Snapshot from "@highvalley.systems/itsyexpo/components/snapshot"
+import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
 import styles from "./screen.module.scss"
 
 interface ScreenProps {

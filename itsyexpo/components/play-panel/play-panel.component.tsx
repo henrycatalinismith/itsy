@@ -1,12 +1,12 @@
 import React from "react"
 import { LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
-import Console from "@itsy.studio/studio/components/console"
-import PlayerControls from "@itsy.studio/studio/components/player-controls"
-import Screen from "@itsy.studio/studio/components/screen"
-import LayoutContext from "@itsy.studio/studio/contexts/layout"
-import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
-import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
+import Console from "@highvalley.systems/itsyexpo/components/console"
+import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
+import Screen from "@highvalley.systems/itsyexpo/components/screen"
+import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
+import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
+import { ScreenState, selectScreen } from "@highvalley.systems/itsyexpo/store/screen"
 import styles from "./play-panel.module.scss"
 
 interface PlayPanelProps {

@@ -6,10 +6,10 @@ import {
   Disk,
   createDisk,
   selectNormalDisks,
-} from "@itsy.studio/studio/store/disks"
+} from "@highvalley.systems/itsyexpo/store/disks"
 
-import Button from "@itsy.studio/studio/components/button"
-import DiskListItem from "@itsy.studio/studio/components/disk-list-item"
+import Button from "@highvalley.systems/itsyexpo/components/button"
+import DiskListItem from "@highvalley.systems/itsyexpo/components/disk-list-item"
 import styles from "./disk-list.module.scss"
 
 interface DiskListProps {

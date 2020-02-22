@@ -1,6 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
-import Editor from "@itsy.studio/studio/components/editor"
+import Editor from "@highvalley.systems/itsyexpo/components/editor"
 import styles from "./code-panel.module.scss"
 
 interface CodePanelProps {

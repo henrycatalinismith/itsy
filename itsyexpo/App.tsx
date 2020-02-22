@@ -13,16 +13,16 @@ import Code from "./screens/code"
 
 import store from "./store"
 
-import { loadDisks } from "@itsy.studio/studio/store/disks"
+import { loadDisks } from "@highvalley.systems/itsyexpo/store/disks"
 
 import {
   keyboardDidHide,
   keyboardDidShow,
   keyboardWillHide,
   keyboardWillShow,
-} from "@itsy.studio/studio/store/keyboard"
+} from "@highvalley.systems/itsyexpo/store/keyboard"
 
-import { resizeScreen } from "@itsy.studio/studio/store/screen"
+import { resizeScreen } from "@highvalley.systems/itsyexpo/store/screen"
 
 const routes = {
   Code: {

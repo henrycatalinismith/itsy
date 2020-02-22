@@ -8,16 +8,16 @@ import {
   _Panel,
   selectActivePanel,
   selectRankedPanels,
-} from "@itsy.studio/studio/store/panels"
+} from "@highvalley.systems/itsyexpo/store/panels"
 
-import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
+import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 
-import CodePanel from "@itsy.studio/studio/components/code-panel"
-import DisksPanel from "@itsy.studio/studio/components/disks-panel"
-import DrawPanel from "@itsy.studio/studio/components/draw-panel"
-import HelpPanel from "@itsy.studio/studio/components/help-panel"
-import Panel from "@itsy.studio/studio/components/panel"
-import PlayPanel from "@itsy.studio/studio/components/play-panel"
+import CodePanel from "@highvalley.systems/itsyexpo/components/code-panel"
+import DisksPanel from "@highvalley.systems/itsyexpo/components/disks-panel"
+import DrawPanel from "@highvalley.systems/itsyexpo/components/draw-panel"
+import HelpPanel from "@highvalley.systems/itsyexpo/components/help-panel"
+import Panel from "@highvalley.systems/itsyexpo/components/panel"
+import PlayPanel from "@highvalley.systems/itsyexpo/components/play-panel"
 import styles from "./panel-slider.module.scss"
 
 interface PanelSliderProps {

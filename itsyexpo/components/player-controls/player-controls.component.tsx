@@ -1,10 +1,10 @@
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
-import Font from "@itsy.studio/studio/components/font"
-import Play from "@itsy.studio/studio/components/play"
-import Stop from "@itsy.studio/studio/components/stop"
-import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import Play from "@highvalley.systems/itsyexpo/components/play"
+import Stop from "@highvalley.systems/itsyexpo/components/stop"
+import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
 import styles from "./player-controls.module.scss"
 
 interface PlayerControlsProps {

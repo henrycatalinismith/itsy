@@ -8,9 +8,9 @@ import {
   selectActivePanels,
   selectPanelMode,
   selectPanels,
-} from "@itsy.studio/studio/store/panels"
-import LayoutContext from "@itsy.studio/studio/contexts/layout"
-import { selectSafeArea } from "@itsy.studio/studio/store/safe-area"
+} from "@highvalley.systems/itsyexpo/store/panels"
+import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
+import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 import { Rect } from "@itsy.studio/types/geometry"
 import styles from "./panel.module.scss"
 

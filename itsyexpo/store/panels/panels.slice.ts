@@ -1,7 +1,7 @@
 import _ from "lodash"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Thunk } from "@itsy.studio/studio/store"
-import { selectDevice } from "@itsy.studio/studio/store/device"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { selectDevice } from "@highvalley.systems/itsyexpo/store/device"
 
 export enum PanelId {
   code = "code",

@@ -2,10 +2,10 @@ import React from "react"
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native"
 import { connect } from "react-redux"
 
-import { Disk, inspectDisk, openDisk } from "@itsy.studio/studio/store/disks"
+import { Disk, inspectDisk, openDisk } from "@highvalley.systems/itsyexpo/store/disks"
 
-import DiskIcon from "@itsy.studio/studio/components/disk-icon"
-import Font from "@itsy.studio/studio/components/font"
+import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import styles from "./disk-list-item.module.scss"
 
 interface DiskListItemProps {

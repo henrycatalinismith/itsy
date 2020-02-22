@@ -6,10 +6,10 @@ import {
   Panel as _Panel,
   selectPanels,
   togglePanel,
-} from "@itsy.studio/studio/store/panels"
+} from "@highvalley.systems/itsyexpo/store/panels"
 
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import Font from "@itsy.studio/studio/components/font"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import styles from "./tab.module.scss"
 
 interface TabProps {

@@ -3,9 +3,9 @@ import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
-import { saveSnapshot } from "@itsy.studio/studio/store/disks"
-import { appendOutput } from "@itsy.studio/studio/store/output"
-import { PlayerState, playerSelector } from "@itsy.studio/studio/store/player"
+import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
+import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
+import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
 import styles from "./player.module.scss"
 
 interface PlayerProps {

@@ -2,7 +2,7 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import { selectStorageBusy } from "@itsy.studio/studio/store/storage"
+import { selectStorageBusy } from "@highvalley.systems/itsyexpo/store/storage"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 
 interface StorageProps {

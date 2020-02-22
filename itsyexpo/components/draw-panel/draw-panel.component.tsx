@@ -8,7 +8,7 @@ import {
   Disk,
   editDisk,
   selectActiveDisk,
-} from "@itsy.studio/studio/store/disks"
+} from "@highvalley.systems/itsyexpo/store/disks"
 
 import styles from "./draw-panel.module.scss"
 

@@ -4,14 +4,14 @@ import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 
-import Loading from "@itsy.studio/studio/components/loading"
-import styles from "@itsy.studio/studio/components/editor/editor.module.scss"
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
+import styles from "@highvalley.systems/itsyexpo/components/editor/editor.module.scss"
 import {
   Disk,
   editDisk,
   selectActiveDisk,
-} from "@itsy.studio/studio/store/disks"
-import { EditorState, editorSelector } from "@itsy.studio/studio/store/editor"
+} from "@highvalley.systems/itsyexpo/store/disks"
+import { EditorState, editorSelector } from "@highvalley.systems/itsyexpo/store/editor"
 
 interface EditorProps {
   disk: Disk

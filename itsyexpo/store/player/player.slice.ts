@@ -1,6 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
-import { Thunk } from "@itsy.studio/studio/store"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
 
 export interface PlayerState {
   html: string

@@ -2,8 +2,8 @@ import React from "react"
 import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-import { Disk, selectActiveDisk } from "@itsy.studio/studio/store/disks"
-import styles from "@itsy.studio/studio/components/snapshot/snapshot.module.scss"
+import { Disk, selectActiveDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import styles from "@highvalley.systems/itsyexpo/components/snapshot/snapshot.module.scss"
 
 interface SnapshotProps {
   disk: Disk

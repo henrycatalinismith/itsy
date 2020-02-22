@@ -12,12 +12,12 @@ import {
   dismissDisk,
   renameDisk,
   selectInspectedDisk,
-} from "@itsy.studio/studio/store/disks"
+} from "@highvalley.systems/itsyexpo/store/disks"
 
-import Button from "@itsy.studio/studio/components/button"
-import DiskIcon from "@itsy.studio/studio/components/disk-icon"
-import DiskSpritesheet from "@itsy.studio/studio/components/disk-spritesheet"
-import Font from "@itsy.studio/studio/components/font"
+import Button from "@highvalley.systems/itsyexpo/components/button"
+import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
+import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import styles from "./disk-inspector.module.scss"
 

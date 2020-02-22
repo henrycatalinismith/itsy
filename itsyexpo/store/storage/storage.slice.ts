@@ -2,7 +2,7 @@ import _ from "lodash"
 import uuid from "uuid"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { AsyncStorage } from "react-native"
-import { Thunk } from "@itsy.studio/studio/store"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
 
 export interface StorageDelete {
   id: string

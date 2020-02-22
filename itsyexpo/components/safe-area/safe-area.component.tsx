@@ -3,7 +3,7 @@ import React from "react"
 import { connect } from "react-redux"
 import { SafeAreaView, LayoutChangeEvent, LayoutRectangle } from "react-native"
 
-import { updateSafeArea } from "@itsy.studio/studio/store/safe-area"
+import { updateSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 import styles from "./safe-area.module.scss"
 
 interface SafeAreaProps {

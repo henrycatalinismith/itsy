@@ -13,15 +13,16 @@ module.exports = (api) => {
               __dirname,
               "../editor"
             ),
-            "@highvalley.systems/itsyplay": path.resolve(__dirname, "../itsy"),
-            "@itsy.studio/studio": path.resolve(__dirname),
+            "@highvalley.systems/itsydraw": path.resolve(__dirname, "../itsydraw"),
+            "@highvalley.systems/itsyexpo": path.resolve(__dirname),
+            "@highvalley.systems/itsyplay": path.resolve(__dirname, "../itsyplay"),
             "@highvalley.systems/palettes": path.resolve(
               __dirname,
               "../palettes"
             ),
             "@highvalley.systems/pixlflip": path.resolve(
               __dirname,
-              "../pixelflip"
+              "../pixlflip"
             ),
           },
         },

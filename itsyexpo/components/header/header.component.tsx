@@ -2,15 +2,15 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 
-import DiskIcon from "@itsy.studio/studio/components/disk-icon"
-import Floppy from "@itsy.studio/studio/components/floppy"
-import Font from "@itsy.studio/studio/components/font"
-import Storage from "@itsy.studio/studio/components/storage"
+import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
+import Floppy from "@highvalley.systems/itsyexpo/components/floppy"
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import Storage from "@highvalley.systems/itsyexpo/components/storage"
 import {
   Disk,
   DiskType,
   selectActiveDisk,
-} from "@itsy.studio/studio/store/disks"
+} from "@highvalley.systems/itsyexpo/store/disks"
 
 import styles from "./header.module.scss"
 
