@@ -1,0 +1,38 @@
+.results {
+}
+
+.results__list {
+  display: grid;
+  grid-template-columns: 100%;
+  list-style-type: none;
+  padding: 0;
+  border: 1px solid #eee;
+  background: #fffeff;
+  border-radius: 4px;
+}
+
+.results__item {
+}
+
+.results__link {
+  border-bottom: 1px solid #eee;
+  height: 64px;
+  padding: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.results__title {
+  color: #036eb5;
+  font-weight: bold;
+  line-height: 1rem;
+}
+
+.results__description {
+  color: #444;
+  font-size: 14px;
+  line-height: 1rem;
+  font-weight: normal;
+}

@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 import { ScreenState, selectScreen } from "@itsy.studio/studio/store/screen"
 import styles from "./help-panel.module.scss"
 
-const manual = Asset.fromModule(require("../../assets/webviews/manual.html"))
+const manual = Asset.fromModule(require("../../assets/webviews/itsyhelp.html"))
 
 interface HelpPanelProps {
   screen: ScreenState

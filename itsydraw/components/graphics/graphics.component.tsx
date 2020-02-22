@@ -2,7 +2,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./graphics.module.scss"
 
-// import { currentPage, navigate } from "@itsy.studio/manual/store/location"
+// import { currentPage, navigate } from "@highvalley.systems/itsyhelp/store/location"
 
 import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"

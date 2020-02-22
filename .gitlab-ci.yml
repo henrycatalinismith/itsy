@@ -7,9 +7,9 @@ deploy:studio:
   image: highvalleysystems/itsy:latest
   only:
     changes:
-      - itsyedit/**/*
       - itsy/**/*
-      - manual/**/*
+      - itsyedit/**/*
+      - itsyhelp/**/*
       - studio/**/*
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
@@ -33,11 +33,11 @@ deploy:studio:
     - yarn build
     - cd ..
     - cp itsydraw/index.html studio/assets/webviews/itsydraw.html
-    - cd manual
+    - cd itsyhelp
     - yarn --pure-lockfile
     - yarn build
     - cd ..
-    - cp manual/index.html studio/assets/webviews/manual.html
+    - cp itsyhelp/index.html studio/assets/webviews/itsyhelp.html
     - cd studio
     - yarn --pure-lockfile
     - yarn expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD

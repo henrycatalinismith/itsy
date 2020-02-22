@@ -9,8 +9,8 @@
     "paths": {
       "@highvalley.systems/itsyedit/*": ["itsyedit/*"],
       "@highvalley.systems/itsydraw/*": ["itsydraw/*"],
+      "@highvalley.systems/itsyhelp/*": ["itsyhelp/*"],
       "@itsy.studio/itsy/*": ["itsy/*"],
-      "@itsy.studio/manual/*": ["manual/*"],
       "@itsy.studio/palettes/*": ["palettes/*"],
       "@itsy.studio/pixelflip/*": ["pixelflip/*"],
       "@itsy.studio/settings/*": ["settings/*"],
@@ -23,7 +23,7 @@
       "../itsy",
       "../itsyedit",
       "../itsydraw",
-      "../manual",
+      "../itsyhelp",
       "../palettes",
       "../pixelflip",
       "../studio",
