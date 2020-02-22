@@ -1,7 +1,7 @@
 import React from "react"
 import { Helmet } from "react-helmet"
 
-import Pixelflip from "@itsy.studio/pixelflip/regular"
+import Pixelflip from "@highvalley.systems/pixlflip/regular"
 import Center from "@itsy.studio/website/components/center"
 import Square from "@itsy.studio/website/components/square"
 

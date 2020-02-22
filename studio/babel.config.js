@@ -16,7 +16,10 @@ module.exports = (api) => {
             "@highvalley.systems/itsyplay": path.resolve(__dirname, "../itsy"),
             "@itsy.studio/studio": path.resolve(__dirname),
             "@itsy.studio/palettes": path.resolve(__dirname, "../palettes"),
-            "@itsy.studio/pixelflip": path.resolve(__dirname, "../pixelflip"),
+            "@highvalley.systems/pixlflip": path.resolve(
+              __dirname,
+              "../pixelflip"
+            ),
           },
         },
       ],

@@ -21,7 +21,7 @@ deploy:studio:
     - yarn --pure-lockfile
     - make itsyplay
     - cd ..
-    - cd pixelflip
+    - cd pixlflip
     - yarn --pure-lockfile
     - cd ..
     - cd itsyedit
@@ -51,7 +51,7 @@ deploy:website:
     changes:
       - website/**/*
   script:
-    - cd pixelflip
+    - cd pixlflip
     - yarn --pure-lockfile
     - cd ..
     - cd website
