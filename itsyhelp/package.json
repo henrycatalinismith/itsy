@@ -2,7 +2,7 @@
   "name": "@highvalley.systems/itsyhelp",
   "version": "0.0.0",
   "scripts": {
-    "build": "webpack --config webpack.config.js; rm -f index.js",
+    "build": "webpack --config webpack.config.js && cp index.html ../itsyexpo/assets/webviews/itsyhelp.html; rm -f index.js",
     "storybook": "start-storybook -p 6006"
   },
   "devDependencies": {
