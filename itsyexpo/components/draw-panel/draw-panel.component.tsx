@@ -10,6 +10,7 @@ import {
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import styles from "./draw-panel.module.scss"
 
 interface DrawPanelProps {
@@ -26,40 +27,74 @@ const mapDispatchToProps = {}
 
 export function DrawPanel({ disk }: DrawPanelProps) {
   const webview = React.useRef() as any
+  const renders = React.useRef(0)
+  const [loading, setLoading] = React.useState(true)
+  const [reloading, setReloading] = React.useState(false)
+
+  React.useEffect(() => {
+    if (renders.current > 1) {
+      setLoading(true)
+      setReloading(true)
+      setTimeout(() => setReloading(false), Math.pow(2, 8))
+    }
+  }, [disk.id])
 
   const handleMessage = React.useCallback((event) => {
     const message = JSON.parse(event.nativeEvent.data)
     console.log(`🏓 ${message.type}`)
 
     switch (message.type) {
+      case "console/log":
+        console.log(message.payload)
+        break
+
       case "webview/start":
-        console.log(disk.spritesheet)
-        console.log(disk.palette)
+        setTimeout(() => {
+          // wait a second while the lua gets injected
+          setLoading(false)
+        }, Math.pow(2, 8))
+
+        // console.log(disk.spritesheet)
+        // console.log(disk.palette)
         webview.current.injectJavaScript(`
-          store.dispatch(importSpriteSheet(
+          console.log('test')
+          try {
+          window.store.dispatch(window.importSpritesheet(
             "${disk.spritesheet}",
-            "${disk.palette}",
+            "${disk.palette}"
           ))
+          } catch (e) {
+            console.log(e.message)
+          }
         `)
         break
     }
   }, [])
 
+  renders.current += 1
+
+  const onError = React.useCallback(() => {
+    console.log("onError")
+  }, [])
+
   return React.useMemo(
     () => (
       <View style={styles.drawPanel}>
-        <WebView
-          style={styles.webview}
-          bounces={false}
-          injectedJavaScript="window.isReactNative = true;"
-          onMessage={handleMessage}
-          ref={webview}
-          scrollEnabled={false}
-          source={{ uri: html.uri }}
-        />
+        {!reloading && (
+          <WebView
+            style={styles.webview}
+            bounces={false}
+            onMessage={handleMessage}
+            onError={onError}
+            ref={webview}
+            scrollEnabled={false}
+            source={{ uri: html.uri }}
+          />
+        )}
+        {(loading || reloading) && <Loading style={styles.loading} />}
       </View>
     ),
-    []
+    [loading, reloading]
   )
 }
 

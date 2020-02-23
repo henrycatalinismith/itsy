@@ -32,15 +32,40 @@ const postMessageMiddleware = (store) => (next) => (action) => {
   }
 
   const message = JSON.stringify(action)
-  ;(window as any).ReactNativeWebView.postMessage(message)
 
   if (action.type === "webview/start") {
+    ;(window as any).buffer = []
+
+    setInterval(() => {
+      if ((window as any).buffer.length > 0) {
+        ;(window as any).ReactNativeWebView.postMessage(
+          JSON.stringify({
+            type: "console/log",
+            payload: (window as any).buffer,
+          })
+        )
+        ;(window as any).buffer = []
+      }
+    }, 100)
+    ;(window as any).console.log = (l) => {
+      ;(window as any).buffer.push(JSON.stringify(l))
+    }
+
     ;(window as any).store = store
+    console.log((window as any).store)
     ;(window as any).importSpritesheet = importSpritesheet
   }
+
+  ;(window as any).ReactNativeWebView.postMessage(message)
 }
 
-const middleware = [...getDefaultMiddleware(), logger, postMessageMiddleware]
+const middleware = [...getDefaultMiddleware(), postMessageMiddleware]
+
+if ((window as any).ReactNativeWebView) {
+  //
+} else {
+  middleware.push(logger)
+}
 
 const reducer = combineReducers({
   color: color.reducer,

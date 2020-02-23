@@ -158,6 +158,7 @@ export const importSpritesheet = (
   spritesheetSource: string,
   paletteSource: string
 ): Thunk => async (dispatch) => {
+  console.log("importing")
   const spritesheetPixels = await pngColors(spritesheetSource, 128, 1)
   const palettePixels = await pngColors(paletteSource, 4, 1)
 
