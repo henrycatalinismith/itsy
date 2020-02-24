@@ -91,7 +91,7 @@ base64/spritesheet.js:
 	echo "module.exports = '`base64 defaults/spritesheet.png`'" > base64/spritesheet.js
 
 base64/stylesheet.js:
-	echo "module.exports = '`base64 style.css`'" > base64/stylesheet.js
+	echo "module.exports = '`base64 --wrap=0 style.css`'" > base64/stylesheet.js
 
 engine/itsy.js: $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ)
 	$(CC) $(CFLAGS) engine/main/main.c $(OBJS) $(FUNCTIONS_OBJ) $(ENGINE_OBJ) $(EMCCFLAGS) -o engine/itsy.js
