@@ -34,6 +34,12 @@ export type SpritesheetState = {
   }
 }
 
+export type PartialSpritesheetState = {
+  [i in SpritesheetPixelIndex]?: {
+    [i in SpritesheetPixelIndex]?: PaletteIndex
+  }
+}
+
 const name = "spritesheet"
 
 const initialState: SpritesheetState = _.zipObject(
@@ -88,6 +94,14 @@ const reducers = {
     }>
   ) {
     spritesheet[action.payload.x][action.payload.y] = action.payload.color
+  },
+
+  update(spritesheet, action: PayloadAction<PartialSpritesheetState>) {
+    _.forEach(action.payload, (column, x) => {
+      _.forEach(column, (color, y) => {
+        spritesheet[x][y] = color
+      })
+    })
   },
 }
 
@@ -217,6 +231,12 @@ export const drawPixel = (
   color: PaletteIndex
 ): Thunk => async (dispatch) => {
   dispatch(slice.actions.pset({ x, y, color }))
+}
+
+export const updateSpritesheet = (
+  changes: PartialSpritesheetState
+): Thunk => async (dispatch) => {
+  dispatch(slice.actions.update(changes))
 }
 
 export default slice

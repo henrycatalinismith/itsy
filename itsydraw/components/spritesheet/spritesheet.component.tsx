@@ -14,9 +14,11 @@ import {
 import {
   SpritesheetPixelIndex,
   SpritesheetState,
+  PartialSpritesheetState,
   selectSpritesheet,
   drawLine,
   drawPixel,
+  updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import styles from "./spritesheet.module.scss"
 
@@ -36,6 +38,7 @@ interface SpritesheetProps {
     y: SpritesheetPixelIndex,
     color: PaletteIndex
   ) => void
+  updateSpritesheet: (changes: PartialSpritesheetState) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -47,6 +50,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   drawLine,
   drawPixel,
+  updateSpritesheet,
 }
 
 export function Spritesheet({
@@ -55,7 +59,22 @@ export function Spritesheet({
   spritesheet,
   drawPixel,
   drawLine,
+  updateSpritesheet,
 }: SpritesheetProps): React.ReactElement {
+  const repainting = React.useRef(false)
+  const changes = React.useRef<
+    {
+      [i in SpritesheetPixelIndex]?: {
+        [i in SpritesheetPixelIndex]?: PaletteIndex
+      }
+    }
+  >({})
+
+  const update = _.debounce(() => {
+    updateSpritesheet(changes.current)
+    changes.current = {}
+  }, 100)
+
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const drawing = React.useRef(false)
@@ -107,6 +126,13 @@ export function Spritesheet({
         1,
         1
       )
+      if (!repainting.current) {
+        if (!changes.current[x]) {
+          changes.current[x] = {}
+        }
+        changes.current[x][y] = i
+        update()
+      }
     },
     [scale]
   )
@@ -144,11 +170,13 @@ export function Spritesheet({
 
   const repaint = React.useCallback(() => {
     cls(0)
+    repainting.current = true
     Object.entries(spritesheet).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
         pset(x as any, y as any, pixel)
       })
     })
+    repainting.current = false
   }, [scale])
 
   const onTouchStart = React.useCallback(
@@ -172,7 +200,7 @@ export function Spritesheet({
       drawing.current = true
 
       pset(x, y, color)
-      drawPixel(x, y, color)
+      // drawPixel(x, y, color)
       last.current = { x, y }
     },
     [scale, color]
@@ -200,10 +228,10 @@ export function Spritesheet({
 
       if (last.current.x === undefined) {
         pset(x, y, color)
-        drawPixel(x, y, color)
+        // drawPixel(x, y, color)
       } else {
         line(last.current.x, last.current.y, x, y, color)
-        drawLine(last.current.x, last.current.y, x, y, color)
+        // drawLine(last.current.x, last.current.y, x, y, color)
       }
 
       last.current = { x, y }
