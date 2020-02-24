@@ -1,13 +1,9 @@
-import { configure } from "@storybook/react"
+import { configure } from "@storybook/react";
 
-const components = [
-  "header",
-  "ident",
-  "post",
-]
+const components = ["header", "ident", "post"];
 
 function loadStories() {
-  components.forEach(name => require(`../${name}/${name}.stories.js`))
+  components.forEach(name => require(`../${name}/${name}.stories.tsx`));
 }
 
-configure(loadStories, module)
+configure(loadStories, module);

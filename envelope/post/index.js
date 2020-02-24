@@ -1,2 +1,2 @@
-import Post from "./post"
-export default Post
+import Post from "./post.component";
+export default Post;
