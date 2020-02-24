@@ -31,7 +31,7 @@ const postMessageMiddleware = (store) => (next) => (action) => {
     return
   }
 
-  const message = JSON.stringify(action)
+  let message = JSON.stringify(action)
 
   if (action.type === "webview/start") {
     ;(window as any).buffer = []
@@ -50,10 +50,29 @@ const postMessageMiddleware = (store) => (next) => (action) => {
     ;(window as any).console.log = (l) => {
       ;(window as any).buffer.push(JSON.stringify(l))
     }
-
     ;(window as any).store = store
     console.log((window as any).store)
     ;(window as any).importSpritesheet = importSpritesheet
+  }
+
+  console.log(action.type)
+  if (action.type === "spritesheet/update") {
+    const { palette, spritesheet } = store.getState()
+    const canvas = document.createElement("canvas")
+    const context = canvas.getContext("2d")
+
+    canvas.width = 128
+    canvas.height = 128
+
+    for (let x = 0; x < 128; x++) {
+      for (let y = 0; y < 128; y++) {
+        context.fillStyle = palette[spritesheet[x][y]].hex
+        context.fillRect(x, y, 1, 1)
+      }
+    }
+
+    const uri = canvas.toDataURL("image/png").split(",")[1]
+    message = JSON.stringify({ ...action, uri })
   }
 
   ;(window as any).ReactNativeWebView.postMessage(message)

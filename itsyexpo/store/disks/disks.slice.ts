@@ -288,6 +288,18 @@ export const stopDisk = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.stop())
 }
 
+export const updateSpritesheet = (png: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  console.log("UPDATING")
+  dispatch(slice.actions.spritesheet(png))
+
+  const state = getState()
+  const disk = selectActiveDisk(state)
+  dispatch(writeValue(disk.uri, disk))
+}
+
 export const selectDisks = ({ disks }) => _.values(disks)
 
 export const selectNormalDisks = createSelector([selectDisks], (disks) =>

@@ -120,7 +120,7 @@ function hex(red, green, blue) {
   return "#" + (0x1000000 + rgb).toString(16).slice(1)
 }
 
-const pngColors = (
+const png2hex = (
   base64: string,
   size: number,
   scale: number
@@ -147,24 +147,13 @@ const pngColors = (
           const green = data[index + 1]
           const blue = data[index + 2]
           grid[x][y] = hex(red, green, blue)
-          // console.log(x, y, index, red, green, blue, grid[x][y])
-          // console.log('%c Oh my heavens! ', `background: ${grid[x][y]}`);
-          // console.log('%c --- %s', `color: ${grid[x][y]};`)
         }
       }
 
       resolve(grid)
     }
     image.src = `data:image/png;base64,${base64}`
-    console.log(image.src)
-
     canvas.style.imageRendering = "pixelated"
-    // canvas.style.position = 'absolute'
-    // canvas.style.bottom = "128px"
-    // canvas.style.left = "128px"
-    // canvas.style.width = "128px"
-    // canvas.style.height = "128px"
-    // document.body.appendChild(canvas)
   })
 }
 
@@ -173,8 +162,8 @@ export const importSpritesheet = (
   paletteSource: string
 ): Thunk => async (dispatch) => {
   console.log("importing")
-  const spritesheetPixels = await pngColors(spritesheetSource, 128, 1)
-  const palettePixels = await pngColors(paletteSource, 4, 1)
+  const spritesheetPixels = await png2hex(spritesheetSource, 128, 1)
+  const palettePixels = await png2hex(paletteSource, 4, 1)
 
   const paletteState: PaletteState = _.zipObject(
     _.range(16),

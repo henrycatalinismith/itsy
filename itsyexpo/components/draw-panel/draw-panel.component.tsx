@@ -6,8 +6,8 @@ import { connect } from "react-redux"
 
 import {
   Disk,
-  editDisk,
   selectActiveDisk,
+  updateSpritesheet,
 } from "@highvalley.systems/itsyexpo/store/disks"
 
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
@@ -15,6 +15,7 @@ import styles from "./draw-panel.module.scss"
 
 interface DrawPanelProps {
   disk: Disk
+  updateSpritesheet: (png: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -23,9 +24,11 @@ const mapStateToProps = (state) => ({
 
 const html = Asset.fromModule(require("../../assets/webviews/itsydraw.html"))
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  updateSpritesheet,
+}
 
-export function DrawPanel({ disk }: DrawPanelProps) {
+export function DrawPanel({ disk, updateSpritesheet }: DrawPanelProps) {
   const webview = React.useRef() as any
   const renders = React.useRef(0)
   const [loading, setLoading] = React.useState(true)
@@ -44,10 +47,6 @@ export function DrawPanel({ disk }: DrawPanelProps) {
     console.log(`🏓 ${message.type}`)
 
     switch (message.type) {
-      case "console/log":
-        console.log(message.payload)
-        break
-
       case "webview/start":
         setTimeout(() => {
           // wait a second while the lua gets injected
@@ -67,6 +66,16 @@ export function DrawPanel({ disk }: DrawPanelProps) {
             console.log(e.message)
           }
         `)
+        break
+
+      case "console/log":
+        console.log(message.payload)
+        break
+
+      case "spritesheet/update":
+        console.log(message.payload)
+        console.log(message.uri)
+        updateSpritesheet(message.uri)
         break
     }
   }, [])
