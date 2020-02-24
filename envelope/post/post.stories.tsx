@@ -4,4 +4,4 @@ import Post from "./post.component";
 
 const stories = storiesOf("Post", module);
 
-stories.add("[default]", () => <Post>{"<p>body html</p>"}</Post>);
+stories.add("[default]", () => <Post title="test">{"<p>body html</p>"}</Post>);
