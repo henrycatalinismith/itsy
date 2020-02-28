@@ -1,16 +1,14 @@
-import { Asset } from "expo-asset"
-import React from "react"
-import { View } from "react-native"
-import { WebView } from "react-native-webview"
-import { connect } from "react-redux"
-
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import {
   Disk,
   selectActiveDisk,
   updateSpritesheet,
 } from "@highvalley.systems/itsyexpo/store/disks"
-
-import Loading from "@highvalley.systems/itsyexpo/components/loading"
+import { Asset } from "expo-asset"
+import React from "react"
+import { View } from "react-native"
+import { WebView } from "react-native-webview"
+import { connect } from "react-redux"
 import styles from "./draw-panel.module.scss"
 
 interface DrawPanelProps {
@@ -42,20 +40,21 @@ export function DrawPanel({ disk, updateSpritesheet }: DrawPanelProps) {
     }
   }, [disk.id])
 
-  const handleMessage = React.useCallback((event) => {
-    const message = JSON.parse(event.nativeEvent.data)
-    console.log(`🏓 ${message.type}`)
+  const handleMessage = React.useCallback(
+    (event) => {
+      const message = JSON.parse(event.nativeEvent.data)
+      console.log(`🏓 ${message.type}`)
 
-    switch (message.type) {
-      case "webview/start":
-        setTimeout(() => {
-          // wait a second while the lua gets injected
-          setLoading(false)
-        }, Math.pow(2, 8))
+      switch (message.type) {
+        case "webview/start":
+          setTimeout(() => {
+            // wait a second while the lua gets injected
+            setLoading(false)
+          }, Math.pow(2, 8))
 
-        // console.log(disk.spritesheet)
-        // console.log(disk.palette)
-        webview.current.injectJavaScript(`
+          // console.log(disk.spritesheet)
+          // console.log(disk.palette)
+          webview.current.injectJavaScript(`
           console.log('test')
           try {
           window.store.dispatch(window.importSpritesheet(
@@ -66,19 +65,21 @@ export function DrawPanel({ disk, updateSpritesheet }: DrawPanelProps) {
             console.log(e.message)
           }
         `)
-        break
+          break
 
-      case "console/log":
-        console.log(message.payload)
-        break
+        case "console/log":
+          console.log(message.payload)
+          break
 
-      case "spritesheet/update":
-        console.log(message.payload)
-        console.log(message.uri)
-        updateSpritesheet(message.uri)
-        break
-    }
-  }, [])
+        case "spritesheet/update":
+          console.log(message.payload)
+          console.log(message.uri)
+          updateSpritesheet(message.uri)
+          break
+      }
+    },
+    [disk.id]
+  )
 
   renders.current += 1
 
