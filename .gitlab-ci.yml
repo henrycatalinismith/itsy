@@ -12,11 +12,16 @@ deploy:itsyexpo:
       - itsyexpo/**/*
       - itsyhelp/**/*
       - itsyplay/**/*
+      - itsyread/**/*
   before_script:
     - echo fs.inotify.max_user_instances=524288 | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_user_watches=524288   | tee -a /etc/sysctl.conf && sysctl -p
     - echo fs.inotify.max_queued_events=524288  | tee -a /etc/sysctl.conf && sysctl -p
   script:
+    - cd itsyread
+    - yarn --pure-lockfile
+    - yarn build
+    - cd ..
     - cd itsyplay
     - yarn --pure-lockfile
     - make itsy

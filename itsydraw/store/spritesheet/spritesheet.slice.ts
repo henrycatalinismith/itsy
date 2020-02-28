@@ -1,6 +1,7 @@
 import { Thunk } from "@highvalley.systems/itsydraw/store"
 import palette from "@highvalley.systems/itsydraw/store/palette"
 import webview from "@highvalley.systems/itsydraw/store/webview"
+import readPalette from "@highvalley.systems/itsyread/palette"
 import {
   Palette,
   PaletteIndex,
@@ -135,15 +136,10 @@ export const importSpritesheet = (
 ): Thunk => async (dispatch) => {
   console.log("importing")
   const spritesheetPixels = await png2hex(spritesheetSource, 128, 1)
-  const palettePixels = await png2hex(paletteSource, 4, 1)
 
-  const paletteState: Palette = _.zipObject(
-    _.range(16),
-    _.range(16).map((id) => ({
-      id,
-      hex: palettePixels[id % 4][Math.floor(id / 4)],
-    }))
-  )
+  const paletteState: Palette = await readPalette(paletteSource)
+  console.log("PEEEEALALALATE")
+  console.log(paletteState)
 
   const spritesheet = {}
   for (let x = 0; x < 128; x++) {
