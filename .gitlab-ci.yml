@@ -20,7 +20,6 @@ deploy:itsyexpo:
   script:
     - cd itsyread
     - yarn --pure-lockfile
-    - yarn build
     - cd ..
     - cd itsyplay
     - yarn --pure-lockfile
