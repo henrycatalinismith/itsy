@@ -41,11 +41,16 @@ export default async function readPalette(png: string): Promise<Palette> {
 
         const palette = _.zipObject(
           _.range(16),
-          _.range(16).map((id) => ({
-            id,
-            hex: pixels[Math.floor(16 / id)][16 % id],
-          }))
+          _.range(16).map((id) => {
+            const y = Math.floor(id / 4)
+            const x = id % 4
+            return {
+              id,
+              hex: pixels[x][y],
+            }
+          })
         )
+        console.log(palette)
 
         resolve(palette)
       })
