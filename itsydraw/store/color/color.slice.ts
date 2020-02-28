@@ -3,9 +3,10 @@ import { Thunk } from "@highvalley.systems/itsydraw/store"
 
 import {
   PaletteColor,
-  PaletteIndex,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/palette"
+
+import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 
 const name = "color"
 

@@ -6,7 +6,6 @@ import { connect } from "react-redux"
 import { selectColor } from "@highvalley.systems/itsydraw/store/color"
 
 import {
-  PaletteIndex,
   PaletteState,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/palette"
@@ -20,6 +19,9 @@ import {
   drawPixel,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
+
+import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {

@@ -8,10 +8,11 @@ import {
 } from "@highvalley.systems/itsydraw/store/color"
 
 import {
-  PaletteIndex,
   PaletteColor,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/palette"
+
+import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 
 import styles from "./color.module.scss"
 

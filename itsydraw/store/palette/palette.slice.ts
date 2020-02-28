@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
 
-// prettier-ignore
-export type PaletteIndex =
-  |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7
-  |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15
+import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+
+import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
 
 export interface PaletteColor {
   id: PaletteIndex

@@ -4,9 +4,11 @@ import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
 
 import palette, {
-  PaletteIndex,
   PaletteState,
 } from "@highvalley.systems/itsydraw/store/palette"
+
+import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+
 import webview from "@highvalley.systems/itsydraw/store/webview"
 
 // prettier-ignore
