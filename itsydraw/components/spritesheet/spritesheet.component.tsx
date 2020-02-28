@@ -5,11 +5,14 @@ import {
   drawPixel,
   PartialSpritesheetState,
   selectSpritesheet,
-  SpritesheetPixelIndex,
   SpritesheetState,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
-import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import {
+  Palette,
+  PaletteIndex,
+  SpritesheetPixelIndex,
+} from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
 import React from "react"
