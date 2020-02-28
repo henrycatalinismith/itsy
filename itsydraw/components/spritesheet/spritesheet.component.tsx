@@ -1,32 +1,24 @@
+import { selectColor } from "@highvalley.systems/itsydraw/store/color"
+import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+import {
+  drawLine,
+  drawPixel,
+  PartialSpritesheetState,
+  selectSpritesheet,
+  SpritesheetPixelIndex,
+  SpritesheetState,
+  updateSpritesheet,
+} from "@highvalley.systems/itsydraw/store/spritesheet"
+import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-
-import { selectColor } from "@highvalley.systems/itsydraw/store/color"
-
-import {
-  PaletteState,
-  selectPalette,
-} from "@highvalley.systems/itsydraw/store/palette"
-
-import {
-  SpritesheetPixelIndex,
-  SpritesheetState,
-  PartialSpritesheetState,
-  selectSpritesheet,
-  drawLine,
-  drawPixel,
-  updateSpritesheet,
-} from "@highvalley.systems/itsydraw/store/spritesheet"
-
-import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
-
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {
   color: PaletteIndex
-  palette: PaletteState
+  palette: Palette
   spritesheet: SpritesheetState
   drawLine: (
     x0: SpritesheetPixelIndex,

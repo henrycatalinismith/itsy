@@ -8,11 +8,11 @@ export interface PaletteColor {
   hex: string
 }
 
-/*
-
 export type Palette = {
   [i in PaletteIndex]: PaletteColor
 }
+
+/*
 
 // prettier-ignore
 export type SpritesheetPixelIndex =

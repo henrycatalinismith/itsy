@@ -1,16 +1,12 @@
+import {
+  activateColor,
+  selectColor,
+} from "@highvalley.systems/itsydraw/store/color"
+import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
-
-import {
-  selectColor,
-  activateColor,
-} from "@highvalley.systems/itsydraw/store/color"
-
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
-
-import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
-
 import styles from "./color.module.scss"
 
 interface ColorProps {

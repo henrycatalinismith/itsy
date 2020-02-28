@@ -1,18 +1,11 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
-import { Thunk } from "@highvalley.systems/itsydraw/store"
-
-import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
-
 import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
-
-export type PaletteState = {
-  [i in PaletteIndex]: PaletteColor
-}
+import { Palette } from "@highvalley.systems/typedefs/itsy"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import _ from "lodash"
 
 const name = "palette"
 
-const initialState: PaletteState = _.zipObject(
+const initialState: Palette = _.zipObject(
   _.range(16),
   _.range(16).map((id) => ({
     id,
@@ -21,7 +14,7 @@ const initialState: PaletteState = _.zipObject(
 )
 
 const reducers = {
-  import(palette, action: PayloadAction<PaletteState>) {
+  import(palette, action: PayloadAction<Palette>) {
     return action.payload
   },
 }

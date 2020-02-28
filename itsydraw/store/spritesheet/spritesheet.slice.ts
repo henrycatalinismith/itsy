@@ -1,15 +1,10 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
+import { Thunk } from "@highvalley.systems/itsydraw/store"
+import palette from "@highvalley.systems/itsydraw/store/palette"
+import webview from "@highvalley.systems/itsydraw/store/webview"
+import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import didYouMean from "didyoumean2"
 import _ from "lodash"
-import { Thunk } from "@highvalley.systems/itsydraw/store"
-
-import palette, {
-  PaletteState,
-} from "@highvalley.systems/itsydraw/store/palette"
-
-import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
-
-import webview from "@highvalley.systems/itsydraw/store/webview"
 
 // prettier-ignore
 export type SpritesheetPixelIndex =
@@ -167,7 +162,7 @@ export const importSpritesheet = (
   const spritesheetPixels = await png2hex(spritesheetSource, 128, 1)
   const palettePixels = await png2hex(paletteSource, 4, 1)
 
-  const paletteState: PaletteState = _.zipObject(
+  const paletteState: Palette = _.zipObject(
     _.range(16),
     _.range(16).map((id) => ({
       id,

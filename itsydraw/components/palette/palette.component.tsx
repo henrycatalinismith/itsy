@@ -1,10 +1,8 @@
+import Color from "@highvalley.systems/itsydraw/components/color"
+import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+import { Palette as PaletteState } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import {
-  PaletteState,
-  selectPalette,
-} from "@highvalley.systems/itsydraw/store/palette"
-import Color from "@highvalley.systems/itsydraw/components/color"
 import styles from "./palette.module.scss"
 
 interface PaletteProps {
