@@ -3,12 +3,12 @@ export type PaletteIndex =
   |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7
   |  8 |  9 | 10 | 11 | 12 | 13 | 14 | 15
 
-/*
-
 export interface PaletteColor {
   id: PaletteIndex
   hex: string
 }
+
+/*
 
 export type Palette = {
   [i in PaletteIndex]: PaletteColor

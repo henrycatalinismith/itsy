@@ -2,14 +2,9 @@ import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
 
-import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 
 import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
-
-export interface PaletteColor {
-  id: PaletteIndex
-  hex: string
-}
 
 export type PaletteState = {
   [i in PaletteIndex]: PaletteColor

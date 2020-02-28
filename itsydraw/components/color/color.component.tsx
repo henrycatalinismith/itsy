@@ -7,12 +7,9 @@ import {
   activateColor,
 } from "@highvalley.systems/itsydraw/store/color"
 
-import {
-  PaletteColor,
-  selectPalette,
-} from "@highvalley.systems/itsydraw/store/palette"
+import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 
-import { PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 
 import styles from "./color.module.scss"
 
