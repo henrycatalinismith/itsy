@@ -31,13 +31,13 @@ export type SpritesheetPixelIndex =
   | 112 | 113 | 114 | 115 | 116 | 117 | 118 | 119
   | 120 | 121 | 122 | 123 | 124 | 125 | 126 | 127
 
-/*
-
 export type Spritesheet = {
   [i in SpritesheetPixelIndex]: {
     [i in SpritesheetPixelIndex]: PaletteIndex
   }
 }
+
+/*
 
 export type PartialSpritesheet = {
   [i in SpritesheetPixelIndex]?: {

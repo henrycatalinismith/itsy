@@ -4,17 +4,12 @@ import webview from "@highvalley.systems/itsydraw/store/webview"
 import {
   Palette,
   PaletteIndex,
+  Spritesheet,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import didYouMean from "didyoumean2"
 import _ from "lodash"
-
-export type SpritesheetState = {
-  [i in SpritesheetPixelIndex]: {
-    [i in SpritesheetPixelIndex]: PaletteIndex
-  }
-}
 
 export type PartialSpritesheetState = {
   [i in SpritesheetPixelIndex]?: {
@@ -24,13 +19,13 @@ export type PartialSpritesheetState = {
 
 const name = "spritesheet"
 
-const initialState: SpritesheetState = _.zipObject(
+const initialState: Spritesheet = _.zipObject(
   _.range(128),
   _.range(128).map(() => _.zipObject(_.range(128), _.fill(Array(128), 0)))
 )
 
 const reducers = {
-  import(spritesheet, action: PayloadAction<SpritesheetState>) {
+  import(spritesheet, action: PayloadAction<Spritesheet>) {
     return action.payload
   },
 
@@ -182,7 +177,7 @@ export const importSpritesheet = (
   }
 
   dispatch(palette.actions.import(paletteState))
-  dispatch(slice.actions.import(spritesheet as SpritesheetState))
+  dispatch(slice.actions.import(spritesheet as Spritesheet))
   dispatch(webview.actions.import())
 }
 

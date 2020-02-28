@@ -5,12 +5,12 @@ import {
   drawPixel,
   PartialSpritesheetState,
   selectSpritesheet,
-  SpritesheetState,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
   Palette,
   PaletteIndex,
+  Spritesheet as SpritesheetState,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
