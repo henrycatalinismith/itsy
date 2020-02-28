@@ -3,13 +3,13 @@ import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
   drawLine,
   drawPixel,
-  PartialSpritesheetState,
   selectSpritesheet,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
   Palette,
   PaletteIndex,
+  PartialSpritesheet,
   Spritesheet as SpritesheetState,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
@@ -35,7 +35,7 @@ interface SpritesheetProps {
     y: SpritesheetPixelIndex,
     color: PaletteIndex
   ) => void
-  updateSpritesheet: (changes: PartialSpritesheetState) => void
+  updateSpritesheet: (changes: PartialSpritesheet) => void
 }
 
 const mapStateToProps = (state) => ({

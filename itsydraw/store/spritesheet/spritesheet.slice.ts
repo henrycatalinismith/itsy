@@ -4,18 +4,13 @@ import webview from "@highvalley.systems/itsydraw/store/webview"
 import {
   Palette,
   PaletteIndex,
+  PartialSpritesheet,
   Spritesheet,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import didYouMean from "didyoumean2"
 import _ from "lodash"
-
-export type PartialSpritesheetState = {
-  [i in SpritesheetPixelIndex]?: {
-    [i in SpritesheetPixelIndex]?: PaletteIndex
-  }
-}
 
 const name = "spritesheet"
 
@@ -73,7 +68,7 @@ const reducers = {
     spritesheet[action.payload.x][action.payload.y] = action.payload.color
   },
 
-  update(spritesheet, action: PayloadAction<PartialSpritesheetState>) {
+  update(spritesheet, action: PayloadAction<PartialSpritesheet>) {
     _.forEach(action.payload, (column, x) => {
       _.forEach(column, (color, y) => {
         spritesheet[x][y] = color
@@ -199,9 +194,9 @@ export const drawPixel = (
   dispatch(slice.actions.pset({ x, y, color }))
 }
 
-export const updateSpritesheet = (
-  changes: PartialSpritesheetState
-): Thunk => async (dispatch) => {
+export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
+  dispatch
+) => {
   dispatch(slice.actions.update(changes))
 }
 

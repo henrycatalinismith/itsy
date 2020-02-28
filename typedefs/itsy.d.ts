@@ -37,12 +37,8 @@ export type Spritesheet = {
   }
 }
 
-/*
-
 export type PartialSpritesheet = {
   [i in SpritesheetPixelIndex]?: {
     [i in SpritesheetPixelIndex]?: PaletteIndex
   }
 }
-
-*/
