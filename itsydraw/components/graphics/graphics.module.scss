@@ -4,9 +4,10 @@
   height: 100vh;
 
   grid-template-areas:
-    "palette"
-    "spritesheet";
-  grid-template-rows: min-content auto;
+    "spritesheet"
+    "palette";
+
+  grid-template-rows: auto min-content;
 }
 
 .palette {

@@ -2,7 +2,8 @@
   "name": "@highvalley.systems/itsydraw",
   "version": "0.0.0",
   "scripts": {
-    "build": "webpack --config webpack.config.js && cp index.html ../itsyexpo/assets/webviews/itsydraw.html; rm -f index.js"
+    "build": "webpack --config webpack.config.js && cp index.html ../itsyexpo/assets/webviews/itsydraw.html; rm -f index.js",
+    "start": "webpack-dev-server --open"
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -34,7 +35,8 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "didyoumean2": "^4.0.0"

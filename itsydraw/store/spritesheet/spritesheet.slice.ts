@@ -134,12 +134,9 @@ export const importSpritesheet = (
   spritesheetSource: string,
   paletteSource: string
 ): Thunk => async (dispatch) => {
-  console.log("importing")
   const spritesheetPixels = await png2hex(spritesheetSource, 128, 1)
 
   const paletteState: Palette = await readPalette(paletteSource)
-  console.log("PEEEEALALALATE")
-  console.log(paletteState)
 
   const spritesheet = {}
   for (let x = 0; x < 128; x++) {
@@ -155,7 +152,6 @@ export const importSpritesheet = (
       }
 
       if (!paletteColor) {
-        console.log(spritePixel)
         paletteColor = paletteState[0]
       }
 

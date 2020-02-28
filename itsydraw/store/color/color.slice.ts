@@ -19,7 +19,13 @@ const slice = createSlice({
   reducers,
 })
 
-export const activateColor = (i: PaletteIndex): Thunk => async (dispatch) => {
+export const activateColor = (i: PaletteIndex): Thunk => async (
+  dispatch,
+  getState
+) => {
+  if (selectColor(getState()) === i) {
+    return
+  }
   dispatch(slice.actions.activate(i as PaletteIndex))
 }
 

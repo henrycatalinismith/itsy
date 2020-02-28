@@ -1,6 +1,7 @@
 .palette {
   display: grid;
-  grid-template-columns: repeat(16, 1fr);
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
   margin: 0;
   padding: 0;
 }
