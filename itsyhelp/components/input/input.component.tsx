@@ -1,6 +1,6 @@
 import React from "react"
 
-import { FunctionParameter } from "@highvalley.systems/typedefs/manual"
+import { FunctionParameter } from "@highvalley.systems/typedefs/itsy"
 import Section from "../section"
 import Type from "../type"
 

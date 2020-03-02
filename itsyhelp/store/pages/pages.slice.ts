@@ -1,10 +1,8 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
-import { Thunk } from "@highvalley.systems/itsyhelp/store"
-import { Page } from "@highvalley.systems/typedefs/manual"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
+import { createSlice } from "@reduxjs/toolkit"
 
 export interface PagesState {
-  [path: string]: Page
+  [path: string]: HelpPage
 }
 
 const name = "pages"

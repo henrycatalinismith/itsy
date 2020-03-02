@@ -1,8 +1,6 @@
+import { Function } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
-
 import styles from "./signature.module.scss"
-
-import { Function } from "@highvalley.systems/typedefs/manual"
 
 export function Signature(fn: Function): React.ReactElement {
   return (

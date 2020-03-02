@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Page, Function } from "@highvalley.systems/typedefs/manual"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 
 import Section from "../section"
 import Signature from "../signature"
@@ -11,7 +11,7 @@ import Example from "../example"
 import styles from "./function.module.scss"
 
 interface FunctionProps {
-  page: Page
+  page: HelpPage
 }
 
 export function FunctionPage({ page }: FunctionProps): React.ReactElement {

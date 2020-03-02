@@ -1,16 +1,15 @@
-import React from "react"
-import { connect } from "react-redux"
-import styles from "./results.module.scss"
-
-import { Page } from "@highvalley.systems/typedefs/manual"
 import {
   selectQuery,
   selectResults,
 } from "@highvalley.systems/itsyhelp/store/query"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
+import React from "react"
+import { connect } from "react-redux"
+import styles from "./results.module.scss"
 
 interface ResultsProps {
   query: string
-  results: Page[]
+  results: HelpPage[]
 }
 
 const mapStateToProps = (state) => ({

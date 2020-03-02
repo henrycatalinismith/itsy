@@ -1,15 +1,12 @@
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import {
   Action,
   combineReducers,
   configureStore,
   getDefaultMiddleware,
 } from "@reduxjs/toolkit"
-
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
-
-import { Page } from "@highvalley.systems/typedefs/manual"
-
 import location from "./location"
 import pages from "./pages"
 import query from "./query"
@@ -32,7 +29,7 @@ markdownFiles.forEach((mardown) => {
   const frontMatter = mardown.attributes
   const body = mardown.body
 
-  const page: Page = {
+  const page: HelpPage = {
     path: frontMatter.path,
     title: frontMatter.title || "",
     description: frontMatter.description || "",

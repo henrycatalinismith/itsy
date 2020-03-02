@@ -2,11 +2,12 @@ import React from "react"
 import { connect } from "react-redux"
 
 import { currentPage } from "@highvalley.systems/itsyhelp/store/location"
-import { Page } from "@highvalley.systems/typedefs/manual"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
+
 import styles from "./breadcrumbs.module.scss"
 
 interface BreadcrumbsProps {
-  page: Page
+  page: HelpPage
 }
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsyhelp/store"
-import { Page } from "@highvalley.systems/typedefs/manual"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "location"
 
@@ -33,7 +32,7 @@ export const locationSelector = ({ location }) => location
 
 export const currentPage = ({ location, pages }) => {
   if (location === "/search") {
-    const searchPage: Page = {
+    const searchPage: HelpPage = {
       path: "/search",
       title: "search",
       description: "search",

@@ -1,13 +1,10 @@
-import React from "react"
-import marked from "marked"
-import { connect } from "react-redux"
-
 import {
   currentPage,
   navigate,
 } from "@highvalley.systems/itsyhelp/store/location"
-import { Page as PageType } from "@highvalley.systems/typedefs/manual"
-
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
+import React from "react"
+import { connect } from "react-redux"
 import Breadcrumbs from "../breadcrumbs"
 import FunctionPage from "../function"
 import Header from "../header"
@@ -18,7 +15,7 @@ import Search from "../search"
 
 interface ManualProps {
   navigate: (path: string) => void
-  page: PageType
+  page: HelpPage
 }
 
 const mapStateToProps = (state) => ({
