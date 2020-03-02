@@ -11,7 +11,7 @@ import {
 } from "@highvalley.systems/itsyexpo/store/panels"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
-import { Rect } from "@highvalley.systems/typedefs/geometry"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
 import styles from "./panel.module.scss"
 
 interface PanelProps {

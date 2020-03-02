@@ -1,7 +1,7 @@
 import React from "react"
 import { Animated, LayoutAnimation, View } from "react-native"
 import { connect } from "react-redux"
-import { Rect } from "@highvalley.systems/typedefs/geometry"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
 
 import {
   PanelId,
