@@ -1,15 +1,13 @@
+import Palette from "@highvalley.systems/itsydraw/components/palette"
+import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
+import Zoom from "@highvalley.systems/itsydraw/components/zoom"
+import {
+  selectWebview,
+  WebviewState,
+} from "@highvalley.systems/itsydraw/store/webview"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./graphics.module.scss"
-
-// import { currentPage, navigate } from "@highvalley.systems/itsyhelp/store/location"
-
-import Palette from "@highvalley.systems/itsydraw/components/palette"
-import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
-import {
-  WebviewState,
-  selectWebview,
-} from "@highvalley.systems/itsydraw/store/webview"
 
 interface GraphicsProps {
   webview: WebviewState
@@ -29,6 +27,9 @@ export function Graphics({ webview }: GraphicsProps): React.ReactElement {
       </div>
       <div className={styles.spritesheet}>
         {webview.imported && <Spritesheet />}
+      </div>
+      <div className={styles.zoom}>
+        <Zoom />
       </div>
     </div>
   )

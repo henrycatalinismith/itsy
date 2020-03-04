@@ -7,6 +7,7 @@ import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import React from "react"
 import { Rect } from "react-konva"
+import { RectConfig } from "konva/types/shapes/Rect"
 import { connect } from "react-redux"
 import styles from "./color.module.scss"
 
@@ -42,12 +43,13 @@ export function Color({
     activateColor(id)
   }, [])
 
-  const props = {
+  const props: RectConfig = {
     x,
     y,
     width: size,
     height: size,
     fill: color.hex,
+    onClick,
     onTap: onClick,
     onTouchMove: onClick,
   }

@@ -12,6 +12,7 @@ import color from "./color"
 import palette from "./palette"
 import spritesheet, { importSpritesheet } from "./spritesheet"
 import webview from "./webview"
+import zoom from "./zoom"
 
 const postMessageMiddleware = (store) => (next) => (action) => {
   next(action)
@@ -91,6 +92,7 @@ const reducer = combineReducers({
   palette: palette.reducer,
   spritesheet: spritesheet.reducer,
   webview: webview.reducer,
+  zoom: zoom.reducer,
 })
 
 const preloadedState = {}

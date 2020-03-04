@@ -6,6 +6,7 @@ import {
   selectSpritesheet,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
+import { selectZoom } from "@highvalley.systems/itsydraw/store/zoom"
 import {
   Palette,
   PaletteIndex,
@@ -36,12 +37,14 @@ interface SpritesheetProps {
     color: PaletteIndex
   ) => void
   updateSpritesheet: (changes: PartialSpritesheet) => void
+  zoom: number
 }
 
 const mapStateToProps = (state) => ({
   color: selectColor(state),
   palette: selectPalette(state),
   spritesheet: selectSpritesheet(state),
+  zoom: selectZoom(state),
 })
 
 const mapDispatchToProps = {
@@ -57,6 +60,7 @@ export function Spritesheet({
   drawPixel,
   drawLine,
   updateSpritesheet,
+  zoom,
 }: SpritesheetProps): React.ReactElement {
   const repainting = React.useRef(false)
   const changes = React.useRef<
@@ -88,10 +92,10 @@ export function Spritesheet({
       canvas.current.width = canvas.current.clientWidth
       canvas.current.height = canvas.current.clientHeight
       ctx.current = canvas.current.getContext("2d")
-      setScale((canvas.current.clientWidth / 128) * 1)
+      setScale((canvas.current.clientWidth / 128) * zoom)
       repaint()
     }
-  }, [])
+  }, [zoom])
 
   // React.useEffect(() => {
   // console.log(spritesheet[2][11])

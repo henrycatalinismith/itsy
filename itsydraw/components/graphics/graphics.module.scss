@@ -5,9 +5,10 @@
 
   grid-template-areas:
     "spritesheet"
-    "palette";
+    "palette"
+    "zoom";
 
-  grid-template-rows: auto min-content;
+  grid-template-rows: auto min-content min-content;
 }
 
 .palette {
