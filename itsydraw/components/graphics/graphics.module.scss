@@ -4,11 +4,16 @@
   height: 100vh;
 
   grid-template-areas:
-    "spritesheet"
-    "palette"
-    "zoom";
+    "spritesheet spritesheet"
+    "palette navigator"
+    "zoom zoom";
 
+  grid-template-columns: auto auto;
   grid-template-rows: auto min-content min-content;
+}
+
+.navigator {
+  grid-area: navigator;
 }
 
 .palette {
@@ -18,4 +23,8 @@
 .spritesheet {
   grid-area: spritesheet;
   display: flex;
+}
+
+.zoom {
+  grid-area: zoom;
 }

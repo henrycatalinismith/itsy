@@ -1,3 +1,4 @@
+import Navigator from "@highvalley.systems/itsydraw/components/navigator"
 import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
 import Zoom from "@highvalley.systems/itsydraw/components/zoom"
@@ -27,6 +28,9 @@ export function Graphics({ webview }: GraphicsProps): React.ReactElement {
       </div>
       <div className={styles.spritesheet}>
         {webview.imported && <Spritesheet />}
+      </div>
+      <div className={styles.navigator}>
+        <Navigator />
       </div>
       <div className={styles.zoom}>
         <Zoom />
