@@ -1,3 +1,7 @@
+import {
+  selectCamera,
+  selectZoom,
+} from "@highvalley.systems/itsydraw/store/camera"
 import { selectColor } from "@highvalley.systems/itsydraw/store/color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
@@ -6,11 +10,11 @@ import {
   selectSpritesheet,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
-import { selectZoom } from "@highvalley.systems/itsydraw/store/zoom"
 import {
   Palette,
   PaletteIndex,
   PartialSpritesheet,
+  Rect,
   Spritesheet as SpritesheetState,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
@@ -21,6 +25,7 @@ import { connect } from "react-redux"
 import styles from "./spritesheet.module.scss"
 
 interface SpritesheetProps {
+  camera: Rect
   color: PaletteIndex
   palette: Palette
   spritesheet: SpritesheetState
@@ -41,6 +46,7 @@ interface SpritesheetProps {
 }
 
 const mapStateToProps = (state) => ({
+  camera: selectCamera(state),
   color: selectColor(state),
   palette: selectPalette(state),
   spritesheet: selectSpritesheet(state),
@@ -54,6 +60,7 @@ const mapDispatchToProps = {
 }
 
 export function Spritesheet({
+  camera,
   color,
   palette,
   spritesheet,
@@ -84,6 +91,7 @@ export function Spritesheet({
     y: SpritesheetPixelIndex
   }>({ x: undefined, y: undefined })
   const [scale, setScale] = React.useState(1)
+  console.log(scale)
 
   console.log("RENDER")
 
@@ -92,10 +100,10 @@ export function Spritesheet({
       canvas.current.width = canvas.current.clientWidth
       canvas.current.height = canvas.current.clientHeight
       ctx.current = canvas.current.getContext("2d")
-      setScale((canvas.current.clientWidth / 128) * zoom)
+      setScale((canvas.current.clientWidth / 128) * (128 / camera.width))
       repaint()
     }
-  }, [zoom])
+  }, [camera, zoom])
 
   // React.useEffect(() => {
   // console.log(spritesheet[2][11])
@@ -116,17 +124,32 @@ export function Spritesheet({
     [scale]
   )
 
-  const pset = React.useCallback(
+  const draw = React.useCallback(
     (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
+      const ix = parseInt(x.toString(), 10)
+      const iy = parseInt(y.toString(), 10)
+
+      if (ix < camera.x || ix > camera.x + camera.width) {
+        return
+      }
+      if (iy < camera.y || iy > camera.y + camera.height) {
+        return
+      }
+
+      const jx = ix - camera.x
+      const jy = iy - camera.y
+
       const color = palette[i].hex
       ctx.current.strokeStyle = color
       ctx.current.fillStyle = color
-      ctx.current.fillRect(
-        parseInt(x.toString(), 10),
-        parseInt(y.toString(), 10),
-        1,
-        1
-      )
+      ctx.current.fillRect(jx, jy, 1, 1)
+    },
+    []
+  )
+
+  const pset = React.useCallback(
+    (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
+      draw(x, y, i)
       if (!repainting.current) {
         if (!changes.current[x]) {
           changes.current[x] = {}
@@ -135,7 +158,7 @@ export function Spritesheet({
         update()
       }
     },
-    [scale]
+    [camera, scale]
   )
 
   const line = React.useCallback(
@@ -174,7 +197,7 @@ export function Spritesheet({
     repainting.current = true
     Object.entries(spritesheet).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
-        pset(x as any, y as any, pixel)
+        draw(x as any, y as any, pixel)
       })
     })
     repainting.current = false

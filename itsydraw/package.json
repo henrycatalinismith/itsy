@@ -39,6 +39,7 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "didyoumean2": "^4.0.0"
+    "didyoumean2": "^4.0.0",
+    "react-rangeslider": "^2.2.0"
   }
 }

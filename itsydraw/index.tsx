@@ -1,10 +1,10 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import { Provider } from "react-redux"
-
 import Graphics from "@highvalley.systems/itsydraw/components/graphics"
 import store from "@highvalley.systems/itsydraw/store"
 import { startWebview } from "@highvalley.systems/itsydraw/store/webview"
+import React from "react"
+import ReactDOM from "react-dom"
+import "react-rangeslider/lib/index.css"
+import { Provider } from "react-redux"
 
 const root = document.createElement("div")
 document.body.appendChild(root)

@@ -8,11 +8,11 @@ import {
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
+import camera from "./camera"
 import color from "./color"
 import palette from "./palette"
 import spritesheet, { importSpritesheet } from "./spritesheet"
 import webview from "./webview"
-import zoom from "./zoom"
 
 const postMessageMiddleware = (store) => (next) => (action) => {
   next(action)
@@ -88,11 +88,11 @@ if ((window as any).ReactNativeWebView) {
 }
 
 const reducer = combineReducers({
+  camera: camera.reducer,
   color: color.reducer,
   palette: palette.reducer,
   spritesheet: spritesheet.reducer,
   webview: webview.reducer,
-  zoom: zoom.reducer,
 })
 
 const preloadedState = {}
