@@ -79,7 +79,12 @@ export function Navigator({
         pset(x as any, y as any, pixel)
       })
     })
-  }, [scale, spritesheet])
+
+    ctx.current.strokeStyle = "#01ffff"
+    ctx.current.lineWidth = 2
+    ctx.current.rect(0, 0, 128 / zoom, 128 / zoom)
+    ctx.current.stroke()
+  }, [scale, spritesheet, zoom])
 
   const props: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
