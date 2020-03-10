@@ -46,44 +46,30 @@ export function Navigator({
 }: NavigatorProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
-  const [scale, setScale] = React.useState(1)
 
-  console.log("RENDER")
+  const cls = (i = 0) => {
+    const color = palette[i].hex
+    ctx.current.fillStyle = color
+    ctx.current.fillRect(0, 0, 128, 128)
+  }
 
-  React.useEffect(() => {
-    if (canvas.current) {
-      canvas.current.width = 128
-      canvas.current.height = 128
-      ctx.current = canvas.current.getContext("2d")
-      repaint()
-    }
-  }, [camera, spritesheet, zoom])
+  const pset = (
+    x: SpritesheetPixelIndex,
+    y: SpritesheetPixelIndex,
+    i: PaletteIndex
+  ) => {
+    const color = palette[i].hex
+    ctx.current.strokeStyle = color
+    ctx.current.fillStyle = color
+    ctx.current.fillRect(
+      parseInt(x.toString(), 10),
+      parseInt(y.toString(), 10),
+      1,
+      1
+    )
+  }
 
-  const cls = React.useCallback(
-    (i = 0) => {
-      const color = palette[i].hex
-      ctx.current.fillStyle = color
-      ctx.current.fillRect(0, 0, 128, 128)
-    },
-    [scale]
-  )
-
-  const pset = React.useCallback(
-    (x: SpritesheetPixelIndex, y: SpritesheetPixelIndex, i: PaletteIndex) => {
-      const color = palette[i].hex
-      ctx.current.strokeStyle = color
-      ctx.current.fillStyle = color
-      ctx.current.fillRect(
-        parseInt(x.toString(), 10),
-        parseInt(y.toString(), 10),
-        1,
-        1
-      )
-    },
-    [palette, scale]
-  )
-
-  const repaint = React.useCallback(() => {
+  const repaint = () => {
     cls(0)
     console.log("repainting")
     console.log(camera.x)
@@ -94,35 +80,41 @@ export function Navigator({
     })
 
     ctx.current.strokeStyle = "#01ffff"
-    ctx.current.lineWidth = 4
-    ctx.current.rect(
-      camera.x,
-      camera.y,
-      camera.x + camera.width,
-      camera.y + camera.height
-    )
+    ctx.current.lineWidth = 1
+    ctx.current.beginPath()
+    ctx.current.rect(camera.x, camera.y, camera.width, camera.height)
     ctx.current.stroke()
-  }, [camera, scale, spritesheet, zoom])
+  }
+
+  const onLoad = React.useCallback(() => {
+    canvas.current.width = 128
+    canvas.current.height = 128
+    ctx.current = canvas.current.getContext("2d")
+  }, [])
+
+  const onUpdateSpritesheet = React.useCallback(() => {
+    repaint()
+  }, [spritesheet])
+
+  const onUpdateCamera = React.useCallback(() => {
+    repaint()
+  }, [camera])
 
   const onTouchStart = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const rect = canvas.current.getBoundingClientRect()
-      const x = Math.floor((event.touches[0].clientX - rect.left) / scale)
-      const y = Math.floor((event.touches[0].clientY - rect.top) / scale)
+      const x = Math.floor((event.touches[0].clientX - rect.left) / 1)
+      const y = Math.floor((event.touches[0].clientY - rect.top) / 1)
       moveCamera(x, y)
     },
     []
   )
 
-  const onTouchMove = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      const rect = canvas.current.getBoundingClientRect()
-      const x = Math.floor((event.touches[0].clientX - rect.left) / scale)
-      const y = Math.floor((event.touches[0].clientY - rect.top) / scale)
-      moveCamera(x, y)
-    },
-    []
-  )
+  const onTouchMove = onTouchStart
+
+  React.useEffect(onLoad, [])
+  React.useEffect(onUpdateSpritesheet, [spritesheet])
+  React.useEffect(onUpdateCamera, [camera])
 
   const props: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
