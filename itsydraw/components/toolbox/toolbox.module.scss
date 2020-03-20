@@ -4,11 +4,23 @@
   background-color: pico8-original-palette(1);
   display: grid;
   flex: 1;
+}
+
+.crowded {
   grid-template-areas:
     "palette navigator"
     "zoom zoom";
-  grid-template-columns: min-content min-content;
-  grid-template-rows: min-content min-content;
+  grid-template-rows: repeat(3, min-content);
+  grid-template-columns: repeat(2, auto);
+}
+
+.stacked {
+  grid-template-areas:
+    "palette"
+    "navigator"
+    "zoom";
+  grid-template-rows: repeat(3, min-content);
+  grid-template-columns: repeat(1, auto);
 }
 
 .navigator {

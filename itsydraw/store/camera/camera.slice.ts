@@ -18,8 +18,6 @@ const initialState: Rect = {
 const reducers = {
   move(camera, action: PayloadAction<Point>): void {
     const { x, y } = action.payload
-    // const zoom = selectZoom({ camera })
-
     camera.x = x - camera.width / 2
     camera.y = y - camera.height / 2
 

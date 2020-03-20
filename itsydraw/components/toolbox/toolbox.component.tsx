@@ -1,30 +1,56 @@
+import cx from "classnames"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
 import {
-  selectZoom,
-  zoomCamera,
-} from "@highvalley.systems/itsydraw/store/camera"
+  ToolboxLayouts,
+  ToolboxState,
+  selectToolbox,
+  updateToolboxLayout,
+} from "@highvalley.systems/itsydraw/store/toolbox"
 import Navigator from "@highvalley.systems/itsydraw/components/navigator"
 import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Zoom from "@highvalley.systems/itsydraw/components/zoom"
 import React from "react"
 import { connect } from "react-redux"
+import useResizeObserver from "use-resize-observer/polyfilled"
 import styles from "./toolbox.module.scss"
 
 interface ToolboxProps {
-  // zoom: number
-  // zoomCamera: (z: number) => void
+  toolbox: ToolboxState
+  updateToolboxLayout: (rect: Rect) => void
 }
 
 const mapStateToProps = (state) => ({
-  // zoom: selectZoom(state),
+  toolbox: selectToolbox(state),
 })
 
 const mapDispatchToProps = {
-  // zoomCamera,
+  updateToolboxLayout,
 }
 
-export function Toolbox({}: ToolboxProps): React.ReactElement {
+export function Toolbox({
+  toolbox,
+  updateToolboxLayout,
+}: ToolboxProps): React.ReactElement {
+  const divRef = React.useRef<HTMLDivElement>(null)
+  const { width, height } = useResizeObserver({ ref: divRef })
+
+  const onResize = React.useCallback(() => {
+    updateToolboxLayout({ ...toolbox.rect, width, height })
+  }, [width, height])
+
+  React.useEffect(() => onResize(), [width, height])
+
+  const className = cx(styles.toolbox, {
+    [styles.crowded]: toolbox.layout === ToolboxLayouts.Crowded,
+    [styles.stacked]: toolbox.layout === ToolboxLayouts.Stacked,
+  })
+
+  const divProps: React.HTMLAttributes<HTMLDivElement> = {
+    className,
+  }
+
   return (
-    <div className={styles.toolbox}>
+    <div {...divProps} ref={divRef}>
       <div className={styles.palette}>
         <Palette />
       </div>

@@ -12,6 +12,7 @@ import camera from "./camera"
 import color from "./color"
 import palette from "./palette"
 import spritesheet, { importSpritesheet } from "./spritesheet"
+import toolbox from "./toolbox"
 import webview from "./webview"
 
 const postMessageMiddleware = (store) => (next) => (action) => {
@@ -92,6 +93,7 @@ const reducer = combineReducers({
   color: color.reducer,
   palette: palette.reducer,
   spritesheet: spritesheet.reducer,
+  toolbox: toolbox.reducer,
   webview: webview.reducer,
 })
 

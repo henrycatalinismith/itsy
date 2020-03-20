@@ -1,3 +1,4 @@
+import useResizeObserver from "use-resize-observer/polyfilled"
 import Graphics from "@highvalley.systems/itsydraw/components/graphics"
 import store from "@highvalley.systems/itsydraw/store"
 import { startWebview } from "@highvalley.systems/itsydraw/store/webview"
