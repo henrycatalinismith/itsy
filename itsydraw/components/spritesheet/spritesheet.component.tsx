@@ -193,7 +193,7 @@ export function Spritesheet({
       sset(x, y, color)
       last.current = { x, y }
     },
-    [color]
+    [camera, color]
   )
 
   const onTouchMove = React.useCallback(
@@ -217,7 +217,7 @@ export function Spritesheet({
 
       last.current = { x, y }
     },
-    [color]
+    [camera, color]
   )
 
   const onUpdateCamera = React.useCallback(() => {
