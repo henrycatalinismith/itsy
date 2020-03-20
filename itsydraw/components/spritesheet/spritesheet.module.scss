@@ -1,5 +1,20 @@
+@mixin aspect-ratio($ratio: 1 1, $selector: "> :first-child") {
+  $selector: unquote($selector);
+
+  padding-bottom: percentage(nth($ratio, 2) / nth($ratio, 1));
+  position: relative;
+
+  #{$selector} {
+    left: 0;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
 .spritesheet {
-  // flex: 1;
+  @include aspect-ratio(1 1);
 }
 
 .canvas {
