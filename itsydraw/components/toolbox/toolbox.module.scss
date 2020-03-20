@@ -1,0 +1,24 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.toolbox {
+  background-color: pico8-original-palette(1);
+  display: grid;
+  flex: 1;
+  grid-template-areas:
+    "palette navigator"
+    "zoom zoom";
+  grid-template-columns: min-content min-content;
+  grid-template-rows: min-content min-content;
+}
+
+.navigator {
+  grid-area: navigator;
+}
+
+.palette {
+  grid-area: palette;
+}
+
+.zoom {
+  grid-area: zoom;
+}

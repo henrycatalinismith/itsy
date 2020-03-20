@@ -1,6 +1,7 @@
 import Navigator from "@highvalley.systems/itsydraw/components/navigator"
 import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
+import Toolbox from "@highvalley.systems/itsydraw/components/toolbox"
 import Zoom from "@highvalley.systems/itsydraw/components/zoom"
 import {
   selectWebview,
@@ -23,17 +24,11 @@ const mapDispatchToProps = {}
 export function Graphics({ webview }: GraphicsProps): React.ReactElement {
   return (
     <div className={styles.graphics}>
-      <div className={styles.palette}>
-        <Palette />
-      </div>
       <div className={styles.spritesheet}>
         {webview.imported && <Spritesheet />}
       </div>
-      <div className={styles.navigator}>
-        <Navigator />
-      </div>
-      <div className={styles.zoom}>
-        <Zoom />
+      <div className={styles.toolbox}>
+        <Toolbox />
       </div>
     </div>
   )
