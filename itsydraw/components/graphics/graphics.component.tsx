@@ -25,7 +25,7 @@ export function Graphics({ webview }: GraphicsProps): React.ReactElement {
   return (
     <div className={styles.graphics}>
       <div className={styles.spritesheet}>
-        {webview.imported && <Spritesheet />}
+        <Spritesheet />
       </div>
       <div className={styles.toolbox}>
         <Toolbox />

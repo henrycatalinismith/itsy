@@ -2,6 +2,10 @@ import {
   selectCamera,
   selectZoom,
 } from "@highvalley.systems/itsydraw/store/camera"
+import {
+  selectWebview,
+  WebviewState,
+} from "@highvalley.systems/itsydraw/store/webview"
 import { selectColor } from "@highvalley.systems/itsydraw/store/color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
@@ -29,6 +33,7 @@ interface SpritesheetProps {
   palette: Palette
   spritesheet: SpritesheetState
   updateSpritesheet: (changes: PartialSpritesheet) => void
+  webview: WebviewState
   zoom: number
 }
 
@@ -37,6 +42,7 @@ const mapStateToProps = (state) => ({
   color: selectColor(state),
   palette: selectPalette(state),
   spritesheet: selectSpritesheet(state),
+  webview: selectWebview(state),
   zoom: selectZoom(state),
 })
 
@@ -50,6 +56,7 @@ export function Spritesheet({
   palette,
   spritesheet,
   updateSpritesheet,
+  webview,
   zoom,
 }: SpritesheetProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
@@ -160,6 +167,10 @@ export function Spritesheet({
     repaint()
   }, [])
 
+  const onImport = React.useCallback(() => {
+    repaint()
+  }, [spritesheet, palette])
+
   const touchLocation = (
     event: React.TouchEvent<HTMLCanvasElement>
   ): {
@@ -227,6 +238,7 @@ export function Spritesheet({
   }, [camera])
 
   React.useEffect(onLoad, [])
+  React.useEffect(onImport, [webview.imported])
   React.useEffect(onUpdateCamera, [camera])
 
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
