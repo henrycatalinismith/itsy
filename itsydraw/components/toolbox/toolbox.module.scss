@@ -4,14 +4,35 @@
   background-color: pico8-original-palette(1);
   display: grid;
   flex: 1;
+  overflow: hidden;
 }
 
 .crowded {
-  grid-template-areas:
-    "palette navigator"
-    "zoom zoom";
-  grid-template-rows: repeat(3, min-content);
-  grid-template-columns: repeat(2, auto);
+  grid-template-areas: "menu tools";
+  grid-template-rows: repeat(1, min-content);
+  grid-template-columns: min-content auto;
+}
+
+.menu {
+  display: grid;
+  grid-area: menu;
+  grid-auto-rows: min-content;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.menuitem {
+  padding: 8px;
+}
+
+.menuitem__active {
+  background-color: pico8-original-palette(12);
+}
+
+.tools {
+  grid-area: tools;
+  overflow: hidden;
 }
 
 .stacked {
@@ -23,14 +44,14 @@
   grid-template-columns: repeat(1, auto);
 }
 
-.navigator {
-  grid-area: navigator;
+.pencil {
+  transition: transform 1s;
+  padding: 8px 8px 8px 0;
+  box-sizing: border-box;
 }
 
-.palette {
-  grid-area: palette;
-}
-
-.zoom {
-  grid-area: zoom;
+.camera {
+  transition: transform 1s;
+  padding: 8px 8px 8px 0;
+  box-sizing: border-box;
 }
