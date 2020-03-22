@@ -2,10 +2,6 @@ import {
   selectCamera,
   selectZoom,
 } from "@highvalley.systems/itsydraw/store/camera"
-import {
-  selectWebview,
-  WebviewState,
-} from "@highvalley.systems/itsydraw/store/webview"
 import { selectColor } from "@highvalley.systems/itsydraw/store/color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
@@ -13,10 +9,13 @@ import {
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
+  selectWebview,
+  WebviewState,
+} from "@highvalley.systems/itsydraw/store/webview"
+import {
   Palette,
   PaletteIndex,
   PartialSpritesheet,
-  Point,
   Rect,
   Spritesheet as SpritesheetState,
   SpritesheetPixelIndex,

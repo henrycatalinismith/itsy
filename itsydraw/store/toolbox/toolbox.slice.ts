@@ -1,6 +1,6 @@
 import { Thunk } from "@highvalley.systems/itsydraw/store"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export enum ToolboxLayouts {
   Crowded = "Crowded",

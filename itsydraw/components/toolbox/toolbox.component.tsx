@@ -1,14 +1,14 @@
-import cx from "classnames"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
-import {
-  ToolboxLayouts,
-  ToolboxState,
-  selectToolbox,
-  updateToolboxLayout,
-} from "@highvalley.systems/itsydraw/store/toolbox"
 import Navigator from "@highvalley.systems/itsydraw/components/navigator"
 import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Zoom from "@highvalley.systems/itsydraw/components/zoom"
+import {
+  selectToolbox,
+  ToolboxLayouts,
+  ToolboxState,
+  updateToolboxLayout,
+} from "@highvalley.systems/itsydraw/store/toolbox"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
+import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import useResizeObserver from "use-resize-observer/polyfilled"

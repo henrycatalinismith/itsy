@@ -1,8 +1,5 @@
-import Navigator from "@highvalley.systems/itsydraw/components/navigator"
-import Palette from "@highvalley.systems/itsydraw/components/palette"
 import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
 import Toolbox from "@highvalley.systems/itsydraw/components/toolbox"
-import Zoom from "@highvalley.systems/itsydraw/components/zoom"
 import {
   selectWebview,
   WebviewState,
