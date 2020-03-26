@@ -15,9 +15,9 @@ const mapDispatchToProps = {}
 
 export function ToolboxToolPencil({}: ToolboxToolPencilProps): React.ReactElement {
   return (
-    <>
+    <div className={styles.pencil}>
       <ToolboxToolPencilPalette />
-    </>
+    </div>
   )
 }
 

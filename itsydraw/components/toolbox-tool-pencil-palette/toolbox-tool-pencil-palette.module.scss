@@ -1,11 +1,5 @@
 .palette {
   display: grid;
-  display: none;
-  grid-template-columns: repeat(4, 1fr);
-  margin: 0;
-  padding: 0;
-}
-
-.color {
-  overflow: hidden;
+  align-items: center;
+  justify-content: center;
 }

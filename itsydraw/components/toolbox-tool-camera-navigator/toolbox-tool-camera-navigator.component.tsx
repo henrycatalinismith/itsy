@@ -1,3 +1,4 @@
+import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
 import {
   moveCamera,
   selectCamera,
@@ -44,8 +45,12 @@ export function ToolboxToolCameraNavigator({
   spritesheet,
   zoom,
 }: ToolboxToolCameraNavigatorProps): React.ReactElement {
+  const { rect } = React.useContext(ToolboxToolContext)
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
+
+  const min = Math.min(rect.width, rect.height)
+  const scale = min / 128
 
   const cls = (i = 0) => {
     const color = palette[i].hex
@@ -87,10 +92,14 @@ export function ToolboxToolCameraNavigator({
   }
 
   const onLoad = React.useCallback(() => {
-    canvas.current.width = 128
-    canvas.current.height = 128
+    canvas.current.width = min
+    canvas.current.height = min
     ctx.current = canvas.current.getContext("2d")
   }, [])
+
+  const onResize = React.useCallback(() => {
+    ctx.current.scale(scale, scale)
+  }, [scale])
 
   const onUpdateSpritesheet = React.useCallback(() => {
     repaint()
@@ -113,6 +122,7 @@ export function ToolboxToolCameraNavigator({
   const onTouchMove = onTouchStart
 
   React.useEffect(onLoad, [])
+  React.useEffect(onResize, [scale])
   React.useEffect(onUpdateSpritesheet, [spritesheet])
   React.useEffect(onUpdateCamera, [camera])
 
@@ -121,6 +131,8 @@ export function ToolboxToolCameraNavigator({
     ref: canvas,
     onTouchStart,
     onTouchMove,
+    width: min,
+    height: min,
   }
 
   return <canvas {...props} />

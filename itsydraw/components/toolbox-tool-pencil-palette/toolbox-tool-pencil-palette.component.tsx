@@ -1,10 +1,11 @@
+import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
 import ToolboxToolPencilPaletteColor from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette-color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect, Provider, ReactReduxContext } from "react-redux"
 import { Stage, Layer, Rect, Text } from "react-konva"
-import styles from "./toolbox-tool-pencil-color.module.scss"
+import styles from "./toolbox-tool-pencil-palette.module.scss"
 
 interface ToolboxToolPencilPaletteProps {
   palette: Palette
@@ -19,36 +20,38 @@ const mapDispatchToProps = {}
 export function ToolboxToolPencilPalette({
   palette,
 }: ToolboxToolPencilPaletteProps): React.ReactElement {
+  const { rect } = React.useContext(ToolboxToolContext)
   const { store } = React.useContext(ReactReduxContext)
+
+  const min = Math.min(rect.width, rect.height)
 
   const colorSize = 128 / 4
   const virtualSize = 128
-  const browserSize = window.innerWidth / 2
+  const browserSize = min - 8
   const scale = browserSize / virtualSize
 
   return (
-    <>
-      <Stage
-        width={browserSize}
-        height={browserSize}
-        scaleX={scale}
-        scaleY={scale}
-      >
-        <Provider store={store}>
-          <Layer>
-            {Object.entries(palette).map(([id, color]) => (
-              <ToolboxToolPencilPaletteColor
-                key={id}
-                id={id}
-                x={(parseInt(id, 10) % 4) * colorSize}
-                y={Math.floor(parseInt(id, 10) / 4) * colorSize}
-                size={colorSize}
-              />
-            ))}
-          </Layer>
-        </Provider>
-      </Stage>
-    </>
+    <Stage
+      className={styles.palette}
+      width={browserSize}
+      height={browserSize}
+      scaleX={scale}
+      scaleY={scale}
+    >
+      <Provider store={store}>
+        <Layer>
+          {Object.entries(palette).map(([id, color]) => (
+            <ToolboxToolPencilPaletteColor
+              key={id}
+              id={id}
+              x={(parseInt(id, 10) % 4) * colorSize}
+              y={Math.floor(parseInt(id, 10) / 4) * colorSize}
+              size={colorSize}
+            />
+          ))}
+        </Layer>
+      </Provider>
+    </Stage>
   )
 }
 

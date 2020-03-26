@@ -1,3 +1,4 @@
+import useResizeObserver from "use-resize-observer/polyfilled"
 import {
   selectToolbox,
   ToolboxState,
@@ -10,6 +11,7 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
+import ToolboxToolContext from "./toolbox-tool.context"
 import styles from "./toolbox-tool.module.scss"
 
 interface ToolboxToolProps {
@@ -30,16 +32,25 @@ export function ToolboxTool({
   tool,
   toolbox,
 }: ToolboxToolProps): React.ReactElement {
-  const height = toolbox.rect.height
+  const divRef = React.useRef<HTMLDivElement>(null)
+  const { width, height } = useResizeObserver({ ref: divRef })
+
+  const rect: Rect = {
+    x: 0,
+    y: 0,
+    width,
+    height,
+  }
+
   const offset =
     _.indexOf(toolbox.tools, tool) -
     _.indexOf(toolbox.tools, toolbox.tool) -
     _.indexOf(toolbox.tools, tool)
-  const translateY = offset * height
+  const translateY = offset * toolbox.rect.height
   const transform = `translateY(${translateY}px)`
 
   const style = {
-    height,
+    height: toolbox.rect.height,
     transform,
   }
 
@@ -51,9 +62,11 @@ export function ToolboxTool({
   }
 
   return (
-    <div {...divProps}>
-      {tool === ToolboxTools.Camera && <ToolboxToolCamera />}
-      {tool === ToolboxTools.Pencil && <ToolboxToolPencil />}
+    <div {...divProps} ref={divRef}>
+      <ToolboxToolContext.Provider value={{ rect }}>
+        {tool === ToolboxTools.Camera && <ToolboxToolCamera />}
+        {tool === ToolboxTools.Pencil && <ToolboxToolPencil />}
+      </ToolboxToolContext.Provider>
     </div>
   )
 }
