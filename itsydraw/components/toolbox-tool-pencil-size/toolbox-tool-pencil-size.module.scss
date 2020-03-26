@@ -1,0 +1,17 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.sizes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.size {
+  display: block;
+  background-color: pico8-original-palette(2);
+  border: 1px solid pico8-original-palette(15);
+}
+
+.active {
+  background-color: pico8-original-palette(12);
+  border: 1px solid pico8-original-palette(14);
+}

@@ -1,4 +1,5 @@
 import ToolboxToolPencilPalette from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette"
+import ToolboxToolPencilSize from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-size"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-pencil.module.scss"
@@ -17,6 +18,7 @@ export function ToolboxToolPencil({}: ToolboxToolPencilProps): React.ReactElemen
   return (
     <div className={styles.pencil}>
       <ToolboxToolPencilPalette />
+      <ToolboxToolPencilSize />
     </div>
   )
 }

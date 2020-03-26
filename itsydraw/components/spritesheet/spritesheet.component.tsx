@@ -127,11 +127,16 @@ export function Spritesheet({
     y: SpritesheetPixelIndex,
     i: PaletteIndex
   ) => {
-    draw(x, y, i)
-    if (!changes.current[x]) {
-      changes.current[x] = {}
+    for (let sx = x; sx < x + pencil.size && sx < 127; sx++) {
+      for (let sy = y; sy < y + pencil.size && sy < 127; sy++) {
+        draw(sx, sy, i)
+        if (!changes.current[sx]) {
+          changes.current[sx] = {}
+        }
+        changes.current[sx][sy] = i
+      }
     }
-    changes.current[x][y] = i
+
     update()
   }
 
@@ -207,7 +212,7 @@ export function Spritesheet({
       sset(x, y, pencil.color)
       last.current = { x, y }
     },
-    [camera, pencil.color]
+    [camera, pencil.color, pencil.size]
   )
 
   const onTouchMove = React.useCallback(
@@ -231,7 +236,7 @@ export function Spritesheet({
 
       last.current = { x, y }
     },
-    [camera, pencil.color]
+    [camera, pencil.color, pencil.size]
   )
 
   const onUpdateCamera = React.useCallback(() => {
