@@ -29,8 +29,8 @@ const initialState: ToolboxState = {
     width: 0,
     height: 0,
   },
-  // tool: ToolboxTools.Pencil,
-  tool: ToolboxTools.Camera,
+  tool: ToolboxTools.Pencil,
+  // tool: ToolboxTools.Camera,
   tools: [ToolboxTools.Pencil, ToolboxTools.Camera],
 }
 

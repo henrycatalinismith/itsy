@@ -1,7 +1,8 @@
 import {
-  activateColor,
-  selectColor,
-} from "@highvalley.systems/itsydraw/store/color"
+  activatePencilColor,
+  selectPencil,
+  PencilState,
+} from "@highvalley.systems/itsydraw/store/pencil"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
@@ -11,34 +12,36 @@ import { connect } from "react-redux"
 
 interface ToolboxToolPencilPaletteColorProps {
   id: PaletteIndex
-  active: boolean
   color: PaletteColor
-  activateColor: (i: PaletteIndex) => void
+  activatePencilColor: (i: PaletteIndex) => void
   x: number
   y: number
   size: number
+  pencil: PencilState
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  active: selectColor(state) === ownProps.id,
+  pencil: selectPencil(state),
   color: selectPalette(state)[ownProps.id],
 })
 
 const mapDispatchToProps = {
-  activateColor,
+  activatePencilColor,
 }
 
 export function ToolboxToolPencilPaletteColor({
-  active,
-  activateColor,
+  activatePencilColor,
   id,
   color,
   x,
   y,
   size,
+  pencil,
 }: ToolboxToolPencilPaletteColorProps): React.ReactElement {
+  const active =
+    parseInt(pencil.color.toString(), 10) === parseInt(id.toString(), 10)
   const onClick = React.useCallback(() => {
-    activateColor(id)
+    activatePencilColor(id)
   }, [])
 
   const props: RectConfig = {

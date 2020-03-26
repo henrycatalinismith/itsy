@@ -2,6 +2,7 @@ import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-
 import ToolboxToolPencilPaletteColor from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette-color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import _ from "lodash"
 import React from "react"
 import { connect, Provider, ReactReduxContext } from "react-redux"
 import { Stage, Layer, Rect, Text } from "react-konva"
@@ -40,7 +41,7 @@ export function ToolboxToolPencilPalette({
     >
       <Provider store={store}>
         <Layer>
-          {Object.entries(palette).map(([id, color]) => (
+          {_.toPairs(palette).map(([id, color]) => (
             <ToolboxToolPencilPaletteColor
               key={id}
               id={id}

@@ -9,8 +9,8 @@ import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
 import camera from "./camera"
-import color from "./color"
 import palette from "./palette"
+import pencil from "./pencil"
 import spritesheet, { importSpritesheet } from "./spritesheet"
 import toolbox from "./toolbox"
 import webview from "./webview"
@@ -90,8 +90,8 @@ if ((window as any).ReactNativeWebView) {
 
 const reducer = combineReducers({
   camera: camera.reducer,
-  color: color.reducer,
   palette: palette.reducer,
+  pencil: pencil.reducer,
   spritesheet: spritesheet.reducer,
   toolbox: toolbox.reducer,
   webview: webview.reducer,

@@ -2,7 +2,10 @@ import {
   selectCamera,
   selectZoom,
 } from "@highvalley.systems/itsydraw/store/camera"
-import { selectColor } from "@highvalley.systems/itsydraw/store/color"
+import {
+  selectPencil,
+  PencilState,
+} from "@highvalley.systems/itsydraw/store/pencil"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
   selectSpritesheet,
@@ -30,6 +33,7 @@ interface SpritesheetProps {
   camera: Rect
   color: PaletteIndex
   palette: Palette
+  pencil: PencilState
   spritesheet: SpritesheetState
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
@@ -38,8 +42,8 @@ interface SpritesheetProps {
 
 const mapStateToProps = (state) => ({
   camera: selectCamera(state),
-  color: selectColor(state),
   palette: selectPalette(state),
+  pencil: selectPencil(state),
   spritesheet: selectSpritesheet(state),
   webview: selectWebview(state),
   zoom: selectZoom(state),
@@ -51,8 +55,8 @@ const mapDispatchToProps = {
 
 export function Spritesheet({
   camera,
-  color,
   palette,
+  pencil,
   spritesheet,
   updateSpritesheet,
   webview,
@@ -200,10 +204,10 @@ export function Spritesheet({
         return
       }
 
-      sset(x, y, color)
+      sset(x, y, pencil.color)
       last.current = { x, y }
     },
-    [camera, color]
+    [camera, pencil.color]
   )
 
   const onTouchMove = React.useCallback(
@@ -220,14 +224,14 @@ export function Spritesheet({
 
       console.log(x, y)
       if (last.current.x === undefined) {
-        sset(x, y, color)
+        sset(x, y, pencil.color)
       } else {
-        line(last.current.x, last.current.y, x, y, color)
+        line(last.current.x, last.current.y, x, y, pencil.color)
       }
 
       last.current = { x, y }
     },
-    [camera, color]
+    [camera, pencil.color]
   )
 
   const onUpdateCamera = React.useCallback(() => {

@@ -131,8 +131,8 @@ export function ToolboxToolCameraNavigator({
     ref: canvas,
     onTouchStart,
     onTouchMove,
-    width: min,
-    height: min,
+    width: !isNaN(min) ? min : 0,
+    height: !isNaN(min) ? min : 0,
   }
 
   return <canvas {...props} />
