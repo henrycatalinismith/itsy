@@ -23,7 +23,7 @@ const mapDispatchToProps = {
   changePencilSize,
 }
 
-const sizes = [1, 2]
+const sizes = [1, 2, 4, 8]
 
 export function ToolboxToolPencilSize({
   changePencilSize,

@@ -3,7 +3,7 @@ import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export type PencilSizes = 1 | 2 | 3 | 4
+export type PencilSizes = 1 | 2 | 4 | 8
 
 export interface PencilState {
   color: PaletteIndex
