@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "didyoumean2": "^4.0.0",
-    "react-rangeslider": "^2.2.0",
     "use-resize-observer": "^6.0.0"
   }
 }
