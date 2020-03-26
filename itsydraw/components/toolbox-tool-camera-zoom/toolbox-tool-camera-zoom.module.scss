@@ -1,9 +1,17 @@
-.zoom {
+@import "../../../palettes/pico8/_original.scss";
+
+.zooms {
   display: grid;
-  padding: 8px;
+  grid-template-columns: repeat(4, 1fr);
 }
 
-.range {
-  height: 32px;
-  width: 100%;
+.zoom {
+  display: block;
+  background-color: pico8-original-palette(2);
+  border: 1px solid pico8-original-palette(15);
+}
+
+.active {
+  background-color: pico8-original-palette(12);
+  border: 1px solid pico8-original-palette(14);
 }

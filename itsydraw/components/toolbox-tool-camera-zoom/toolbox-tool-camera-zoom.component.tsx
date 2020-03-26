@@ -1,3 +1,5 @@
+import cx from "classnames"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import {
   selectZoom,
   zoomCamera,
@@ -20,19 +22,34 @@ const mapDispatchToProps = {
   zoomCamera,
 }
 
+const zoomLevels = [1, 2, 4, 8]
+
 export function ToolboxToolCameraZoom({
   zoom,
   zoomCamera,
 }: ToolboxToolCameraZoomProps): React.ReactElement {
-  const onChange = React.useCallback((newValue) => {
-    const value = parseInt(newValue, 10)
-    const newZoom = value + 1
-    zoomCamera(newZoom)
-  }, [])
-
   return (
-    <div className={styles.zoom}>
-      <Slider min={1} max={8} value={zoom} onChange={onChange} />
+    <div className={styles.zooms}>
+      {zoomLevels.map((z) => {
+        const className = cx(styles.zoom, {
+          [styles.active]: z === zoom,
+        })
+
+        const onClick = React.useCallback(() => {
+          zoomCamera(z)
+        }, [])
+
+        const button: React.HTMLAttributes<HTMLButtonElement> = {
+          className,
+          onClick,
+        }
+
+        return (
+          <button key={z} {...button}>
+            <Pixlflip fontSize={16}>{`${z.toString()}x`}</Pixlflip>
+          </button>
+        )
+      })}
     </div>
   )
 }
