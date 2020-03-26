@@ -1,6 +1,6 @@
 import { Thunk } from "@highvalley.systems/itsydraw/store"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export enum ToolboxTools {
   Pencil = "Pencil",
@@ -16,6 +16,7 @@ export interface ToolboxState {
   layout: ToolboxLayouts
   rect: Rect
   tool: ToolboxTools
+  tools: ToolboxTools[]
 }
 
 const name = "toolbox"
@@ -29,6 +30,7 @@ const initialState: ToolboxState = {
     height: 0,
   },
   tool: ToolboxTools.Pencil,
+  tools: [ToolboxTools.Pencil, ToolboxTools.Camera],
 }
 
 const reducers = {
@@ -68,9 +70,14 @@ export const updateToolboxTool = (tool: ToolboxTools): Thunk => async (
 
 export const selectToolbox = ({ toolbox }) => toolbox
 
-// export const selectActiveColor = createSelector(
-// [selectColor, selectPalette],
-// (color, palette): PaletteColor => palette[color]
-// )
+export const selectToolboxTool = createSelector(
+  [selectToolbox],
+  (toolbox): ToolboxTools => toolbox.tool
+)
+
+export const selectToolboxTools = createSelector(
+  [selectToolbox],
+  (toolbox): ToolboxTools[] => toolbox.tools
+)
 
 export default slice

@@ -1,6 +1,4 @@
-import Navigator from "@highvalley.systems/itsydraw/components/navigator"
-import Palette from "@highvalley.systems/itsydraw/components/palette"
-import Zoom from "@highvalley.systems/itsydraw/components/zoom"
+import ToolboxTool from "@highvalley.systems/itsydraw/components/toolbox-tool"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import {
   selectToolbox,
@@ -77,29 +75,8 @@ export function Toolbox({
         })}
       </ol>
       <div className={styles.tools} style={{ height }}>
-        <div
-          className={styles.pencil}
-          style={{
-            height,
-            transform: `translateY(${
-              toolbox.tool === ToolboxTools.Pencil ? 0 : 0 - height
-            }px)`,
-          }}
-        >
-          <Palette />
-        </div>
-        <div
-          className={styles.camera}
-          style={{
-            height,
-            transform: `translateY(${
-              toolbox.tool === ToolboxTools.Camera ? 0 - height : height
-            }px)`,
-          }}
-        >
-          <Navigator />
-          <Zoom />
-        </div>
+        <ToolboxTool tool={ToolboxTools.Pencil} />
+        <ToolboxTool tool={ToolboxTools.Camera} />
       </div>
     </div>
   )

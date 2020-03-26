@@ -4,14 +4,12 @@ import {
 } from "@highvalley.systems/itsydraw/store/color"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
-import cx from "classnames"
 import React from "react"
 import { Rect } from "react-konva"
 import { RectConfig } from "konva/types/shapes/Rect"
 import { connect } from "react-redux"
-import styles from "./color.module.scss"
 
-interface ColorProps {
+interface ToolboxToolPencilPaletteColorProps {
   id: PaletteIndex
   active: boolean
   color: PaletteColor
@@ -30,7 +28,7 @@ const mapDispatchToProps = {
   activateColor,
 }
 
-export function Color({
+export function ToolboxToolPencilPaletteColor({
   active,
   activateColor,
   id,
@@ -38,7 +36,7 @@ export function Color({
   x,
   y,
   size,
-}: ColorProps): React.ReactElement {
+}: ToolboxToolPencilPaletteColorProps): React.ReactElement {
   const onClick = React.useCallback(() => {
     activateColor(id)
   }, [])
@@ -83,4 +81,7 @@ export function Color({
   return rect
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Color)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolboxToolPencilPaletteColor)

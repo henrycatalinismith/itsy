@@ -16,9 +16,9 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./navigator.module.scss"
+import styles from "./toolbox-tool-camera-navigator.module.scss"
 
-interface NavigatorProps {
+interface ToolboxToolCameraNavigatorProps {
   camera: Rect
   moveCamera: (x: number, y: number) => void
   palette: Palette
@@ -37,13 +37,13 @@ const mapDispatchToProps = {
   moveCamera,
 }
 
-export function Navigator({
+export function ToolboxToolCameraNavigator({
   camera,
   moveCamera,
   palette,
   spritesheet,
   zoom,
-}: NavigatorProps): React.ReactElement {
+}: ToolboxToolCameraNavigatorProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
 
@@ -126,4 +126,7 @@ export function Navigator({
   return <canvas {...props} />
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigator)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolboxToolCameraNavigator)
