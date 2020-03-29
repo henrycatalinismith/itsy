@@ -11,6 +11,7 @@ import {
   deleteDisk,
   dismissDisk,
   renameDisk,
+  shareDisk,
   selectInspectedDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 
@@ -33,6 +34,7 @@ interface DiskInspectorProps {
   deleteDisk: (id: string) => void
   dismissDisk: (id: string) => void
   renameDisk: (id: string) => void
+  shareDisk: () => void
 }
 
 const mapStateToProps = (state, { id }) => ({
@@ -44,6 +46,7 @@ const mapDispatchToProps = {
   deleteDisk,
   dismissDisk,
   renameDisk,
+  shareDisk,
 }
 
 export function DiskInspector({
@@ -52,6 +55,7 @@ export function DiskInspector({
   disk,
   dismissDisk,
   renameDisk,
+  shareDisk,
 }: DiskInspectorProps) {
   const [mode, setMode] = React.useState<DiskInspectorMode>(
     DiskInspectorMode.neutral
@@ -87,6 +91,10 @@ export function DiskInspector({
     setMode(DiskInspectorMode.neutral)
   }, [name])
 
+  const onShareStart = React.useCallback(() => {
+    shareDisk()
+  }, [])
+
   const onSpritesheetChange = React.useCallback(async () => {
     const image = await DocumentPicker.getDocumentAsync({ type: "image/png" })
     const uri = await FileSystem.readAsStringAsync(image.uri, {
@@ -113,6 +121,11 @@ export function DiskInspector({
                   <Font fontSize={24}>{disk.name}</Font>
                 </View>
                 <View style={styles.headerNameButtons}>
+                  <View style={styles.headerNameButton}>
+                    <Button onPress={onShareStart} theme="blue">
+                      share
+                    </Button>
+                  </View>
                   <View style={styles.headerNameButton}>
                     <Button onPress={onRenameStart}>rename</Button>
                   </View>

@@ -1,9 +1,11 @@
+import * as Sharing from "expo-sharing"
+import { AsyncStorage } from "react-native"
+import * as FileSystem from "expo-file-system"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
 import _ from "lodash"
 import { Keyboard } from "react-native"
 import uuid from "uuid"
-
 import * as itsy from "@highvalley.systems/itsyplay"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import player from "@highvalley.systems/itsyexpo/store/player"
@@ -280,6 +282,25 @@ export const saveSnapshot = (png: string): Thunk => async (
   const state = getState()
   const disk = selectActiveDisk(state)
   dispatch(writeValue(disk.uri, disk))
+}
+
+export const shareDisk = (): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const disk = selectInspectedDisk(state)
+  const html = itsy.write(disk)
+
+  const slug = disk.name.replace(/[^a-z0-9]/gi, "-")
+
+  const uri = `${FileSystem.documentDirectory}${slug}.html`
+  await FileSystem.writeAsStringAsync(uri, html)
+
+  const sharingOptions = {
+    dialogTitle: `Share ${disk.name}`,
+    mimeType: "text/html",
+    UTI: "text/html",
+  }
+
+  await Sharing.shareAsync(uri, sharingOptions)
 }
 
 export const stopDisk = (): Thunk => async (dispatch, getState) => {
