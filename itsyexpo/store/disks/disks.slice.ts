@@ -170,7 +170,15 @@ export const createDisk = (): Thunk => async (dispatch, getState) => {
   const id = uuid()
   const uri = makeUri(id)
   const name = words()
-  const lua = ""
+  const lua = `function _init()
+end
+
+function _tick()
+end
+
+function _draw()
+end
+`
   const active = false
   const inspect = false
   const created = new Date().toISOString()
