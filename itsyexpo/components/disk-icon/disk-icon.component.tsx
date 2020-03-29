@@ -5,7 +5,7 @@ import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import styles from "./disk-icon.module.scss"
 
-interface DiskIconProps {
+export interface DiskIconProps {
   id: string
   disk: Disk
   size: number
