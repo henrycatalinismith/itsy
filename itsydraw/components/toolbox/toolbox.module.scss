@@ -31,6 +31,7 @@
 }
 
 .tools {
+  display: grid;
   grid-area: tools;
   overflow: hidden;
 }

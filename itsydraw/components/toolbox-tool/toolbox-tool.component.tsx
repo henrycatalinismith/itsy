@@ -6,10 +6,11 @@ import {
 } from "@highvalley.systems/itsydraw/store/toolbox"
 import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
 import ToolboxToolPencil from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil"
+import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-tool-select"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
-import React from "react"
+import React, { CSSProperties } from "react"
 import { connect } from "react-redux"
 import ToolboxToolContext from "./toolbox-tool.context"
 import styles from "./toolbox-tool.module.scss"
@@ -42,15 +43,20 @@ export function ToolboxTool({
     height,
   }
 
-  const offset =
-    _.indexOf(toolbox.tools, tool) -
-    _.indexOf(toolbox.tools, toolbox.tool) -
-    _.indexOf(toolbox.tools, tool)
+  const thisIndex = _.indexOf(toolbox.tools, tool)
+  const thatIndex = _.indexOf(toolbox.tools, toolbox.tool)
+
+  console.log(thisIndex, thatIndex)
+  const offset = 0 - thatIndex
+
   const translateY = offset * toolbox.rect.height
   const transform = `translateY(${translateY}px)`
 
-  const style = {
+  const gridRow = thisIndex + 1
+
+  const style: CSSProperties = {
     height: toolbox.rect.height,
+    gridArea: `${gridRow} / 1 / ${gridRow} /2`,
     transform,
   }
 
@@ -66,6 +72,7 @@ export function ToolboxTool({
       <ToolboxToolContext.Provider value={{ rect }}>
         {tool === ToolboxTools.Camera && <ToolboxToolCamera />}
         {tool === ToolboxTools.Pencil && <ToolboxToolPencil />}
+        {tool === ToolboxTools.Select && <ToolboxToolSelect />}
       </ToolboxToolContext.Provider>
     </div>
   )

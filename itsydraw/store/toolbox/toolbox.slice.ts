@@ -5,6 +5,7 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 export enum ToolboxTools {
   Pencil = "Pencil",
   Camera = "Camera",
+  Select = "Select",
 }
 
 export enum ToolboxLayouts {
@@ -31,7 +32,7 @@ const initialState: ToolboxState = {
   },
   tool: ToolboxTools.Pencil,
   // tool: ToolboxTools.Camera,
-  tools: [ToolboxTools.Pencil, ToolboxTools.Camera],
+  tools: [ToolboxTools.Pencil, ToolboxTools.Camera, ToolboxTools.Select],
 }
 
 const reducers = {

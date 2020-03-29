@@ -10,7 +10,7 @@ import {
 } from "@highvalley.systems/itsydraw/store/toolbox"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
-import React from "react"
+import React, { CSSProperties } from "react"
 import { connect } from "react-redux"
 import useResizeObserver from "use-resize-observer/polyfilled"
 import styles from "./toolbox.module.scss"
@@ -53,6 +53,16 @@ export function Toolbox({
     className,
   }
 
+  const toolsDiv: React.HTMLAttributes<HTMLDivElement> = {
+    className: styles.tools,
+    style: {
+      height,
+      gridTemplateRows: `repeat(${toolbox.tools.length}, ${height}px)`,
+    },
+  }
+
+  console.log(`repeat(${toolbox.tools.length}, ${height}px)`)
+
   return (
     <div {...divProps} ref={divRef}>
       <ol className={styles.menu}>
@@ -61,22 +71,22 @@ export function Toolbox({
             updateToolboxTool(tool as ToolboxTools)
           }, [])
           const li = {
-            key: tool,
             className: cx(styles.menuitem, {
               [styles.menuitem__active]: toolbox.tool === tool,
             }),
             onClick,
           }
           return (
-            <li {...li}>
+            <li {...li} key={tool}>
               <Pixlflip fontSize={24}>{tool}</Pixlflip>
             </li>
           )
         })}
       </ol>
-      <div className={styles.tools} style={{ height }}>
+      <div {...toolsDiv}>
         <ToolboxTool tool={ToolboxTools.Pencil} />
         <ToolboxTool tool={ToolboxTools.Camera} />
+        <ToolboxTool tool={ToolboxTools.Select} />
       </div>
     </div>
   )

@@ -50,7 +50,6 @@ export default async function readPalette(png: string): Promise<Palette> {
             }
           })
         )
-        console.log(palette)
 
         resolve(palette)
       })
