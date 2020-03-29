@@ -5,12 +5,17 @@ import { connect } from "react-redux"
 
 import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
 import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
-import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
+import {
+  PlayerState,
+  playerSelector,
+  stop,
+} from "@highvalley.systems/itsyexpo/store/player"
 import styles from "./player.module.scss"
 
 interface PlayerProps {
   player: PlayerState
   saveSnapshot: (uri: string) => void
+  stop: () => void
   appendOutput: (text: string) => void
 }
 
@@ -21,9 +26,15 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   appendOutput,
   saveSnapshot,
+  stop,
 }
 
-export function Player({ appendOutput, player, saveSnapshot }: PlayerProps) {
+export function Player({
+  appendOutput,
+  player,
+  saveSnapshot,
+  stop,
+}: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -80,6 +91,11 @@ export function Player({ appendOutput, player, saveSnapshot }: PlayerProps) {
     switch (message.type) {
       case "console.log":
         appendOutput(message.payload)
+        break
+
+      case "error":
+        console.log("stopping")
+        stop()
         break
 
       case "snapshot":

@@ -17,6 +17,8 @@ void error (void)
   printf("error error lololol\n");
   printf("%s\n", msg);
 
+  emscripten_run_script("error()");
+
   camera(0, 0);
   rectfill(0, 0, 128, 128, 0);
   print(msg, 0, 0, 7);

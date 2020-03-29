@@ -129,6 +129,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   window.itsy = itsy
 
+  window.error = function() {
+    console.log("THERES BEEN AN ERROR")
+    if (typeof window.ReactNativeWebView !== "undefined") {
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        type: "error",
+      }))
+      window.itsy.abort()
+    }
+  }
+
   ${Buffer.from(base64.engine, "base64").toString()}
 
 })
