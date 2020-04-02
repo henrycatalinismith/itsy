@@ -41,6 +41,7 @@ OBJS=\
 	$(LUA)/liblua.a
 
 EMCCFLAGS=\
+	-s ALLOW_MEMORY_GROWTH=1 \
 	-s ENVIRONMENT="web" \
 	-s ERROR_ON_UNDEFINED_SYMBOLS=0 \
 	-s EXPORT_NAME="itsy" \

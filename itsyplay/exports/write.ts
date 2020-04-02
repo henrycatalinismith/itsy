@@ -147,3 +147,23 @@ document.addEventListener("DOMContentLoaded", () => {
 </html>
 `.trim()
 }
+
+/*
+-  ${Buffer.from(base64.engine, "base64").toString()}
++  const data = JSON.parse(document.querySelector("#data").innerText)
++  const engine = atob(data.engine)
+ 
++  const start = () => {
++    eval(engine)
++    canvas.removeEventListener("click", start)
++  }
++
++  canvas.addEventListener("click", start)
+ })
++
++</script>
++<script id="data" type="application/json">
++  ${JSON.stringify({
++    engine: base64.engine
++  })}
+*/

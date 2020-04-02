@@ -8,7 +8,7 @@ import {
 
 import express from "express"
 import fs from "fs"
-import { palette, snapshot, spritesheet } from "../studio/defaults"
+import { palette, snapshot, spritesheet } from "../itsyexpo/defaults"
 import { Disk } from "@highvalley.systems/typedefs"
 import read from "./exports/read"
 import write from "./exports/write"
