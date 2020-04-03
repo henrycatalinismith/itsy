@@ -69,7 +69,15 @@ if (typeof window.ReactNativeWebView !== "undefined") {
   }, 100)
 
   window.console.log = l => {
-    window.buffer.push(JSON.stringify(l))
+    switch (typeof l) {
+      case "string":
+        window.buffer.push(l)
+        break
+
+      default:
+        window.buffer.push(JSON.stringify(l))
+        break
+    }
   };
 }
 
