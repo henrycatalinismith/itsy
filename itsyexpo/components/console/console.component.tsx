@@ -10,7 +10,7 @@ import {
 } from "react-native"
 import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
-import { selectOutput } from "@highvalley.systems/itsyexpo/store/output"
+import { selectActiveOutput } from "@highvalley.systems/itsyexpo/store/output"
 import Button from "@highvalley.systems/itsyexpo/components/button"
 import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
@@ -21,7 +21,7 @@ interface ConsoleProps {
 }
 
 const mapStateToProps = (state) => ({
-  output: selectOutput(state),
+  output: selectActiveOutput(state),
 })
 
 const mapDispatchToProps = {}
@@ -29,6 +29,8 @@ const mapDispatchToProps = {}
 export function Console({ output }: ConsoleProps) {
   const view = React.useRef<ScrollView>()
   const [selectedLine, setSelectedLine] = React.useState(-1)
+
+  console.log(output)
 
   const onLinePress = (i: number) => () => setSelectedLine(i)
 
