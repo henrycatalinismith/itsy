@@ -6,8 +6,9 @@ import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
   Disk,
   inspectDisk,
-  openDisk,
+  selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import DiskIcon, {
   DiskIconProps,
 } from "@highvalley.systems/itsyexpo/components/disk-icon"
@@ -17,12 +18,14 @@ import styles from "./disk-list-item.module.scss"
 interface DiskListItemProps {
   id: string
   disk: Disk
+  activeDisk: Disk
   inspectDisk: (id: string) => void
   openDisk: (id: string) => void
 }
 
 const mapStateToProps = (state, { id }) => ({
   disk: state.disks[id],
+  activeDisk: selectActiveDisk(state),
 })
 
 const mapDispatchToProps = {
@@ -32,13 +35,15 @@ const mapDispatchToProps = {
 
 export function DiskListItem({
   disk,
+  activeDisk,
   inspectDisk,
   openDisk,
 }: DiskListItemProps) {
   const layout: Rect = React.useContext(LayoutContext)
   const diskListItemStyles = [styles.diskListItem]
 
-  if (disk.active) {
+  const active = disk.id === activeDisk.id
+  if (active) {
     diskListItemStyles.push(styles.active)
   }
 
@@ -72,12 +77,12 @@ export function DiskListItem({
   console.log(layout)
 
   const onPress = React.useCallback(() => {
-    if (disk.active) {
+    if (active) {
       inspectDisk(disk.id)
     } else {
       openDisk(disk.id)
     }
-  }, [disk.active])
+  }, [active])
 
   const touchableOpacity: TouchableOpacityProps = {
     style: diskListItemStyles,
