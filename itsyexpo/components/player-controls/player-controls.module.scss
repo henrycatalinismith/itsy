@@ -2,13 +2,4 @@
 
 .playerControls {
   display: flex;
-  height: 32px;
-  background-color: pico8-original-palette(14);
-  border-top: 2px solid pico8-original-palette(2);
-  border-bottom: 2px solid pico8-original-palette(2);
-  margin-left: -2px;
-  margin-right: -2px;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
 }

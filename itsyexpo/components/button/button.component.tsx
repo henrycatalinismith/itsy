@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import { TouchableOpacity } from "react-native"
 
@@ -36,7 +37,23 @@ export function Button({
 
   return (
     <TouchableOpacity style={[styles.button, styles[theme]]} onPress={onPress}>
-      <Font {...font}>{children}</Font>
+      {_.isArray(children) ? (
+        <>
+          {_.map(_.toArray(children), (c, i) => {
+            if (_.isString(c)) {
+              return (
+                <Font key={i} {...font}>
+                  {c}
+                </Font>
+              )
+            } else {
+              return c
+            }
+          })}
+        </>
+      ) : (
+        <Font {...font}>{children}</Font>
+      )}
     </TouchableOpacity>
   )
 }

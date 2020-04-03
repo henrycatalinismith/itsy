@@ -8,9 +8,12 @@ import {
   TextProps,
   ScrollViewProps,
 } from "react-native"
+import { Svg, Path } from "react-native-svg"
 import { connect } from "react-redux"
 import { selectOutput } from "@highvalley.systems/itsyexpo/store/output"
 import Button from "@highvalley.systems/itsyexpo/components/button"
+import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import styles from "./console.module.scss"
 
 interface ConsoleProps {
@@ -41,32 +44,34 @@ export function Console({ output }: ConsoleProps) {
     }
   }, [output])
 
-  const scrollView: ScrollViewProps = {
-    style: styles.console,
-  }
-
   return (
-    <ScrollView {...scrollView} ref={view}>
-      {output.map((line, i) => (
-        <TouchableHighlight key={i} onPress={onLinePress(i)}>
-          <>
-            <Text
-              style={[
-                styles.lineText,
-                i === selectedLine && styles.selectedLineText,
-              ]}
-            >
-              {line}
-            </Text>
-            {i === selectedLine && (
-              <View style={styles.copy}>
-                <Button onPress={onCopy}>copy</Button>
-              </View>
-            )}
-          </>
-        </TouchableHighlight>
-      ))}
-    </ScrollView>
+    <View style={styles.console}>
+      <ScrollView style={styles.output} ref={view}>
+        {output.map((line, i) => (
+          <TouchableHighlight key={i} onPress={onLinePress(i)}>
+            <>
+              <Text
+                style={[
+                  styles.lineText,
+                  i === selectedLine && styles.selectedLineText,
+                ]}
+              >
+                {line}
+              </Text>
+              {i === selectedLine && (
+                <View style={styles.copy}>
+                  <Button onPress={onCopy}>copy</Button>
+                </View>
+              )}
+            </>
+          </TouchableHighlight>
+        ))}
+      </ScrollView>
+      <View style={styles.shelf}>
+        <PlayerControls />
+        <Button onPress={() => {}}>clear</Button>
+      </View>
+    </View>
   )
 }
 

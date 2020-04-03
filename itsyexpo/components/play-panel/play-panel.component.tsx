@@ -5,8 +5,14 @@ import Console from "@highvalley.systems/itsyexpo/components/console"
 import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
 import Screen from "@highvalley.systems/itsyexpo/components/screen"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
-import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
-import { ScreenState, selectScreen } from "@highvalley.systems/itsyexpo/store/screen"
+import {
+  PlayerState,
+  playerSelector,
+} from "@highvalley.systems/itsyexpo/store/player"
+import {
+  ScreenState,
+  selectScreen,
+} from "@highvalley.systems/itsyexpo/store/screen"
 import styles from "./play-panel.module.scss"
 
 interface PlayPanelProps {
@@ -41,9 +47,7 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
       <View style={screenStyles}>
         <Screen />
       </View>
-      <View style={styles.controls}>
-        <PlayerControls />
-      </View>
+      <View style={styles.divider} />
       <View style={styles.console}>
         <Console />
       </View>
