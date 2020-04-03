@@ -11,6 +11,11 @@ const reducers = {
     const { id, lines } = action.payload
     output[id] = [...(output[id] || []), ...lines]
   },
+
+  clear(output, action: PayloadAction<{ id: string }>) {
+    const { id } = action.payload
+    delete output[id]
+  },
 }
 
 const slice = createSlice({
@@ -27,6 +32,14 @@ export const appendOutput = (newOutput: string[]): Thunk => async (
 ) => {
   const id = selectDisk(getState())
   dispatch(slice.actions.append({ id, lines: newOutput }))
+}
+
+export const clearOutput = (newOutput: string[]): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const id = selectDisk(getState())
+  dispatch(slice.actions.clear({ id }))
 }
 
 export const selectOutput = ({ output }): string[] => output
