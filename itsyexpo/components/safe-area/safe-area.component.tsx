@@ -1,9 +1,8 @@
+import { updateSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 import _ from "lodash"
 import React from "react"
+import { LayoutChangeEvent, LayoutRectangle, SafeAreaView } from "react-native"
 import { connect } from "react-redux"
-import { SafeAreaView, LayoutChangeEvent, LayoutRectangle } from "react-native"
-
-import { updateSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 import styles from "./safe-area.module.scss"
 
 interface SafeAreaProps {

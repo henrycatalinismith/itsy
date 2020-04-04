@@ -1,6 +1,6 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.header {
+.component {
   border: 2px solid pico8-original-palette(2);
   background-color: pico8-original-palette(14);
   border-bottom-width: 0;
@@ -9,14 +9,4 @@
   height: 32px;
   padding: 4px;
   position: relative;
-}
-
-.icon {
-  margin-right: 8px;
-}
-
-.storage {
-  position: absolute;
-  top: 4px;
-  right: 4px;
 }

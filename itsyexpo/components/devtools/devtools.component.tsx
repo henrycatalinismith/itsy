@@ -1,4 +1,4 @@
-import Header from "@highvalley.systems/itsyexpo/components/header"
+import AppHeader from "@highvalley.systems/itsyexpo/components/app-header"
 import PanelMode from "@highvalley.systems/itsyexpo/components/panel-mode"
 import PanelPicker from "@highvalley.systems/itsyexpo/components/panel-picker"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
@@ -17,9 +17,7 @@ export function Devtools({}: DevtoolsProps) {
   return (
     <>
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
-      <View style={styles.header}>
-        <Header />
-      </View>
+      <AppHeader />
       <View style={styles.component}>
         <PanelMode />
         <PanelPicker />
