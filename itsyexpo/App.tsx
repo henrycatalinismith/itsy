@@ -1,4 +1,5 @@
-import { AppLoading, ScreenOrientation } from "expo"
+import { AppLoading } from "expo"
+import * as ScreenOrientation from "expo-screen-orientation"
 import * as Font from "expo-font"
 import React from "react"
 import { EmitterSubscription, Keyboard, Dimensions } from "react-native"

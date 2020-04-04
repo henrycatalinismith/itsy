@@ -3,7 +3,7 @@
     "name": "itsy studio",
     "slug": "itsy-studio",
     "privacy": "unlisted",
-    "sdkVersion": "36.0.0",
+    "sdkVersion": "37.0.0",
     "packagerOpts": {
       "projectRoots": "",
       "config": "./metro.config.js",
