@@ -17,9 +17,9 @@ import {
 import Button from "@highvalley.systems/itsyexpo/components/button"
 import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import styles from "./console.module.scss"
+import styles from "./play-panel-console.module.scss"
 
-interface ConsoleProps {
+interface PlayPanelConsoleProps {
   output: string[]
   clearOutput: () => void
 }
@@ -32,7 +32,10 @@ const mapDispatchToProps = {
   clearOutput,
 }
 
-export function Console({ clearOutput, output }: ConsoleProps) {
+export function PlayPanelConsole({
+  clearOutput,
+  output,
+}: PlayPanelConsoleProps) {
   const view = React.useRef<ScrollView>()
   const [selectedLine, setSelectedLine] = React.useState(-1)
 
@@ -83,4 +86,4 @@ export function Console({ clearOutput, output }: ConsoleProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Console)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayPanelConsole)

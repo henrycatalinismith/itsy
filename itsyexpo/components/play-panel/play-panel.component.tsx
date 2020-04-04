@@ -1,9 +1,8 @@
 import React from "react"
 import { LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
-import Console from "@highvalley.systems/itsyexpo/components/console"
-import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
-import Screen from "@highvalley.systems/itsyexpo/components/screen"
+import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel-console"
+import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
   PlayerState,
@@ -45,11 +44,11 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
   return (
     <View style={panelStyles}>
       <View style={screenStyles}>
-        <Screen />
+        <PlayPanelScreen />
       </View>
       <View style={styles.divider} />
       <View style={styles.console}>
-        <Console />
+        <PlayPanelConsole />
       </View>
     </View>
   )

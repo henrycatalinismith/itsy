@@ -4,10 +4,13 @@ import { connect } from "react-redux"
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import Player from "@highvalley.systems/itsyexpo/components/player"
 import Snapshot from "@highvalley.systems/itsyexpo/components/snapshot"
-import { PlayerState, playerSelector } from "@highvalley.systems/itsyexpo/store/player"
-import styles from "./screen.module.scss"
+import {
+  PlayerState,
+  playerSelector,
+} from "@highvalley.systems/itsyexpo/store/player"
+import styles from "./play-panel-screen.module.scss"
 
-interface ScreenProps {
+interface PlayPanelScreenProps {
   player: PlayerState
   appendConsoleText: (text: string) => void
 }
@@ -18,7 +21,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Screen({ appendConsoleText, player }: ScreenProps) {
+export function PlayPanelScreen({
+  appendConsoleText,
+  player,
+}: PlayPanelScreenProps) {
   return (
     <View style={styles.screen}>
       {player.waiting ? (
@@ -32,4 +38,4 @@ export function Screen({ appendConsoleText, player }: ScreenProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Screen)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayPanelScreen)
