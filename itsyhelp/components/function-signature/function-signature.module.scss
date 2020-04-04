@@ -2,12 +2,12 @@
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
-.signature {
+.component {
   @include subsection();
   @include code();
   font-size: 14px;
 }
 
-.signature__name {
+.name {
   color: pico8-original-palette(3);
 }

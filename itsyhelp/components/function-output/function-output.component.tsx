@@ -1,10 +1,10 @@
-import { FunctionOutput } from "@highvalley.systems/typedefs/itsy"
+import { FunctionOutput as Output } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import Section from "../section"
 import Type from "../type"
-import styles from "./output.module.scss"
+import styles from "./function-output.module.scss"
 
-export function Output(output: FunctionOutput): React.ReactElement {
+export function FunctionOutput(output: Output): React.ReactElement {
   return (
     <Section
       title={
@@ -21,4 +21,4 @@ export function Output(output: FunctionOutput): React.ReactElement {
   )
 }
 
-export default Output
+export default FunctionOutput

@@ -6,30 +6,29 @@
   padding-top: 8px;
 }
 
-.input {
-  border-collapse: collapse;
+.component {
 }
 
-.input__name {
+.name {
   @include cell();
   @include code();
 
   color: pico8-original-palette(3);
 }
 
-.input__type {
+.type {
   @include cell();
   font-size: 12px;
   padding-left: 2px;
   padding-right: 4px;
 }
 
-.input__desc {
+.desc {
   @include cell();
   color: pico8-original-palette(0);
 }
 
-.input__base {
+.default {
   color: pico8-original-palette(13);
   font-size: 14px;
 }

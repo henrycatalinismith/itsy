@@ -2,13 +2,11 @@ import { selectCurrentPage } from "@highvalley.systems/itsyhelp/store/location"
 import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import Breadcrumbs from "../breadcrumbs"
 import FunctionPage from "../function"
 import Header from "../header"
 import Markdown from "../markdown"
 import Page from "../page"
 import Results from "../results"
-import Search from "../search"
 
 interface AppProps {
   navigate: (path: string) => void

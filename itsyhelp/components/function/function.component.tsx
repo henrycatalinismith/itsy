@@ -1,33 +1,25 @@
-import React from "react"
-
+import FunctionExampleList from "@highvalley.systems/itsyhelp/components/function-example-list"
+import FunctionInputList from "@highvalley.systems/itsyhelp/components/function-input-list"
+import FunctionOutput from "@highvalley.systems/itsyhelp/components/function-output"
+import FunctionSignature from "@highvalley.systems/itsyhelp/components/function-signature"
 import { HelpPage } from "@highvalley.systems/typedefs/itsy"
-
-import Section from "../section"
-import Signature from "../signature"
-import Input from "../input"
-import Output from "../output"
-import Example from "../example"
-
+import React from "react"
 import styles from "./function.module.scss"
 
 interface FunctionProps {
   page: HelpPage
 }
 
-export function FunctionPage({ page }: FunctionProps): React.ReactElement {
+export function Function({ page }: FunctionProps): React.ReactElement {
   return (
     <>
-      <Signature {...page.function} />
+      <FunctionSignature {...page.function} />
       <p className={styles.function__desc}>{page.description}</p>
-      <Input parameters={page.function.input} />
-      <Output {...page.function.output} />
-      <Section title="examples">
-        {Object.entries(page.function.examples).map(([name, example]) => (
-          <Example key={name} {...example} />
-        ))}
-      </Section>
+      <FunctionInputList parameters={page.function.input} />
+      <FunctionOutput {...page.function.output} />
+      <FunctionExampleList examples={page.function.examples} />
     </>
   )
 }
 
-export default FunctionPage
+export default Function

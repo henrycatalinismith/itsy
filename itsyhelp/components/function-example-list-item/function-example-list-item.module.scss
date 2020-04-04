@@ -2,16 +2,16 @@
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
-.example {
+.component {
   @include subsection();
   margin-bottom: 32px;
 }
 
-.example__heading {
+.heading {
   @include h3();
 }
 
-.example__card {
+.card {
   background: pico8-original-palette(7) !important;
   border: 1px solid pico8-original-palette(6);
   border-top: 4px solid pico8-original-palette(14) !important;
@@ -30,21 +30,21 @@
   }
 }
 
-.example__pre {
+.pre {
   background: pico8-original-palette(7) !important;
   flex: 1;
   margin: 0;
   width: 100%;
 }
 
-.example__code {
+.code {
   background: none !important;
   margin: 0;
   padding: 4px 8px !important;
 }
 
 $screenBorder: 2px;
-.example__square {
+.square {
   border: $screenBorder solid pico8-original-palette(0) !important;
   // width: calc(100% - 8px - (#{2 * $screenBorder}) );
   // padding-top: 100%;
@@ -54,7 +54,7 @@ $screenBorder: 2px;
   overflow: hidden;
 }
 
-.example__iframe {
+.iframe {
   border: 0;
   // kflex: 1;
   // kheight: 90vw;
