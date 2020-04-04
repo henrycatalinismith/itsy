@@ -1,49 +1,34 @@
 import { Asset } from "expo-asset"
 import React from "react"
-import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-
-import Loading from "@highvalley.systems/itsyexpo/components/loading"
-import styles from "@highvalley.systems/itsyexpo/components/editor/editor.module.scss"
+import styles from "./code-panel-webview.module.scss"
 import {
   Disk,
   editDisk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
-import { EditorState, editorSelector } from "@highvalley.systems/itsyexpo/store/editor"
 
 interface EditorProps {
   disk: Disk
-  editor: EditorState
   editDisk: (lua: string) => void
+  onLoad: () => void
 }
 
 const html = Asset.fromModule(require("../../assets/webviews/itsycode.html"))
 
 const mapStateToProps = (state) => ({
   disk: selectActiveDisk(state),
-  editor: editorSelector(state),
 })
 
 const mapDispatchToProps = {
   editDisk,
 }
 
-export function Editor({ disk, editor, editDisk }: EditorProps) {
+export function Editor({ disk, editDisk, onLoad }: EditorProps) {
   const renders = React.useRef(0)
-  const [loading, setLoading] = React.useState(true)
-  const [reloading, setReloading] = React.useState(false)
   const lua = disk.lua
   const webview = React.useRef() as any
-
-  React.useEffect(() => {
-    if (renders.current > 1) {
-      setLoading(true)
-      setReloading(true)
-      setTimeout(() => setReloading(false), Math.pow(2, 8))
-    }
-  }, [disk.id])
 
   const handleMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
@@ -52,7 +37,7 @@ export function Editor({ disk, editor, editDisk }: EditorProps) {
       case "webview/start":
         setTimeout(() => {
           // wait a second while the lua gets injected
-          setLoading(false)
+          onLoad()
         }, Math.pow(2, 8))
 
         webview.current.injectJavaScript(`
@@ -81,22 +66,17 @@ export function Editor({ disk, editor, editDisk }: EditorProps) {
 
   return React.useMemo(
     () => (
-      <View style={styles.editor}>
-        {!reloading && (
-          <WebView
-            style={styles.webview}
-            bounces={false}
-            injectedJavaScript="window.isReactNative = true;"
-            onMessage={handleMessage}
-            ref={webview}
-            scrollEnabled={false}
-            source={{ uri: html.uri }}
-          />
-        )}
-        {(loading || reloading) && <Loading style={styles.loading} />}
-      </View>
+      <WebView
+        style={styles.webview}
+        bounces={false}
+        injectedJavaScript="window.isReactNative = true;"
+        onMessage={handleMessage}
+        ref={webview}
+        scrollEnabled={false}
+        source={{ uri: html.uri }}
+      />
     ),
-    [loading, reloading]
+    []
   )
 }
 

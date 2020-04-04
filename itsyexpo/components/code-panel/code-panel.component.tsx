@@ -1,20 +1,50 @@
 import React from "react"
 import { connect } from "react-redux"
-import Editor from "@highvalley.systems/itsyexpo/components/editor"
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
+import { View } from "react-native"
+import {
+  Disk,
+  selectActiveDisk,
+} from "@highvalley.systems/itsyexpo/store/disks"
+import CodePanelWebview from "@highvalley.systems/itsyexpo/components/code-panel-webview"
 import styles from "./code-panel.module.scss"
 
 interface CodePanelProps {
-  // screen: ScreenState
+  disk: Disk
 }
 
 const mapStateToProps = (state) => ({
-  // screen: selectScreen(state),
+  disk: selectActiveDisk(state),
 })
 
 const mapDispatchToProps = {}
 
-export function CodePanel({}: CodePanelProps) {
-  return <Editor />
+export function CodePanel({ disk }: CodePanelProps) {
+  const renders = React.useRef(0)
+  const [loading, setLoading] = React.useState(true)
+  const [reloading, setReloading] = React.useState(false)
+
+  const onLoadWebview = React.useCallback(() => setLoading(false), [])
+
+  React.useEffect(() => {
+    if (renders.current > 1) {
+      setLoading(true)
+      setReloading(true)
+      setTimeout(() => setReloading(false), Math.pow(2, 8))
+    }
+  }, [disk.id])
+
+  renders.current += 1
+
+  return React.useMemo(
+    () => (
+      <View style={styles.codePanel}>
+        {!reloading && <CodePanelWebview onLoad={onLoadWebview} />}
+        {(loading || reloading) && <Loading style={styles.loading} />}
+      </View>
+    ),
+    [loading, reloading]
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CodePanel)
