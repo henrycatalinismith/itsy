@@ -2,10 +2,13 @@ import React from "react"
 import { View } from "react-native"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-import { Disk, selectActiveDisk } from "@highvalley.systems/itsyexpo/store/disks"
-import styles from "@highvalley.systems/itsyexpo/components/snapshot/snapshot.module.scss"
+import {
+  Disk,
+  selectActiveDisk,
+} from "@highvalley.systems/itsyexpo/store/disks"
+import styles from "./play-panel-screen-snapshot.module.scss"
 
-interface SnapshotProps {
+interface PlayPanelScreenSnapshotProps {
   disk: Disk
 }
 
@@ -13,9 +16,11 @@ const mapStateToProps = (state) => ({
   disk: selectActiveDisk(state),
 })
 
-export function Snapshot({ disk }: SnapshotProps) {
+export function PlayPanelScreenSnapshot({
+  disk,
+}: PlayPanelScreenSnapshotProps) {
   return (
-    <View style={styles.snapshot}>
+    <View style={styles.component}>
       <WebView
         style={styles.webview}
         source={{
@@ -60,4 +65,4 @@ export function Snapshot({ disk }: SnapshotProps) {
   )
 }
 
-export default connect(mapStateToProps)(Snapshot)
+export default connect(mapStateToProps)(PlayPanelScreenSnapshot)

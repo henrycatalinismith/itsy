@@ -10,9 +10,9 @@ import {
   playerSelector,
   stop,
 } from "@highvalley.systems/itsyexpo/store/player"
-import styles from "./player.module.scss"
+import styles from "./play-panel-screen-player.module.scss"
 
-interface PlayerProps {
+interface PlayPanelScreenPlayerProps {
   player: PlayerState
   saveSnapshot: (uri: string) => void
   stop: () => void
@@ -29,12 +29,12 @@ const mapDispatchToProps = {
   stop,
 }
 
-export function Player({
+export function PlayPanelScreenPlayer({
   appendOutput,
   player,
   saveSnapshot,
   stop,
-}: PlayerProps) {
+}: PlayPanelScreenPlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -118,19 +118,16 @@ export function Player({
     onMessage,
     scrollEnabled: false,
     source,
+    style: styles.component,
   }
 
-  return React.useMemo(
-    () => (
-      <View style={styles.player}>
-        <WebView {...webviewProps} />
-      </View>
-    ),
-    []
-  )
+  return React.useMemo(() => <WebView {...webviewProps} />, [])
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Player)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayPanelScreenPlayer)
 
 /*
 export default class Player extends React.Component {

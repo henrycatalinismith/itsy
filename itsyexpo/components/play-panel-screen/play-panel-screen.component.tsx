@@ -2,8 +2,8 @@ import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
-import Player from "@highvalley.systems/itsyexpo/components/player"
-import Snapshot from "@highvalley.systems/itsyexpo/components/snapshot"
+import PlayPanelScreenPlayer from "@highvalley.systems/itsyexpo/components/play-panel-screen-player"
+import PlayPanelScreenSnapshot from "@highvalley.systems/itsyexpo/components/play-panel-screen-snapshot"
 import {
   PlayerState,
   playerSelector,
@@ -30,9 +30,9 @@ export function PlayPanelScreen({
       {player.waiting ? (
         <Loading />
       ) : player.running || player.stopping ? (
-        <Player appendConsoleText={appendConsoleText} />
+        <PlayPanelScreenPlayer appendConsoleText={appendConsoleText} />
       ) : (
-        <Snapshot />
+        <PlayPanelScreenSnapshot />
       )}
     </View>
   )
