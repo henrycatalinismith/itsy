@@ -1,12 +1,12 @@
-import React from "react"
-import { connect } from "react-redux"
+import CodePanelWebview from "@highvalley.systems/itsyexpo/components/code-panel-webview"
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
-import { View } from "react-native"
 import {
   Disk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
-import CodePanelWebview from "@highvalley.systems/itsyexpo/components/code-panel-webview"
+import React from "react"
+import { View } from "react-native"
+import { connect } from "react-redux"
 import styles from "./code-panel.module.scss"
 
 interface CodePanelProps {

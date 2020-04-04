@@ -1,13 +1,13 @@
-import { Asset } from "expo-asset"
-import React from "react"
-import { WebView } from "react-native-webview"
-import { connect } from "react-redux"
-import styles from "./code-panel-webview.module.scss"
 import {
   Disk,
   editDisk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { Asset } from "expo-asset"
+import React from "react"
+import { WebView } from "react-native-webview"
+import { connect } from "react-redux"
+import styles from "./code-panel-webview.module.scss"
 
 interface EditorProps {
   disk: Disk

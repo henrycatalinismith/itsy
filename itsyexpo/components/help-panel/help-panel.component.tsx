@@ -1,8 +1,11 @@
+import {
+  ScreenState,
+  selectScreen,
+} from "@highvalley.systems/itsyexpo/store/screen"
 import { Asset } from "expo-asset"
 import React from "react"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-import { ScreenState, selectScreen } from "@highvalley.systems/itsyexpo/store/screen"
 import styles from "./help-panel.module.scss"
 
 const manual = Asset.fromModule(require("../../assets/webviews/itsyhelp.html"))

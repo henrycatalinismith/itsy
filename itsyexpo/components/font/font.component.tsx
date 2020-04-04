@@ -1,8 +1,6 @@
-import React from "react"
-import { Svg, G, Path } from "react-native-svg"
-
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import Pixelflip from "@highvalley.systems/pixlflip/regular"
+import React from "react"
+import { G, Path, Svg } from "react-native-svg"
 
 interface FontProps {
   children: any

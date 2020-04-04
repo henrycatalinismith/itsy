@@ -1,8 +1,7 @@
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
 import { TouchableHighlight } from "react-native"
-import { Svg, Rect } from "react-native-svg"
-
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import { Rect, Svg } from "react-native-svg"
 
 export function Floppy({ size = 23, onPress = () => {} }) {
   const styles = {

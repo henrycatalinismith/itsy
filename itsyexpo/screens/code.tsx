@@ -1,8 +1,7 @@
+import Devtools from "@highvalley.systems/itsyexpo/components/devtools"
+import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
 import React from "react"
 import { connect } from "react-redux"
-import Devtools from "@highvalley.systems/itsyexpo/components/devtools"
-import Header from "@highvalley.systems/itsyexpo/components/header"
-import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
 
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}

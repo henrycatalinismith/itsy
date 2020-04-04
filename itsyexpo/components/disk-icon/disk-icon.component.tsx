@@ -1,8 +1,8 @@
-import React from "react"
-import { Svg, Defs, ClipPath, Path, Image as SvgImage } from "react-native-svg"
-import { connect } from "react-redux"
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import React from "react"
+import { ClipPath, Defs, Image as SvgImage, Path, Svg } from "react-native-svg"
+import { connect } from "react-redux"
 import styles from "./disk-icon.module.scss"
 
 export interface DiskIconProps {

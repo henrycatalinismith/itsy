@@ -1,6 +1,6 @@
 import Button from "@highvalley.systems/itsyexpo/components/button"
 import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
-import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
+import DiskPanelInspectorSpritesheet from "@highvalley.systems/itsyexpo/components/disk-panel-inspector-spritesheet"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   changeDiskSpritesheet,
@@ -177,7 +177,7 @@ export function DiskPanelInspector({
 
       <View style={styles.spritesheetSection}>
         <View style={styles.spritesheetImageColumn}>
-          <DiskSpritesheet id={disk.id} size={128} />
+          <DiskPanelInspectorSpritesheet id={disk.id} size={128} />
         </View>
         <View style={styles.spritesheetButtonsColumn}>
           <View style={styles.spritesheetTitle}>

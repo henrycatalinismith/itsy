@@ -1,12 +1,9 @@
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import _ from "lodash"
 import React from "react"
 import { TouchableOpacity } from "react-native"
-
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import Font from "@highvalley.systems/itsyexpo/components/font"
-import styles from "@highvalley.systems/itsyexpo/components/button/button.module.scss"
-
-//
+import styles from "./button.module.scss"
 
 const fontThemes: { [theme: string]: Object } = {
   blue: {
