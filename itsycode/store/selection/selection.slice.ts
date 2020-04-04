@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsycode/store"
 import { Point2D } from "@highvalley.systems/typedefs"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface SelectionState {
   text: string
@@ -54,6 +53,6 @@ export const updateSelection = (
   dispatch(slice.actions.update({ start, end, text }))
 }
 
-export const selectionSelector = ({ selection }) => selection
+export const selectSelection = ({ selection }) => selection
 
 export default slice

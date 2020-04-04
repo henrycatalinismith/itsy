@@ -1,6 +1,5 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsycode/store"
+import { createSlice } from "@reduxjs/toolkit"
 
 export interface WebviewState {}
 
@@ -28,6 +27,6 @@ export const startWebview = (): Thunk => async (dispatch, getState) => {
   }, 300)
 }
 
-export const webviewSelector = ({ webview }) => webview
+export const selectWebview = ({ webview }) => webview
 
 export default slice

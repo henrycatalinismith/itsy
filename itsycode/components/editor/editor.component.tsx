@@ -1,29 +1,22 @@
+import { moveCursor } from "@highvalley.systems/itsycode/store/cursor"
+import { updateSelection } from "@highvalley.systems/itsycode/store/selection"
+import { changeText, selectText } from "@highvalley.systems/itsycode/store/text"
+import { Point } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
-import { connect } from "react-redux"
 import { Controlled as CodeMirror } from "react-codemirror2"
-
-import { Point2D } from "@highvalley.systems/typedefs"
+import { connect } from "react-redux"
 import "./codemirror.scss"
 import styles from "./editor.module.scss"
-import {
-  moveCursor,
-  cursorSelector,
-} from "@highvalley.systems/itsycode/store/cursor"
-import { updateSelection } from "@highvalley.systems/itsycode/store/selection"
-import {
-  changeText,
-  textSelector,
-} from "@highvalley.systems/itsycode/store/text"
 
 interface EditorProps {
   changeText: (text: string) => void
-  moveCursor: (point: Point2D) => void
-  updateSelection: (start: Point2D, end: Point2D, text: string) => void
+  moveCursor: (point: Point) => void
+  updateSelection: (start: Point, end: Point, text: string) => void
   text: string
 }
 
 const mapStateToProps = (state) => ({
-  text: textSelector(state),
+  text: selectText(state),
 })
 
 const mapDispatchToProps = {
@@ -50,7 +43,7 @@ export function Editor({
 
   const onCursor = React.useCallback(() => {
     const { line, ch } = codemirror.current.getCursor()
-    const point: Point2D = {
+    const point: Point = {
       x: ch,
       y: line,
     }
@@ -61,8 +54,8 @@ export function Editor({
     (cm, { ranges: [{ anchor, head }] }) => {
       setTimeout(() => {
         const selectedText = codemirror.current.getSelection()
-        const start: Point2D = { x: head.ch, y: head.line }
-        const end: Point2D = { x: anchor.ch, y: anchor.line }
+        const start: Point = { x: head.ch, y: head.line }
+        const end: Point = { x: anchor.ch, y: anchor.line }
         updateSelection(start, end, selectedText)
       }, 10)
     },
@@ -84,7 +77,7 @@ export function Editor({
   }
 
   const props = {
-    className: styles.editor,
+    className: styles.component,
     value: text,
     editorDidMount,
     onBeforeChange,

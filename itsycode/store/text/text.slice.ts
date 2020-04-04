@@ -1,6 +1,5 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsycode/store"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "text"
 
@@ -25,6 +24,6 @@ export const changeText = (text: string): Thunk => async (
   dispatch(slice.actions.change(text))
 }
 
-export const textSelector = ({ text }) => text
+export const selectText = ({ text }) => text
 
 export default slice

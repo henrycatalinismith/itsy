@@ -1,20 +1,6 @@
 @import "~@highvalley.systems/palettes/pico8/original";
 
-.loading {
-  background: #fae4ec;
-  color: pico8-original-palette(14);
-  width: 100vw !important;
-  height: 100vh !important;
-  display: flex;
-  flex-direction: column;
-  font-family: "Overpass Mono", monospace !important;
-  font-size: 18px;
-  font-weight: bold;
-  align-items: center;
-  justify-content: center;
-}
-
-.editor {
+.component {
   background: #eee;
   width: 100vw !important;
   height: 100vh !important;

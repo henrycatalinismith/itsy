@@ -1,17 +1,16 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsycode/store"
-import { Point2D } from "@highvalley.systems/typedefs"
+import { Point } from "@highvalley.systems/typedefs/itsy"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "cursor"
 
-const initialState: Point2D = {
+const initialState: Point = {
   x: 0,
   y: 0,
 }
 
 const reducers = {
-  move(cursor, action: PayloadAction<Point2D>) {
+  move(cursor, action: PayloadAction<Point>) {
     cursor.x = action.payload.x
     cursor.y = action.payload.y
   },
@@ -23,13 +22,13 @@ const slice = createSlice({
   reducers,
 })
 
-export const moveCursor = (point: Point2D): Thunk => async (
+export const moveCursor = (point: Point): Thunk => async (
   dispatch,
   getState
 ) => {
   dispatch(slice.actions.move(point))
 }
 
-export const cursorSelector = ({ cursor }) => cursor
+export const selectCursor = ({ cursor }) => cursor
 
 export default slice

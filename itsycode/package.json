@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "build": "webpack --config webpack.config.js && cp index.html ../itsyexpo/assets/webviews/itsycode.html; rm -f index.js",
+    "start": "webpack-dev-server --open",
     "storybook": "start-storybook -p 6006"
   },
   "devDependencies": {
@@ -32,6 +33,7 @@
     "typescript": "^3.7.4",
     "typings-for-css-modules-loader": "^1.7.0",
     "webpack": "^4.41.4",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.3"
   }
 }
