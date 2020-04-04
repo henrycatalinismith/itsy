@@ -1,17 +1,17 @@
-import useResizeObserver from "use-resize-observer/polyfilled"
+import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
+import ToolboxToolPencil from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil"
+import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-tool-select"
 import {
   selectToolbox,
   ToolboxState,
   ToolboxTools,
 } from "@highvalley.systems/itsydraw/store/toolbox"
-import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
-import ToolboxToolPencil from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil"
-import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-tool-select"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
 import React, { CSSProperties } from "react"
 import { connect } from "react-redux"
+import useResizeObserver from "use-resize-observer/polyfilled"
 import ToolboxToolContext from "./toolbox-tool.context"
 import styles from "./toolbox-tool.module.scss"
 

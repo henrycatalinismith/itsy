@@ -1,9 +1,5 @@
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import {
-  Point,
-  Rect,
-  SpritesheetPixelIndex,
-} from "@highvalley.systems/typedefs/itsy"
+import { Point, Rect } from "@highvalley.systems/typedefs/itsy"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "camera"

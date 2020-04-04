@@ -1,9 +1,9 @@
-import cx from "classnames"
-import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import {
   selectZoom,
   zoomCamera,
 } from "@highvalley.systems/itsydraw/store/camera"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
+import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-camera-zoom.module.scss"

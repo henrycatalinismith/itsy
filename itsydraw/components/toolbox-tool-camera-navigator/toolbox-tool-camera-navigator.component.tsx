@@ -14,7 +14,6 @@ import {
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
-import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-camera-navigator.module.scss"

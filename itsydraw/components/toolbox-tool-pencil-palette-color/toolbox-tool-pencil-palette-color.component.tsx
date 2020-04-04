@@ -1,13 +1,13 @@
+import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
   activatePencilColor,
-  selectPencil,
   PencilState,
+  selectPencil,
 } from "@highvalley.systems/itsydraw/store/pencil"
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import { RectConfig } from "konva/types/shapes/Rect"
 import React from "react"
 import { Rect } from "react-konva"
-import { RectConfig } from "konva/types/shapes/Rect"
 import { connect } from "react-redux"
 
 interface ToolboxToolPencilPaletteColorProps {

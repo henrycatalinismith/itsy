@@ -1,11 +1,11 @@
-import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
 import ToolboxToolPencilPaletteColor from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette-color"
+import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
 import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
-import { Palette, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
+import { Palette } from "@highvalley.systems/typedefs/itsy"
 import _ from "lodash"
 import React from "react"
+import { Layer, Stage } from "react-konva"
 import { connect, Provider, ReactReduxContext } from "react-redux"
-import { Stage, Layer, Rect, Text } from "react-konva"
 import styles from "./toolbox-tool-pencil-palette.module.scss"
 
 interface ToolboxToolPencilPaletteProps {

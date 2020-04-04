@@ -1,5 +1,4 @@
 import ToolboxTool from "@highvalley.systems/itsydraw/components/toolbox-tool"
-import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import {
   selectToolbox,
   ToolboxLayouts,
@@ -8,9 +7,10 @@ import {
   updateToolboxLayout,
   updateToolboxTool,
 } from "@highvalley.systems/itsydraw/store/toolbox"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
-import React, { CSSProperties } from "react"
+import React from "react"
 import { connect } from "react-redux"
 import useResizeObserver from "use-resize-observer/polyfilled"
 import styles from "./toolbox.module.scss"

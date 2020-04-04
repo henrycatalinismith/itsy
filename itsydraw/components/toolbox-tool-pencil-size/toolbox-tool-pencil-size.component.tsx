@@ -1,11 +1,11 @@
-import cx from "classnames"
-import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import {
   changePencilSize,
-  selectPencil,
-  PencilState,
   PencilSizes,
+  PencilState,
+  selectPencil,
 } from "@highvalley.systems/itsydraw/store/pencil"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
+import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-pencil-size.module.scss"
