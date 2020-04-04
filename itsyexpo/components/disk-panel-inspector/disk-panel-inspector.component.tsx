@@ -1,34 +1,30 @@
-import React from "react"
-import { View, TextInput } from "react-native"
-import { connect } from "react-redux"
-
-import * as DocumentPicker from "expo-document-picker"
-import * as FileSystem from "expo-file-system"
-
-import {
-  Disk,
-  changeDiskSpritesheet,
-  deleteDisk,
-  dismissDisk,
-  renameDisk,
-  shareDisk,
-  selectInspectedDisk,
-} from "@highvalley.systems/itsyexpo/store/disks"
-
 import Button from "@highvalley.systems/itsyexpo/components/button"
 import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
 import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
 import Font from "@highvalley.systems/itsyexpo/components/font"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import styles from "./disk-inspector.module.scss"
+import {
+  changeDiskSpritesheet,
+  deleteDisk,
+  Disk,
+  dismissDisk,
+  renameDisk,
+  selectInspectedDisk,
+  shareDisk,
+} from "@highvalley.systems/itsyexpo/store/disks"
+import * as DocumentPicker from "expo-document-picker"
+import * as FileSystem from "expo-file-system"
+import React from "react"
+import { TextInput, View } from "react-native"
+import { connect } from "react-redux"
+import styles from "./disk-panel-inspector.module.scss"
 
-enum DiskInspectorMode {
-  neutral = "neutral",
-  rename = "rename",
-  delete = "delete",
+enum DiskPanelInspectorModes {
+  Neutral = "Neutral",
+  Rename = "Rename",
+  Delete = "Delete",
 }
 
-interface DiskInspectorProps {
+interface DiskPanelInspectorProps {
   disk: Disk
   changeDiskSpritesheet: (uri: string) => void
   deleteDisk: (id: string) => void
@@ -49,25 +45,25 @@ const mapDispatchToProps = {
   shareDisk,
 }
 
-export function DiskInspector({
+export function DiskPanelInspector({
   changeDiskSpritesheet,
   deleteDisk,
   disk,
   dismissDisk,
   renameDisk,
   shareDisk,
-}: DiskInspectorProps) {
-  const [mode, setMode] = React.useState<DiskInspectorMode>(
-    DiskInspectorMode.neutral
+}: DiskPanelInspectorProps) {
+  const [mode, setMode] = React.useState<DiskPanelInspectorModes>(
+    DiskPanelInspectorModes.Neutral
   )
   const [name, setName] = React.useState(disk.name)
 
   const onDeleteStart = React.useCallback(() => {
-    setMode(DiskInspectorMode.delete)
+    setMode(DiskPanelInspectorModes.Delete)
   }, [])
 
   const onDeleteCancel = React.useCallback(() => {
-    setMode(DiskInspectorMode.neutral)
+    setMode(DiskPanelInspectorModes.Neutral)
   }, [])
 
   const onDeleteConfirm = React.useCallback(() => {
@@ -79,7 +75,7 @@ export function DiskInspector({
   }, [])
 
   const onRenameStart = React.useCallback(() => {
-    setMode(DiskInspectorMode.rename)
+    setMode(DiskPanelInspectorModes.Rename)
   }, [])
 
   const onRenameEdit = React.useCallback((newName) => {
@@ -88,7 +84,7 @@ export function DiskInspector({
 
   const onRenameSubmit = React.useCallback(() => {
     renameDisk(name)
-    setMode(DiskInspectorMode.neutral)
+    setMode(DiskPanelInspectorModes.Neutral)
   }, [name])
 
   const onShareStart = React.useCallback(() => {
@@ -104,7 +100,7 @@ export function DiskInspector({
   }, [])
 
   return (
-    <View style={styles.diskInspector}>
+    <View style={styles.component}>
       <View style={styles.navigation}>
         <Button onPress={onDismiss}>done</Button>
       </View>
@@ -115,7 +111,7 @@ export function DiskInspector({
         </View>
         <View style={styles.headerNameColumn}>
           {{
-            [DiskInspectorMode.neutral]: () => (
+            [DiskPanelInspectorModes.Neutral]: () => (
               <>
                 <View style={styles.headerNameOutput}>
                   <Font fontSize={24}>{disk.name}</Font>
@@ -138,7 +134,7 @@ export function DiskInspector({
               </>
             ),
 
-            [DiskInspectorMode.rename]: () => (
+            [DiskPanelInspectorModes.Rename]: () => (
               <>
                 <TextInput
                   autoCapitalize="none"
@@ -158,7 +154,7 @@ export function DiskInspector({
               </>
             ),
 
-            [DiskInspectorMode.delete]: () => (
+            [DiskPanelInspectorModes.Delete]: () => (
               <>
                 <View style={styles.headerNameOutput}>
                   <Font fontSize={24}>really delete?</Font>
@@ -196,4 +192,4 @@ export function DiskInspector({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiskInspector)
+export default connect(mapStateToProps, mapDispatchToProps)(DiskPanelInspector)
