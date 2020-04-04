@@ -1,11 +1,11 @@
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { selectKeyboardHeight } from "@highvalley.systems/itsyexpo/store/keyboard"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { selectKeyboardHeight } from "@highvalley.systems/itsyexpo/store/keyboard"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export enum ScreenOrientation {
-  landscape = "landscape",
-  portrait = "portrait",
+export enum ScreenOrientations {
+  Landscape = "Landscape",
+  Portrait = "Portrait",
 }
 
 const name = "screen"
@@ -65,9 +65,9 @@ export const selectScreenOrientation = createSelector(
   selectScreen,
   ({ width, height }) => {
     if (width > height) {
-      return ScreenOrientation.landscape
+      return ScreenOrientations.Landscape
     } else {
-      return ScreenOrientation.portrait
+      return ScreenOrientations.Portrait
     }
   }
 )
