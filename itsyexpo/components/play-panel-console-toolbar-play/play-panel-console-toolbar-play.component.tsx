@@ -1,18 +1,15 @@
-import React from "react"
-import { View } from "react-native"
-import { connect } from "react-redux"
-import { Svg, Path } from "react-native-svg"
 import Button from "@highvalley.systems/itsyexpo/components/button"
-import Font from "@highvalley.systems/itsyexpo/components/font"
 import { playDisk, stopDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import {
-  PlayerState,
   playerSelector,
+  PlayerState,
 } from "@highvalley.systems/itsyexpo/store/player"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
-import styles from "./player-controls.module.scss"
+import React from "react"
+import { Path, Svg } from "react-native-svg"
+import { connect } from "react-redux"
 
-interface PlayerControlsProps {
+interface PlayPanelConsoleToolbarPlayProps {
   player: PlayerState
   playDisk: () => void
   stopDisk: () => void
@@ -27,11 +24,11 @@ const mapDispatchToProps = {
   stopDisk,
 }
 
-export function PlayerControls({
+export function PlayPanelConsoleToolbarPlay({
   player,
   playDisk,
   stopDisk,
-}: PlayerControlsProps) {
+}: PlayPanelConsoleToolbarPlayProps) {
   return (
     <>
       {player.running || player.waiting || player.stopping ? (
@@ -81,4 +78,7 @@ export function PlayerControls({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayerControls)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayPanelConsoleToolbarPlay)

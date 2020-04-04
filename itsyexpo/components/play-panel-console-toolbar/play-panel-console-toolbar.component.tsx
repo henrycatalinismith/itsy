@@ -1,5 +1,5 @@
 import Button from "@highvalley.systems/itsyexpo/components/button"
-import PlayerControls from "@highvalley.systems/itsyexpo/components/player-controls"
+import PlayPanelConsoleToolbarPlay from "@highvalley.systems/itsyexpo/components/play-panel-console-toolbar-play"
 import { clearOutput } from "@highvalley.systems/itsyexpo/store/output"
 import React from "react"
 import { View } from "react-native"
@@ -21,7 +21,7 @@ export function PlayPanelConsoleToolbar({
 }: PlayPanelConsoleToolbarProps) {
   return (
     <View style={styles.component}>
-      <PlayerControls />
+      <PlayPanelConsoleToolbarPlay />
       <Button onPress={clearOutput}>clear</Button>
     </View>
   )
