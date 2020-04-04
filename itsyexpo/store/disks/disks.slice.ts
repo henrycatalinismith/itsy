@@ -1,26 +1,25 @@
-import * as Sharing from "expo-sharing"
-import { AsyncStorage } from "react-native"
-import * as FileSystem from "expo-file-system"
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import delay from "delay"
-import _ from "lodash"
-import { Keyboard } from "react-native"
-import uuid from "uuid"
-import * as itsy from "@highvalley.systems/itsyplay"
-import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import player from "@highvalley.systems/itsyexpo/store/player"
-import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
-import {
-  deleteValue,
-  readValues,
-  writeValue,
-} from "@highvalley.systems/itsyexpo/store/storage"
 import {
   palette,
   snapshot as defaultSnapshot,
   spritesheet,
 } from "@highvalley.systems/itsyexpo/defaults"
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
+import player from "@highvalley.systems/itsyexpo/store/player"
+import {
+  deleteValue,
+  readValues,
+  writeValue,
+} from "@highvalley.systems/itsyexpo/store/storage"
 import words from "@highvalley.systems/itsyexpo/words"
+import * as itsy from "@highvalley.systems/itsyplay"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import delay from "delay"
+import * as FileSystem from "expo-file-system"
+import * as Sharing from "expo-sharing"
+import _ from "lodash"
+import { Keyboard } from "react-native"
+import uuid from "uuid"
 
 const dWrite = _.debounce((dispatch: any, disk: any) => {
   dispatch(writeValue(disk.uri, disk))

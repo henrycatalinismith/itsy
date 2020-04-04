@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction, createSelector } from "@reduxjs/toolkit"
-import _ from "lodash"
+import { createSlice } from "@reduxjs/toolkit"
 
 export interface EditorState {}
 

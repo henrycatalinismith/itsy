@@ -1,10 +1,8 @@
+import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
 import { LayoutRectangle } from "react-native"
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { selectKeyboardHeight } from "@highvalley.systems/itsyexpo/store/keyboard"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
-import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { selectScreen } from "@highvalley.systems/itsyexpo/store/screen"
 
 const name = "safeArea"
 
