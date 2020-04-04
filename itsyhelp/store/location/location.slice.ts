@@ -28,9 +28,9 @@ export const navigate = (path: string): Thunk => async (dispatch, getState) => {
   })
 }
 
-export const locationSelector = ({ location }) => location
+export const selectLocation = ({ location }) => location
 
-export const currentPage = ({ location, pages }) => {
+export const selectCurrentPage = ({ location, pages }) => {
   if (location === "/search") {
     const searchPage: HelpPage = {
       path: "/search",

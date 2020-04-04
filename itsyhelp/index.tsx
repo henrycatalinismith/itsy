@@ -1,19 +1,15 @@
-import _ from "lodash"
-import React from "react"
-import ReactDOM from "react-dom"
-import url from "url"
-
-import marked from "marked"
-import hljs from "highlight.js/lib/highlight"
-import lua from "highlight.js/lib/languages/lua"
-import "@highvalley.systems/itsyhelp/stylesheets/itsy.css"
-
-import { Provider } from "react-redux"
-
-import Manual from "@highvalley.systems/itsyhelp/components/manual"
+import App from "@highvalley.systems/itsyhelp/components/app"
 import store from "@highvalley.systems/itsyhelp/store"
 import { navigate } from "@highvalley.systems/itsyhelp/store/location"
 import { startWebview } from "@highvalley.systems/itsyhelp/store/webview"
+import "@highvalley.systems/itsyhelp/stylesheets/itsy.css"
+import hljs from "highlight.js/lib/highlight"
+import lua from "highlight.js/lib/languages/lua"
+import marked from "marked"
+import React from "react"
+import ReactDOM from "react-dom"
+import { Provider } from "react-redux"
+import url from "url"
 
 hljs.registerLanguage("lua", lua)
 marked.setOptions({
@@ -32,7 +28,7 @@ document.body.style.margin = "0"
 
 const manual = (
   <Provider store={store}>
-    <Manual />
+    <App />
   </Provider>
 )
 

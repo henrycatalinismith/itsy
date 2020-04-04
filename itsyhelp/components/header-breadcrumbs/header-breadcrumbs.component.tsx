@@ -1,22 +1,22 @@
+import { selectCurrentPage } from "@highvalley.systems/itsyhelp/store/location"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
+import styles from "./header-breadcrumbs.module.scss"
 
-import { currentPage } from "@highvalley.systems/itsyhelp/store/location"
-import { HelpPage } from "@highvalley.systems/typedefs/itsy"
-
-import styles from "./breadcrumbs.module.scss"
-
-interface BreadcrumbsProps {
+interface HeaderBreadcrumbsProps {
   page: HelpPage
 }
 
 const mapStateToProps = (state) => ({
-  page: currentPage(state),
+  page: selectCurrentPage(state),
 })
 
 const mapDispatchToProps = {}
 
-export function Breadcrumbs({ page }: BreadcrumbsProps): React.ReactElement {
+export function HeaderBreadcrumbs({
+  page,
+}: HeaderBreadcrumbsProps): React.ReactElement {
   let prev = ""
 
   const breadcrumbs = [
@@ -38,7 +38,7 @@ export function Breadcrumbs({ page }: BreadcrumbsProps): React.ReactElement {
   ]
 
   return (
-    <ul className={styles.breadcrumbs}>
+    <ul className={styles.component}>
       {breadcrumbs.map((segment, i) => (
         <li className={styles.breadcrumb} key={`breadcrumb-${i}`}>
           <a className={styles.breadcrumbLink} href={segment.href}>
@@ -53,4 +53,4 @@ export function Breadcrumbs({ page }: BreadcrumbsProps): React.ReactElement {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Breadcrumbs)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBreadcrumbs)

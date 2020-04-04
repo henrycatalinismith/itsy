@@ -1,10 +1,9 @@
+import { search, selectQuery } from "@highvalley.systems/itsyhelp/store/query"
 import React from "react"
 import { connect } from "react-redux"
+import styles from "./header-search.module.scss"
 
-import { selectQuery, search } from "@highvalley.systems/itsyhelp/store/query"
-import styles from "./search.module.scss"
-
-interface SearchProps {
+export interface HeaderSearchProps {
   query: string
   search: (query: string) => void
 }
@@ -17,7 +16,10 @@ const mapDispatchToProps = {
   search,
 }
 
-export function Search({ query, search }): React.ReactElement {
+export function HeaderSearch({
+  query,
+  search,
+}: HeaderSearchProps): React.ReactElement {
   const element = React.useRef(undefined)
   const onKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -30,7 +32,7 @@ export function Search({ query, search }): React.ReactElement {
       autoCorrect="off"
       autoComplete="off"
       autoFocus
-      className={styles.search}
+      className={styles.component}
       spellCheck={false}
       type="search"
       ref={element}
@@ -41,4 +43,4 @@ export function Search({ query, search }): React.ReactElement {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search)
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderSearch)
