@@ -14,7 +14,7 @@ import disks from "./disks"
 import disk from "./disk"
 import editor from "./editor"
 import keyboard from "./keyboard"
-import panels, { PanelId } from "./panels"
+import panels, { PanelIds } from "./panels"
 import output from "./output"
 import player from "./player"
 import safeArea from "./safe-area"
@@ -48,31 +48,31 @@ const preloadedState = {
 
   panels: {
     disk: {
-      id: PanelId.disk,
+      id: PanelIds.disk,
       active: true,
       rank: 0,
     },
 
     code: {
-      id: PanelId.code,
+      id: PanelIds.code,
       active: !!Device.modelName.match(/iPad/),
       rank: 1,
     },
 
     play: {
-      id: PanelId.play,
+      id: PanelIds.play,
       active: !!Device.modelName.match(/iPad/),
       rank: 2,
     },
 
     draw: {
-      id: PanelId.draw,
+      id: PanelIds.draw,
       active: false,
       rank: 3,
     },
 
     help: {
-      id: PanelId.help,
+      id: PanelIds.help,
       active: false,
       rank: 4,
     },

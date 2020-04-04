@@ -5,7 +5,7 @@ import HelpPanel from "@highvalley.systems/itsyexpo/components/help-panel"
 import Panel from "@highvalley.systems/itsyexpo/components/panel"
 import PlayPanel from "@highvalley.systems/itsyexpo/components/play-panel"
 import {
-  PanelId,
+  PanelIds,
   selectActivePanel,
   selectRankedPanels,
   _Panel,
@@ -55,11 +55,11 @@ export function PanelModeSlide({
           <Panel key={panel.id} id={panel.id}>
             {
               {
-                [PanelId.code]: <CodePanel key={panel.id} />,
-                [PanelId.disk]: <DiskPanel key={panel.id} />,
-                [PanelId.draw]: <DrawPanel key={panel.id} />,
-                [PanelId.play]: <PlayPanel key={panel.id} />,
-                [PanelId.help]: <HelpPanel key={panel.id} />,
+                [PanelIds.code]: <CodePanel key={panel.id} />,
+                [PanelIds.disk]: <DiskPanel key={panel.id} />,
+                [PanelIds.draw]: <DrawPanel key={panel.id} />,
+                [PanelIds.play]: <PlayPanel key={panel.id} />,
+                [PanelIds.help]: <HelpPanel key={panel.id} />,
               }[panel.id]
             }
           </Panel>

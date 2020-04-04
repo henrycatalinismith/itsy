@@ -1,7 +1,7 @@
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   Panel,
-  PanelId,
+  PanelIds,
   selectPanels,
   togglePanel,
 } from "@highvalley.systems/itsyexpo/store/panels"
@@ -14,7 +14,7 @@ import styles from "./panel-picker-button.module.scss"
 interface PanelPickerButtonProps {
   id: string
   panel: Panel
-  togglePanel: (id: PanelId) => void
+  togglePanel: (id: PanelIds) => void
 }
 
 const mapStateToProps = (state, { id }) => ({

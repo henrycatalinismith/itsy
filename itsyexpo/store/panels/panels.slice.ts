@@ -3,7 +3,7 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { selectDevice } from "@highvalley.systems/itsyexpo/store/device"
 
-export enum PanelId {
+export enum PanelIds {
   code = "code",
   disk = "disk",
   play = "play",
@@ -17,7 +17,7 @@ export enum PanelModes {
 }
 
 export interface Panel {
-  id: PanelId
+  id: PanelIds
   active: boolean
   rank: number
 }
@@ -31,15 +31,15 @@ const name = "panels"
 const initialState: PanelsState = {}
 
 const reducers = {
-  hide(panels, action: PayloadAction<PanelId>) {
+  hide(panels, action: PayloadAction<PanelIds>) {
     panels[action.payload].active = false
   },
 
-  show(panels, action: PayloadAction<PanelId>) {
+  show(panels, action: PayloadAction<PanelIds>) {
     panels[action.payload].active = true
   },
 
-  swap(panels, action: PayloadAction<PanelId>) {
+  swap(panels, action: PayloadAction<PanelIds>) {
     _.find(panels, "active").active = false
     panels[action.payload].active = true
   },
@@ -51,7 +51,7 @@ const slice = createSlice({
   reducers,
 })
 
-export const togglePanel = (id: PanelId): Thunk => async (
+export const togglePanel = (id: PanelIds): Thunk => async (
   dispatch,
   getState
 ) => {
