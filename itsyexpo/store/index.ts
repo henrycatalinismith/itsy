@@ -47,8 +47,8 @@ const preloadedState = {
   },
 
   panels: {
-    disks: {
-      id: PanelId.disks,
+    disk: {
+      id: PanelId.disk,
       active: true,
       rank: 0,
     },

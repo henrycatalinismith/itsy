@@ -11,7 +11,7 @@ import {
 } from "@highvalley.systems/itsyexpo/store/panels"
 
 import CodePanel from "@highvalley.systems/itsyexpo/components/code-panel"
-import DisksPanel from "@highvalley.systems/itsyexpo/components/disks-panel"
+import DiskPanel from "@highvalley.systems/itsyexpo/components/disk-panel"
 import DrawPanel from "@highvalley.systems/itsyexpo/components/draw-panel"
 import HelpPanel from "@highvalley.systems/itsyexpo/components/help-panel"
 import Panel from "@highvalley.systems/itsyexpo/components/panel"
@@ -43,7 +43,7 @@ export function PanelTiler({ panels }: PanelTilerProps) {
           {
             {
               [PanelId.code]: <CodePanel key={panel.id} />,
-              [PanelId.disks]: <DisksPanel key={panel.id} />,
+              [PanelId.disk]: <DiskPanel key={panel.id} />,
               [PanelId.draw]: <DrawPanel key={panel.id} />,
               [PanelId.play]: <PlayPanel key={panel.id} />,
               [PanelId.help]: <HelpPanel key={panel.id} />,

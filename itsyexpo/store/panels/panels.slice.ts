@@ -5,7 +5,7 @@ import { selectDevice } from "@highvalley.systems/itsyexpo/store/device"
 
 export enum PanelId {
   code = "code",
-  disks = "disks",
+  disk = "disk",
   play = "play",
   draw = "draw",
   help = "help",

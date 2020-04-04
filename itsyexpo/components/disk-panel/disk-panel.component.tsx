@@ -3,10 +3,13 @@ import { Text } from "react-native"
 import { connect } from "react-redux"
 import DiskInspector from "@highvalley.systems/itsyexpo/components/disk-inspector"
 import DiskList from "@highvalley.systems/itsyexpo/components/disk-list"
-import { Disk, selectInspectedDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  Disk,
+  selectInspectedDisk,
+} from "@highvalley.systems/itsyexpo/store/disks"
 // import styles from "./disks-panel.module.scss"
 
-interface DisksPanelProps {
+interface DiskPanelProps {
   inspectedDisk: Disk
 }
 
@@ -16,8 +19,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function DisksPanel({ inspectedDisk }: DisksPanelProps) {
+export function DiskPanel({ inspectedDisk }: DiskPanelProps) {
   return <>{inspectedDisk ? <DiskInspector /> : <DiskList />}</>
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DisksPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(DiskPanel)
