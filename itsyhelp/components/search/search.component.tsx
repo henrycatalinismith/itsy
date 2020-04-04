@@ -5,9 +5,9 @@ import {
 import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./results.module.scss"
+import styles from "./search.module.scss"
 
-interface ResultsProps {
+interface SearchProps {
   query: string
   results: HelpPage[]
 }
@@ -19,9 +19,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Results({ query, results }: ResultsProps): React.ReactElement {
+export function Search({ query, results }: SearchProps): React.ReactElement {
   return (
-    <div className={styles.results}>
+    <div className={styles.component}>
       {query === "" ? (
         <p>type a query</p>
       ) : results.length === 0 ? (
@@ -46,4 +46,4 @@ export function Results({ query, results }: ResultsProps): React.ReactElement {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Results)
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

@@ -1,12 +1,12 @@
+import Function from "@highvalley.systems/itsyhelp/components/function"
+import Search from "@highvalley.systems/itsyhelp/components/search"
 import { selectCurrentPage } from "@highvalley.systems/itsyhelp/store/location"
 import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import FunctionPage from "../function"
 import Header from "../header"
 import Markdown from "../markdown"
 import Page from "../page"
-import Results from "../results"
 
 interface AppProps {
   navigate: (path: string) => void
@@ -25,9 +25,9 @@ export function App({ page }: AppProps): React.ReactElement {
       <Header />
       <Page title={page.title}>
         {page.path.match(/^\/search$/) ? (
-          <Results />
+          <Search />
         ) : page.function ? (
-          <FunctionPage page={page} />
+          <Function page={page} />
         ) : (
           <Markdown body={page.body} css={page.css} />
         )}
