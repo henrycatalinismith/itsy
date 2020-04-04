@@ -1,11 +1,6 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.drawPanel {
-  display: flex;
-  flex: 1;
-}
-
-.loading {
+.webview {
   position: absolute;
   top: 0;
   right: 0;
