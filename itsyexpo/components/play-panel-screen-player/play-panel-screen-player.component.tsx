@@ -1,15 +1,13 @@
-import React from "react"
-import { View } from "react-native"
-import { WebView } from "react-native-webview"
-import { connect } from "react-redux"
-
 import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
 import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
-  PlayerState,
   playerSelector,
+  PlayerState,
   stop,
 } from "@highvalley.systems/itsyexpo/store/player"
+import React from "react"
+import { WebView } from "react-native-webview"
+import { connect } from "react-redux"
 import styles from "./play-panel-screen-player.module.scss"
 
 interface PlayPanelScreenPlayerProps {

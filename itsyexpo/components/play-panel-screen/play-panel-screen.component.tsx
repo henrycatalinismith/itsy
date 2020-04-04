@@ -1,13 +1,13 @@
-import React from "react"
-import { View } from "react-native"
-import { connect } from "react-redux"
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import PlayPanelScreenPlayer from "@highvalley.systems/itsyexpo/components/play-panel-screen-player"
 import PlayPanelScreenSnapshot from "@highvalley.systems/itsyexpo/components/play-panel-screen-snapshot"
 import {
-  PlayerState,
   playerSelector,
+  PlayerState,
 } from "@highvalley.systems/itsyexpo/store/player"
+import React from "react"
+import { View } from "react-native"
+import { connect } from "react-redux"
 import styles from "./play-panel-screen.module.scss"
 
 interface PlayPanelScreenProps {

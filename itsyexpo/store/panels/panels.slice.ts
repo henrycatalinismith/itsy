@@ -11,7 +11,7 @@ export enum PanelId {
   help = "help",
 }
 
-export enum PanelMode {
+export enum PanelModes {
   slide = "slide",
   tiles = "tiles",
 }
@@ -60,7 +60,7 @@ export const togglePanel = (id: PanelId): Thunk => async (
   const activePanels = selectActivePanels(state)
   const panel: Panel = state.panels[id]
 
-  if (panelMode === PanelMode.slide) {
+  if (panelMode === PanelModes.slide) {
     dispatch(slice.actions.swap(id))
     return
   }
@@ -88,9 +88,9 @@ export const selectActivePanels = createSelector(
 
 export const selectPanelMode = createSelector([selectDevice], (device) => {
   if (device.modelName.match(/iPad/)) {
-    return PanelMode.tiles
+    return PanelModes.tiles
   } else {
-    return PanelMode.slide
+    return PanelModes.slide
   }
 })
 

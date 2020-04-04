@@ -1,17 +1,17 @@
-import _ from "lodash"
-import React from "react"
-import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
-import { connect } from "react-redux"
+import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
-  PanelMode,
   Panel as _Panel,
+  PanelModes,
   selectActivePanels,
   selectPanelMode,
   selectPanels,
 } from "@highvalley.systems/itsyexpo/store/panels"
-import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
+import _ from "lodash"
+import React from "react"
+import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
+import { connect } from "react-redux"
 import styles from "./panel.module.scss"
 
 interface PanelProps {
@@ -19,7 +19,7 @@ interface PanelProps {
   children: any
   id: string
   panel: _Panel
-  panelMode: PanelMode
+  panelMode: PanelModes
   safeArea: Rect
 }
 
@@ -51,7 +51,7 @@ export function Panel({
   }, [])
 
   switch (panelMode) {
-    case PanelMode.slide:
+    case PanelModes.slide:
       return (
         <View style={[styles.slide, { width: safeArea.width }]}>
           <View
@@ -65,7 +65,7 @@ export function Panel({
         </View>
       )
 
-    case PanelMode.tiles:
+    case PanelModes.tiles:
       const tileStyles = [styles.tile]
 
       if (panel.active) {

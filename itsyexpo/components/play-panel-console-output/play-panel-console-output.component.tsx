@@ -1,14 +1,14 @@
+import Button from "@highvalley.systems/itsyexpo/components/button"
+import { selectActiveOutput } from "@highvalley.systems/itsyexpo/store/output"
 import React from "react"
 import {
   Clipboard,
-  View,
-  TouchableHighlight,
-  Text,
   ScrollView,
+  Text,
+  TouchableHighlight,
+  View,
 } from "react-native"
 import { connect } from "react-redux"
-import { selectActiveOutput } from "@highvalley.systems/itsyexpo/store/output"
-import Button from "@highvalley.systems/itsyexpo/components/button"
 import styles from "./play-panel-console-output.module.scss"
 
 interface PlayPanelConsoleOutputProps {

@@ -1,11 +1,11 @@
-import React from "react"
-import { View } from "react-native"
-import { WebView } from "react-native-webview"
-import { connect } from "react-redux"
 import {
   Disk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import React from "react"
+import { View } from "react-native"
+import { WebView } from "react-native-webview"
+import { connect } from "react-redux"
 import styles from "./play-panel-screen-snapshot.module.scss"
 
 interface PlayPanelScreenSnapshotProps {
