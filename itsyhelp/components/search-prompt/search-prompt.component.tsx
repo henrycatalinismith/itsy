@@ -11,7 +11,7 @@ const mapDispatchToProps = {}
 export function SearchPrompt({}: SearchPromptProps): React.ReactElement {
   return (
     <div className={styles.component}>
-      <p>type a query</p>
+      <p className={styles.message}>type a query</p>
     </div>
   )
 }

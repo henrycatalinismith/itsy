@@ -1,0 +1,24 @@
+@import "../../../palettes/pico8/_original.scss";
+@import "../../stylesheets/typography";
+
+.component {
+  display: grid;
+  grid-template-areas:
+    ".   .   ."
+    ". items ."
+    ".   .   .";
+  grid-template-columns: 4px auto 4px;
+  grid-template-rows: 0px auto 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.items {
+  grid-area: items;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: min-content 12px min-content 12px min-content 12px min-content;
+  column-gap: 4px;
+}

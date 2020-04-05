@@ -1,12 +1,12 @@
 @import "../../../palettes/pico8/_original.scss";
 @import "../../stylesheets/typography";
 
-.border {
+.component {
   border: 4px solid #ddd;
   box-sizing: border-box;
 }
 
-.header {
+.box {
   background-color: pico8-original-palette(15);
   background-color: pico8-original-palette(7);
   background-color: #fff;

@@ -1,10 +1,9 @@
-@import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
-.section {
-  @include section();
+.component {
+  margin: 0;
 }
 
-.section__heading {
+.title {
   @include h2();
 }

@@ -1,0 +1,13 @@
+@import "../../../palettes/pico8/_original.scss";
+@import "../../stylesheets/typography";
+
+.component {
+  display: grid;
+  color: pico8-original-palette(13);
+  text-shadow: pico8-original-palette(14) 1px 1px 1px;
+  font-family: "Overpass Mono";
+  font-weight: normal;
+  font-size: 18px;
+  height: 28px;
+  line-height: 24px;
+}

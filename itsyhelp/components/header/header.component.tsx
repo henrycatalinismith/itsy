@@ -1,4 +1,4 @@
-import HeaderBreadcrumbs from "@highvalley.systems/itsyhelp/components/header-breadcrumbs"
+import HeaderBreadcrumbList from "@highvalley.systems/itsyhelp/components/header-breadcrumb-list"
 import HeaderSearch from "@highvalley.systems/itsyhelp/components/header-search"
 import {
   navigate,
@@ -36,15 +36,15 @@ export function Header({ navigate, page }: HeaderProps): React.ReactElement {
   )
 
   return (
-    <div className={styles.border}>
-      <div className={styles.header} onClick={onClick}>
+    <header className={styles.component}>
+      <div className={styles.box} onClick={onClick}>
         {page.path.match(/^\/search$/) ? (
           <HeaderSearch />
         ) : (
-          <HeaderBreadcrumbs />
+          <HeaderBreadcrumbList />
         )}
       </div>
-    </div>
+    </header>
   )
 }
 

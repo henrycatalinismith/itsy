@@ -12,7 +12,7 @@ export function FunctionExampleList({
   examples,
 }: FunctionExampleListProps): React.ReactElement {
   return (
-    <Section title="examples">
+    <Section title="examples" className={styles.component}>
       {examples.map((example, i) => (
         <FunctionExampleListItem key={i} {...example} />
       ))}

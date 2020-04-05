@@ -5,18 +5,18 @@ import Type from "../type"
 import styles from "./function-output.module.scss"
 
 export function FunctionOutput(output: Output): React.ReactElement {
+  const title = (
+    <>
+      returns{" "}
+      <span className={styles.output__type}>
+        <Type name={output.type} />
+      </span>
+    </>
+  )
+
   return (
-    <Section
-      title={
-        <>
-          returns{" "}
-          <span className={styles.output__type}>
-            <Type name={output.type} />
-          </span>
-        </>
-      }
-    >
-      <p className={styles.output__description}>{output.desc}</p>
+    <Section title={title} className={styles.component}>
+      {output.desc && <p className={styles.description}>{output.desc}</p>}
     </Section>
   )
 }

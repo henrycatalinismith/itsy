@@ -19,11 +19,13 @@ export function SearchResultList({
   results,
 }: SearchResultListProps): React.ReactElement {
   return (
-    <ul className={styles.component}>
-      {results.map((result, i) => {
-        return <SearchResultListItem key={i} result={result} />
-      })}
-    </ul>
+    <div className={styles.component}>
+      <ol className={styles.items}>
+        {results.map((result, i) => {
+          return <SearchResultListItem key={i} result={result} />
+        })}
+      </ol>
+    </div>
   )
 }
 

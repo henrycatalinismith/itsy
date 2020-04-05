@@ -12,8 +12,8 @@ export function FunctionInputList({
   parameters,
 }: FunctionInputListProps): React.ReactElement {
   return (
-    <Section title="parameters">
-      <table className={styles.component}>
+    <Section title="parameters" className={styles.component}>
+      <table className={styles.table}>
         <tbody>
           {parameters.map((arg, i) => (
             <FunctionInputListItem key={i} {...arg} />

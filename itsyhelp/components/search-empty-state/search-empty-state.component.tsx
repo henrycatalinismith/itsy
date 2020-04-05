@@ -1,6 +1,4 @@
-import SearchResultListItem from "@highvalley.systems/itsyhelp/components/search-result-list-item"
 import { selectQuery } from "@highvalley.systems/itsyhelp/store/query"
-import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./search-empty-state.module.scss"
@@ -20,7 +18,7 @@ export function SearchEmptyState({
 }: SearchEmptyStateProps): React.ReactElement {
   return (
     <div className={styles.component}>
-      <p>no results for {query}</p>
+      <p className={styles.message}>no results for {query}</p>
     </div>
   )
 }

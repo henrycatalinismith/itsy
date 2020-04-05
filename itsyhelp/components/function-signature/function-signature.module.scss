@@ -3,9 +3,10 @@
 @import "../../stylesheets/typography";
 
 .component {
-  @include subsection();
   @include code();
   font-size: 14px;
+  grid-area: signature;
+  margin: 0;
 }
 
 .name {

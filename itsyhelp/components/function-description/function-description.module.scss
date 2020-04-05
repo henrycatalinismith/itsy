@@ -2,10 +2,5 @@
 @import "../../stylesheets/typography";
 
 .component {
-  grid-area: output;
-}
-
-.description {
-  @include text();
-  margin: 0;
+  grid-area: description;
 }

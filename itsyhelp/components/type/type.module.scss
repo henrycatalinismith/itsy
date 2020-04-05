@@ -1,18 +1,21 @@
 @import "../../../palettes/pico8/_original.scss";
 @import "../../stylesheets/typography";
 
-.type {
+.component {
   font-family: "Overpass Mono";
+  display: inline-grid;
+  grid-template-columns: repeat(3, min-content);
+  column-gap: 1px;
 }
 
-.type__lt {
+.lt {
   color: pico8-original-palette(13);
 }
 
-.type__name {
+.name {
   color: pico8-original-palette(14);
 }
 
-.type__gt {
+.gt {
   color: pico8-original-palette(13);
 }

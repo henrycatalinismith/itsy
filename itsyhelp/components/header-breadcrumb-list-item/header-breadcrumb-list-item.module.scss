@@ -1,0 +1,16 @@
+@import "../../../palettes/pico8/_original.scss";
+@import "../../stylesheets/typography";
+
+.component {
+  display: grid;
+}
+
+.link {
+  display: block;
+  font-family: "Overpass";
+  text-decoration: none;
+  color: pico8-original-palette(12);
+  text-shadow: pico8-original-palette(7) 1px 1px 1px;
+  height: 28px;
+  line-height: 28px;
+}

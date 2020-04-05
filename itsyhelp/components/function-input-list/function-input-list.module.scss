@@ -7,29 +7,9 @@
 }
 
 .component {
+  grid-area: inputlist;
+}
+
+.table {
   border-collapse: collapse;
-}
-
-.name {
-  @include cell();
-  @include code();
-
-  color: pico8-original-palette(3);
-}
-
-.type {
-  @include cell();
-  font-size: 12px;
-  padding-left: 2px;
-  padding-right: 4px;
-}
-
-.desc {
-  @include cell();
-  color: pico8-original-palette(0);
-}
-
-.default {
-  color: pico8-original-palette(13);
-  font-size: 14px;
 }
