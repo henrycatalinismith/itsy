@@ -23,13 +23,13 @@ export function App({ page }: AppProps): React.ReactElement {
   return (
     <>
       <Header />
-      <Page title={page.title}>
+      <Page page={page}>
         {page.path.match(/^\/search$/) ? (
           <Search />
         ) : page.function ? (
           <Function page={page} />
         ) : (
-          <Markdown body={page.body} css={page.css} />
+          <Markdown>{page.body}</Markdown>
         )}
       </Page>
     </>

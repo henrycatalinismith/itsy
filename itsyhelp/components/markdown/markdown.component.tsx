@@ -1,11 +1,14 @@
 import React from "react"
 import marked from "marked"
 
-export function Markdown({ body = "", css = "" }): React.ReactElement {
-  const html = marked(body)
+export interface MarkdownProps {
+  children: string
+}
+
+export function Markdown({ children }: MarkdownProps): React.ReactElement {
+  const html = marked(children)
   return (
     <>
-      {css && <style type="text/css">{css}</style>}
       <div dangerouslySetInnerHTML={{ __html: html }} />
     </>
   )

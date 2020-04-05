@@ -2,7 +2,7 @@
 @import "../../stylesheets/layout";
 @import "../../stylesheets/typography";
 
-.page {
+.component {
   background-color: #fceeff;
   box-sizing: border-box;
   font-family: "Helvetica";
@@ -11,14 +11,15 @@
   overflow: hidden;
 }
 
-.page__title {
+.title {
+  margin: 0;
   padding: 16px 0;
   // height: 32px;
   // max-height: 32px;
   // display: flex;
 }
 
-.page__body {
+.body {
   font-family: "Overpass";
 
   h2 {
@@ -52,10 +53,4 @@
   pre code {
     font-size: 16px;
   }
-
-  // td:first-child > a {
-  // display: block;
-  // text-decoration: none;
-  // width: 70px;
-  // }
 }

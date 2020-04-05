@@ -1,16 +1,24 @@
-import React from "react"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
-
+import React from "react"
+import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import styles from "./page.module.scss"
 
-export function Page({ title, children }): React.ReactElement {
+export interface PageProps {
+  children: any
+  page: HelpPage
+}
+
+export function Page({ children, page }: PageProps): React.ReactElement {
   return (
-    <article className={styles.page}>
-      <div className={styles.page__title}>
-        <Pixlflip fontSize={32}>{title}</Pixlflip>
-      </div>
-      <div className={styles.page__body}>{children}</div>
-    </article>
+    <>
+      {page.css && <style type="text/css">{page.css}</style>}
+      <article className={styles.component}>
+        <h1 className={styles.title}>
+          <Pixlflip fontSize={32}>{page.title}</Pixlflip>
+        </h1>
+        <main className={styles.body}>{children}</main>
+      </article>
+    </>
   )
 }
 
