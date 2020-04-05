@@ -1,3 +1,6 @@
+import SearchEmptyState from "@highvalley.systems/itsyhelp/components/search-empty-state"
+import SearchPrompt from "@highvalley.systems/itsyhelp/components/search-prompt"
+import SearchResultList from "@highvalley.systems/itsyhelp/components/search-result-list"
 import {
   selectQuery,
   selectResults,
@@ -23,24 +26,11 @@ export function Search({ query, results }: SearchProps): React.ReactElement {
   return (
     <div className={styles.component}>
       {query === "" ? (
-        <p>type a query</p>
+        <SearchPrompt />
       ) : results.length === 0 ? (
-        <p>no results for {query}</p>
+        <SearchEmptyState />
       ) : (
-        <ul className={styles.results__list}>
-          {results.map((page, i) => {
-            return (
-              <li key={`result-${i}`} className={styles.results__item}>
-                <a href={page.path} className={styles.results__link}>
-                  <div className={styles.results__title}>{page.title}</div>
-                  <div className={styles.results__description}>
-                    {page.description}
-                  </div>
-                </a>
-              </li>
-            )
-          })}
-        </ul>
+        <SearchResultList />
       )}
     </div>
   )

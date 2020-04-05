@@ -1,0 +1,25 @@
+.component {
+}
+
+.link {
+  border-bottom: 1px solid #eee;
+  height: 64px;
+  padding: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.title {
+  color: #036eb5;
+  font-weight: bold;
+  line-height: 1rem;
+}
+
+.description {
+  color: #444;
+  font-size: 14px;
+  line-height: 1rem;
+  font-weight: normal;
+}
