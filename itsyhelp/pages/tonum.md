@@ -7,7 +7,7 @@ function:
   category: misc
   input:
     - name: str
-      category: string
+      type: string
       desc: any string
   output:
     type: number

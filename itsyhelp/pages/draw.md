@@ -1,6 +1,6 @@
 ---
 title: _draw()
-path: /game-loop/draw
+path: /code/game-loop/draw
 description: called after every tick
 ---
 

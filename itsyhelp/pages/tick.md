@@ -1,6 +1,6 @@
 ---
 title: _tick()
-path: /game-loop/tick
+path: /code/game-loop/tick
 description: called 60 times per second
 ---
 

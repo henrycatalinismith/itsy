@@ -1,6 +1,6 @@
 ---
 title: _init()
-path: /game-loop/init
+path: /code/game-loop/init
 description: called once during startup
 ---
 

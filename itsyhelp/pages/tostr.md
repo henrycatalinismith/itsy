@@ -10,7 +10,7 @@ function:
       type: any
       desc: any value
   output:
-    category: string
+    type: string
     desc: string representation of the input value
   examples:
     decimals: |

@@ -22,6 +22,6 @@
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: min-content 12px min-content 12px min-content 12px min-content;
+  grid-template-columns: max-content 12px max-content 12px max-content 12px max-content;
   column-gap: 4px;
 }
