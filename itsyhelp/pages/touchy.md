@@ -1,6 +1,6 @@
 ---
 title: touchy
-path: /functions/touchy
+path: /code/functions/touchy
 description: gets y position
 
 function:

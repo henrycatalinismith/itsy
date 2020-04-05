@@ -1,6 +1,6 @@
 ---
 title: rectfill
-path: /functions/rectfill
+path: /code/functions/rectfill
 description: fills a rectangle
 
 function:

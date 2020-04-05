@@ -1,6 +1,6 @@
 ---
 title: poke
-path: /functions/poke
+path: /code/functions/poke
 description: writes a byte
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: lower
-path: /functions/lower
+path: /code/functions/lower
 description: lowercases a string
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: sub
-path: /functions/sub
+path: /code/functions/sub
 description: gets a substring
 
 function:

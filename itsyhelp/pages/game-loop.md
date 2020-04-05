@@ -1,6 +1,6 @@
 ---
 title: game loop
-path: /game-loop
+path: /code/game-loop
 description: hooks to run your game at 60 fps
 css: |
   td:first-child a {
@@ -30,6 +30,6 @@ three specially named functions:
 | [⌚️][_tick] | [`_tick`][_tick]<br/>called 60 times per second |
 | [🖌][_draw]   | [`_draw`][_draw]<br />called after every tick   |
 
-[_init]: /game-loop/init
-[_tick]: /game-loop/tick
-[_draw]: /game-loop/draw
+[_init]: /code/game-loop/init
+[_tick]: /code/game-loop/tick
+[_draw]: /code/game-loop/draw

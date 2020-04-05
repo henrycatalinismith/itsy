@@ -1,6 +1,6 @@
 ---
 title: cls
-path: /functions/cls
+path: /code/functions/cls
 description: clears the screen
 
 function:

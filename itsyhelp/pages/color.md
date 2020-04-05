@@ -1,6 +1,6 @@
 ---
 title: color
-path: /functions/color
+path: /code/functions/color
 description: sets default color
 
 function:

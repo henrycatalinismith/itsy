@@ -1,6 +1,6 @@
 ---
 title: del
-path: /functions/del
+path: /code/functions/del
 description: deletes from table
 
 function:

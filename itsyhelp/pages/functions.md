@@ -1,6 +1,6 @@
 ---
 title: functions
-path: /functions
+path: /code/functions
 description: complete api reference
 css: |
   td:first-child {
@@ -25,14 +25,14 @@ css: |
 | [rectfill] | fills a rectangle  |
 | [sspr]     | draws a sprite     |
 
-[circ]: /functions/circ
-[cls]: /functions/cls
-[line]: /functions/line
-[print]: /functions/print
-[pset]: /functions/pset
-[rect]: /functions/rect
-[rectfill]: /functions/rectfill
-[sspr]: /functions/sspr
+[circ]: /code/functions/circ
+[cls]: /code/functions/cls
+[line]: /code/functions/line
+[print]: /code/functions/print
+[pset]: /code/functions/pset
+[rect]: /code/functions/rect
+[rectfill]: /code/functions/rectfill
+[sspr]: /code/functions/sspr
 
 ## input functions 🎮
 
@@ -42,9 +42,9 @@ css: |
 | [touchx] | gets x position |
 | [touchy] | gets y position |
 
-[touch]: /functions/touch
-[touchx]: /functions/touchx
-[touchy]: /functions/touchy
+[touch]: /code/functions/touch
+[touchx]: /code/functions/touchx
+[touchy]: /code/functions/touchy
 
 ## graphics functions 🎨
 
@@ -53,8 +53,8 @@ css: |
 | [camera] | moves the camera   |
 | [color]  | sets default color |
 
-[camera]: /functions/camera
-[color]: /functions/color
+[camera]: /code/functions/camera
+[color]: /code/functions/color
 
 ## math functions 📊
 
@@ -70,15 +70,15 @@ css: |
 | [sin]  | calculates sine    |
 | [tan]  | calculates tangent |
 
-[abs]: /functions/abs
-[ceil]: /functions/ceil
-[cos]: /functions/cos
-[flr]: /functions/flr
-[max]: /functions/max
-[min]: /functions/min
-[rnd]: /functions/rnd
-[sin]: /functions/sin
-[tan]: /functions/tan
+[abs]: /code/functions/abs
+[ceil]: /code/functions/ceil
+[cos]: /code/functions/cos
+[flr]: /code/functions/flr
+[max]: /code/functions/max
+[min]: /code/functions/min
+[rnd]: /code/functions/rnd
+[sin]: /code/functions/sin
+[tan]: /code/functions/tan
 
 ## table functions 👩‍👩‍👧‍👧
 
@@ -88,9 +88,9 @@ css: |
 | [del]   | deletes from table |
 | [pairs] | gets keys + values |
 
-[add]: /functions/add
-[del]: /functions/del
-[pairs]: /functions/pairs
+[add]: /code/functions/add
+[del]: /code/functions/del
+[pairs]: /code/functions/pairs
 
 ## string functions 🧶
 
@@ -100,9 +100,9 @@ css: |
 | [sub]   | gets a substring    |
 | [upper] | uppercases a string |
 
-[lower]: /functions/lower
-[sub]: /functions/sub
-[upper]: /functions/upper
+[lower]: /code/functions/lower
+[sub]: /code/functions/sub
+[upper]: /code/functions/upper
 
 ## misc functions 🧦
 
@@ -112,9 +112,9 @@ css: |
 | [tostr] | converts to string  |
 | [type]  | gets a value's type |
 
-[tonum]: /functions/tonum
-[tostr]: /functions/tostr
-[type]: /functions/type
+[tonum]: /code/functions/tonum
+[tostr]: /code/functions/tostr
+[type]: /code/functions/type
 
 ## memory functions 🧙‍♀️
 
@@ -123,5 +123,5 @@ css: |
 | [peek] | reads a byte  |
 | [poke] | writes a byte |
 
-[peek]: /functions/peek
-[poke]: /functions/poke
+[peek]: /code/functions/peek
+[poke]: /code/functions/poke

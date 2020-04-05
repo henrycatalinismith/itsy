@@ -1,6 +1,6 @@
 ---
 title: peek
-path: /functions/peek
+path: /code/functions/peek
 description: reads a byte
 
 function:

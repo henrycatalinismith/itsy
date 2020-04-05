@@ -1,6 +1,6 @@
 ---
 title: print
-path: /functions/print
+path: /code/functions/print
 description: displays a message
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: upper
-path: /functions/upper
+path: /code/functions/upper
 description: uppercases a string
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: add
-path: /functions/add
+path: /code/functions/add
 description: adds to table
 
 function:

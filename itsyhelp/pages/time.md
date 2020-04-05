@@ -1,6 +1,6 @@
 ---
 title: time
-path: /functions/time
+path: /code/functions/time
 description: seconds since startup
 
 function:

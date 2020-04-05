@@ -1,6 +1,6 @@
 ---
 title: abs
-path: /functions/abs
+path: /code/functions/abs
 description: removes minus sign
 
 function:

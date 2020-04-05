@@ -1,6 +1,6 @@
 ---
 title: rect
-path: /functions/rect
+path: /code/functions/rect
 description: draws a rectangle
 
 function:

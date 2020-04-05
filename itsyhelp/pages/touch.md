@@ -1,6 +1,6 @@
 ---
 title: touch
-path: /functions/touch
+path: /code/functions/touch
 description: detects touches
 
 function:

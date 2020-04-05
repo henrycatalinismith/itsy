@@ -1,6 +1,6 @@
 ---
 title: ceil
-path: /functions/ceil
+path: /code/functions/ceil
 description: rounds up
 
 function:

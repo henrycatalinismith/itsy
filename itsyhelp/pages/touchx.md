@@ -1,6 +1,6 @@
 ---
 title: touchx
-path: /functions/touchx
+path: /code/functions/touchx
 description: gets x position
 
 function:

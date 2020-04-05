@@ -1,6 +1,6 @@
 ---
 title: max
-path: /functions/max
+path: /code/functions/max
 description: finds the biggest
 
 function:

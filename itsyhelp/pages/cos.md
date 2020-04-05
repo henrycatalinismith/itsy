@@ -1,6 +1,6 @@
 ---
 title: cos
-path: /functions/cos
+path: /code/functions/cos
 category: math
 description: calculates cosine
 parameters:

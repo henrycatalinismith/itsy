@@ -1,6 +1,6 @@
 ---
 title: sin
-path: /functions/sin
+path: /code/functions/sin
 description: calculates sine
 
 function:

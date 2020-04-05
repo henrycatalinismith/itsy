@@ -1,6 +1,6 @@
 ---
 title: tonum
-path: /functions/tonum
+path: /code/functions/tonum
 description: converts to number
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: type
-path: /functions/type
+path: /code/functions/type
 description: gets a value's type
 
 function:

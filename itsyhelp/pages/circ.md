@@ -1,6 +1,6 @@
 ---
 title: circ
-path: /functions/circ
+path: /code/functions/circ
 description: draws a circle
 
 function:

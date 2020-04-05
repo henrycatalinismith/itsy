@@ -1,6 +1,6 @@
 ---
 title: pset
-path: /functions/pset
+path: /code/functions/pset
 description: sets one pixel
 
 function:

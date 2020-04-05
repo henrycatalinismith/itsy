@@ -1,6 +1,6 @@
 ---
 title: pairs
-path: /functions/pairs
+path: /code/functions/pairs
 description: gets keys + values
 
 function:

@@ -1,6 +1,6 @@
 ---
 title: tostr
-path: /functions/tostr
+path: /code/functions/tostr
 description: converts to string
 
 function:

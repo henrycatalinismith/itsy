@@ -1,6 +1,6 @@
 ---
 title: pget
-path: /functions/pget
+path: /code/functions/pget
 description: gets pixel color
 
 function:

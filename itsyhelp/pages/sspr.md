@@ -1,6 +1,6 @@
 ---
 title: sspr
-path: /functions/sspr
+path: /code/functions/sspr
 description: draws a sprite
 
 function:

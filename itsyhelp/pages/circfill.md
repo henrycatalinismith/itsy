@@ -1,6 +1,6 @@
 ---
 title: circfill
-path: /functions/circfill
+path: /code/functions/circfill
 description: draws a circle
 
 function:

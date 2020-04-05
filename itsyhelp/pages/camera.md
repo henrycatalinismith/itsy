@@ -1,6 +1,6 @@
 ---
 title: camera
-path: /functions/camera
+path: /code/functions/camera
 description: moves the camera
 
 function:

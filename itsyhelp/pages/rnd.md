@@ -1,6 +1,6 @@
 ---
 title: rnd
-path: /functions/rnd
+path: /code/functions/rnd
 description: random number
 
 function:

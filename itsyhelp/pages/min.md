@@ -1,6 +1,6 @@
 ---
 title: min
-path: /functions/min
+path: /code/functions/min
 description: finds the smallest
 
 function:

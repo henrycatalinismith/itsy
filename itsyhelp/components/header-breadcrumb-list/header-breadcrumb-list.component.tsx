@@ -42,7 +42,7 @@ export function HeaderBreadcrumbList({
 
   const breadcrumbs = [
     {
-      text: "home",
+      text: "help",
       href: "/",
     },
     ...page.path

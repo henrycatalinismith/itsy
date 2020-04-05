@@ -1,6 +1,6 @@
 ---
 title: flr
-path: /functions/flr
+path: /code/functions/flr
 description: rounds down
 
 function:

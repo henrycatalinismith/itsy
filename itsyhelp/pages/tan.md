@@ -1,6 +1,6 @@
 ---
 title: tan
-path: /functions/tan
+path: /code/functions/tan
 description: calculates tangent
 
 function:

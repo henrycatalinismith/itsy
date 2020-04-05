@@ -1,6 +1,6 @@
 ---
 title: line
-path: /functions/line
+path: /code/functions/line
 description: draws a line
 
 function:
