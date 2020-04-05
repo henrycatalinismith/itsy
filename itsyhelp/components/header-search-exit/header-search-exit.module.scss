@@ -1,0 +1,10 @@
+@import "../../../palettes/pico8/_original.scss";
+@import "../../stylesheets/typography";
+
+.component {
+  grid-area: exit;
+  margin: 2px;
+  padding: 0 4px;
+  background-color: pico8-original-palette(13);
+  border: 2px solid pico8-original-palette(1);
+}
