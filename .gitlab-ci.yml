@@ -62,3 +62,15 @@ deploy:itsysite:
     - yarn --pure-lockfile
     - yarn gatsby build
     - yarn netlify deploy --prod --dir=public --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN
+
+deploy:homepage:
+  stage: deploy
+  image: node:12-stretch
+  only:
+    changes:
+      - homepage/**/*
+  script:
+    - cd homepage
+    - yarn --pure-lockfile
+    - yarn gatsby build
+    - yarn netlify deploy --prod --dir=public --site $HOMEPAGE_NETLIFY_SITE_ID --auth $HOMEPAGE_NETLIFY_AUTH_TOKEN
