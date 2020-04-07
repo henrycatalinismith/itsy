@@ -1,4 +1,0 @@
-{
-  "extends": "../settings/tsconfig.json",
-  "include": ["../typedefs/scss.d.ts"]
-}
