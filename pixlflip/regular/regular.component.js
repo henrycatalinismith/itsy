@@ -18,7 +18,17 @@ export default function Regular({
 
   const xm = 2.6;
 
-  const viewBox = [-0.5, 0, xm * lines[0].length - 1, 4 * lines.length].join(
+  const first = (() => {
+    switch (lines[0][0]) {
+      case "w":
+        return -0.23;
+
+      default:
+        return -0.5;
+    }
+  })();
+
+  const viewBox = [first, 0, xm * lines[0].length - 1, 4 * lines.length].join(
     " "
   );
 
