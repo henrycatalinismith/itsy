@@ -6,11 +6,11 @@ import {
   changeDiskSpritesheet,
   deleteDisk,
   Disk,
-  dismissDisk,
   renameDisk,
   selectActiveDisk,
   shareDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { closeDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
 import React from "react"
@@ -28,7 +28,7 @@ interface DiskPanelInspectorProps {
   disk: Disk
   changeDiskSpritesheet: (uri: string) => void
   deleteDisk: (id: string) => void
-  dismissDisk: (id: string) => void
+  closeDisk: () => void
   renameDisk: (id: string) => void
   shareDisk: () => void
 }
@@ -39,17 +39,17 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {
   changeDiskSpritesheet,
+  closeDisk,
   deleteDisk,
-  dismissDisk,
   renameDisk,
   shareDisk,
 }
 
 export function DiskPanelInspector({
   changeDiskSpritesheet,
+  closeDisk,
   deleteDisk,
   disk,
-  dismissDisk,
   renameDisk,
   shareDisk,
 }: DiskPanelInspectorProps) {
@@ -70,8 +70,8 @@ export function DiskPanelInspector({
     deleteDisk(disk.id)
   }, [])
 
-  const onDismiss = React.useCallback(() => {
-    dismissDisk(disk.id)
+  const onClose = React.useCallback(() => {
+    closeDisk()
   }, [])
 
   const onRenameStart = React.useCallback(() => {
@@ -102,7 +102,7 @@ export function DiskPanelInspector({
   return (
     <View style={styles.component}>
       <View style={styles.navigation}>
-        <Button onPress={onDismiss}>done</Button>
+        <Button onPress={onClose}>done</Button>
       </View>
 
       <View style={styles.header}>

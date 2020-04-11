@@ -2,7 +2,7 @@ import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
 import Floppy from "@highvalley.systems/itsyexpo/components/floppy"
 import {
   Disk,
-  DiskType,
+  DiskTypes,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
@@ -23,7 +23,7 @@ const mapDispatchToProps = {}
 export function AppHeaderIcon({ disk }: AppHeaderIconProps) {
   return (
     <View style={styles.component}>
-      {disk.type === DiskType.empty ? (
+      {disk.type === DiskTypes.Empty ? (
         <Floppy />
       ) : (
         <DiskIcon id={disk.id} size={24} />

@@ -24,6 +24,7 @@ const mapDispatchToProps = {
 }
 
 export function DiskPanelList({ createDisk, disks }: DiskPanelListProps) {
+  console.log(disks.length)
   return (
     <View style={styles.component}>
       <View style={styles.controls}>

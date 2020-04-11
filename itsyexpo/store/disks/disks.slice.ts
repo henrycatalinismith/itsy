@@ -29,9 +29,9 @@ function makeUri(id = uuid()): string {
   return `itsystudio://disk/${id}`
 }
 
-export enum DiskType {
-  empty = "empty",
-  normal = "normal",
+export enum DiskTypes {
+  Empty = "Empty",
+  Normal = "Normal",
 }
 
 export interface Disk {
@@ -42,7 +42,7 @@ export interface Disk {
   palette: string
   snapshot: string
   spritesheet: string
-  type: DiskType
+  type: DiskTypes
   created: string
   updated: string
 }
@@ -62,7 +62,7 @@ const initialState: DiskState = {
     palette,
     snapshot: defaultSnapshot,
     spritesheet,
-    type: DiskType.empty,
+    type: DiskTypes.Empty,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),
   },
@@ -168,7 +168,7 @@ end
     palette,
     snapshot: defaultSnapshot,
     spritesheet,
-    type: DiskType.normal,
+    type: DiskTypes.Normal,
     created,
     updated,
   }
@@ -199,7 +199,7 @@ export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
   const state = getState()
   const disk = selectActiveDisk(state)
 
-  if (disk.type === DiskType.empty) {
+  if (disk.type === DiskTypes.Empty) {
     return
   }
 
@@ -299,7 +299,7 @@ export const updateSpritesheet = (png: string): Thunk => async (
 export const selectDisks = ({ disks }) => _.values(disks)
 
 export const selectNormalDisks = createSelector([selectDisks], (disks) =>
-  _.filter(disks, { type: DiskType.normal })
+  _.filter(disks, { type: DiskTypes.Normal })
 )
 
 export const selectActiveDisk = createSelector(

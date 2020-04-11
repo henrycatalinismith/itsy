@@ -2,7 +2,7 @@ import DiskPanelInspector from "@highvalley.systems/itsyexpo/components/disk-pan
 import DiskPanelList from "@highvalley.systems/itsyexpo/components/disk-panel-list"
 import {
   Disk,
-  DiskType,
+  DiskTypes,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
@@ -21,7 +21,7 @@ const mapDispatchToProps = {}
 export function DiskPanel({ disk }: DiskPanelProps) {
   return (
     <>
-      {disk.type !== DiskType.empty ? (
+      {disk.type !== DiskTypes.Empty ? (
         <DiskPanelInspector />
       ) : (
         <DiskPanelList />

@@ -1,7 +1,7 @@
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   Disk,
-  DiskType,
+  DiskTypes,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
@@ -22,7 +22,7 @@ const mapDispatchToProps = {}
 export function AppHeaderTitle({ disk }: AppHeaderTitleProps) {
   return (
     <View style={styles.component}>
-      {disk.type === DiskType.empty ? (
+      {disk.type === DiskTypes.Empty ? (
         <Font>itsy.studio</Font>
       ) : (
         <Font>{disk.name}</Font>

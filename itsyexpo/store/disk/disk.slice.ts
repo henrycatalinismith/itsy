@@ -6,6 +6,10 @@ const name = "disk"
 const initialState = "empty"
 
 const reducers = {
+  close(): string {
+    return "empty"
+  },
+
   open(disk, action: PayloadAction<string>): string {
     return action.payload
   },
@@ -18,6 +22,10 @@ const slice = createSlice({
 })
 
 export const actions = slice.actions
+
+export const closeDisk = (): Thunk => async (dispatch) => {
+  dispatch(slice.actions.close())
+}
 
 export const openDisk = (id: string): Thunk => async (dispatch) => {
   dispatch(slice.actions.open(id))
