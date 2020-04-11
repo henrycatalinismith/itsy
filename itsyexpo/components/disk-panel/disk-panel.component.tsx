@@ -2,24 +2,32 @@ import DiskPanelInspector from "@highvalley.systems/itsyexpo/components/disk-pan
 import DiskPanelList from "@highvalley.systems/itsyexpo/components/disk-panel-list"
 import {
   Disk,
-  selectInspectedDisk,
+  DiskType,
+  selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { connect } from "react-redux"
-// import styles from "./disks-panel.module.scss"
 
 interface DiskPanelProps {
-  inspectedDisk: Disk
+  disk: Disk
 }
 
 const mapStateToProps = (state) => ({
-  inspectedDisk: selectInspectedDisk(state),
+  disk: selectActiveDisk(state),
 })
 
 const mapDispatchToProps = {}
 
-export function DiskPanel({ inspectedDisk }: DiskPanelProps) {
-  return <>{inspectedDisk ? <DiskPanelInspector /> : <DiskPanelList />}</>
+export function DiskPanel({ disk }: DiskPanelProps) {
+  return (
+    <>
+      {disk.type !== DiskType.empty ? (
+        <DiskPanelInspector />
+      ) : (
+        <DiskPanelList />
+      )}
+    </>
+  )
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiskPanel)

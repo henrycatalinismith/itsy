@@ -8,7 +8,7 @@ import {
   Disk,
   dismissDisk,
   renameDisk,
-  selectInspectedDisk,
+  selectActiveDisk,
   shareDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import * as DocumentPicker from "expo-document-picker"
@@ -34,7 +34,7 @@ interface DiskPanelInspectorProps {
 }
 
 const mapStateToProps = (state, { id }) => ({
-  disk: selectInspectedDisk(state),
+  disk: selectActiveDisk(state),
 })
 
 const mapDispatchToProps = {

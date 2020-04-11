@@ -42,7 +42,6 @@ export interface Disk {
   palette: string
   snapshot: string
   spritesheet: string
-  inspect: boolean
   type: DiskType
   created: string
   updated: string
@@ -64,7 +63,6 @@ const initialState: DiskState = {
     snapshot: defaultSnapshot,
     spritesheet,
     type: DiskType.empty,
-    inspect: false,
     created: new Date().toISOString(),
     updated: new Date().toISOString(),
   },
@@ -75,7 +73,6 @@ const reducers = {
     action.payload.forEach((disk) => {
       disks[disk.id] = {
         ...disk,
-        inspect: false,
       }
     })
   },
@@ -89,7 +86,6 @@ const reducers = {
       palette: action.payload.palette,
       snapshot: action.payload.snapshot,
       spritesheet: action.payload.spritesheet,
-      inspect: action.payload.inspect,
       type: action.payload.type,
       created: action.payload.created,
       updated: action.payload.updated,
@@ -98,17 +94,6 @@ const reducers = {
 
   delete(disks, action: PayloadAction<string>) {
     delete disks[action.payload]
-  },
-
-  dismiss(disks, action: PayloadAction<string>) {
-    disks[action.payload].inspect = false
-  },
-
-  inspect(disks, action: PayloadAction<string>) {
-    _.filter(disks, "inspect").forEach((disk) => {
-      disk.inspect = false
-    })
-    disks[action.payload].inspect = true
   },
 
   rename(disks, action: PayloadAction<{ id: string; name: string }>) {
@@ -155,7 +140,7 @@ export const changeDiskSpritesheet = (uri: string): Thunk => async (
   dispatch(action)
 
   const state = getState()
-  const disk = selectInspectedDisk(state)
+  const disk = selectActiveDisk(state)
   dispatch(writeValue(disk.uri, disk))
 }
 
@@ -173,7 +158,6 @@ function _draw()
 end
 `
   const active = false
-  const inspect = false
   const created = new Date().toISOString()
   const updated = created
   const disk: Disk = {
@@ -185,8 +169,6 @@ end
     snapshot: defaultSnapshot,
     spritesheet,
     type: DiskType.normal,
-    active,
-    inspect,
     created,
     updated,
   }
@@ -197,7 +179,7 @@ end
 
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
   const state = getState()
-  const disk = selectInspectedDisk(state)
+  const disk = selectActiveDisk(state)
 
   dispatch(slice.actions.delete(id))
   dispatch(deleteValue(disk.uri))
@@ -222,13 +204,6 @@ export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
   }
 
   dWrite(dispatch, disk)
-}
-
-export const inspectDisk = (id: string): Thunk => async (
-  dispatch,
-  getState
-) => {
-  dispatch(slice.actions.inspect(id))
 }
 
 export const loadDisks = (): Thunk => async (dispatch) => {
@@ -267,7 +242,7 @@ export const renameDisk = (name: string): Thunk => async (
   dispatch(action)
 
   const state = getState()
-  const disk = selectInspectedDisk(state)
+  const disk = selectActiveDisk(state)
   dispatch(writeValue(disk.uri, disk))
 }
 
@@ -285,7 +260,7 @@ export const saveSnapshot = (png: string): Thunk => async (
 
 export const shareDisk = (): Thunk => async (dispatch, getState) => {
   const state = getState()
-  const disk = selectInspectedDisk(state)
+  const disk = selectActiveDisk(state)
   const html = itsy.write(disk)
 
   const slug = disk.name.replace(/[^a-z0-9]/gi, "-")
@@ -330,10 +305,6 @@ export const selectNormalDisks = createSelector([selectDisks], (disks) =>
 export const selectActiveDisk = createSelector(
   [selectDisks, selectDisk],
   (disks, disk) => _.find(disks, { id: disk })
-)
-
-export const selectInspectedDisk = createSelector([selectDisks], (disks) =>
-  _.find(disks, "inspect")
 )
 
 export default slice
