@@ -1,5 +1,5 @@
+import DiskPanelBrowser from "@highvalley.systems/itsyexpo/components/disk-panel-browser"
 import DiskPanelInspector from "@highvalley.systems/itsyexpo/components/disk-panel-inspector"
-import DiskPanelList from "@highvalley.systems/itsyexpo/components/disk-panel-list"
 import {
   Disk,
   DiskTypes,
@@ -24,7 +24,7 @@ export function DiskPanel({ disk }: DiskPanelProps) {
       {disk.type !== DiskTypes.Empty ? (
         <DiskPanelInspector />
       ) : (
-        <DiskPanelList />
+        <DiskPanelBrowser />
       )}
     </>
   )

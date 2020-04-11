@@ -5,26 +5,38 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 import styles from "./button.module.scss"
 
-const fontThemes: { [theme: string]: Object } = {
-  blue: {
+export enum ButtonThemes {
+  Blue = "Blue",
+  Gray = "Gray",
+  Red = "Red",
+}
+
+const fontThemes: { [theme in ButtonThemes]: Object } = {
+  [ButtonThemes.Blue]: {
     color: colors[7],
     borderColor: colors[1],
   },
-  gray: {
+  [ButtonThemes.Gray]: {
     color: colors[7],
     borderColor: colors[1],
   },
-  red: {
+  [ButtonThemes.Red]: {
     color: colors[7],
     borderColor: colors[1],
   },
 }
 
+export interface ButtonProps {
+  children: any
+  onPress: any
+  theme?: ButtonThemes
+}
+
 export function Button({
   children = undefined,
   onPress = () => {},
-  theme = "gray",
-}) {
+  theme = ButtonThemes.Gray,
+}: ButtonProps) {
   const font = {
     fontSize: 16,
     strokeMultiplier: 0.9,
@@ -44,12 +56,14 @@ export function Button({
                 </Font>
               )
             } else {
-              return c
+              return <React.Fragment key={i}>{c}</React.Fragment>
             }
           })}
         </>
-      ) : (
+      ) : _.isString(children) ? (
         <Font {...font}>{children}</Font>
+      ) : (
+        children
       )}
     </TouchableOpacity>
   )

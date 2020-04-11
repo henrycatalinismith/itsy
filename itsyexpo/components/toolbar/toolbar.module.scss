@@ -1,0 +1,33 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  flex-direction: row;
+  align-items: center;
+  height: 32px;
+  background-color: pico8-original-palette(15);
+  border-bottom-color: pico8-original-palette(13);
+  border-bottom-width: 2px;
+  padding-left: 2px;
+}
+
+.DiskPanelBrowser {
+  background-color: pico8-original-palette(15);
+  border-bottom-color: pico8-original-palette(13);
+  border-bottom-width: 2px;
+}
+
+.DiskPanelInspector {
+  background-color: pico8-original-palette(7);
+  border-bottom-color: pico8-original-palette(13);
+  border-bottom-width: 2px;
+}
+
+.PlayPanelConsole {
+  background-color: pico8-original-palette(1);
+  border-bottom-color: pico8-original-palette(13);
+  border-bottom-width: 0;
+}
+
+.button {
+  margin-right: 4px;
+}

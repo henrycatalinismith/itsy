@@ -1,6 +1,9 @@
-import Button from "@highvalley.systems/itsyexpo/components/button"
+import Button, {
+  ButtonThemes,
+} from "@highvalley.systems/itsyexpo/components/button"
 import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
 import DiskPanelInspectorSpritesheet from "@highvalley.systems/itsyexpo/components/disk-panel-inspector-spritesheet"
+import DiskPanelInspectorToolbar from "@highvalley.systems/itsyexpo/components/disk-panel-inspector-toolbar"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   changeDiskSpritesheet,
@@ -10,7 +13,6 @@ import {
   selectActiveDisk,
   shareDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
-import { closeDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
 import React from "react"
@@ -28,7 +30,6 @@ interface DiskPanelInspectorProps {
   disk: Disk
   changeDiskSpritesheet: (uri: string) => void
   deleteDisk: (id: string) => void
-  closeDisk: () => void
   renameDisk: (id: string) => void
   shareDisk: () => void
 }
@@ -39,7 +40,6 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {
   changeDiskSpritesheet,
-  closeDisk,
   deleteDisk,
   renameDisk,
   shareDisk,
@@ -47,7 +47,6 @@ const mapDispatchToProps = {
 
 export function DiskPanelInspector({
   changeDiskSpritesheet,
-  closeDisk,
   deleteDisk,
   disk,
   renameDisk,
@@ -68,10 +67,6 @@ export function DiskPanelInspector({
 
   const onDeleteConfirm = React.useCallback(() => {
     deleteDisk(disk.id)
-  }, [])
-
-  const onClose = React.useCallback(() => {
-    closeDisk()
   }, [])
 
   const onRenameStart = React.useCallback(() => {
@@ -101,9 +96,7 @@ export function DiskPanelInspector({
 
   return (
     <View style={styles.component}>
-      <View style={styles.navigation}>
-        <Button onPress={onClose}>done</Button>
-      </View>
+      <DiskPanelInspectorToolbar />
 
       <View style={styles.header}>
         <View style={styles.headerIconColumn}>
@@ -118,15 +111,17 @@ export function DiskPanelInspector({
                 </View>
                 <View style={styles.headerNameButtons}>
                   <View style={styles.headerNameButton}>
-                    <Button onPress={onShareStart} theme="blue">
+                    <Button onPress={onShareStart} theme={ButtonThemes.Blue}>
                       share
                     </Button>
                   </View>
                   <View style={styles.headerNameButton}>
-                    <Button onPress={onRenameStart}>rename</Button>
+                    <Button onPress={onRenameStart} theme={ButtonThemes.Gray}>
+                      rename
+                    </Button>
                   </View>
                   <View style={styles.headerNameButton}>
-                    <Button onPress={onDeleteStart} theme="red">
+                    <Button onPress={onDeleteStart} theme={ButtonThemes.Red}>
                       delete
                     </Button>
                   </View>
@@ -164,7 +159,7 @@ export function DiskPanelInspector({
                     <Button onPress={onDeleteCancel}>no</Button>
                   </View>
                   <View style={styles.headerNameButton}>
-                    <Button onPress={onDeleteConfirm} theme="red">
+                    <Button onPress={onDeleteConfirm} theme={ButtonThemes.Red}>
                       yes
                     </Button>
                   </View>
