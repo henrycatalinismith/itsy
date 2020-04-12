@@ -1,22 +1,15 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.component {
-  background-color: pico8-original-palette(6);
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
+.prompt {
 }
 
 .input {
   background-color: pico8-original-palette(7);
   border-color: pico8-original-palette(0);
   border-width: 2px;
-  font-family: "overpass-mono-regular";
+  font-family: "overpass-mono-bold";
   font-size: 16px;
   padding: 4px;
-  margin: 0;
   width: 100%;
 }
 

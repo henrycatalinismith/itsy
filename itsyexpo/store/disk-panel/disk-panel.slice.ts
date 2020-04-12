@@ -7,6 +7,7 @@ export enum DiskPanelModes {
   Delete = "Delete",
   Inspect = "Inspect",
   Rename = "Rename",
+  Share = "Share",
   Sprite = "Sprite",
 }
 

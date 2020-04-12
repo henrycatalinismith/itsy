@@ -1,1 +1,6 @@
 @import "../../../palettes/pico8/_original.scss";
+
+.inspect {
+  background-color: pico8-original-palette(7);
+  flex: 1;
+}

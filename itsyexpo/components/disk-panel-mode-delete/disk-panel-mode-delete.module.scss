@@ -1,18 +1,12 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
-  background-color: pico8-original-palette(7);
-  flex-direction: column;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
+  flex-direction: row;
 }
 
-.prompt {
+.delete {
+  margin-right: 8px;
 }
 
-.buttons {
-}
-
-.button {
+.cancel {
 }

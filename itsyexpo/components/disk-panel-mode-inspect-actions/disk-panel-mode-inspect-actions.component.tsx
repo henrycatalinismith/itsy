@@ -36,7 +36,7 @@ export function DiskPanelModeInspectActions({
   }, [])
 
   const onShare = React.useCallback(() => {
-    shareDisk()
+    setDiskPanelMode(DiskPanelModes.Share)
   }, [])
 
   const onSprite = React.useCallback(() => {
@@ -49,7 +49,7 @@ export function DiskPanelModeInspectActions({
         <Button onPress={onShare} theme={ButtonThemes.Blue}>
           share
         </Button>
-        <Text style={styles.label}>export playable copy of disk</Text>
+        <Text style={styles.label}>export a playable copy of disk</Text>
       </View>
       <View style={styles.action}>
         <Button onPress={onRename} theme={ButtonThemes.Gray}>
