@@ -1,3 +1,4 @@
+import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
@@ -25,6 +26,7 @@ export function DiskPanelModeBrowseToolbar({
   buttons.push({
     label: "new",
     action: createDisk,
+    theme: ButtonThemes.Blue,
   })
 
   const toolbar: ToolbarProps = {

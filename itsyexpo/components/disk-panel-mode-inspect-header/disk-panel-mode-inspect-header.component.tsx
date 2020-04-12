@@ -25,7 +25,7 @@ export function DiskPanelModeInspectHeader({
   return (
     <View style={styles.component}>
       <View style={styles.icon}>
-        <DiskIcon id={disk.id} size={64} />
+        <DiskIcon id={disk.id} size={72} />
       </View>
       <View style={styles.name}>
         <Font fontSize={24}>{disk.name}</Font>

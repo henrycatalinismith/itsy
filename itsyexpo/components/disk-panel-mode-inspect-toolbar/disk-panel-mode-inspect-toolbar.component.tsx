@@ -1,3 +1,4 @@
+import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
@@ -10,7 +11,7 @@ interface DiskPanelModeInspectToolbarProps {
   closeDisk: () => void
 }
 
-const mapStateToProps = (state, { id }) => ({})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
   closeDisk,
@@ -23,8 +24,9 @@ export function DiskPanelModeInspectToolbar({
   const theme = ToolbarThemes.DiskPanelInspector
 
   buttons.push({
-    label: "done",
+    label: "close",
     action: closeDisk,
+    theme: ButtonThemes.Gray,
   })
 
   const toolbar: ToolbarProps = {

@@ -9,6 +9,7 @@ export enum ButtonThemes {
   Blue = "Blue",
   Gray = "Gray",
   Red = "Red",
+  White = "White",
 }
 
 const fontThemes: { [theme in ButtonThemes]: Object } = {
@@ -21,6 +22,10 @@ const fontThemes: { [theme in ButtonThemes]: Object } = {
     borderColor: colors[1],
   },
   [ButtonThemes.Red]: {
+    color: colors[7],
+    borderColor: colors[1],
+  },
+  [ButtonThemes.White]: {
     color: colors[7],
     borderColor: colors[1],
   },

@@ -3,7 +3,7 @@
 .component {
   flex-direction: row;
   align-items: center;
-  height: 32px;
+  height: 40px;
   background-color: pico8-original-palette(15);
   border-bottom-color: pico8-original-palette(13);
   border-bottom-width: 2px;
@@ -17,9 +17,9 @@
 }
 
 .DiskPanelInspector {
-  background-color: pico8-original-palette(7);
-  border-bottom-color: pico8-original-palette(13);
-  border-bottom-width: 2px;
+  background-color: pico8-original-palette(1);
+  border-bottom-color: pico8-original-palette(1);
+  border-bottom-width: 1px;
 }
 
 .PlayPanelConsole {

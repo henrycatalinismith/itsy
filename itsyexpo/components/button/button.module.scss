@@ -1,25 +1,34 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .button {
-  display: flex;
-  flex-direction: row;
   align-items: center;
-  border-width: 2px;
+  border-color: pico8-original-palette(1);
+  border-radius: 2px;
+  border-width: 1px;
+  box-shadow: 1px 1px 0.5px pico8-original-palette(13);
+  height: 32px;
+  flex-direction: row;
+  justify-content: center;
   padding: 2px 2px 4px 2px;
-  width: 64px;
+  width: 72px;
 }
 
 .Blue {
   background-color: pico8-original-palette(12);
-  border-color: pico8-original-palette(5);
+  border-color: pico8-original-palette(1);
 }
 
 .Gray {
   background-color: pico8-original-palette(13);
-  border-color: pico8-original-palette(5);
+  border-color: pico8-original-palette(1);
 }
 
 .Red {
   background-color: pico8-original-palette(8);
-  border-color: pico8-original-palette(5);
+  border-color: pico8-original-palette(1);
+}
+
+.White {
+  background-color: pico8-original-palette(7);
+  border-color: pico8-original-palette(1);
 }

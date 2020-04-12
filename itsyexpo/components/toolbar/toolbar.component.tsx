@@ -1,4 +1,6 @@
-import Button from "@highvalley.systems/itsyexpo/components/button"
+import Button, {
+  ButtonThemes,
+} from "@highvalley.systems/itsyexpo/components/button"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
@@ -11,8 +13,9 @@ export enum ToolbarThemes {
 }
 
 export interface ToolbarButton {
-  label: any
   action: Function
+  label: any
+  theme: ButtonThemes
 }
 
 export interface ToolbarProps {
@@ -27,10 +30,12 @@ const mapDispatchToProps = {}
 export function Toolbar({ buttons, theme }: ToolbarProps) {
   return (
     <View style={[styles.component, styles[theme]]}>
-      {buttons.map((button, i) => {
+      {buttons.map((button) => {
         return (
-          <View key={i} style={styles.button}>
-            <Button onPress={button.action}>{button.label}</Button>
+          <View key={button.label} style={styles.button}>
+            <Button onPress={button.action} theme={button.theme}>
+              {button.label}
+            </Button>
           </View>
         )
       })}

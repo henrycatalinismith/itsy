@@ -1,74 +1,7 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
-  background-color: pico8-original-palette(6);
-  flex-direction: column;
-  flex: 1;
-}
-
-.navigation {
-  align-items: flex-start;
-  margin: 8px 8px 0 8px;
-}
-
-.header {
-  flex-direction: row;
-  margin: 32px 4px 32px 4px;
-}
-
-.headerIconColumn {
-}
-
-.headerNameColumn {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.headerNameInput {
   background-color: pico8-original-palette(7);
-  border-color: pico8-original-palette(0);
-  border-width: 2px;
-  font-family: "overpass-mono-regular";
-  font-size: 16px;
-  padding: 4px;
-  margin: 22px 0 8px 8px;
-  width: 100%;
-}
-
-.headerNameOutput {
-  margin: 16px 0 8px 8px;
-}
-
-.headerNameButtons {
   flex-direction: column;
-  margin: 0 0 0 8px;
-}
-
-.headerNameButton {
-  margin-bottom: 8px;
-}
-
-.spritesheetSection {
-  border-top-color: pico8-original-palette(13);
-  border-top-width: 2px;
   flex: 1;
-  margin: 0 8px 0 8px;
-  padding: 32px 0 0 0;
-  flex-direction: row;
-}
-
-.spritesheetImageColumn {
-  margin-right: 8px;
-}
-
-.spritesheetButtonsColumn {
-  flex-direction: column;
-}
-
-.spritesheetTitle {
-  margin-bottom: 8px;
-}
-
-.spritesheetButtons {
-  flex-direction: row;
 }
