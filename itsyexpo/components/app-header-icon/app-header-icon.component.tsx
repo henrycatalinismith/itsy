@@ -23,7 +23,7 @@ const mapDispatchToProps = {}
 export function AppHeaderIcon({ disk }: AppHeaderIconProps) {
   return (
     <View style={styles.component}>
-      {disk.type === DiskTypes.Empty ? (
+      {!disk || disk.type === DiskTypes.Empty ? (
         <Floppy />
       ) : (
         <DiskIcon id={disk.id} size={24} />

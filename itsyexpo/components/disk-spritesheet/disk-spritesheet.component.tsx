@@ -2,9 +2,9 @@ import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { Image as SvgImage, Svg } from "react-native-svg"
 import { connect } from "react-redux"
-import styles from "./disk-panel-inspector-spritesheet.module.scss"
+import styles from "./disk-spritesheet.module.scss"
 
-interface DiskPanelInspectorSpritesheetProps {
+interface DiskSpritesheetProps {
   id: string
   disk: Disk
   size: number
@@ -16,10 +16,7 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {}
 
-export function DiskPanelInspectorSpritesheet({
-  disk,
-  size,
-}: DiskPanelInspectorSpritesheetProps) {
+export function DiskSpritesheet({ disk, size }: DiskSpritesheetProps) {
   return (
     <Svg
       style={styles.component}
@@ -38,7 +35,4 @@ export function DiskPanelInspectorSpritesheet({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DiskPanelInspectorSpritesheet)
+export default connect(mapStateToProps, mapDispatchToProps)(DiskSpritesheet)

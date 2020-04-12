@@ -1,14 +1,14 @@
-import DiskPanelBrowserListItem from "@highvalley.systems/itsyexpo/components/disk-panel-browser-list-item"
+import DiskPanelModeBrowseListItem from "@highvalley.systems/itsyexpo/components/disk-panel-mode-browse-list-item"
 import {
   Disk,
   selectNormalDisks,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
-import { ScrollView, View } from "react-native"
+import { ScrollView } from "react-native"
 import { connect } from "react-redux"
-import styles from "./disk-panel-browser-list.module.scss"
+import styles from "./disk-panel-mode-browse-list.module.scss"
 
-interface DiskPanelBrowserListProps {
+interface DiskPanelModeBrowseListProps {
   disks: Disk[]
 }
 
@@ -18,11 +18,13 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {}
 
-export function DiskPanelBrowserList({ disks }: DiskPanelBrowserListProps) {
+export function DiskPanelModeBrowseList({
+  disks,
+}: DiskPanelModeBrowseListProps) {
   return (
     <ScrollView style={styles.component}>
       {disks.map((disk) => (
-        <DiskPanelBrowserListItem key={disk.id} id={disk.id} />
+        <DiskPanelModeBrowseListItem key={disk.id} id={disk.id} />
       ))}
     </ScrollView>
   )
@@ -31,4 +33,4 @@ export function DiskPanelBrowserList({ disks }: DiskPanelBrowserListProps) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DiskPanelBrowserList)
+)(DiskPanelModeBrowseList)

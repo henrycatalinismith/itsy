@@ -1,31 +1,33 @@
-import DiskPanelBrowser from "@highvalley.systems/itsyexpo/components/disk-panel-browser"
-import DiskPanelInspector from "@highvalley.systems/itsyexpo/components/disk-panel-inspector"
+import DiskPanelModeBrowse from "@highvalley.systems/itsyexpo/components/disk-panel-mode-browse"
+import DiskPanelModeDelete from "@highvalley.systems/itsyexpo/components/disk-panel-mode-delete"
+import DiskPanelModeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect"
+import DiskPanelModeRename from "@highvalley.systems/itsyexpo/components/disk-panel-mode-rename"
+import DiskPanelModeSprite from "@highvalley.systems/itsyexpo/components/disk-panel-mode-sprite"
 import {
-  Disk,
-  DiskTypes,
-  selectActiveDisk,
-} from "@highvalley.systems/itsyexpo/store/disks"
+  DiskPanelModes,
+  selectDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/disk-panel"
 import React from "react"
 import { connect } from "react-redux"
 
 interface DiskPanelProps {
-  disk: Disk
+  mode: DiskPanelModes
 }
 
 const mapStateToProps = (state) => ({
-  disk: selectActiveDisk(state),
+  mode: selectDiskPanelMode(state),
 })
 
 const mapDispatchToProps = {}
 
-export function DiskPanel({ disk }: DiskPanelProps) {
+export function DiskPanel({ mode }: DiskPanelProps) {
   return (
     <>
-      {disk.type !== DiskTypes.Empty ? (
-        <DiskPanelInspector />
-      ) : (
-        <DiskPanelBrowser />
-      )}
+      {mode === DiskPanelModes.Browse && <DiskPanelModeBrowse />}
+      {mode === DiskPanelModes.Delete && <DiskPanelModeDelete />}
+      {mode === DiskPanelModes.Inspect && <DiskPanelModeInspect />}
+      {mode === DiskPanelModes.Rename && <DiskPanelModeRename />}
+      {mode === DiskPanelModes.Sprite && <DiskPanelModeSprite />}
     </>
   )
 }

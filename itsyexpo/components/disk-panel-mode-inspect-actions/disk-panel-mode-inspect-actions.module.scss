@@ -1,0 +1,16 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  margin: 8px;
+}
+
+.action {
+  margin-bottom: 8px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  font-family: "overpass-mono-bold";
+  margin-left: 8px;
+}

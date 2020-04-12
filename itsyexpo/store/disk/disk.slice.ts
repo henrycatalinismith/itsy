@@ -15,10 +15,17 @@ const reducers = {
   },
 }
 
+const extraReducers = {
+  "disks/delete": (diskPanel): string => {
+    return "empty"
+  },
+}
+
 const slice = createSlice({
   name,
   initialState,
   reducers,
+  extraReducers,
 })
 
 export const actions = slice.actions

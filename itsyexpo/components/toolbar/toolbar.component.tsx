@@ -29,10 +29,8 @@ export function Toolbar({ buttons, theme }: ToolbarProps) {
     <View style={[styles.component, styles[theme]]}>
       {buttons.map((button, i) => {
         return (
-          <View style={styles.button}>
-            <Button key={i} onPress={button.action}>
-              {button.label}
-            </Button>
+          <View key={i} style={styles.button}>
+            <Button onPress={button.action}>{button.label}</Button>
           </View>
         )
       })}

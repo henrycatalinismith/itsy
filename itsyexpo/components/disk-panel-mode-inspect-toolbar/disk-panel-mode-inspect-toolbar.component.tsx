@@ -2,29 +2,29 @@ import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
 } from "@highvalley.systems/itsyexpo/components/toolbar"
-import { createDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import { closeDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import React from "react"
 import { connect } from "react-redux"
 
-interface DiskPanelBrowserToolbarProps {
-  createDisk: () => void
+interface DiskPanelModeInspectToolbarProps {
+  closeDisk: () => void
 }
 
 const mapStateToProps = (state, { id }) => ({})
 
 const mapDispatchToProps = {
-  createDisk,
+  closeDisk,
 }
 
-export function DiskPanelBrowserToolbar({
-  createDisk,
-}: DiskPanelBrowserToolbarProps) {
+export function DiskPanelModeInspectToolbar({
+  closeDisk,
+}: DiskPanelModeInspectToolbarProps) {
   const buttons = []
-  const theme = ToolbarThemes.DiskPanelBrowser
+  const theme = ToolbarThemes.DiskPanelInspector
 
   buttons.push({
-    label: "new",
-    action: createDisk,
+    label: "done",
+    action: closeDisk,
   })
 
   const toolbar: ToolbarProps = {
@@ -38,4 +38,4 @@ export function DiskPanelBrowserToolbar({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DiskPanelBrowserToolbar)
+)(DiskPanelModeInspectToolbar)

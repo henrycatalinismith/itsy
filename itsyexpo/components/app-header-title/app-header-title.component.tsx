@@ -22,7 +22,7 @@ const mapDispatchToProps = {}
 export function AppHeaderTitle({ disk }: AppHeaderTitleProps) {
   return (
     <View style={styles.component}>
-      {disk.type === DiskTypes.Empty ? (
+      {!disk || disk.type === DiskTypes.Empty ? (
         <Font>itsy.studio</Font>
       ) : (
         <Font>{disk.name}</Font>

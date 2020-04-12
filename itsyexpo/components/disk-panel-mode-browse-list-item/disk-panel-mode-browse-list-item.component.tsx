@@ -13,9 +13,9 @@ import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { TouchableOpacity, TouchableOpacityProps, View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./disk-panel-browser-list-item.module.scss"
+import styles from "./disk-panel-mode-browse-list-item.module.scss"
 
-interface DiskPanelBrowserListItemProps {
+interface DiskPanelModeBrowseListItemProps {
   id: string
   disk: Disk
   activeDisk: Disk
@@ -33,12 +33,12 @@ const mapDispatchToProps = {
   openDisk,
 }
 
-export function DiskPanelBrowserListItem({
+export function DiskPanelModeBrowseListItem({
   disk,
   activeDisk,
   inspectDisk,
   openDisk,
-}: DiskPanelBrowserListItemProps) {
+}: DiskPanelModeBrowseListItemProps) {
   const layout: Rect = React.useContext(LayoutContext)
   const diskListItemStyles = [styles.component]
 
@@ -104,4 +104,4 @@ export function DiskPanelBrowserListItem({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DiskPanelBrowserListItem)
+)(DiskPanelModeBrowseListItem)

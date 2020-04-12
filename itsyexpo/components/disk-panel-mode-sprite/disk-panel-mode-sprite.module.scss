@@ -1,0 +1,25 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  background-color: pico8-original-palette(6);
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.prompt {
+  margin-bottom: 8px;
+}
+
+.spritesheet {
+  margin-bottom: 8px;
+}
+
+.buttons {
+  flex-direction: row;
+}
+
+.change {
+  margin-right: 8px;
+}

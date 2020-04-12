@@ -1,0 +1,14 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  flex-direction: row;
+  margin: 8px;
+  align-items: center;
+}
+
+.icon {
+}
+
+.name {
+  margin-left: 8px;
+}

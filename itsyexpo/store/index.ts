@@ -10,6 +10,7 @@ import { Dimensions } from "react-native"
 import { ThunkAction } from "redux-thunk"
 
 import device from "./device"
+import diskPanel from "./disk-panel"
 import disks from "./disks"
 import disk from "./disk"
 import editor from "./editor"
@@ -25,6 +26,7 @@ const middleware = [...getDefaultMiddleware()]
 
 const reducer = combineReducers({
   device: device.reducer,
+  diskPanel: diskPanel.reducer,
   disks: disks.reducer,
   disk: disk.reducer,
   editor: editor.reducer,
@@ -101,6 +103,7 @@ const store = configureStore({
 })
 
 exports.device = device
+exports.diskPanel = diskPanel
 exports.disks = disks
 exports.disk = disk
 exports.editor = editor
