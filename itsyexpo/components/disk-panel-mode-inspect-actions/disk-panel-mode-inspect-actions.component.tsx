@@ -1,6 +1,9 @@
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
+import DiskPanelModeInspectButtonGroup, {
+  DiskPanelModeInspectButtonGroupProps,
+} from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-button-group"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   DiskPanelModes,
@@ -28,55 +31,51 @@ export function DiskPanelModeInspectActions({
   setDiskPanelMode,
   shareDisk,
 }: DiskPanelModeInspectActionsProps) {
-  const onDelete = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Delete)
-  }, [])
+  const title = "actions"
+  const buttons = []
 
-  const onRename = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Rename)
-  }, [])
+  buttons.push({
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Share)
+    }, []),
+    label: "share",
+    text: "export playable disk",
+    theme: ButtonThemes.Blue,
+  })
 
-  const onShare = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Share)
-  }, [])
+  buttons.push({
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Rename)
+    }, []),
+    label: "rename",
+    text: "change the disk's name",
+    theme: ButtonThemes.Gray,
+  })
 
-  const onSprite = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Sprite)
-  }, [])
+  buttons.push({
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Sprite)
+    }, []),
+    label: "sprite",
+    text: "change the disk's spritesheet",
+    theme: ButtonThemes.Gray,
+  })
 
-  return (
-    <View style={styles.component}>
-      <View style={styles.title}>
-        <Font fontSize={24}>actions</Font>
-      </View>
-      <View style={styles.actions}>
-        <View style={styles.action}>
-          <Button onPress={onShare} theme={ButtonThemes.Blue}>
-            share
-          </Button>
-          <Text style={styles.label}>export a playable copy of disk</Text>
-        </View>
-        <View style={styles.action}>
-          <Button onPress={onRename} theme={ButtonThemes.Gray}>
-            rename
-          </Button>
-          <Text style={styles.label}>give the disk a new name</Text>
-        </View>
-        <View style={styles.action}>
-          <Button onPress={onSprite} theme={ButtonThemes.Gray}>
-            sprite
-          </Button>
-          <Text style={styles.label}>replace the spritesheet</Text>
-        </View>
-        <View style={styles.action}>
-          <Button onPress={onDelete} theme={ButtonThemes.Red}>
-            delete
-          </Button>
-          <Text style={styles.label}>remove the disk</Text>
-        </View>
-      </View>
-    </View>
-  )
+  buttons.push({
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Delete)
+    }, []),
+    label: "deletee",
+    text: "delete the disk",
+    theme: ButtonThemes.Red,
+  })
+
+  const buttonGroup: DiskPanelModeInspectButtonGroupProps = {
+    buttons,
+    title,
+  }
+
+  return <DiskPanelModeInspectButtonGroup {...buttonGroup} />
 }
 
 export default connect(
