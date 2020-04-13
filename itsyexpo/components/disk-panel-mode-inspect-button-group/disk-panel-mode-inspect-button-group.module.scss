@@ -22,4 +22,6 @@
 .text {
   font-family: "overpass-mono-bold";
   margin-left: 8px;
+  overflow: hidden;
+  white-space: nowrap;
 }

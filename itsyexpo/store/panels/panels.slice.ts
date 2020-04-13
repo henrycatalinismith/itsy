@@ -76,6 +76,12 @@ export const togglePanel = (id: PanelIds): Thunk => async (
 
 export const selectPanels = ({ panels }): PanelsState => panels
 
+export const selectDevtoolsPanels = createSelector(
+  [selectPanels],
+  (panels): Panel[] =>
+    _.filter(panels, (p) => ![PanelIds.disk, PanelIds.help].includes(p.id))
+)
+
 export const selectActivePanel = createSelector(
   [selectPanels],
   (panels): Panel => _.find(panels, "active")

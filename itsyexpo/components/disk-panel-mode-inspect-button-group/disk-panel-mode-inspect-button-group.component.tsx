@@ -1,9 +1,10 @@
 import Button, {
+  ButtonProps,
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
-import { Text, View } from "react-native"
+import { Text, TextProps, View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./disk-panel-mode-inspect-button-group.module.scss"
 
@@ -34,12 +35,21 @@ export function DiskPanelModeInspectButtonGroup({
       </View>
       <View style={styles.buttons}>
         {buttons.map((button) => {
+          const buttonProps: ButtonProps = {
+            onPress: button.action,
+            theme: button.theme,
+          }
+
+          const textProps: TextProps = {
+            ellipsizeMode: "tail",
+            numberOfLines: 1,
+            style: styles.text,
+          }
+
           return (
             <View key={button.label} style={styles.button}>
-              <Button onPress={button.action} theme={button.theme}>
-                {button.label}
-              </Button>
-              <Text style={styles.text}>{button.text}</Text>
+              <Button {...buttonProps}>{button.label}</Button>
+              <Text {...textProps}>{button.text}</Text>
             </View>
           )
         })}

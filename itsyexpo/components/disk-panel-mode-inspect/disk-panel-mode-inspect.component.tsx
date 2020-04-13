@@ -1,4 +1,5 @@
 import DiskPanelModeInspectActions from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-actions"
+import DiskPanelModeInspectPanels from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-panels"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
@@ -13,6 +14,7 @@ const mapDispatchToProps = {}
 export function DiskPanelModeInspect({}: DiskPanelModeInspectProps) {
   return (
     <View style={styles.component}>
+      <DiskPanelModeInspectPanels />
       <DiskPanelModeInspectActions />
     </View>
   )

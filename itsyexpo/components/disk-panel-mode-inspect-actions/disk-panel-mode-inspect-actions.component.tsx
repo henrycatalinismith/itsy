@@ -56,7 +56,7 @@ export function DiskPanelModeInspectActions({
     action: React.useCallback(() => {
       setDiskPanelMode(DiskPanelModes.Delete)
     }, []),
-    label: "deletee",
+    label: "delete",
     text: "delete the disk",
     theme: ButtonThemes.Red,
   })
