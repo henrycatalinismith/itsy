@@ -257,7 +257,7 @@ export function Spritesheet({
   }
 
   return (
-    <div className={styles.spritesheet}>
+    <div className={styles.component}>
       <canvas {...canvasProps} />
     </div>
   )

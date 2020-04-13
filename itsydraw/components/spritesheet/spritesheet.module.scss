@@ -1,3 +1,5 @@
+@import "../../../palettes/pico8/_original.scss";
+
 @mixin aspect-ratio($ratio: 1 1, $selector: "> :first-child") {
   $selector: unquote($selector);
 
@@ -13,7 +15,8 @@
   }
 }
 
-.spritesheet {
+.component {
+  border: 2px solid pico8-original-palette(2);
   @include aspect-ratio(1 1);
 }
 

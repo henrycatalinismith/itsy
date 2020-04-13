@@ -1,9 +1,10 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.codePanel {
+.component {
   flex: 1;
-  border-top-color: pico8-original-palette(6);
-  border-top-width: 2px;
+  border: 2px solid pico8-original-palette(2);
+  // border-top-color: pico8-original-palette(6);
+  // border-top-width: 2px;
   position: relative;
 }
 

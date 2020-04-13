@@ -44,7 +44,7 @@ export function Toolbox({
 
   React.useEffect(() => onResize(), [width, height])
 
-  const className = cx(styles.toolbox, {
+  const className = cx(styles.component, {
     [styles.crowded]: toolbox.layout === ToolboxLayouts.Crowded,
     [styles.stacked]: toolbox.layout === ToolboxLayouts.Stacked,
   })
@@ -60,8 +60,6 @@ export function Toolbox({
       gridTemplateRows: `repeat(${toolbox.tools.length}, ${height}px)`,
     },
   }
-
-  console.log(`repeat(${toolbox.tools.length}, ${height}px)`)
 
   return (
     <div {...divProps} ref={divRef}>

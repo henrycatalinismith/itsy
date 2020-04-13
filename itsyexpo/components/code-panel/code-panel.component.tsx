@@ -38,7 +38,7 @@ export function CodePanel({ disk }: CodePanelProps) {
 
   return React.useMemo(
     () => (
-      <View style={styles.codePanel}>
+      <View style={styles.component}>
         {!reloading && <CodePanelWebview onLoad={onLoadWebview} />}
         {(loading || reloading) && <Loading style={styles.loading} />}
       </View>

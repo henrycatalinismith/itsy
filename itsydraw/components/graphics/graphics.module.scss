@@ -1,14 +1,18 @@
+@import "../../../palettes/pico8/_original.scss";
+
 .graphics {
+  background-color: pico8-original-palette(14);
   display: grid;
   width: 100vw;
   height: 100vh;
 
   grid-template-areas:
     "spritesheet"
+    "."
     "toolbox";
 
   grid-template-columns: auto;
-  grid-template-rows: min-content auto;
+  grid-template-rows: min-content 4px auto;
   overflow: hidden;
 }
 

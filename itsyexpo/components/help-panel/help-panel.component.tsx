@@ -1,7 +1,5 @@
-import {
-  ScreenState,
-  selectScreen,
-} from "@highvalley.systems/itsyexpo/store/screen"
+import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
 import { Asset } from "expo-asset"
 import React from "react"
 import { WebView } from "react-native-webview"
@@ -10,19 +8,16 @@ import styles from "./help-panel.module.scss"
 
 const manual = Asset.fromModule(require("../../assets/webviews/itsyhelp.html"))
 
-interface HelpPanelProps {
-  screen: ScreenState
-}
+interface HelpPanelProps {}
 
-const mapStateToProps = (state) => ({
-  screen: selectScreen(state),
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
-export function HelpPanel({ screen }: HelpPanelProps) {
+export function HelpPanel({}: HelpPanelProps) {
+  const layout: Rect = React.useContext(LayoutContext)
   const panelWidth = {
-    width: screen.width,
+    width: layout.width,
   }
 
   return (
@@ -31,7 +26,7 @@ export function HelpPanel({ screen }: HelpPanelProps) {
       originWhitelist={["*"]}
       scrollEnabled={true}
       source={{ uri: manual.uri }}
-      style={[styles.webView, panelWidth]}
+      style={[styles.component, panelWidth]}
     />
   )
 }

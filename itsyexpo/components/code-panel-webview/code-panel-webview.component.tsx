@@ -67,7 +67,7 @@ export function Editor({ disk, editDisk, onLoad }: EditorProps) {
   return React.useMemo(
     () => (
       <WebView
-        style={styles.webview}
+        style={styles.component}
         bounces={false}
         injectedJavaScript="window.isReactNative = true;"
         onMessage={handleMessage}

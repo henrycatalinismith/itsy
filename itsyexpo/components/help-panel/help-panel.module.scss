@@ -1,11 +1,6 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.helpPanel {
-  display: flex;
+.component {
+  border: 2px solid pico8-original-palette(2);
   flex: 1;
-}
-
-.webView {
-  flex: 1;
-  border-color: pico8-original-palette(14);
 }
