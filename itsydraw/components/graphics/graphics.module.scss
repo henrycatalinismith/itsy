@@ -12,15 +12,17 @@
     "toolbox";
 
   grid-template-columns: auto;
-  grid-template-rows: min-content 4px auto;
+  grid-template-rows: 100vmin 4px auto;
   overflow: hidden;
 }
 
 .spritesheet {
+  border: 2px solid pico8-original-palette(2);
   grid-area: spritesheet;
 }
 
 .toolbox {
+  border: 2px solid pico8-original-palette(2);
   grid-area: toolbox;
   display: flex;
 }

@@ -16,7 +16,6 @@
 }
 
 .component {
-  border: 2px solid pico8-original-palette(2);
   @include aspect-ratio(1 1);
 }
 
