@@ -30,17 +30,8 @@ export function DiskPanelModeInspectActions({
       setDiskPanelMode(DiskPanelModes.Share)
     }, []),
     label: "share",
-    text: "export playable disk",
+    text: "export the disk",
     theme: ButtonThemes.Blue,
-  })
-
-  buttons.push({
-    action: React.useCallback(() => {
-      setDiskPanelMode(DiskPanelModes.Rename)
-    }, []),
-    label: "rename",
-    text: "change the disk's name",
-    theme: ButtonThemes.Gray,
   })
 
   buttons.push({
@@ -48,7 +39,16 @@ export function DiskPanelModeInspectActions({
       setDiskPanelMode(DiskPanelModes.Sprite)
     }, []),
     label: "sprite",
-    text: "change the disk's spritesheet",
+    text: "export the spritesheet",
+    theme: ButtonThemes.Gray,
+  })
+
+  buttons.push({
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Rename)
+    }, []),
+    label: "rename",
+    text: "rename the disk",
     theme: ButtonThemes.Gray,
   })
 
