@@ -1,6 +1,6 @@
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
-import { View } from "react-native"
+import { ScrollView, View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./disk-panel-submode.module.scss"
 
@@ -19,7 +19,10 @@ export function DiskPanelSubmode({ children, title }: DiskPanelSubmodeProps) {
       <View style={styles.title}>
         <Font fontSize={24}>{title}</Font>
       </View>
-      <View style={styles.children}>{children}</View>
+      <ScrollView style={styles.children}>
+        {children}
+        <View style={styles.spacer} />
+      </ScrollView>
     </View>
   )
 }

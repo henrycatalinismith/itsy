@@ -3,6 +3,7 @@ import Button, {
 } from "@highvalley.systems/itsyexpo/components/button"
 import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
 import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
+import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
   DiskPanelModes,
   setDiskPanelMode,
@@ -12,6 +13,7 @@ import {
   Disk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { Rect } from "@highvalley.systems/typedefs/itsy"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
 import React from "react"
@@ -39,6 +41,9 @@ export function DiskPanelModeSprite({
   disk,
   setDiskPanelMode,
 }: DiskPanelModeSpriteProps) {
+  const layout: Rect = React.useContext(LayoutContext)
+  const size = layout.width - 20
+
   const onCancel = React.useCallback(() => {
     setDiskPanelMode(DiskPanelModes.Inspect)
   }, [])
@@ -53,9 +58,6 @@ export function DiskPanelModeSprite({
 
   return (
     <DiskPanelSubmode title="spritesheet">
-      <View style={styles.spritesheet}>
-        <DiskSpritesheet id={disk.id} size={256} />
-      </View>
       <View style={styles.buttons}>
         <View style={styles.change}>
           <Button onPress={onChange} theme={ButtonThemes.Blue}>
@@ -67,6 +69,9 @@ export function DiskPanelModeSprite({
             cancel
           </Button>
         </View>
+      </View>
+      <View style={styles.spritesheet}>
+        <DiskSpritesheet id={disk.id} size={size} />
       </View>
     </DiskPanelSubmode>
   )

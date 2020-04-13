@@ -44,7 +44,7 @@ export function PlayPanelConsoleToolbar({
     buttons.push({
       action: stopDisk,
       label: [
-        <Svg width={16} height={12} viewBox="0 0 48 48">
+        <Svg key="svg" width={16} height={12} viewBox="0 0 48 48">
           <Path
             d="M4,4 L44,4 L44,44 L4,44 L4,4"
             strokeLinecap="round"
@@ -62,7 +62,7 @@ export function PlayPanelConsoleToolbar({
     buttons.push({
       action: playDisk,
       label: [
-        <Svg width={16} height={16} viewBox="0 0 40 48">
+        <Svg key="svg" width={16} height={16} viewBox="0 0 40 48">
           <Path
             d="M8,8 L32,24 L8,40 L8,8"
             strokeLinecap="round"

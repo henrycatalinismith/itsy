@@ -13,6 +13,11 @@
   width: 100%;
 }
 
-.button {
+.buttons {
   margin-top: 8px;
+  flex-direction: row;
+}
+
+.save {
+  margin-right: 8px;
 }

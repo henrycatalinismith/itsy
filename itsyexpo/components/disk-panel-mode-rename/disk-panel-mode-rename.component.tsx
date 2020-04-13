@@ -1,5 +1,11 @@
+import Button, {
+  ButtonThemes,
+} from "@highvalley.systems/itsyexpo/components/button"
 import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
-import Button from "@highvalley.systems/itsyexpo/components/button"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/disk-panel"
 import {
   Disk,
   renameDisk,
@@ -13,6 +19,7 @@ import styles from "./disk-panel-mode-rename.module.scss"
 interface DiskPanelModeRenameProps {
   disk: Disk
   renameDisk: (id: string) => void
+  setDiskPanelMode: (mode: DiskPanelModes) => void
 }
 
 const mapStateToProps = (state, { id }) => ({
@@ -21,16 +28,22 @@ const mapStateToProps = (state, { id }) => ({
 
 const mapDispatchToProps = {
   renameDisk,
+  setDiskPanelMode,
 }
 
 export function DiskPanelModeRename({
   disk,
   renameDisk,
+  setDiskPanelMode,
 }: DiskPanelModeRenameProps) {
   const [name, setName] = React.useState(disk.name)
 
   const onChange = React.useCallback((newName) => {
     setName(newName)
+  }, [])
+
+  const onCancel = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Inspect)
   }, [])
 
   const onSubmit = React.useCallback(() => {
@@ -49,8 +62,17 @@ export function DiskPanelModeRename({
         textContentType="none"
         value={name}
       />
-      <View style={styles.button}>
-        <Button onPress={onSubmit}>save</Button>
+      <View style={styles.buttons}>
+        <View style={styles.save}>
+          <Button onPress={onSubmit} theme={ButtonThemes.Blue}>
+            save
+          </Button>
+        </View>
+        <View style={styles.cancel}>
+          <Button onPress={onCancel} theme={ButtonThemes.Gray}>
+            cancel
+          </Button>
+        </View>
       </View>
     </DiskPanelSubmode>
   )
