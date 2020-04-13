@@ -16,6 +16,7 @@ import {
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
+import * as Sharing from "expo-sharing"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
@@ -44,11 +45,7 @@ export function DiskPanelModeSprite({
   const layout: Rect = React.useContext(LayoutContext)
   const size = layout.width - 20
 
-  const onCancel = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Inspect)
-  }, [])
-
-  const onChange = React.useCallback(async () => {
+  const onImport = React.useCallback(async () => {
     const image = await DocumentPicker.getDocumentAsync({ type: "image/png" })
     const uri = await FileSystem.readAsStringAsync(image.uri, {
       encoding: FileSystem.EncodingType.Base64,
@@ -56,12 +53,33 @@ export function DiskPanelModeSprite({
     changeDiskSpritesheet(uri)
   }, [])
 
+  const onExport = React.useCallback(async () => {
+    const uri = `${FileSystem.documentDirectory}spritesheet.png`
+    const data = disk.spritesheet
+    await FileSystem.writeAsStringAsync(uri, data, { encoding: "base64" })
+    const sharingOptions = {
+      dialogTitle: "Export spritesheet",
+      mimeType: "image/png",
+      UTI: "image/png",
+    }
+    await Sharing.shareAsync(uri, sharingOptions)
+  }, [])
+
+  const onCancel = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Inspect)
+  }, [])
+
   return (
     <DiskPanelSubmode title="spritesheet">
       <View style={styles.buttons}>
-        <View style={styles.change}>
-          <Button onPress={onChange} theme={ButtonThemes.Blue}>
-            change
+        <View style={styles.import}>
+          <Button onPress={onImport} theme={ButtonThemes.Blue}>
+            import
+          </Button>
+        </View>
+        <View style={styles.export}>
+          <Button onPress={onExport} theme={ButtonThemes.Gray}>
+            export
           </Button>
         </View>
         <View style={styles.cancel}>
