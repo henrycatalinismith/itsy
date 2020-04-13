@@ -3,9 +3,16 @@
 .component {
   flex-direction: row;
   align-items: center;
-  flex: 1;
   margin: 4px;
   padding: 4px;
+}
+
+.Short {
+  height: 32px;
+}
+
+.Tall {
+  height: 64px;
 }
 
 .active {
