@@ -1,7 +1,16 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
-  margin: 0 8px;
+  border-top-color: pico8-original-palette(1);
+  border-top-width: 1px;
+  padding: 16px 8px;
+}
+
+.title {
+  margin-bottom: 16px;
+}
+
+.actions {
 }
 
 .action {

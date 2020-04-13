@@ -1,6 +1,7 @@
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   DiskPanelModes,
   setDiskPanelMode,
@@ -45,29 +46,34 @@ export function DiskPanelModeInspectActions({
 
   return (
     <View style={styles.component}>
-      <View style={styles.action}>
-        <Button onPress={onShare} theme={ButtonThemes.Blue}>
-          share
-        </Button>
-        <Text style={styles.label}>export a playable copy of disk</Text>
+      <View style={styles.title}>
+        <Font fontSize={24}>actions</Font>
       </View>
-      <View style={styles.action}>
-        <Button onPress={onRename} theme={ButtonThemes.Gray}>
-          rename
-        </Button>
-        <Text style={styles.label}>give the disk a new name</Text>
-      </View>
-      <View style={styles.action}>
-        <Button onPress={onSprite} theme={ButtonThemes.Gray}>
-          sprite
-        </Button>
-        <Text style={styles.label}>replace the spritesheet</Text>
-      </View>
-      <View style={styles.action}>
-        <Button onPress={onDelete} theme={ButtonThemes.Red}>
-          delete
-        </Button>
-        <Text style={styles.label}>remove the disk</Text>
+      <View style={styles.actions}>
+        <View style={styles.action}>
+          <Button onPress={onShare} theme={ButtonThemes.Blue}>
+            share
+          </Button>
+          <Text style={styles.label}>export a playable copy of disk</Text>
+        </View>
+        <View style={styles.action}>
+          <Button onPress={onRename} theme={ButtonThemes.Gray}>
+            rename
+          </Button>
+          <Text style={styles.label}>give the disk a new name</Text>
+        </View>
+        <View style={styles.action}>
+          <Button onPress={onSprite} theme={ButtonThemes.Gray}>
+            sprite
+          </Button>
+          <Text style={styles.label}>replace the spritesheet</Text>
+        </View>
+        <View style={styles.action}>
+          <Button onPress={onDelete} theme={ButtonThemes.Red}>
+            delete
+          </Button>
+          <Text style={styles.label}>remove the disk</Text>
+        </View>
       </View>
     </View>
   )
