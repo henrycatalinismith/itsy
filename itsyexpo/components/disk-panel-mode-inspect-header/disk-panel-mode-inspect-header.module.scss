@@ -1,9 +1,11 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
+  background-color: pico8-original-palette(7);
   flex-direction: row;
-  margin: 8px;
+  padding: 8px;
   align-items: center;
+  overflow: hidden;
 }
 
 .icon {

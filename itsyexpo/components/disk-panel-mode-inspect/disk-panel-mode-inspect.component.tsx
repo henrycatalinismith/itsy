@@ -1,7 +1,7 @@
 import DiskPanelModeInspectActions from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-actions"
 import DiskPanelModeInspectPanels from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-panels"
 import React from "react"
-import { View } from "react-native"
+import { ScrollView } from "react-native"
 import { connect } from "react-redux"
 import styles from "./disk-panel-mode-inspect.module.scss"
 
@@ -13,10 +13,10 @@ const mapDispatchToProps = {}
 
 export function DiskPanelModeInspect({}: DiskPanelModeInspectProps) {
   return (
-    <View style={styles.component}>
+    <ScrollView style={styles.component}>
       <DiskPanelModeInspectPanels />
       <DiskPanelModeInspectActions />
-    </View>
+    </ScrollView>
   )
 }
 
