@@ -34,14 +34,6 @@ export function DiskPanelModeBrowseToolbar({
     theme: ButtonThemes.Blue,
   })
 
-  buttons.push({
-    label: "import",
-    action: React.useCallback(() => {
-      setDiskPanelMode(DiskPanelModes.Import)
-    }, []),
-    theme: ButtonThemes.Gray,
-  })
-
   const toolbar: ToolbarProps = {
     buttons,
     theme,
