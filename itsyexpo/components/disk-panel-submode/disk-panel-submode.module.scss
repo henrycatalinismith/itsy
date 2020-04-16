@@ -2,11 +2,12 @@
 
 .component {
   background-color: pico8-original-palette(6);
-  border: 2px solid pico8-original-palette(2);
   flex: 1;
 }
 
 .title {
+  border-top-color: pico8-original-palette(1);
+  border-top-width: 2px;
   background-color: pico8-original-palette(13);
   border-bottom-color: pico8-original-palette(1);
   border-bottom-width: 2px;
@@ -15,8 +16,6 @@
 
 .children {
   background-color: pico8-original-palette(6);
-  border-top-color: pico8-original-palette(13);
-  border-top-width: 2px;
   flex: 1;
   padding: 8px;
 }

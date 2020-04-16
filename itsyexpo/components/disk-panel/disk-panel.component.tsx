@@ -29,7 +29,7 @@ export function DiskPanel({ mode }: DiskPanelProps) {
   // always keep <DiskPanelModeBrowse /> loaded so that closing a disk isn't
   // too laggy a lot of disks are present
   return (
-    <>
+    <View style={styles.component}>
       <DiskPanelModeBrowse />
       {mode === DiskPanelModes.Create && <DiskPanelModeCreate />}
       {mode === DiskPanelModes.Delete && <DiskPanelModeDelete />}
@@ -38,7 +38,7 @@ export function DiskPanel({ mode }: DiskPanelProps) {
       {mode === DiskPanelModes.Rename && <DiskPanelModeRename />}
       {mode === DiskPanelModes.Share && <DiskPanelModeShare />}
       {mode === DiskPanelModes.Sprite && <DiskPanelModeSprite />}
-    </>
+    </View>
   )
 }
 

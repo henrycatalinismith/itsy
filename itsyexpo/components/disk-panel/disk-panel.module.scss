@@ -1,12 +1,7 @@
 @import "../../../palettes/pico8/_original.scss";
 
-.inspect {
+.component {
   background-color: pico8-original-palette(7);
   border: 2px solid pico8-original-palette(2);
   flex: 1;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
