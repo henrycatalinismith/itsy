@@ -4,28 +4,31 @@ import {
   DiskTypes,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./app-header-title.module.scss"
 
 interface AppHeaderTitleProps {
-  disk: Disk
+  activeDisk: Disk
+  disk: string
 }
 
 const mapStateToProps = (state) => ({
-  disk: selectActiveDisk(state),
+  activeDisk: selectActiveDisk(state),
+  disk: selectDisk(state),
 })
 
 const mapDispatchToProps = {}
 
-export function AppHeaderTitle({ disk }: AppHeaderTitleProps) {
+export function AppHeaderTitle({ activeDisk, disk }: AppHeaderTitleProps) {
   return (
     <View style={styles.component}>
-      {!disk || disk.type === DiskTypes.Empty ? (
-        <Font>itsy.studio</Font>
+      {disk === "empty" ? (
+        <Font>itsy studio</Font>
       ) : (
-        <Font>{disk.name}</Font>
+        <Font>{activeDisk.name}</Font>
       )}
     </View>
   )
