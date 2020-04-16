@@ -1,4 +1,4 @@
-import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
+import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import { shareDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { connect } from "react-redux"
@@ -20,9 +20,9 @@ export function DiskPanelModeSprite({ shareDisk }: DiskPanelModeSpriteProps) {
   }, [])
 
   return (
-    <DiskPanelSubmode title="sharing...">
+    <DiskPanelSubmodeInspect title="sharing...">
       <></>
-    </DiskPanelSubmode>
+    </DiskPanelSubmodeInspect>
   )
 }
 

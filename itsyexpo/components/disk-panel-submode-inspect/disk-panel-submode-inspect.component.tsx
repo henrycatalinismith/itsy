@@ -4,26 +4,33 @@ import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { ScrollView, View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./disk-panel-submode.module.scss"
+import styles from "./disk-panel-submode-inspect.module.scss"
 
-interface DiskPanelSubmodeProps {
+interface DiskPanelSubmodeInspectProps {
   children: any
-  title: string
+  style?: any
+  title?: string
 }
 
 const mapStateToProps = (state, { id }) => ({})
 
 const mapDispatchToProps = {}
 
-export function DiskPanelSubmode({ children, title }: DiskPanelSubmodeProps) {
+export function DiskPanelSubmodeInspect({
+  children,
+  style = undefined,
+  title = "",
+}: DiskPanelSubmodeInspectProps) {
   return (
     <View style={styles.component}>
       <DiskPanelModeInspectToolbar />
       <DiskPanelModeInspectHeader />
-      <View style={styles.title}>
-        <Font fontSize={24}>{title}</Font>
-      </View>
-      <ScrollView style={styles.children}>
+      {title.length > 0 && (
+        <View style={styles.title}>
+          <Font fontSize={24}>{title}</Font>
+        </View>
+      )}
+      <ScrollView style={[styles.children, style]}>
         {children}
         <View style={styles.spacer} />
       </ScrollView>
@@ -31,4 +38,7 @@ export function DiskPanelSubmode({ children, title }: DiskPanelSubmodeProps) {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiskPanelSubmode)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DiskPanelSubmodeInspect)

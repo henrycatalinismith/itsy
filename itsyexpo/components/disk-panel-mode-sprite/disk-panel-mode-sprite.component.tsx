@@ -1,7 +1,7 @@
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
-import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
+import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
@@ -70,7 +70,7 @@ export function DiskPanelModeSprite({
   }, [])
 
   return (
-    <DiskPanelSubmode title="spritesheet">
+    <DiskPanelSubmodeInspect title="spritesheet" style={styles.component}>
       <View style={styles.buttons}>
         <View style={styles.import}>
           <Button onPress={onImport} theme={ButtonThemes.Blue}>
@@ -91,7 +91,7 @@ export function DiskPanelModeSprite({
       <View style={styles.spritesheet}>
         <DiskSpritesheet id={disk.id} size={size} />
       </View>
-    </DiskPanelSubmode>
+    </DiskPanelSubmodeInspect>
   )
 }
 

@@ -1,7 +1,7 @@
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
-import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
+import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import {
   DiskPanelModes,
   setDiskPanelMode,
@@ -51,7 +51,7 @@ export function DiskPanelModeRename({
   }, [name])
 
   return (
-    <DiskPanelSubmode title="rename">
+    <DiskPanelSubmodeInspect title="rename" style={styles.component}>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
@@ -74,7 +74,7 @@ export function DiskPanelModeRename({
           </Button>
         </View>
       </View>
-    </DiskPanelSubmode>
+    </DiskPanelSubmodeInspect>
   )
 }
 

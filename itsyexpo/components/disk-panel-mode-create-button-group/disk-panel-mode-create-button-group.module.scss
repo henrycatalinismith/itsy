@@ -2,7 +2,6 @@
 
 .component {
   flex-direction: row;
-  margin-bottom: 8px;
 }
 
 .button {
@@ -27,9 +26,9 @@
 }
 
 .activeButton {
-  background-color: pico8-original-palette(1);
+  background-color: pico8-original-palette(6);
 }
 
 .inactiveButton {
-  background-color: pico8-original-palette(6);
+  background-color: pico8-original-palette(7);
 }

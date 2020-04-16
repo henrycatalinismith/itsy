@@ -1,4 +1,4 @@
-import DiskPanelSubmode from "@highvalley.systems/itsyexpo/components/disk-panel-submode"
+import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
@@ -46,8 +46,8 @@ export function DiskPanelModeDelete({
   }, [])
 
   return (
-    <DiskPanelSubmode title="delete">
-      <View style={styles.component}>
+    <DiskPanelSubmodeInspect title="delete" style={styles.component}>
+      <View style={styles.buttons}>
         <View style={styles.delete}>
           <Button onPress={onConfirm} theme={ButtonThemes.Red}>
             delete
@@ -57,7 +57,7 @@ export function DiskPanelModeDelete({
           <Button onPress={onCancel}>cancel</Button>
         </View>
       </View>
-    </DiskPanelSubmode>
+    </DiskPanelSubmodeInspect>
   )
 }
 

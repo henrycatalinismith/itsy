@@ -1,0 +1,29 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  background-color: pico8-original-palette(6);
+  flex: 1;
+}
+
+.header {
+  background-color: pico8-original-palette(7);
+  border-bottom-color: pico8-original-palette(1);
+  border-bottom-width: 1px;
+  padding: 8px;
+}
+
+.children {
+  background-color: pico8-original-palette(7);
+  flex: 1;
+}
+
+.spacer {
+  height: 32px;
+}
+
+.mode {
+  background-color: pico8-original-palette(7);
+  height: 44px;
+  justify-content: center;
+  align-items: center;
+}

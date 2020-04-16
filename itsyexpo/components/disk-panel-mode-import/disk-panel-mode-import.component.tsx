@@ -5,6 +5,7 @@ import {
   DiskPanelModes,
   setDiskPanelMode,
 } from "@highvalley.systems/itsyexpo/store/disk-panel"
+import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { View } from "react-native"
@@ -31,12 +32,12 @@ export function DiskPanelModeImport({
   }, [])
 
   return (
-    <View style={styles.component}>
+    <DiskPanelSubmodeCreate style={styles.component}>
       <Font fontSize={24}>importing</Font>
       <Button onPress={onCancel} theme={ButtonThemes.Gray}>
         cancel
       </Button>
-    </View>
+    </DiskPanelSubmodeCreate>
   )
 }
 
