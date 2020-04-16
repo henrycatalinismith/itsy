@@ -6,6 +6,7 @@ import {
   DiskPanelModes,
   setDiskPanelMode,
 } from "@highvalley.systems/itsyexpo/store/disk-panel"
+import DiskPanelModeCreateButtonGroup from "@highvalley.systems/itsyexpo/components/disk-panel-mode-create-button-group"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import { createDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
@@ -45,8 +46,26 @@ export function DiskPanelModeCreate({
     createDisk(name)
   }, [name])
 
+  const buttons = []
+
+  buttons.push({
+    label: "blank",
+    action: () => {},
+    active: true,
+  })
+
+  buttons.push({
+    label: "import",
+    action: () => {},
+    active: false,
+  })
+
   return (
     <View style={styles.component}>
+      <View style={styles.buttons}>
+        <DiskPanelModeCreateButtonGroup buttons={buttons} />
+      </View>
+
       <Font fontSize={24}>name</Font>
       <TextInput
         autoCapitalize="none"
