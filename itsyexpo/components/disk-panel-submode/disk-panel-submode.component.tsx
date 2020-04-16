@@ -1,3 +1,5 @@
+import DiskPanelModeInspectHeader from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-header"
+import DiskPanelModeInspectToolbar from "@highvalley.systems/itsyexpo/components/disk-panel-mode-inspect-toolbar"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { ScrollView, View } from "react-native"
@@ -16,6 +18,8 @@ const mapDispatchToProps = {}
 export function DiskPanelSubmode({ children, title }: DiskPanelSubmodeProps) {
   return (
     <View style={styles.component}>
+      <DiskPanelModeInspectToolbar />
+      <DiskPanelModeInspectHeader />
       <View style={styles.title}>
         <Font fontSize={24}>{title}</Font>
       </View>

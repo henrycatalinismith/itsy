@@ -2,8 +2,7 @@
 
 .component {
   background-color: pico8-original-palette(7);
-  border-top-color: pico8-original-palette(1);
+  border: 2px solid pico8-original-palette(2);
   border-top-width: 1px;
   flex-direction: column;
-  flex: 1;
 }

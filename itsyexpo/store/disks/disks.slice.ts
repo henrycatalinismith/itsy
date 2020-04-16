@@ -148,10 +148,12 @@ export const changeDiskSpritesheet = (uri: string): Thunk => async (
   dispatch(writeValue(disk.uri, disk))
 }
 
-export const createDisk = (): Thunk => async (dispatch, getState) => {
+export const createDisk = (name: string): Thunk => async (
+  dispatch,
+  getState
+) => {
   const id = uuid()
   const uri = makeUri(id)
-  const name = words()
   const lua = `function _init()
 end
 
@@ -161,7 +163,6 @@ end
 function _draw()
 end
 `
-  const active = false
   const created = new Date().toISOString()
   const updated = created
   const disk: Disk = {

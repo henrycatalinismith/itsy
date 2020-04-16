@@ -1,4 +1,5 @@
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { Disk } from "@highvalley.systems/typedefs/itsy"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "disk"
@@ -16,6 +17,10 @@ const reducers = {
 }
 
 const extraReducers = {
+  "disks/create": (diskPanel, action: PayloadAction<Disk>): string => {
+    return action.payload.id
+  },
+
   "disks/delete": (diskPanel): string => {
     return "empty"
   },

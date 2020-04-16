@@ -4,6 +4,7 @@ import _ from "lodash"
 
 export enum DiskPanelModes {
   Browse = "Browse",
+  Create = "Create",
   Delete = "Delete",
   Inspect = "Inspect",
   Rename = "Rename",
@@ -34,6 +35,10 @@ const extraReducers = {
 
   "disk/close": (diskPanel): void => {
     diskPanel.mode = DiskPanelModes.Browse
+  },
+
+  "disks/create": (diskPanel): void => {
+    diskPanel.mode = DiskPanelModes.Inspect
   },
 
   "disks/delete": (diskPanel): void => {

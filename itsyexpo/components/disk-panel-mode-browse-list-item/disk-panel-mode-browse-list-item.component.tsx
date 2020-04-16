@@ -59,11 +59,7 @@ export function DiskPanelModeBrowseListItem({
   }
 
   const onPress = React.useCallback(() => {
-    if (active) {
-      inspectDisk(disk.id)
-    } else {
-      openDisk(disk.id)
-    }
+    openDisk(disk.id)
   }, [active])
 
   const touchableOpacity: TouchableOpacityProps = {

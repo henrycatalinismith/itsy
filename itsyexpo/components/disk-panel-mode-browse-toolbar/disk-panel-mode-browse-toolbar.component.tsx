@@ -1,31 +1,36 @@
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/disk-panel"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
 } from "@highvalley.systems/itsyexpo/components/toolbar"
-import { createDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { connect } from "react-redux"
 
 interface DiskPanelModeBrowseToolbarProps {
-  createDisk: () => void
+  setDiskPanelMode: (mode: DiskPanelModes) => void
 }
 
 const mapStateToProps = (state, { id }) => ({})
 
 const mapDispatchToProps = {
-  createDisk,
+  setDiskPanelMode,
 }
 
 export function DiskPanelModeBrowseToolbar({
-  createDisk,
+  setDiskPanelMode,
 }: DiskPanelModeBrowseToolbarProps) {
   const buttons = []
   const theme = ToolbarThemes.DiskPanelBrowser
 
   buttons.push({
     label: "new",
-    action: createDisk,
+    action: React.useCallback(() => {
+      setDiskPanelMode(DiskPanelModes.Create)
+    }, []),
     theme: ButtonThemes.Blue,
   })
 
