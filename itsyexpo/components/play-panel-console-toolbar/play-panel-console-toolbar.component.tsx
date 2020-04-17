@@ -6,8 +6,8 @@ import Toolbar, {
 import { playDisk, stopDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import { clearOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
-  playerSelector,
-  PlayerState,
+  PlayerModes,
+  selectPlayerMode,
 } from "@highvalley.systems/itsyexpo/store/player"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
@@ -15,14 +15,14 @@ import { Path, Svg } from "react-native-svg"
 import { connect } from "react-redux"
 
 interface PlayPanelConsoleToolbarProps {
-  player: PlayerState
+  playerMode: PlayerModes
   clearOutput: () => void
   playDisk: () => void
   stopDisk: () => void
 }
 
 const mapStateToProps = (state) => ({
-  player: playerSelector(state),
+  playerMode: selectPlayerMode(state),
 })
 
 const mapDispatchToProps = {
@@ -33,14 +33,16 @@ const mapDispatchToProps = {
 
 export function PlayPanelConsoleToolbar({
   clearOutput,
-  player,
+  playerMode,
   playDisk,
   stopDisk,
 }: PlayPanelConsoleToolbarProps) {
   const buttons = []
   const theme = ToolbarThemes.PlayPanelConsole
 
-  if (player.running || player.waiting || player.stopping) {
+  if (
+    [PlayerModes.Load, PlayerModes.Busy, PlayerModes.Halt].includes(playerMode)
+  ) {
     buttons.push({
       action: stopDisk,
       label: [

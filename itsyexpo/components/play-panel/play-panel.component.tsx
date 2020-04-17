@@ -2,8 +2,8 @@ import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel
 import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
-  playerSelector,
   PlayerState,
+  selectPlayer,
 } from "@highvalley.systems/itsyexpo/store/player"
 import {
   ScreenState,
@@ -20,7 +20,7 @@ interface PlayPanelProps {
 }
 
 const mapStateToProps = (state) => ({
-  player: playerSelector(state),
+  player: selectPlayer(state),
   screen: selectScreen(state),
 })
 

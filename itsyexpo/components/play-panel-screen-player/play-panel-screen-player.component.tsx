@@ -1,7 +1,7 @@
 import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
 import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
-  playerSelector,
+  selectPlayer,
   PlayerState,
   stop,
 } from "@highvalley.systems/itsyexpo/store/player"
@@ -18,7 +18,7 @@ interface PlayPanelScreenPlayerProps {
 }
 
 const mapStateToProps = (state) => ({
-  player: playerSelector(state),
+  player: selectPlayer(state),
 })
 
 const mapDispatchToProps = {

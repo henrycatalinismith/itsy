@@ -2,43 +2,41 @@ import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
 
+export enum PlayerModes {
+  Load = "Load",
+  Busy = "Busy",
+  Halt = "Halt",
+  Idle = "Idle",
+}
+
 export interface PlayerState {
   html: string
-  running: boolean
-  stopping: boolean
-  waiting: boolean
+  mode: PlayerModes
 }
 
 const name = "player"
 
 const initialState: PlayerState = {
   html: "",
-  running: false,
-  stopping: false,
-  waiting: false,
+  mode: PlayerModes.Idle,
 }
 
 const reducers = {
+  load(player) {
+    player.mode = PlayerModes.Load
+  },
+
   play(player, action: PayloadAction<string>) {
     player.html = action.payload
-    player.running = true
-    player.waiting = false
+    player.mode = PlayerModes.Busy
   },
 
-  shutdown(player) {
-    player.running = false
-    player.stopping = true
+  halt(player) {
+    player.mode = PlayerModes.Halt
   },
 
-  stop(player) {
-    player.stopping = false
-    player.running = false
-  },
-
-  wait(player) {
-    player.waiting = true
-    player.running = false
-    player.stopping = false
+  idle(player) {
+    player.mode = PlayerModes.Idle
   },
 }
 
@@ -51,16 +49,16 @@ const slice = createSlice({
 export const actions = slice.actions
 
 export const stop = (): Thunk => async (dispatch) => {
-  dispatch(slice.actions.shutdown())
+  dispatch(slice.actions.halt())
   await delay(400)
-  dispatch(slice.actions.stop())
+  dispatch(slice.actions.idle())
 }
 
-export const playerSelector = ({ player }): PlayerState => player
+export const selectPlayer = ({ player }): PlayerState => player
 
-export const playerRunning = createSelector(
-  playerSelector,
-  ({ running }) => running
+export const selectPlayerMode = createSelector(
+  selectPlayer,
+  (player): PlayerModes => player.mode
 )
 
 export default slice

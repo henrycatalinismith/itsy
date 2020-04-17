@@ -2,8 +2,8 @@ import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import PlayPanelScreenPlayer from "@highvalley.systems/itsyexpo/components/play-panel-screen-player"
 import PlayPanelScreenSnapshot from "@highvalley.systems/itsyexpo/components/play-panel-screen-snapshot"
 import {
-  playerSelector,
-  PlayerState,
+  PlayerModes,
+  selectPlayerMode,
 } from "@highvalley.systems/itsyexpo/store/player"
 import React from "react"
 import { View } from "react-native"
@@ -11,25 +11,25 @@ import { connect } from "react-redux"
 import styles from "./play-panel-screen.module.scss"
 
 interface PlayPanelScreenProps {
-  player: PlayerState
+  playerMode: PlayerModes
   appendConsoleText: (text: string) => void
 }
 
 const mapStateToProps = (state) => ({
-  player: playerSelector(state),
+  playerMode: selectPlayerMode(state),
 })
 
 const mapDispatchToProps = {}
 
 export function PlayPanelScreen({
   appendConsoleText,
-  player,
+  playerMode,
 }: PlayPanelScreenProps) {
   return (
     <View style={styles.screen}>
-      {player.waiting ? (
+      {playerMode === PlayerModes.Load ? (
         <Loading />
-      ) : player.running || player.stopping ? (
+      ) : [PlayerModes.Busy, PlayerModes.Halt].includes(playerMode) ? (
         <PlayPanelScreenPlayer appendConsoleText={appendConsoleText} />
       ) : (
         <PlayPanelScreenSnapshot />

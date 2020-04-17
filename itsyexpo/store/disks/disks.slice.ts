@@ -15,7 +15,6 @@ import {
   readValues,
   writeValue,
 } from "@highvalley.systems/itsyexpo/store/storage"
-import words from "@highvalley.systems/itsyexpo/words"
 import * as itsy from "@highvalley.systems/itsyplay"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import delay from "delay"
@@ -226,7 +225,7 @@ export const loadDisks = (): Thunk => async (dispatch) => {
 export const playDisk = (): Thunk => async (dispatch, getState) => {
   Keyboard.dismiss()
 
-  dispatch(player.actions.wait())
+  dispatch(player.actions.load())
 
   await delay(Math.pow(2, 4))
 
@@ -284,9 +283,9 @@ export const shareDisk = (): Thunk => async (dispatch, getState) => {
 }
 
 export const stopDisk = (): Thunk => async (dispatch, getState) => {
-  dispatch(player.actions.shutdown())
+  dispatch(player.actions.halt())
   await delay(400)
-  dispatch(player.actions.stop())
+  dispatch(player.actions.idle())
 }
 
 export const updateSpritesheet = (png: string): Thunk => async (
