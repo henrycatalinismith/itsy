@@ -2,43 +2,43 @@ import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { KeyboardEvent } from "react-native"
 
-export enum KeyboardStatus {
-  hidden = "hidden",
-  hiding = "hiding",
-  showing = "showing",
-  visible = "visible",
+export enum KeyboardModes {
+  Hidden = "Hidden",
+  Hiding = "Hiding",
+  Showing = "Showing",
+  Visible = "Visible",
 }
 
 interface KeyboardState {
   height: number
-  status: KeyboardStatus
+  status: KeyboardModes
 }
 
 const name = "keyboard"
 
 const initialState: KeyboardState = {
   height: 0,
-  status: KeyboardStatus.hidden,
+  status: KeyboardModes.Hidden,
 }
 
 const reducers = {
   didHide(keyboard) {
     keyboard.height = 0
-    keyboard.status = KeyboardStatus.hidden
+    keyboard.status = KeyboardModes.Hidden
   },
 
   didShow(keyboard, action: PayloadAction<number>) {
     keyboard.height = action.payload
-    keyboard.status = KeyboardStatus.visible
+    keyboard.status = KeyboardModes.Visible
   },
 
   willHide(keyboard) {
-    keyboard.status = KeyboardStatus.hiding
+    keyboard.status = KeyboardModes.Hiding
   },
 
   willShow(keyboard, action: PayloadAction<number>) {
     keyboard.height = action.payload
-    keyboard.status = KeyboardStatus.showing
+    keyboard.status = KeyboardModes.Showing
   },
 }
 
@@ -81,7 +81,7 @@ export const selectKeyboardHeight = createSelector(
 
 export const selectKeyboardVisibility = createSelector(
   [selectKeyboard],
-  ({ status }) => status === KeyboardStatus.visible
+  ({ status }) => status === KeyboardModes.Visible
 )
 
 export default slice
