@@ -22,8 +22,39 @@ export interface Panel {
   rank: number
 }
 
+export interface CodePanel extends Panel {
+  id: PanelIds.code
+}
+
+export enum DiskPanelModes {
+  Browse = "Browse",
+  Create = "Create",
+  Delete = "Delete",
+  Inspect = "Inspect",
+  Rename = "Rename",
+  Share = "Share",
+  Sprite = "Sprite",
+}
+
+export interface DiskPanel extends Panel {
+  id: PanelIds.disk
+  mode: DiskPanelModes
+}
+
+export interface DrawPanel extends Panel {
+  id: PanelIds.draw
+}
+
+export interface HelpPanel extends Panel {
+  id: PanelIds.help
+}
+
+export interface PlayPanel extends Panel {
+  id: PanelIds.play
+}
+
 export interface PanelsState {
-  [id: string]: Panel
+  [id: string]: CodePanel | DiskPanel | DrawPanel | HelpPanel | PlayPanel
 }
 
 const name = "panels"
@@ -43,12 +74,39 @@ const reducers = {
     _.find(panels, "active").active = false
     panels[action.payload].active = true
   },
+
+  diskPanelMode(panels, action: PayloadAction<DiskPanelModes>): void {
+    panels.disk.mode = action.payload
+  },
+}
+
+const extraReducers = {
+  "disk/open": (panels): void => {
+    panels.disk.mode = DiskPanelModes.Inspect
+  },
+
+  "disk/close": (panels): void => {
+    panels.disk.mode = DiskPanelModes.Browse
+  },
+
+  "disks/create": (panels): void => {
+    panels.disk.mode = DiskPanelModes.Inspect
+  },
+
+  "disks/delete": (panels): void => {
+    panels.disk.mode = DiskPanelModes.Browse
+  },
+
+  "disks/rename": (panels): void => {
+    panels.disk.mode = DiskPanelModes.Inspect
+  },
 }
 
 const slice = createSlice({
   name,
   initialState,
   reducers,
+  extraReducers,
 })
 
 export const togglePanel = (id: PanelIds): Thunk => async (
@@ -74,6 +132,12 @@ export const togglePanel = (id: PanelIds): Thunk => async (
   }
 }
 
+export const setDiskPanelMode = (mode: DiskPanelModes): Thunk => async (
+  dispatch
+) => {
+  dispatch(slice.actions.diskPanelMode(mode))
+}
+
 export const selectPanels = ({ panels }): PanelsState => panels
 
 export const selectDevtoolsPanels = createSelector(
@@ -90,6 +154,16 @@ export const selectActivePanel = createSelector(
 export const selectActivePanels = createSelector(
   [selectPanels],
   (panels): Panel[] => _.filter(panels, "active")
+)
+
+export const selectDiskPanel = createSelector(
+  [selectPanels],
+  (panels): DiskPanel => panels.disk as DiskPanel
+)
+
+export const selectDiskPanelMode = createSelector(
+  [selectDiskPanel],
+  (diskPanel): DiskPanelModes => diskPanel.mode
 )
 
 export const selectPanelMode = createSelector([selectDevice], (device) => {

@@ -4,7 +4,7 @@ import {
   DiskPanelModes,
   selectDiskPanelMode,
   setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { ScrollView, View } from "react-native"
 import { connect } from "react-redux"

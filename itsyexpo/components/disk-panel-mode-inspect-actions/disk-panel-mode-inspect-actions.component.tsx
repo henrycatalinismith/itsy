@@ -5,7 +5,7 @@ import DiskPanelModeInspectButtonGroup, {
 import {
   DiskPanelModes,
   setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { connect } from "react-redux"
 

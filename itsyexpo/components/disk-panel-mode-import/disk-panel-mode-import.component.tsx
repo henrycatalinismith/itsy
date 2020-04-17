@@ -1,14 +1,13 @@
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
+import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   DiskPanelModes,
   setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
-import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
-import Font from "@highvalley.systems/itsyexpo/components/font"
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
-import { View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./disk-panel-mode-import.module.scss"
 

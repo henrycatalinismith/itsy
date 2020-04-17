@@ -10,12 +10,11 @@ import { Dimensions } from "react-native"
 import { ThunkAction } from "redux-thunk"
 
 import device from "./device"
-import diskPanel from "./disk-panel"
 import disks from "./disks"
 import disk from "./disk"
 import editor from "./editor"
 import keyboard from "./keyboard"
-import panels, { PanelIds } from "./panels"
+import panels, { PanelIds, DiskPanelModes } from "./panels"
 import output from "./output"
 import player from "./player"
 import safeArea from "./safe-area"
@@ -26,7 +25,6 @@ const middleware = [...getDefaultMiddleware()]
 
 const reducer = combineReducers({
   device: device.reducer,
-  diskPanel: diskPanel.reducer,
   disks: disks.reducer,
   disk: disk.reducer,
   editor: editor.reducer,
@@ -51,6 +49,7 @@ const preloadedState = {
   panels: {
     disk: {
       id: PanelIds.disk,
+      mode: DiskPanelModes.Browse,
       active: true,
       rank: 0,
     },
@@ -103,7 +102,6 @@ const store = configureStore({
 })
 
 exports.device = device
-exports.diskPanel = diskPanel
 exports.disks = disks
 exports.disk = disk
 exports.editor = editor

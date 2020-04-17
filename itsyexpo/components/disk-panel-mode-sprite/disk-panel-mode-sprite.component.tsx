@@ -5,14 +5,14 @@ import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/dis
 import DiskSpritesheet from "@highvalley.systems/itsyexpo/components/disk-spritesheet"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
-import {
   changeDiskSpritesheet,
   Disk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/panels"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"

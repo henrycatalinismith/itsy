@@ -9,7 +9,7 @@ import DiskPanelModeSprite from "@highvalley.systems/itsyexpo/components/disk-pa
 import {
   DiskPanelModes,
   selectDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"

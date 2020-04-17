@@ -3,14 +3,14 @@ import Button, {
 } from "@highvalley.systems/itsyexpo/components/button"
 import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
-import {
   Disk,
   renameDisk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { TextInput, View } from "react-native"
 import { connect } from "react-redux"

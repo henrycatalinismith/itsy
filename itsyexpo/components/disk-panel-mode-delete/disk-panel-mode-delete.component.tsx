@@ -1,17 +1,16 @@
-import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import Button, {
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
-import Font from "@highvalley.systems/itsyexpo/components/font"
-import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
+import DiskPanelSubmodeInspect from "@highvalley.systems/itsyexpo/components/disk-panel-submode-inspect"
 import {
   deleteDisk,
   Disk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"

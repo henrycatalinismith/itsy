@@ -9,7 +9,7 @@ import player from "@highvalley.systems/itsyexpo/store/player"
 import {
   DiskPanelModes,
   setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
+} from "@highvalley.systems/itsyexpo/store/panels"
 import {
   deleteValue,
   readValues,

@@ -1,12 +1,12 @@
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
-import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/disk-panel"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
 } from "@highvalley.systems/itsyexpo/components/toolbar"
+import {
+  DiskPanelModes,
+  setDiskPanelMode,
+} from "@highvalley.systems/itsyexpo/store/panels"
 import React from "react"
 import { connect } from "react-redux"
 
