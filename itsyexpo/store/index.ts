@@ -12,7 +12,6 @@ import { ThunkAction } from "redux-thunk"
 import device from "./device"
 import disks from "./disks"
 import disk from "./disk"
-import editor from "./editor"
 import keyboard from "./keyboard"
 import panels, { PanelIds, DiskPanelModes } from "./panels"
 import output from "./output"
@@ -27,7 +26,6 @@ const reducer = combineReducers({
   device: device.reducer,
   disks: disks.reducer,
   disk: disk.reducer,
-  editor: editor.reducer,
   keyboard: keyboard.reducer,
   output: output.reducer,
   panels: panels.reducer,
@@ -104,7 +102,6 @@ const store = configureStore({
 exports.device = device
 exports.disks = disks
 exports.disk = disk
-exports.editor = editor
 exports.keyboard = keyboard
 exports.output = output
 exports.panels = panels
