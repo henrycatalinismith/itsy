@@ -1,4 +1,6 @@
-import DiskPanelModeCreateButtonGroup from "@highvalley.systems/itsyexpo/components/disk-panel-mode-create-button-group"
+import Button, {
+  ButtonThemes,
+} from "@highvalley.systems/itsyexpo/components/button"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   DiskPanelModes,
@@ -12,7 +14,6 @@ import styles from "./disk-panel-submode-create.module.scss"
 
 interface DiskPanelSubmodeCreateProps {
   children: any
-  mode: DiskPanelModes
   setDiskPanelMode: (mode: DiskPanelModes) => void
   style?: any
   title?: string
@@ -28,37 +29,30 @@ const mapDispatchToProps = {
 
 export function DiskPanelSubmodeCreate({
   children,
-  mode,
   setDiskPanelMode,
   style = undefined,
-  title = "",
+  title = "new disk",
 }: DiskPanelSubmodeCreateProps) {
-  const buttons = []
-
-  buttons.push({
-    label: "blank",
-    action: () => setDiskPanelMode(DiskPanelModes.Create),
-    active: mode === DiskPanelModes.Create,
-  })
-
-  buttons.push({
-    label: "import",
-    action: () => setDiskPanelMode(DiskPanelModes.Import),
-    active: mode === DiskPanelModes.Import,
-  })
+  const onCancel = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Browse)
+  }, [])
 
   return (
     <View style={styles.component}>
       <View style={styles.header}>
-        <Font fontSize={32}>new disk</Font>
+        <View style={styles.headerText}>
+          <Font fontSize={32}>{title}</Font>
+        </View>
+        <View style={styles.headerButton}>
+          <Button onPress={onCancel} theme={ButtonThemes.Red}>
+            cancel
+          </Button>
+        </View>
       </View>
       <ScrollView style={[styles.children, style]}>
         {children}
         <View style={styles.spacer} />
       </ScrollView>
-      <View style={styles.mode}>
-        <DiskPanelModeCreateButtonGroup buttons={buttons} />
-      </View>
     </View>
   )
 }

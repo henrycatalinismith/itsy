@@ -5,6 +5,11 @@ import React from "react"
 import { TouchableOpacity } from "react-native"
 import styles from "./button.module.scss"
 
+export enum ButtonSizes {
+  Regular = "Regular",
+  Large = "Large",
+}
+
 export enum ButtonThemes {
   Blue = "Blue",
   Gray = "Gray",
@@ -34,23 +39,33 @@ const fontThemes: { [theme in ButtonThemes]: Object } = {
 export interface ButtonProps {
   children: any
   onPress: any
+  size?: ButtonSizes
   theme?: ButtonThemes
+}
+
+const fontSizes: { [key in ButtonSizes]: number } = {
+  [ButtonSizes.Regular]: 16,
+  [ButtonSizes.Large]: 32,
 }
 
 export function Button({
   children = undefined,
   onPress = () => {},
+  size = ButtonSizes.Regular,
   theme = ButtonThemes.Gray,
 }: ButtonProps) {
   const font = {
-    fontSize: 16,
+    fontSize: fontSizes[size],
     strokeMultiplier: 0.9,
     borderMultiplier: 3,
     ...fontThemes[theme],
   }
 
   return (
-    <TouchableOpacity style={[styles.button, styles[theme]]} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.button, styles[size], styles[theme]]}
+      onPress={onPress}
+    >
       {_.isArray(children) ? (
         <>
           {_.map(_.toArray(children), (c, i) => {

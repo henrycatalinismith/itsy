@@ -1,4 +1,5 @@
 import Button, {
+  ButtonSizes,
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
 import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
@@ -8,14 +9,12 @@ import {
   DiskPanelModes,
   setDiskPanelMode,
 } from "@highvalley.systems/itsyexpo/store/panels"
-import words from "@highvalley.systems/itsyexpo/words"
 import React from "react"
-import { TextInput, View } from "react-native"
+import { View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./disk-panel-mode-create.module.scss"
 
 interface DiskPanelModeCreateProps {
-  createDisk: (name: string) => void
   setDiskPanelMode: (mode: DiskPanelModes) => void
 }
 
@@ -29,59 +28,50 @@ const mapDispatchToProps = {
 }
 
 export function DiskPanelModeCreate({
-  createDisk,
   setDiskPanelMode,
 }: DiskPanelModeCreateProps) {
-  const [name, setName] = React.useState(words())
-
-  const onChange = React.useCallback((newName) => {
-    setName(newName)
+  const onBlank = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Blank)
   }, [])
 
-  const onCancel = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Browse)
+  const onImport = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Import)
   }, [])
 
-  const onSubmit = React.useCallback(() => {
-    createDisk(name)
-  }, [name])
-
-  const buttons = []
-
-  buttons.push({
-    label: "blank",
-    action: () => {},
-    active: true,
-  })
-
-  buttons.push({
-    label: "import",
-    action: () => {},
-    active: false,
-  })
+  const onTemplate = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Template)
+  }, [])
 
   return (
     <DiskPanelSubmodeCreate style={styles.component}>
-      <Font fontSize={24}>name</Font>
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        autoFocus={true}
-        onChangeText={onChange}
-        onSubmitEditing={onSubmit}
-        style={styles.input}
-        textContentType="none"
-        value={name}
-      />
       <View style={styles.buttons}>
-        <View style={styles.save}>
-          <Button onPress={onSubmit} theme={ButtonThemes.Blue}>
-            create
+        <View style={styles.blank}>
+          <Button
+            onPress={onBlank}
+            size={ButtonSizes.Large}
+            theme={ButtonThemes.Blue}
+          >
+            blank
           </Button>
         </View>
-        <View style={styles.cancel}>
-          <Button onPress={onCancel} theme={ButtonThemes.Gray}>
-            cancel
+
+        <View style={styles.import}>
+          <Button
+            onPress={onImport}
+            size={ButtonSizes.Large}
+            theme={ButtonThemes.Gray}
+          >
+            import
+          </Button>
+        </View>
+
+        <View style={styles.template}>
+          <Button
+            onPress={onTemplate}
+            size={ButtonSizes.Large}
+            theme={ButtonThemes.Gray}
+          >
+            template
           </Button>
         </View>
       </View>

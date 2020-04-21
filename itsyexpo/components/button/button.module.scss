@@ -3,14 +3,26 @@
 .button {
   align-items: center;
   border-color: pico8-original-palette(1);
-  border-radius: 2px;
-  border-width: 1px;
-  box-shadow: 1px 1px 0.5px pico8-original-palette(13);
-  height: 32px;
   flex-direction: row;
   justify-content: center;
-  padding: 2px 2px 4px 2px;
+}
+
+.Regular {
+  border-width: 1px;
+  box-shadow: 1px 1px 0.5px pico8-original-palette(13);
+  border-radius: 2px;
+  height: 32px;
   width: 72px;
+  padding: 2px 2px 4px 2px;
+}
+
+.Large {
+  border-width: 2px;
+  box-shadow: 1px 1px 1px pico8-original-palette(13);
+  border-radius: 4px;
+  height: 64px;
+  width: 100%;
+  padding: 2px 2px 4px 2px;
 }
 
 .Blue {

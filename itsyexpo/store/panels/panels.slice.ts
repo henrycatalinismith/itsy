@@ -27,6 +27,7 @@ export interface CodePanel extends Panel {
 }
 
 export enum DiskPanelModes {
+  Blank = "Blank",
   Browse = "Browse",
   Create = "Create",
   Delete = "Delete",
@@ -34,6 +35,7 @@ export enum DiskPanelModes {
   Rename = "Rename",
   Share = "Share",
   Sprite = "Sprite",
+  Template = "Template",
 }
 
 export interface DiskPanel extends Panel {

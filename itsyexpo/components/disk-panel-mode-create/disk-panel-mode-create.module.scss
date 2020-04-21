@@ -4,25 +4,14 @@
   padding: 8px;
 }
 
-.prompt {
-}
-
-.input {
-  background-color: pico8-original-palette(7);
-  border-color: pico8-original-palette(0);
-  border-width: 2px;
-  font-family: "overpass-mono-bold";
-  font-size: 16px;
-  padding: 4px;
-  width: 100%;
-  margin-top: 8px;
-}
-
 .buttons {
-  margin-top: 8px;
-  flex-direction: row;
+  flex-direction: column;
 }
 
-.save {
-  margin-right: 8px;
+.import {
+  margin-top: 8px;
+}
+
+.template {
+  margin-top: 8px;
 }

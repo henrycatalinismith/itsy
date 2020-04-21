@@ -5,22 +5,23 @@ import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./disk-panel-mode-import.module.scss"
+import styles from "./disk-panel-mode-template.module.scss"
 
-interface DiskPanelModeImportProps {}
+interface DiskPanelModeTemplateProps {}
 
-const mapStateToProps = (state, { id }) => ({
-  // disk: selectActiveDisk(state),
-})
+const mapStateToProps = (state, { id }) => ({})
 
 const mapDispatchToProps = {}
 
-export function DiskPanelModeImport({}: DiskPanelModeImportProps) {
+export function DiskPanelModeTemplate({}: DiskPanelModeTemplateProps) {
   return (
     <DiskPanelSubmodeCreate style={styles.component}>
-      <Font fontSize={24}>importing</Font>
+      <Font fontSize={24}>choose template</Font>
     </DiskPanelSubmodeCreate>
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiskPanelModeImport)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DiskPanelModeTemplate)

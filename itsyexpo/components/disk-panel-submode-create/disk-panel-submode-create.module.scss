@@ -10,6 +10,8 @@
   border-bottom-color: pico8-original-palette(1);
   border-bottom-width: 1px;
   padding: 8px;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .children {
