@@ -181,6 +181,26 @@ end
   dispatch(writeValue(disk.uri, disk))
 }
 
+export const createDiskFromStarter = (starter: Disk): Thunk => async (
+  dispatch,
+  getState
+) => {
+  console.log("eee")
+  const id = uuid()
+  const uri = makeUri(id)
+  const created = new Date().toISOString()
+  const updated = created
+  const disk = {
+    ...starter,
+    id,
+    uri,
+    created,
+    updated,
+  }
+  dispatch(slice.actions.create(disk))
+  dispatch(writeValue(disk.uri, disk))
+}
+
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
   const state = getState()
   const disk = selectActiveDisk(state)

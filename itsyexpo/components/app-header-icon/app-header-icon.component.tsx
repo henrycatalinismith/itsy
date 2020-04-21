@@ -26,11 +26,7 @@ const mapDispatchToProps = {}
 export function AppHeaderIcon({ activeDisk, disk }: AppHeaderIconProps) {
   return (
     <View style={styles.component}>
-      {disk === "empty" ? (
-        <Floppy />
-      ) : (
-        <DiskIcon id={activeDisk.id} size={24} />
-      )}
+      {disk === "empty" ? <Floppy /> : <DiskIcon disk={activeDisk} size={24} />}
     </View>
   )
 }

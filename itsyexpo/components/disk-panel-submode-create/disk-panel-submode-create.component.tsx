@@ -15,6 +15,7 @@ import styles from "./disk-panel-submode-create.module.scss"
 interface DiskPanelSubmodeCreateProps {
   children: any
   setDiskPanelMode: (mode: DiskPanelModes) => void
+  scrollable?: boolean
   style?: any
   title?: string
 }
@@ -30,12 +31,15 @@ const mapDispatchToProps = {
 export function DiskPanelSubmodeCreate({
   children,
   setDiskPanelMode,
+  scrollable = true,
   style = undefined,
   title = "new disk",
 }: DiskPanelSubmodeCreateProps) {
   const onCancel = React.useCallback(() => {
     setDiskPanelMode(DiskPanelModes.Browse)
   }, [])
+
+  const Wrapper = scrollable ? ScrollView : View
 
   return (
     <View style={styles.component}>
@@ -49,10 +53,10 @@ export function DiskPanelSubmodeCreate({
           </Button>
         </View>
       </View>
-      <ScrollView style={[styles.children, style]}>
+      <Wrapper style={[styles.children, style]}>
         {children}
         <View style={styles.spacer} />
-      </ScrollView>
+      </Wrapper>
     </View>
   )
 }

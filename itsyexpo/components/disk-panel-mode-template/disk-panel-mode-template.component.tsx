@@ -1,22 +1,42 @@
-import Button, {
-  ButtonThemes,
-} from "@highvalley.systems/itsyexpo/components/button"
+import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
+import {
+  Disk,
+  createDiskFromStarter,
+} from "@highvalley.systems/itsyexpo/store/disks"
+import { selectStarters } from "@highvalley.systems/itsyexpo/store/starters"
 import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
-import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./disk-panel-mode-template.module.scss"
 
-interface DiskPanelModeTemplateProps {}
+interface DiskPanelModeTemplateProps {
+  starters: Disk[]
+  createDiskFromStarter: (disk: Disk) => void
+}
 
-const mapStateToProps = (state, { id }) => ({})
+const mapStateToProps = (state) => ({
+  starters: selectStarters(state),
+})
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  createDiskFromStarter,
+}
 
-export function DiskPanelModeTemplate({}: DiskPanelModeTemplateProps) {
+export function DiskPanelModeTemplate({
+  starters,
+}: DiskPanelModeTemplateProps) {
+  const onSelect = React.useCallback((disk: Disk) => {
+    console.log(createDiskFromStarter)
+    createDiskFromStarter(disk)
+  }, [])
+
   return (
-    <DiskPanelSubmodeCreate style={styles.component}>
-      <Font fontSize={24}>choose template</Font>
+    <DiskPanelSubmodeCreate
+      style={styles.component}
+      title="quick start"
+      scrollable={false}
+    >
+      <DiskPicker disks={starters} onSelect={onSelect} />
     </DiskPanelSubmodeCreate>
   )
 }

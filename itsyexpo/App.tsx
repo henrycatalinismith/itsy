@@ -13,6 +13,7 @@ import Code from "./screens/code"
 import store from "./store"
 
 import { loadDisks } from "@highvalley.systems/itsyexpo/store/disks"
+import { importStarters } from "@highvalley.systems/itsyexpo/store/starters"
 
 import {
   keyboardDidHide,
@@ -43,6 +44,7 @@ function App({ skipLoadingScreen }): React.ReactElement {
 
   React.useEffect(() => {
     store.dispatch(loadDisks())
+    store.dispatch(importStarters())
   }, [])
 
   const loadResourcesAsync = async (): Promise<void> => {

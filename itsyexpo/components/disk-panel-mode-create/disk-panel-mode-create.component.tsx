@@ -45,11 +45,21 @@ export function DiskPanelModeCreate({
   return (
     <DiskPanelSubmodeCreate style={styles.component}>
       <View style={styles.buttons}>
+        <View style={styles.template}>
+          <Button
+            onPress={onTemplate}
+            size={ButtonSizes.Large}
+            theme={ButtonThemes.Blue}
+          >
+            quick start
+          </Button>
+        </View>
+
         <View style={styles.blank}>
           <Button
             onPress={onBlank}
             size={ButtonSizes.Large}
-            theme={ButtonThemes.Blue}
+            theme={ButtonThemes.Gray}
           >
             blank
           </Button>
@@ -62,16 +72,6 @@ export function DiskPanelModeCreate({
             theme={ButtonThemes.Gray}
           >
             import
-          </Button>
-        </View>
-
-        <View style={styles.template}>
-          <Button
-            onPress={onTemplate}
-            size={ButtonSizes.Large}
-            theme={ButtonThemes.Gray}
-          >
-            template
           </Button>
         </View>
       </View>

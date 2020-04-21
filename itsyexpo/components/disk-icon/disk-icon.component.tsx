@@ -19,15 +19,12 @@ export enum DiskIconActions {
 }
 
 export interface DiskIconProps {
-  id: string
   disk: Disk
   size: number
   action?: DiskIconActions
 }
 
-const mapStateToProps = (state, { id }) => ({
-  disk: state.disks[id],
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
