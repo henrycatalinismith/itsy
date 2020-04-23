@@ -7,7 +7,7 @@ import styles from "./disk-panel-mode-browse.module.scss"
 
 interface DiskPanelModeBrowseProps {}
 
-const mapStateToProps = (state, { id }) => ({})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 

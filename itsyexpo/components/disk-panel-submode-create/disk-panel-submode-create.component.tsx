@@ -3,6 +3,10 @@ import Button, {
 } from "@highvalley.systems/itsyexpo/components/button"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
+  Disk,
+  selectDisksForBrowsePanel,
+} from "@highvalley.systems/itsyexpo/store/disks"
+import {
   DiskPanelModes,
   selectDiskPanelMode,
   setDiskPanelMode,
@@ -14,6 +18,8 @@ import styles from "./disk-panel-submode-create.module.scss"
 
 interface DiskPanelSubmodeCreateProps {
   children: any
+  disks: Disk[]
+  mode: DiskPanelModes
   setDiskPanelMode: (mode: DiskPanelModes) => void
   scrollable?: boolean
   style?: any
@@ -21,6 +27,7 @@ interface DiskPanelSubmodeCreateProps {
 }
 
 const mapStateToProps = (state) => ({
+  disks: selectDisksForBrowsePanel(state),
   mode: selectDiskPanelMode(state),
 })
 
@@ -30,11 +37,15 @@ const mapDispatchToProps = {
 
 export function DiskPanelSubmodeCreate({
   children,
+  disks,
+  mode,
   setDiskPanelMode,
   scrollable = true,
   style = undefined,
   title = "new disk",
 }: DiskPanelSubmodeCreateProps) {
+  const canCancel = mode !== DiskPanelModes.Create || disks.length > 0
+
   const onCancel = React.useCallback(() => {
     setDiskPanelMode(DiskPanelModes.Browse)
   }, [])
@@ -47,11 +58,13 @@ export function DiskPanelSubmodeCreate({
         <View style={styles.headerText}>
           <Font fontSize={24}>{title}</Font>
         </View>
-        <View style={styles.headerButton}>
-          <Button onPress={onCancel} theme={ButtonThemes.Red}>
-            cancel
-          </Button>
-        </View>
+        {canCancel && (
+          <View style={styles.headerButton}>
+            <Button onPress={onCancel} theme={ButtonThemes.Red}>
+              cancel
+            </Button>
+          </View>
+        )}
       </View>
       <Wrapper style={[styles.children, style]}>
         {children}
