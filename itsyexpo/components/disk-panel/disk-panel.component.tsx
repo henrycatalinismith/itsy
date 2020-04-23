@@ -7,7 +7,7 @@ import DiskPanelModeInspect from "@highvalley.systems/itsyexpo/components/disk-p
 import DiskPanelModeRename from "@highvalley.systems/itsyexpo/components/disk-panel-mode-rename"
 import DiskPanelModeShare from "@highvalley.systems/itsyexpo/components/disk-panel-mode-share"
 import DiskPanelModeSprite from "@highvalley.systems/itsyexpo/components/disk-panel-mode-sprite"
-import DiskPanelModeTemplate from "@highvalley.systems/itsyexpo/components/disk-panel-mode-template"
+import DiskPanelModeStarter from "@highvalley.systems/itsyexpo/components/disk-panel-mode-starter"
 import {
   DiskPanelModes,
   selectDiskPanelMode,
@@ -41,7 +41,7 @@ export function DiskPanel({ mode }: DiskPanelProps) {
       {mode === DiskPanelModes.Rename && <DiskPanelModeRename />}
       {mode === DiskPanelModes.Share && <DiskPanelModeShare />}
       {mode === DiskPanelModes.Sprite && <DiskPanelModeSprite />}
-      {mode === DiskPanelModes.Template && <DiskPanelModeTemplate />}
+      {mode === DiskPanelModes.Starter && <DiskPanelModeStarter />}
     </View>
   )
 }

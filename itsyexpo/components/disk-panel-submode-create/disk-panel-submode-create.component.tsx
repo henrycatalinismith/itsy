@@ -45,7 +45,7 @@ export function DiskPanelSubmodeCreate({
     <View style={styles.component}>
       <View style={styles.header}>
         <View style={styles.headerText}>
-          <Font fontSize={32}>{title}</Font>
+          <Font fontSize={24}>{title}</Font>
         </View>
         <View style={styles.headerButton}>
           <Button onPress={onCancel} theme={ButtonThemes.Red}>

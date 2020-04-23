@@ -32,7 +32,7 @@ export function DrawPanel({ disk }: DrawPanelProps) {
       setReloading(true)
       setTimeout(() => setReloading(false), Math.pow(2, 8))
     }
-  }, [disk.id])
+  }, [disk && disk.id])
 
   renders.current += 1
 

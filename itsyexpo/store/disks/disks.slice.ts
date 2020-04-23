@@ -1,7 +1,7 @@
 import {
-  palette,
+  palette as defaultPalette,
   snapshot as defaultSnapshot,
-  spritesheet,
+  spritesheet as defaultSpritesheet,
 } from "@highvalley.systems/itsyexpo/defaults"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
@@ -45,7 +45,6 @@ export interface Disk {
   palette: string
   snapshot: string
   spritesheet: string
-  type: DiskTypes
   created: string
   updated: string
 }
@@ -56,20 +55,7 @@ interface DiskState {
 
 const name = "disks"
 
-const initialState: DiskState = {
-  empty: {
-    id: "empty",
-    uri: "itsystudio://disk/empty",
-    name: "",
-    lua: "",
-    palette,
-    snapshot: defaultSnapshot,
-    spritesheet,
-    type: DiskTypes.Empty,
-    created: new Date().toISOString(),
-    updated: new Date().toISOString(),
-  },
-}
+const initialState: DiskState = {}
 
 const reducers = {
   load(disks, action: PayloadAction<Disk[]>) {
@@ -89,7 +75,6 @@ const reducers = {
       palette: action.payload.palette,
       snapshot: action.payload.snapshot,
       spritesheet: action.payload.spritesheet,
-      type: action.payload.type,
       created: action.payload.created,
       updated: action.payload.updated,
     }
@@ -147,58 +132,49 @@ export const changeDiskSpritesheet = (uri: string): Thunk => async (
   dispatch(writeValue(disk.uri, disk))
 }
 
-export const createDisk = (name: string): Thunk => async (
-  dispatch,
-  getState
+export const createDisk = (partialDisk: Partial<Disk>): Thunk => async (
+  dispatch
 ) => {
   const id = uuid()
   const uri = makeUri(id)
-  const lua = `function _init()
-end
-
-function _tick()
-end
-
-function _draw()
-end
-`
+  const name = partialDisk.name || ""
+  const lua = partialDisk.lua || ""
+  const palette = partialDisk.palette || defaultPalette
+  const snapshot = partialDisk.snapshot || defaultSnapshot
+  const spritesheet = partialDisk.spritesheet || defaultSpritesheet
   const created = new Date().toISOString()
   const updated = created
+
   const disk: Disk = {
+    ...partialDisk,
     id,
     uri,
     name,
     lua,
     palette,
-    snapshot: defaultSnapshot,
+    snapshot,
     spritesheet,
-    type: DiskTypes.Normal,
     created,
     updated,
   }
 
-  dispatch(slice.actions.create(disk))
-  dispatch(writeValue(disk.uri, disk))
+  await dispatch(slice.actions.create(disk))
+  await dispatch(writeValue(disk.uri, disk))
 }
 
-export const createDiskFromStarter = (starter: Disk): Thunk => async (
-  dispatch,
-  getState
-) => {
-  console.log("eee")
-  const id = uuid()
-  const uri = makeUri(id)
-  const created = new Date().toISOString()
-  const updated = created
-  const disk = {
-    ...starter,
-    id,
-    uri,
-    created,
-    updated,
-  }
-  dispatch(slice.actions.create(disk))
-  dispatch(writeValue(disk.uri, disk))
+export const createBlankDisk = (name: string): Thunk => async (dispatch) => {
+  const lua = [
+    "function _init()",
+    "end",
+    "",
+    "function _tick()",
+    "end",
+    "",
+    "function _draw()",
+    "end",
+    "",
+  ].join("\n")
+  await dispatch(createDisk({ name, lua }))
 }
 
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
@@ -209,23 +185,12 @@ export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
   dispatch(deleteValue(disk.uri))
 }
 
-export const dismissDisk = (id: string): Thunk => async (
-  dispatch,
-  getState
-) => {
-  dispatch(slice.actions.dismiss(id))
-}
-
 export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
   const d = selectActiveDisk(getState())
   dispatch(slice.actions.edit({ id: d.id, lua }))
 
   const state = getState()
   const disk = selectActiveDisk(state)
-
-  if (disk.type === DiskTypes.Empty) {
-    return
-  }
 
   dWrite(dispatch, disk)
 }
@@ -323,8 +288,9 @@ export const updateSpritesheet = (png: string): Thunk => async (
 
 export const selectDisks = ({ disks }) => _.values(disks)
 
-export const selectNormalDisks = createSelector([selectDisks], (disks) =>
-  _.filter(disks, { type: DiskTypes.Normal })
+export const selectDisksForBrowsePanel = createSelector(
+  [selectDisks],
+  (disks) => _.orderBy(disks, ["updated"], ["desc"])
 )
 
 export const selectActiveDisk = createSelector(

@@ -38,8 +38,8 @@ export function DiskPanelModeCreate({
     setDiskPanelMode(DiskPanelModes.Import)
   }, [])
 
-  const onTemplate = React.useCallback(() => {
-    setDiskPanelMode(DiskPanelModes.Template)
+  const onStarter = React.useCallback(() => {
+    setDiskPanelMode(DiskPanelModes.Starter)
   }, [])
 
   return (
@@ -47,7 +47,7 @@ export function DiskPanelModeCreate({
       <View style={styles.buttons}>
         <View style={styles.template}>
           <Button
-            onPress={onTemplate}
+            onPress={onStarter}
             size={ButtonSizes.Large}
             theme={ButtonThemes.Blue}
           >

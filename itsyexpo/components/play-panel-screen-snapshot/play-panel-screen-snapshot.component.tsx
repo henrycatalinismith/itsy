@@ -55,7 +55,7 @@ export function PlayPanelScreenSnapshot({
               image-rendering: pixelated;
             }
           </style>
-          <img src="data:image/png;base64,${disk.snapshot}" />
+          <img src="data:image/png;base64,${disk && disk.snapshot}" />
           </body>
           </html>
         `,

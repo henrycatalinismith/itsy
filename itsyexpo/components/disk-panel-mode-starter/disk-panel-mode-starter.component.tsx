@@ -1,17 +1,17 @@
 import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import {
-  Disk,
-  createDiskFromStarter,
-} from "@highvalley.systems/itsyexpo/store/disks"
-import { selectStarters } from "@highvalley.systems/itsyexpo/store/starters"
+  selectStarters,
+  useStarter,
+} from "@highvalley.systems/itsyexpo/store/starters"
 import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./disk-panel-mode-template.module.scss"
+import styles from "./disk-panel-mode-starter.module.scss"
 
-interface DiskPanelModeTemplateProps {
+interface DiskPanelModeStarterProps {
   starters: Disk[]
-  createDiskFromStarter: (disk: Disk) => void
+  useStarter: (id: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -19,15 +19,15 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  createDiskFromStarter,
+  useStarter,
 }
 
-export function DiskPanelModeTemplate({
+export function DiskPanelModeStarter({
   starters,
-}: DiskPanelModeTemplateProps) {
-  const onSelect = React.useCallback((disk: Disk) => {
-    console.log(createDiskFromStarter)
-    createDiskFromStarter(disk)
+  useStarter,
+}: DiskPanelModeStarterProps) {
+  const onSelect = React.useCallback((starter: Disk) => {
+    useStarter(starter.id)
   }, [])
 
   return (
@@ -44,4 +44,4 @@ export function DiskPanelModeTemplate({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(DiskPanelModeTemplate)
+)(DiskPanelModeStarter)

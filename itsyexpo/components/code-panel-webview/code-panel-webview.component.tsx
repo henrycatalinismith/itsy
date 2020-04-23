@@ -27,7 +27,7 @@ const mapDispatchToProps = {
 
 export function Editor({ disk, editDisk, onLoad }: EditorProps) {
   const renders = React.useRef(0)
-  const lua = disk.lua
+  const lua = disk && disk.lua
   const webview = React.useRef() as any
 
   const handleMessage = (event) => {

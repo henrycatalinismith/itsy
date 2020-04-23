@@ -35,7 +35,7 @@ export enum DiskPanelModes {
   Rename = "Rename",
   Share = "Share",
   Sprite = "Sprite",
-  Template = "Template",
+  Starter = "Starter",
 }
 
 export interface DiskPanel extends Panel {

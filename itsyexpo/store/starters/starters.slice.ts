@@ -1,7 +1,7 @@
 import { Asset } from "expo-asset"
 import * as FileSystem from "expo-file-system"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
+import { Disk, createDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import * as itsy from "@highvalley.systems/itsyplay"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
@@ -33,6 +33,19 @@ export const importStarters = (): Thunk => async (dispatch, getState) => {
   const clockHtml = await FileSystem.readAsStringAsync(clockFile.uri)
   const clockDisk = itsy.read(clockHtml)
   dispatch(slice.actions.import([clockDisk]))
+}
+
+export const useStarter = (id: string): Thunk => async (dispatch, getState) => {
+  const { starters } = getState()
+  const starter = starters[id]
+  const disk: Partial<Disk> = {
+    lua: starter.lua,
+    name: starter.name,
+    palette: starter.palette,
+    snapshot: starter.snapshot,
+    spritesheet: starter.spritesheet,
+  }
+  await dispatch(createDisk(disk))
 }
 
 const slice = createSlice({

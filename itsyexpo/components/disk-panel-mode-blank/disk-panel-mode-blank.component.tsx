@@ -3,7 +3,7 @@ import Button, {
 } from "@highvalley.systems/itsyexpo/components/button"
 import DiskPanelSubmodeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-submode-create"
 import Font from "@highvalley.systems/itsyexpo/components/font"
-import { createDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import { createBlankDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import {
   DiskPanelModes,
   setDiskPanelMode,
@@ -15,7 +15,7 @@ import { connect } from "react-redux"
 import styles from "./disk-panel-mode-blank.module.scss"
 
 interface DiskPanelModeBlankProps {
-  createDisk: (name: string) => void
+  createBlankDisk: (name: string) => void
   setDiskPanelMode: (mode: DiskPanelModes) => void
 }
 
@@ -24,12 +24,12 @@ const mapStateToProps = (state, { id }) => ({
 })
 
 const mapDispatchToProps = {
-  createDisk,
+  createBlankDisk,
   setDiskPanelMode,
 }
 
 export function DiskPanelModeBlank({
-  createDisk,
+  createBlankDisk,
   setDiskPanelMode,
 }: DiskPanelModeBlankProps) {
   const [name, setName] = React.useState(words())
@@ -43,7 +43,7 @@ export function DiskPanelModeBlank({
   }, [])
 
   const onSubmit = React.useCallback(() => {
-    createDisk(name)
+    createBlankDisk(name)
   }, [name])
 
   return (

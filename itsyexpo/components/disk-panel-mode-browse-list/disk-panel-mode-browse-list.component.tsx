@@ -2,7 +2,7 @@ import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
 import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import {
   Disk,
-  selectNormalDisks,
+  selectDisksForBrowsePanel,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { View } from "react-native"
@@ -15,7 +15,7 @@ interface DiskPanelModeBrowseListProps {
 }
 
 const mapStateToProps = (state, { id }) => ({
-  disks: selectNormalDisks(state),
+  disks: selectDisksForBrowsePanel(state),
 })
 
 const mapDispatchToProps = {

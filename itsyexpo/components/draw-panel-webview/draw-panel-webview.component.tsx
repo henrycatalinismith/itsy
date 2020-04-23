@@ -50,8 +50,8 @@ export function DrawPanelWebview({
           console.log('test')
           try {
           window.store.dispatch(window.importSpritesheet(
-            "${disk.spritesheet}",
-            "${disk.palette}"
+            "${disk && disk.spritesheet}",
+            "${disk && disk.palette}"
           ))
           } catch (e) {
             console.log(e.message)
@@ -70,7 +70,7 @@ export function DrawPanelWebview({
           break
       }
     },
-    [disk.id]
+    [disk && disk.id]
   )
 
   const onError = React.useCallback(() => {
