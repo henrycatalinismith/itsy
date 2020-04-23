@@ -14,7 +14,7 @@ export function Page({ children, page }: PageProps): React.ReactElement {
       {page.css && <style type="text/css">{page.css}</style>}
       <article className={styles.component}>
         <h1 className={styles.title}>
-          <Pixlflip fontSize={32}>{page.title}</Pixlflip>
+          <Pixlflip fontSize={24}>{page.title}</Pixlflip>
         </h1>
         <main className={styles.body}>{children}</main>
       </article>
