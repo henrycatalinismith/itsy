@@ -38,7 +38,11 @@ export default function read(html: string): Disk {
         "lua" === _.mapValues(_.keyBy(node.attributes, "key"), "value").id
     ),
     "children[0].content"
-  ).trim()
+  )
+    .trim()
+    .split("\n")
+    .map((line, i) => (i === 0 ? line : line.substring(6)))
+    .join("\n")
 
   const palette = _.get(
     _.find(
