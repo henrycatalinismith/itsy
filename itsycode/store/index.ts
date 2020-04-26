@@ -1,3 +1,6 @@
+import createWebviewBridgeMiddleware, {
+  WebviewBridgeMiddlewareOptions,
+} from "@highvalley.systems/itsyexpo/components/webview-bridge/webview-bridge.middleware"
 import {
   Action,
   combineReducers,
@@ -13,23 +16,24 @@ import selection from "./selection"
 import text from "./text"
 import webview from "./webview"
 
-const postMessageMiddleware = (store) => (next) => (action) => {
-  next(action)
+const isReactNative = !!(window as any).ReactNativeWebView
+const middleware = [...getDefaultMiddleware()]
 
-  if (!(window as any).ReactNativeWebView || action.__fromWebview) {
-    return
+if (isReactNative) {
+  const webviewMiddlewareOptions: WebviewBridgeMiddlewareOptions = {
+    slices: {
+      cursor,
+      selection,
+      text,
+    },
   }
-
-  const message = JSON.stringify(action)
-  ;(window as any).ReactNativeWebView.postMessage(message)
-
-  if (action.type === "webview/start") {
-    ;(window as any).store = store
-    ;(window as any).text = text
-  }
+  const webviewMiddleware = createWebviewBridgeMiddleware(
+    webviewMiddlewareOptions
+  )
+  middleware.push(webviewMiddleware)
+} else {
+  middleware.push(logger)
 }
-
-const middleware = [...getDefaultMiddleware(), logger, postMessageMiddleware]
 
 const reducer = combineReducers({
   cursor: cursor.reducer,

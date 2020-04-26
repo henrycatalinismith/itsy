@@ -1,3 +1,8 @@
+import delay from "delay"
+import WebviewBridge, {
+  WebviewBridgeEvents,
+  WebviewBridgeProps,
+} from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import {
   Disk,
   editDisk,
@@ -5,7 +10,6 @@ import {
 } from "@highvalley.systems/itsyexpo/store/disks"
 import { Asset } from "expo-asset"
 import React from "react"
-import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 import styles from "./code-panel-webview.module.scss"
 
@@ -26,58 +30,34 @@ const mapDispatchToProps = {
 }
 
 export function Editor({ disk, editDisk, onLoad }: EditorProps) {
-  const renders = React.useRef(0)
   const lua = disk && disk.lua
-  const webview = React.useRef() as any
 
-  const handleMessage = (event) => {
-    const message = JSON.parse(event.nativeEvent.data)
-    console.log(`🏓 ${message.type}`)
-    switch (message.type) {
-      case "webview/start":
-        setTimeout(() => {
-          // wait a second while the lua gets injected
-          onLoad()
-        }, Math.pow(2, 8))
+  const events: WebviewBridgeEvents = {
+    "webview/start": async function($1, dispatch): Promise<void> {
+      dispatch("text/change", lua)
+      await delay(Math.pow(2, 8))
+      onLoad()
+    },
 
-        webview.current.injectJavaScript(`
-          const action = text.actions.change(${JSON.stringify(lua)})
-          action.__fromWebview = true
-          store.dispatch(action)
-        `)
-        break
-
-      case "text/change":
-        // console.log(lua)
-        // console.log(message.lua)
-        if (message.payload === lua) {
-          //console.log("SAME LOLOLOLOL")
-        } else {
-          editDisk(message.payload)
-        }
-        return
-
-      default:
-        return // console.log(`🤷‍♀️ ${message.type}`)
-    }
+    "text/change": async (payload: any): Promise<void> => {
+      if (payload !== lua) {
+        editDisk(payload)
+      }
+    },
   }
 
-  renders.current += 1
+  const id = "itsycode"
+  const style = styles.component
+  const uri = html.uri
 
-  return React.useMemo(
-    () => (
-      <WebView
-        style={styles.component}
-        bounces={false}
-        injectedJavaScript="window.isReactNative = true;"
-        onMessage={handleMessage}
-        ref={webview}
-        scrollEnabled={false}
-        source={{ uri: html.uri }}
-      />
-    ),
-    []
-  )
+  const props: WebviewBridgeProps = {
+    id,
+    events,
+    style,
+    uri,
+  }
+
+  return <WebviewBridge {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

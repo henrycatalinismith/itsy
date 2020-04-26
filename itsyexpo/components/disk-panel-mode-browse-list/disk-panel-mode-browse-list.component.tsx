@@ -39,7 +39,7 @@ export function DiskPanelModeBrowseList({
 }: DiskPanelModeBrowseListProps) {
   const onMount = React.useCallback(() => {
     if (mode === DiskPanelModes.Browse && disks.length === 0) {
-      setDiskPanelMode(DiskPanelModes.Create)
+      // setDiskPanelMode(DiskPanelModes.Create)
     }
   }, [mode, disks])
 

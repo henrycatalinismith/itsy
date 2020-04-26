@@ -1,4 +1,8 @@
-import Loading from "@highvalley.systems/itsyexpo/components/loading"
+import delay from "delay"
+import WebviewBridge, {
+  WebviewBridgeEvents,
+  WebviewBridgeProps,
+} from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import {
   Disk,
   selectActiveDisk,
@@ -32,65 +36,32 @@ export function DrawPanelWebview({
   onLoad,
   updateSpritesheet,
 }: DrawPanelWebviewProps) {
-  const webview = React.useRef() as any
-
-  const handleMessage = React.useCallback(
-    (event) => {
-      const message = JSON.parse(event.nativeEvent.data)
-      console.log(`🏓 ${message.type}`)
-
-      switch (message.type) {
-        case "webview/start":
-          setTimeout(() => {
-            // wait a second while the lua gets injected
-            onLoad()
-          }, Math.pow(2, 8))
-
-          webview.current.injectJavaScript(`
-          console.log('test')
-          try {
-          window.store.dispatch(window.importSpritesheet(
-            "${disk && disk.spritesheet}",
-            "${disk && disk.palette}"
-          ))
-          } catch (e) {
-            console.log(e.message)
-          }
-        `)
-          break
-
-        case "console/log":
-          console.log(message.payload)
-          break
-
-        case "spritesheet/update":
-          console.log(message.payload)
-          console.log(message.uri)
-          updateSpritesheet(message.uri)
-          break
+  const events: WebviewBridgeEvents = {
+    "webview/start": async function($1, dispatch): Promise<void> {
+      if (disk) {
+        dispatch("importSpritesheet", disk.spritesheet, disk.palette)
       }
+      await delay(Math.pow(2, 8))
+      onLoad()
     },
-    [disk && disk.id]
-  )
 
-  const onError = React.useCallback(() => {
-    console.log("onError")
-  }, [])
+    "spritesheet/update": async (payload: any): Promise<void> => {
+      updateSpritesheet(payload.uri)
+    },
+  }
 
-  return React.useMemo(
-    () => (
-      <WebView
-        style={styles.webview}
-        bounces={false}
-        onMessage={handleMessage}
-        onError={onError}
-        ref={webview}
-        scrollEnabled={false}
-        source={{ uri: html.uri }}
-      />
-    ),
-    []
-  )
+  const id = "itsydraw"
+  const style = styles.component
+  const uri = html.uri
+
+  const props: WebviewBridgeProps = {
+    id,
+    events,
+    style,
+    uri,
+  }
+
+  return <WebviewBridge {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawPanelWebview)

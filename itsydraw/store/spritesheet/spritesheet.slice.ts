@@ -69,8 +69,12 @@ const reducers = {
     spritesheet[action.payload.x][action.payload.y] = action.payload.color
   },
 
-  update(spritesheet, action: PayloadAction<PartialSpritesheet>) {
-    _.forEach(action.payload, (column, x) => {
+  update(
+    spritesheet,
+    action: PayloadAction<{ changes: PartialSpritesheet; uri: string }>
+  ) {
+    const { changes } = action.payload
+    _.forEach(changes, (column, x) => {
       _.forEach(column, (color, y) => {
         spritesheet[x][y] = color
       })
@@ -187,9 +191,27 @@ export const drawPixel = (
 }
 
 export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
-  dispatch
+  dispatch,
+  getState
 ) => {
-  dispatch(slice.actions.update(changes))
+  const { palette, spritesheet } = getState()
+  const canvas = document.createElement("canvas")
+  const context = canvas.getContext("2d")
+
+  canvas.width = 128
+  canvas.height = 128
+
+  for (let x = 0; x < 128; x++) {
+    for (let y = 0; y < 128; y++) {
+      context.fillStyle = palette[spritesheet[x][y]].hex
+      context.fillRect(x, y, 1, 1)
+    }
+  }
+
+  const uri = canvas.toDataURL("image/png").split(",")[1]
+
+  const action = slice.actions.update({ changes, uri })
+  dispatch(action)
 }
 
 export default slice

@@ -62,13 +62,15 @@ const preloadedState = {
 
     play: {
       id: PanelIds.play,
-      active: !!Device.modelName.match(/iPad/),
+      //active: !!Device.modelName.match(/iPad/),
+      active: false,
       rank: 2,
     },
 
     draw: {
       id: PanelIds.draw,
-      active: false,
+      // active: false,
+      active: !!Device.modelName.match(/iPad/),
       rank: 3,
     },
 
