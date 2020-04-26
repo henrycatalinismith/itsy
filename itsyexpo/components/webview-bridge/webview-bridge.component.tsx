@@ -25,8 +25,8 @@ export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
   const source = { uri }
 
   const defaultEvents: WebviewBridgeEvents = {
-    "console/log": async (payload: any): Promise<void> => {
-      console.log(`🌍 <WebviewBridge id="${id}" /> console.log: ${payload}`)
+    "console/log": async (payload: any[]): Promise<void> => {
+      payload.forEach((log) => console.log(log))
     },
   }
 
@@ -54,9 +54,9 @@ export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
   }
 
   const onMissing = (type: string, payload: any): void => {
-    console.log(
-      `🌍 <WebviewBridge id="${id}" />: No handler for message type "${type}"`
-    )
+    // console.log(
+    // `🌍 <WebviewBridge id="${id}" />: No handler for message type "${type}"`
+    // )
   }
 
   const onMessage = (event) => {
@@ -64,6 +64,7 @@ export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
     const type = message.type || ""
     const handler =
       events[type] || defaultEvents[type] || onMissing.bind(undefined, type)
+    console.log(`<WebviewBridge id="${id}" /> 💌  ${type}`)
     handler.call(ref.current, message.payload, dispatch)
   }
 
