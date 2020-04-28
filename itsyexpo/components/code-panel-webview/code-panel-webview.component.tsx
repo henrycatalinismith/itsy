@@ -1,5 +1,6 @@
 import delay from "delay"
 import WebviewBridge, {
+  WebviewApp,
   WebviewBridgeEvents,
   WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
@@ -33,8 +34,9 @@ export function Editor({ disk, editDisk, onLoad }: EditorProps) {
   const lua = disk && disk.lua
 
   const events: WebviewBridgeEvents = {
-    "webview/start": async function($1, dispatch): Promise<void> {
-      dispatch("text/change", lua)
+    "webview/start": async function($1, app: WebviewApp): Promise<void> {
+      console.log(app)
+      app.dispatch("text/change", lua)
       await delay(Math.pow(2, 8))
       onLoad()
     },

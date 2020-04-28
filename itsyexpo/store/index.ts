@@ -64,6 +64,7 @@ const preloadedState = {
       id: PanelIds.play,
       active: !!Device.modelName.match(/iPad/),
       rank: 2,
+      path: "/",
     },
 
     draw: {
@@ -74,7 +75,7 @@ const preloadedState = {
 
     help: {
       id: PanelIds.help,
-      active: false,
+      active: !!Device.modelName.match(/iPad/),
       rank: 4,
     },
   },

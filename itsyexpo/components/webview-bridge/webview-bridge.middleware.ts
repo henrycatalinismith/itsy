@@ -5,16 +5,18 @@ export interface WebviewBridgeMiddlewareOptions {
 
 function createWebviewBridgeMiddleware({
   slices,
-  thunks,
+  thunks = {},
 }: WebviewBridgeMiddlewareOptions): any {
   const isReactNative = !!(window as any).ReactNativeWebView
+  ;(window as any).slices = {}
+  ;(window as any).thunks = {}
 
   Object.entries(slices).forEach(([key, value]) => {
-    window[key] = value
+    ;(window as any).slices[key] = value
   })
 
   Object.entries(thunks).forEach(([key, value]) => {
-    window[key] = value
+    ;(window as any).thunks[key] = value
   })
 
   if (isReactNative) {

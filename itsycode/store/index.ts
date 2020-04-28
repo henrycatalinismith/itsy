@@ -19,19 +19,19 @@ import webview from "./webview"
 const isReactNative = !!(window as any).ReactNativeWebView
 const middleware = [...getDefaultMiddleware()]
 
-if (isReactNative) {
-  const webviewMiddlewareOptions: WebviewBridgeMiddlewareOptions = {
-    slices: {
-      cursor,
-      selection,
-      text,
-    },
-  }
-  const webviewMiddleware = createWebviewBridgeMiddleware(
-    webviewMiddlewareOptions
-  )
-  middleware.push(webviewMiddleware)
-} else {
+const webviewMiddlewareOptions: WebviewBridgeMiddlewareOptions = {
+  slices: {
+    cursor,
+    selection,
+    text,
+  },
+}
+const webviewMiddleware = createWebviewBridgeMiddleware(
+  webviewMiddlewareOptions
+)
+middleware.push(webviewMiddleware)
+
+if (!isReactNative) {
   middleware.push(logger)
 }
 

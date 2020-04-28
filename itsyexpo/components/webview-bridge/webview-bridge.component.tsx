@@ -2,6 +2,10 @@ import React from "react"
 import { WebView, WebViewProps } from "react-native-webview"
 import { connect } from "react-redux"
 
+export interface WebviewApp {
+  dispatch: (id: string, ...payload: any[]) => void
+}
+
 export interface WebviewBridgeEvents {
   [name: string]: (payload: any) => any
 }
@@ -10,6 +14,7 @@ export interface WebviewBridgeProps {
   events: WebviewBridgeEvents
   id: string
   uri: string
+  app?: any
   style?: any
 }
 
@@ -18,9 +23,11 @@ const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
 export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
+  const app = React.useRef<WebviewApp>()
   const ref = React.useRef<WebView>()
 
   const bounces = false
+  const originWhitelist = ["*"]
   const scrollEnabled = false
   const source = { uri }
 
@@ -35,23 +42,33 @@ export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
     if (id.includes("/")) {
       const [slice, type] = id.split("/")
       javaScript = `
-        const actionCreator = ${slice}.actions.${type}
-        const action = actionCreator.apply(undefined, ${JSON.stringify(
-          payload
-        )})
-        action.__fromWebviewBridge = true
-        store.dispatch(action)
+        (() => {
+          const actionCreator = window.slices[${JSON.stringify(
+            slice
+          )}].actions.${type}
+          const action = actionCreator.apply(undefined, ${JSON.stringify(
+            payload
+          )})
+          action.__fromWebviewBridge = true
+          store.dispatch(action)
+        })()
       `
     } else {
       javaScript = `
-        const thunk = ${id}
-        const action = thunk.apply(undefined, ${JSON.stringify(payload)})
-        store.dispatch(action)
+        (() => {
+          const thunk = window.thunks[${JSON.stringify(id)}]
+          const action = thunk.apply(undefined, ${JSON.stringify(payload)})
+          store.dispatch(action)
+        })()
       `
     }
     console.log(javaScript)
     ref.current.injectJavaScript(javaScript)
   }
+
+  React.useEffect(() => {
+    app.current = { dispatch }
+  }, [])
 
   const onMissing = (type: string, payload: any): void => {
     // console.log(
@@ -65,12 +82,13 @@ export function WebviewBridge({ events, id, style, uri }: WebviewBridgeProps) {
     const handler =
       events[type] || defaultEvents[type] || onMissing.bind(undefined, type)
     console.log(`<WebviewBridge id="${id}" /> 💌  ${type}`)
-    handler.call(ref.current, message.payload, dispatch)
+    handler.call(ref.current, message.payload, app.current)
   }
 
   const props: WebViewProps = {
     bounces,
     onMessage,
+    originWhitelist,
     scrollEnabled,
     source,
     style,

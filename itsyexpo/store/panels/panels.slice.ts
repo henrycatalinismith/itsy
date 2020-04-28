@@ -49,6 +49,7 @@ export interface DrawPanel extends Panel {
 
 export interface HelpPanel extends Panel {
   id: PanelIds.help
+  path: string
 }
 
 export interface PlayPanel extends Panel {
@@ -79,6 +80,10 @@ const reducers = {
 
   diskPanelMode(panels, action: PayloadAction<DiskPanelModes>): void {
     panels.disk.mode = action.payload
+  },
+
+  helpPanelPath(panels, action: PayloadAction<string>): void {
+    panels.help.path = action.payload
   },
 }
 
@@ -140,6 +145,10 @@ export const setDiskPanelMode = (mode: DiskPanelModes): Thunk => async (
   dispatch(slice.actions.diskPanelMode(mode))
 }
 
+export const setHelpPanelPath = (path: string): Thunk => async (dispatch) => {
+  dispatch(slice.actions.helpPanelPath(path))
+}
+
 export const selectPanels = ({ panels }): PanelsState => panels
 
 export const selectDevtoolsPanels = createSelector(
@@ -166,6 +175,16 @@ export const selectDiskPanel = createSelector(
 export const selectDiskPanelMode = createSelector(
   [selectDiskPanel],
   (diskPanel): DiskPanelModes => diskPanel.mode
+)
+
+export const selectHelpPanel = createSelector(
+  [selectPanels],
+  (panels): HelpPanel => panels.help as HelpPanel
+)
+
+export const selectHelpPanelPath = createSelector(
+  [selectHelpPanel],
+  (helpPanel): string => helpPanel.path
 )
 
 export const selectPanelMode = createSelector([selectDevice], (device) => {

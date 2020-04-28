@@ -50,7 +50,6 @@ window.onclick = (event) => {
 
 window.onhashchange = () => {
   const path = location.hash.substring(1) || "/"
-
   if (store.getState().location !== path) {
     ;(store.dispatch as any)(navigate(path))
   }

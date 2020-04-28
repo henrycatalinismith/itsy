@@ -18,8 +18,10 @@ export interface ToolbarButton {
   theme: ButtonThemes
 }
 
+export type ToolbarItem = ToolbarButton | React.ReactElement
+
 export interface ToolbarProps {
-  buttons: ToolbarButton[]
+  buttons: ToolbarItem[]
   theme: ToolbarThemes
 }
 
@@ -30,14 +32,21 @@ const mapDispatchToProps = {}
 export function Toolbar({ buttons, theme }: ToolbarProps) {
   return (
     <View style={[styles.component, styles[theme]]}>
-      {buttons.map((button) => {
-        return (
-          <View key={button.label} style={styles.button}>
-            <Button onPress={button.action} theme={button.theme}>
-              {button.label}
-            </Button>
-          </View>
-        )
+      {buttons.map((item, i) => {
+        if (item.hasOwnProperty("label")) {
+          const button = item as ToolbarButton
+          return (
+            <View key={button.label} style={styles.button}>
+              <Button onPress={button.action} theme={button.theme}>
+                {button.label}
+              </Button>
+            </View>
+          )
+        }
+
+        if (React.isValidElement(item)) {
+          return <React.Fragment key={i}>{item}</React.Fragment>
+        }
       })}
     </View>
   )

@@ -1,5 +1,6 @@
 import delay from "delay"
 import WebviewBridge, {
+  WebviewApp,
   WebviewBridgeEvents,
   WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
@@ -37,9 +38,9 @@ export function DrawPanelWebview({
   updateSpritesheet,
 }: DrawPanelWebviewProps) {
   const events: WebviewBridgeEvents = {
-    "webview/start": async function($1, dispatch): Promise<void> {
+    "webview/start": async function($1, app: WebviewApp): Promise<void> {
       if (disk) {
-        dispatch("importSpritesheet", disk.spritesheet, disk.palette)
+        app.dispatch("importSpritesheet", disk.spritesheet, disk.palette)
       }
       await delay(Math.pow(2, 8))
       onLoad()

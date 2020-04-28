@@ -1,3 +1,6 @@
+import createWebviewBridgeMiddleware, {
+  WebviewBridgeMiddlewareOptions,
+} from "@highvalley.systems/itsyexpo/components/webview-bridge/webview-bridge.middleware"
 import { HelpPage } from "@highvalley.systems/typedefs/itsy"
 import {
   Action,
@@ -7,12 +10,33 @@ import {
 } from "@reduxjs/toolkit"
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
-import location from "./location"
+import location, { navigate } from "./location"
 import pages from "./pages"
 import query from "./query"
 import webview from "./webview"
 
-const middleware = [...getDefaultMiddleware(), logger]
+const isReactNative = !!(window as any).ReactNativeWebView
+const middleware = [...getDefaultMiddleware()]
+
+const webviewMiddlewareOptions: WebviewBridgeMiddlewareOptions = {
+  slices: {
+    location,
+    pages,
+    query,
+    webview,
+  },
+  thunks: {
+    navigate,
+  },
+}
+const webviewMiddleware = createWebviewBridgeMiddleware(
+  webviewMiddlewareOptions
+)
+middleware.push(webviewMiddleware)
+
+if (!isReactNative) {
+  middleware.push(logger)
+}
 
 const reducer = combineReducers({
   location: location.reducer,
