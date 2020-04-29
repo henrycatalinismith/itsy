@@ -4,6 +4,7 @@ import WebviewBridge, {
   WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import { selectHelpPanelPath } from "@highvalley.systems/itsyexpo/store/panels"
+import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import { Asset } from "expo-asset"
 import React from "react"
 import { connect } from "react-redux"
@@ -39,7 +40,7 @@ export function HelpPanelWebview({ path }: HelpPanelWebviewProps) {
     // },
   }
 
-  const id = "itsyhelp"
+  const id = WebviewIds.help
   const style = styles.component
   const uri = html.uri
 

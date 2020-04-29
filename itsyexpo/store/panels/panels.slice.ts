@@ -144,10 +144,9 @@ export const onDiskOpen = (): Thunk => async (dispatch, getState) => {
   const panelMode = selectPanelMode(state)
 
   if (panelMode === PanelModes.tiles) {
-    await delay(Math.pow(2, 6))
     dispatch(slice.actions.show(PanelIds.code))
-    await delay(Math.pow(2, 6))
     dispatch(slice.actions.show(PanelIds.play))
+    dispatch(slice.actions.show(PanelIds.draw))
   }
 }
 

@@ -26,6 +26,7 @@ import safeArea from "./safe-area"
 import screen from "./screen"
 import starters from "./starters"
 import storage from "./storage"
+import webviews from "./webviews"
 
 const middleware = [...getDefaultMiddleware()]
 
@@ -41,6 +42,7 @@ const reducer = combineReducers({
   screen: screen.reducer,
   starters: starters.reducer,
   storage: storage.reducer,
+  webviews: webviews.reducer,
 })
 
 const initialPanelAvailabilities: { [key in PanelIds]: PanelAvailabilities } = {
@@ -144,6 +146,7 @@ exports.safeArea = safeArea
 exports.screen = screen
 exports.starters = starters
 exports.storage = storage
+exports.webviews = webviews
 
 export type RootState = ReturnType<typeof reducer>
 export type Dispatch = typeof store.dispatch

@@ -9,6 +9,7 @@ import {
   editDisk,
   selectActiveDisk,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import { Asset } from "expo-asset"
 import React from "react"
 import { connect } from "react-redux"
@@ -54,7 +55,7 @@ export function CodePanelWebview({
     },
   }
 
-  const id = "itsycode"
+  const id = WebviewIds.code
   const style = styles.component
   const uri = html.uri
 

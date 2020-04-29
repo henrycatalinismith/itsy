@@ -9,6 +9,7 @@ import {
   selectActiveDisk,
   updateSpritesheet,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import { Asset } from "expo-asset"
 import React from "react"
 import { View } from "react-native"
@@ -51,7 +52,7 @@ export function DrawPanelWebview({
     },
   }
 
-  const id = "itsydraw"
+  const id = WebviewIds.draw
   const style = styles.component
   const uri = html.uri
 
