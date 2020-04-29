@@ -13,7 +13,12 @@ import device from "./device"
 import disks from "./disks"
 import disk from "./disk"
 import keyboard from "./keyboard"
-import panels, { PanelIds, DiskPanelModes } from "./panels"
+import panels, {
+  PanelIds,
+  PanelsState,
+  DiskPanelModes,
+  PanelVisibilities,
+} from "./panels"
 import output from "./output"
 import player from "./player"
 import safeArea from "./safe-area"
@@ -37,6 +42,62 @@ const reducer = combineReducers({
   storage: storage.reducer,
 })
 
+function initialPanelVisibility(id: PanelIds): PanelVisibilities {
+  switch (id) {
+    case PanelIds.disk:
+      return PanelVisibilities.Visible
+
+    case PanelIds.code:
+      return PanelVisibilities.Hidden
+
+    case PanelIds.play:
+      return PanelVisibilities.Hidden
+
+    case PanelIds.draw:
+      return PanelVisibilities.Hidden
+
+    case PanelIds.help:
+      return PanelVisibilities.Visible
+
+    default:
+      return PanelVisibilities.Hidden
+  }
+}
+
+const panelsState: PanelsState = {
+  disk: {
+    id: PanelIds.disk,
+    mode: DiskPanelModes.Browse,
+    visibility: initialPanelVisibility(PanelIds.disk),
+    rank: 0,
+  },
+
+  code: {
+    id: PanelIds.code,
+    visibility: initialPanelVisibility(PanelIds.code),
+    rank: 1,
+  },
+
+  play: {
+    id: PanelIds.play,
+    visibility: initialPanelVisibility(PanelIds.play),
+    rank: 2,
+  },
+
+  draw: {
+    id: PanelIds.draw,
+    visibility: initialPanelVisibility(PanelIds.draw),
+    rank: 3,
+  },
+
+  help: {
+    id: PanelIds.help,
+    visibility: initialPanelVisibility(PanelIds.help),
+    rank: 4,
+    path: "/",
+  },
+}
+
 const preloadedState = {
   device: {
     brand: Device.brand,
@@ -46,39 +107,7 @@ const preloadedState = {
     osVersion: Device.osVersion,
   },
 
-  panels: {
-    disk: {
-      id: PanelIds.disk,
-      mode: DiskPanelModes.Browse,
-      active: true,
-      rank: 0,
-    },
-
-    code: {
-      id: PanelIds.code,
-      active: !!Device.modelName.match(/iPad/),
-      rank: 1,
-    },
-
-    play: {
-      id: PanelIds.play,
-      active: !!Device.modelName.match(/iPad/),
-      rank: 2,
-      path: "/",
-    },
-
-    draw: {
-      id: PanelIds.draw,
-      active: false,
-      rank: 3,
-    },
-
-    help: {
-      id: PanelIds.help,
-      active: !!Device.modelName.match(/iPad/),
-      rank: 4,
-    },
-  },
+  panels: panelsState,
 
   safeArea: {
     x: 0,

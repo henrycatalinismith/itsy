@@ -1,6 +1,41 @@
 {
-  "extends": "../settings/tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-native"
-  }
+    "allowJs": true,
+    "baseUrl": "../",
+    "esModuleInterop": true,
+    "jsx": "react-native",
+    "lib": ["dom", "esnext"],
+    "moduleResolution": "node",
+    "paths": {
+      "@highvalley.systems/itsycode/*": ["itsycode/*"],
+      "@highvalley.systems/itsydraw/*": ["itsydraw/*"],
+      "@highvalley.systems/itsyexpo/*": ["itsyexpo/*"],
+      "@highvalley.systems/itsyhelp/*": ["itsyhelp/*"],
+      "@highvalley.systems/itsyplay/*": ["itsyplay/*"],
+      "@highvalley.systems/itsyread/*": ["itsyread/*"],
+      "@highvalley.systems/itsysite/*": ["itsysite/*"],
+      "@highvalley.systems/logotype/*": ["logotype/*"],
+      "@highvalley.systems/palettes/*": ["palettes/*"],
+      "@highvalley.systems/pixlflip/*": ["pixlflip/*"],
+      "@highvalley.systems/settings/*": ["settings/*"],
+      "@highvalley.systems/typedefs": ["typedefs"],
+      "@highvalley.systems/typedefs/*": ["typedefs/*"]
+    },
+    "rootDirs": [
+      ".",
+      "../itsycode",
+      "../itsydraw",
+      "../itsyexpo",
+      "../itsyhelp",
+      "../itsyplay",
+      "../itsyread",
+      "../itsysite",
+      "../logotype",
+      "../palettes",
+      "../pixlflip",
+      "../typedefs"
+    ],
+    "skipLibCheck": true
+  },
+  "include": ["./*"]
 }

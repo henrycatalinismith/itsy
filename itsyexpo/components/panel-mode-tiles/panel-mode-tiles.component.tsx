@@ -7,6 +7,7 @@ import PlayPanel from "@highvalley.systems/itsyexpo/components/play-panel"
 import {
   PanelIds,
   selectRankedPanels,
+  selectVisiblePanels,
   _Panel,
 } from "@highvalley.systems/itsyexpo/store/panels"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
@@ -18,21 +19,21 @@ import styles from "./panel-mode-tiles.module.scss"
 
 interface PanelModeTilesProps {
   panels: _Panel[]
+  visiblePanels: _Panel[]
   safeArea: Rect
 }
 
 const mapStateToProps = (state) => ({
   panels: selectRankedPanels(state),
+  visiblePanels: selectVisiblePanels(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PanelModeTiles({ panels }: PanelModeTilesProps) {
-  const activePanels = _.filter(panels, "active")
-
+export function PanelModeTiles({ panels, visiblePanels }: PanelModeTilesProps) {
   React.useEffect(() => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
-  }, [activePanels.length])
+  }, [visiblePanels.length])
 
   return (
     <View style={styles.component}>

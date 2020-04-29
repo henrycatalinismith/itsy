@@ -6,9 +6,9 @@ import {
   Panel,
   PanelIds,
   PanelModes,
-  selectActivePanels,
   selectDevtoolsPanels,
   selectPanelMode,
+  selectVisiblePanels,
   togglePanel,
 } from "@highvalley.systems/itsyexpo/store/panels"
 import _ from "lodash"
@@ -23,7 +23,7 @@ interface DiskPanelModeInspectPanelsProps {
 }
 
 const mapStateToProps = (state) => ({
-  activePanels: selectActivePanels(state),
+  activePanels: selectVisiblePanels(state),
   devtoolsPanels: selectDevtoolsPanels(state),
   panelMode: selectPanelMode(state),
 })

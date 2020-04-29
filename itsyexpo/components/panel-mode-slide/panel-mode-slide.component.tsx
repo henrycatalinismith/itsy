@@ -6,7 +6,7 @@ import Panel from "@highvalley.systems/itsyexpo/components/panel"
 import PlayPanel from "@highvalley.systems/itsyexpo/components/play-panel"
 import {
   PanelIds,
-  selectActivePanel,
+  selectVisiblePanel,
   selectRankedPanels,
   _Panel,
 } from "@highvalley.systems/itsyexpo/store/panels"
@@ -24,7 +24,7 @@ interface PanelModeSlideProps {
 }
 
 const mapStateToProps = (state) => ({
-  activePanel: selectActivePanel(state),
+  activePanel: selectVisiblePanel(state),
   panels: selectRankedPanels(state),
   safeArea: selectSafeArea(state),
 })

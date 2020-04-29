@@ -16,9 +16,14 @@ export enum PanelModes {
   tiles = "tiles",
 }
 
+export enum PanelVisibilities {
+  Visible = "Visible",
+  Hidden = "Hidden",
+}
+
 export interface Panel {
   id: PanelIds
-  active: boolean
+  visibility: PanelVisibilities
   rank: number
 }
 
@@ -66,16 +71,18 @@ const initialState: PanelsState = {}
 
 const reducers = {
   hide(panels, action: PayloadAction<PanelIds>) {
-    panels[action.payload].active = false
+    panels[action.payload].visibility = PanelVisibilities.Hidden
   },
 
   show(panels, action: PayloadAction<PanelIds>) {
-    panels[action.payload].active = true
+    panels[action.payload].visibility = PanelVisibilities.Visible
   },
 
   swap(panels, action: PayloadAction<PanelIds>) {
-    _.find(panels, "active").active = false
-    panels[action.payload].active = true
+    const oldPanel = _.find(panels, { visibility: PanelVisibilities.Visible })
+    const newPanel = panels[action.payload]
+    oldPanel.visibility = PanelVisibilities.Hidden
+    newPanel.visibility = PanelVisibilities.Visible
   },
 
   diskPanelMode(panels, action: PayloadAction<DiskPanelModes>): void {
@@ -122,7 +129,7 @@ export const togglePanel = (id: PanelIds): Thunk => async (
 ) => {
   const state = getState()
   const panelMode = selectPanelMode(state)
-  const activePanels = selectActivePanels(state)
+  const visiblePanels = selectVisiblePanels(state)
   const panel: Panel = state.panels[id]
 
   if (panelMode === PanelModes.slide) {
@@ -130,8 +137,8 @@ export const togglePanel = (id: PanelIds): Thunk => async (
     return
   }
 
-  if (panel.active) {
-    if (activePanels.length > 1) {
+  if (panel.visibility === PanelVisibilities.Visible) {
+    if (visiblePanels.length > 1) {
       dispatch(slice.actions.hide(id))
     }
   } else {
@@ -157,14 +164,15 @@ export const selectDevtoolsPanels = createSelector(
     _.filter(panels, (p) => ![PanelIds.disk, PanelIds.help].includes(p.id))
 )
 
-export const selectActivePanel = createSelector(
+export const selectVisiblePanel = createSelector(
   [selectPanels],
-  (panels): Panel => _.find(panels, "active")
+  (panels): Panel => _.find(panels, { visibility: PanelVisibilities.Visible })
 )
 
-export const selectActivePanels = createSelector(
+export const selectVisiblePanels = createSelector(
   [selectPanels],
-  (panels): Panel[] => _.filter(panels, "active")
+  (panels): Panel[] =>
+    _.filter(panels, { visibility: PanelVisibilities.Visible })
 )
 
 export const selectDiskPanel = createSelector(

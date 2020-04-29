@@ -2,7 +2,8 @@ import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
   Panel as _Panel,
   PanelModes,
-  selectActivePanels,
+  PanelVisibilities,
+  selectVisiblePanels,
   selectPanelMode,
   selectPanels,
 } from "@highvalley.systems/itsyexpo/store/panels"
@@ -15,7 +16,7 @@ import { connect } from "react-redux"
 import styles from "./panel.module.scss"
 
 interface PanelProps {
-  activePanels: _Panel[]
+  visiblePanels: _Panel[]
   children: any
   id: string
   panel: _Panel
@@ -24,7 +25,7 @@ interface PanelProps {
 }
 
 const mapStateToProps = (state, { id }) => ({
-  activePanels: selectActivePanels(state),
+  visiblePanels: selectVisiblePanels(state),
   panel: selectPanels(state)[id],
   panelMode: selectPanelMode(state),
   safeArea: selectSafeArea(state),
@@ -33,7 +34,7 @@ const mapStateToProps = (state, { id }) => ({
 const mapDispatchToProps = {}
 
 export function Panel({
-  activePanels,
+  visiblePanels,
   children,
   panel,
   panelMode,
@@ -68,17 +69,17 @@ export function Panel({
     case PanelModes.tiles:
       const tileStyles = [styles.tile]
 
-      if (panel.active) {
+      if (panel.visibility === PanelVisibilities.Visible) {
         tileStyles.push({ flex: 1 })
       } else {
         tileStyles.push({ width: 0, display: "none" })
       }
 
-      if (_.first(activePanels).id === panel.id) {
+      if (_.first(visiblePanels).id === panel.id) {
         tileStyles.push(styles.firstTile)
       }
 
-      if (_.last(activePanels).id === panel.id) {
+      if (_.last(visiblePanels).id === panel.id) {
         tileStyles.push(styles.lastTile)
       }
 

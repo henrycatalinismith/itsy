@@ -2,6 +2,7 @@ import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   Panel,
   PanelIds,
+  PanelVisibilities,
   selectPanels,
   togglePanel,
 } from "@highvalley.systems/itsyexpo/store/panels"
@@ -29,9 +30,11 @@ export function PanelPickerButton({
   panel,
   togglePanel,
 }: PanelPickerButtonProps) {
-  const bg = panel.active ? colors[0] : colors[0]
-  const fg = panel.active ? "#28DEFF" : colors[7]
-  const fontSize = panel.active ? 18 : 16
+  const bg =
+    panel.visibility === PanelVisibilities.Visible ? colors[0] : colors[0]
+  const fg =
+    panel.visibility === PanelVisibilities.Visible ? "#28DEFF" : colors[7]
+  const fontSize = panel.visibility === PanelVisibilities.Visible ? 18 : 16
 
   const font = {
     bg,
