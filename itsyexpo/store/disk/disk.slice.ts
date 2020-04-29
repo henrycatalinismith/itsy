@@ -1,3 +1,4 @@
+import { onDiskOpen } from "@highvalley.systems/itsyexpo/store/panels"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { Disk } from "@highvalley.systems/typedefs/itsy"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
@@ -39,8 +40,9 @@ export const closeDisk = (): Thunk => async (dispatch) => {
   dispatch(slice.actions.close())
 }
 
-export const openDisk = (id: string): Thunk => async (dispatch) => {
+export const openDisk = (id: string): Thunk => async (dispatch, getState) => {
   dispatch(slice.actions.open(id))
+  dispatch(onDiskOpen())
 }
 
 export const selectDisk = ({ disk }): string => disk

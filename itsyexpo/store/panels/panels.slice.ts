@@ -1,3 +1,4 @@
+import delay from "delay"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import { selectDevice } from "@highvalley.systems/itsyexpo/store/device"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
@@ -16,6 +17,11 @@ export enum PanelModes {
   tiles = "tiles",
 }
 
+export enum PanelAvailabilities {
+  Available = "Available",
+  Unavailable = "Unavailable",
+}
+
 export enum PanelVisibilities {
   Visible = "Visible",
   Hidden = "Hidden",
@@ -23,6 +29,7 @@ export enum PanelVisibilities {
 
 export interface Panel {
   id: PanelIds
+  availability: PanelAvailabilities
   visibility: PanelVisibilities
   rank: number
 }
@@ -97,10 +104,16 @@ const reducers = {
 const extraReducers = {
   "disk/open": (panels): void => {
     panels.disk.mode = DiskPanelModes.Inspect
+    panels.code.availability = PanelAvailabilities.Available
+    panels.play.availability = PanelAvailabilities.Available
+    panels.draw.availability = PanelAvailabilities.Available
   },
 
   "disk/close": (panels): void => {
     panels.disk.mode = DiskPanelModes.Browse
+    panels.code.availability = PanelAvailabilities.Unavailable
+    panels.play.availability = PanelAvailabilities.Unavailable
+    panels.draw.availability = PanelAvailabilities.Unavailable
   },
 
   "disks/create": (panels): void => {
@@ -123,6 +136,18 @@ const slice = createSlice({
   extraReducers,
 })
 
+export const onDiskOpen = (): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const panelMode = selectPanelMode(state)
+
+  if (panelMode === PanelModes.tiles) {
+    await delay(Math.pow(2, 6))
+    dispatch(slice.actions.show(PanelIds.code))
+    await delay(Math.pow(2, 6))
+    dispatch(slice.actions.show(PanelIds.play))
+  }
+}
+
 export const togglePanel = (id: PanelIds): Thunk => async (
   dispatch,
   getState
@@ -131,6 +156,10 @@ export const togglePanel = (id: PanelIds): Thunk => async (
   const panelMode = selectPanelMode(state)
   const visiblePanels = selectVisiblePanels(state)
   const panel: Panel = state.panels[id]
+
+  if (panel.availability === PanelAvailabilities.Unavailable) {
+    return
+  }
 
   if (panelMode === PanelModes.slide) {
     dispatch(slice.actions.swap(id))

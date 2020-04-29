@@ -2,6 +2,7 @@ import Font from "@highvalley.systems/itsyexpo/components/font"
 import {
   Panel,
   PanelIds,
+  PanelAvailabilities,
   PanelVisibilities,
   selectPanels,
   togglePanel,
@@ -30,17 +31,30 @@ export function PanelPickerButton({
   panel,
   togglePanel,
 }: PanelPickerButtonProps) {
-  const bg =
-    panel.visibility === PanelVisibilities.Visible ? colors[0] : colors[0]
-  const fg =
-    panel.visibility === PanelVisibilities.Visible ? "#28DEFF" : colors[7]
-  const fontSize = panel.visibility === PanelVisibilities.Visible ? 18 : 16
+  const font = (() => {
+    switch (true) {
+      case panel.visibility === PanelVisibilities.Visible:
+        return {
+          bg: colors[0],
+          fg: "#28DEFF",
+          fontSize: 18,
+        }
 
-  const font = {
-    bg,
-    fg,
-    fontSize,
-  }
+      case panel.availability === PanelAvailabilities.Available:
+        return {
+          bg: colors[0],
+          fg: colors[7],
+          fontSize: 16,
+        }
+
+      default:
+        return {
+          bg: colors[0],
+          fg: colors[14],
+          fontSize: 16,
+        }
+    }
+  })()
 
   const onPress = React.useCallback(() => {
     togglePanel(panel.id)

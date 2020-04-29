@@ -17,6 +17,7 @@ import panels, {
   PanelIds,
   PanelsState,
   DiskPanelModes,
+  PanelAvailabilities,
   PanelVisibilities,
 } from "./panels"
 import output from "./output"
@@ -42,57 +43,56 @@ const reducer = combineReducers({
   storage: storage.reducer,
 })
 
-function initialPanelVisibility(id: PanelIds): PanelVisibilities {
-  switch (id) {
-    case PanelIds.disk:
-      return PanelVisibilities.Visible
+const initialPanelAvailabilities: { [key in PanelIds]: PanelAvailabilities } = {
+  [PanelIds.disk]: PanelAvailabilities.Available,
+  [PanelIds.code]: PanelAvailabilities.Unavailable,
+  [PanelIds.play]: PanelAvailabilities.Unavailable,
+  [PanelIds.draw]: PanelAvailabilities.Unavailable,
+  [PanelIds.help]: PanelAvailabilities.Available,
+}
 
-    case PanelIds.code:
-      return PanelVisibilities.Hidden
-
-    case PanelIds.play:
-      return PanelVisibilities.Hidden
-
-    case PanelIds.draw:
-      return PanelVisibilities.Hidden
-
-    case PanelIds.help:
-      return PanelVisibilities.Visible
-
-    default:
-      return PanelVisibilities.Hidden
-  }
+const initialPanelVisibilities: { [key in PanelIds]: PanelVisibilities } = {
+  [PanelIds.disk]: PanelVisibilities.Visible,
+  [PanelIds.code]: PanelVisibilities.Hidden,
+  [PanelIds.play]: PanelVisibilities.Hidden,
+  [PanelIds.draw]: PanelVisibilities.Hidden,
+  [PanelIds.help]: PanelVisibilities.Visible,
 }
 
 const panelsState: PanelsState = {
   disk: {
     id: PanelIds.disk,
     mode: DiskPanelModes.Browse,
-    visibility: initialPanelVisibility(PanelIds.disk),
+    availability: initialPanelAvailabilities[PanelIds.disk],
+    visibility: initialPanelVisibilities[PanelIds.disk],
     rank: 0,
   },
 
   code: {
     id: PanelIds.code,
-    visibility: initialPanelVisibility(PanelIds.code),
+    availability: initialPanelAvailabilities[PanelIds.code],
+    visibility: initialPanelVisibilities[PanelIds.code],
     rank: 1,
   },
 
   play: {
     id: PanelIds.play,
-    visibility: initialPanelVisibility(PanelIds.play),
+    availability: initialPanelAvailabilities[PanelIds.play],
+    visibility: initialPanelVisibilities[PanelIds.play],
     rank: 2,
   },
 
   draw: {
     id: PanelIds.draw,
-    visibility: initialPanelVisibility(PanelIds.draw),
+    availability: initialPanelAvailabilities[PanelIds.draw],
+    visibility: initialPanelVisibilities[PanelIds.draw],
     rank: 3,
   },
 
   help: {
     id: PanelIds.help,
-    visibility: initialPanelVisibility(PanelIds.help),
+    availability: initialPanelAvailabilities[PanelIds.help],
+    visibility: initialPanelVisibilities[PanelIds.help],
     rank: 4,
     path: "/",
   },
