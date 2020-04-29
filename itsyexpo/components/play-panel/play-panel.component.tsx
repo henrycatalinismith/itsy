@@ -2,6 +2,10 @@ import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel
 import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
 import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
 import {
+  PanelAvailabilities,
+  selectPlayPanelAvailability,
+} from "@highvalley.systems/itsyexpo/store/panels"
+import {
   PlayerState,
   selectPlayer,
 } from "@highvalley.systems/itsyexpo/store/player"
@@ -15,22 +19,26 @@ import { connect } from "react-redux"
 import styles from "./play-panel.module.scss"
 
 interface PlayPanelProps {
+  playPanelAvailability: PanelAvailabilities
   player: PlayerState
   screen: ScreenState
 }
 
 const mapStateToProps = (state) => ({
+  playPanelAvailability: selectPlayPanelAvailability(state),
   player: selectPlayer(state),
   screen: selectScreen(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PlayPanel({ player, screen }: PlayPanelProps) {
+export function PlayPanel({
+  playPanelAvailability,
+  player,
+  screen,
+}: PlayPanelProps) {
   const panelLayout = React.useContext<LayoutRectangle>(LayoutContext)
-
   const panelStyles = [styles.playPanel]
-
   const screenStyles = [styles.screen]
 
   if (panelLayout.width > panelLayout.height) {
@@ -39,6 +47,10 @@ export function PlayPanel({ player, screen }: PlayPanelProps) {
   } else {
     panelStyles.push(styles.portrait)
     screenStyles.push({ height: panelLayout.width - 4 })
+  }
+
+  if (playPanelAvailability === PanelAvailabilities.Unavailable) {
+    return <></>
   }
 
   return (

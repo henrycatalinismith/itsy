@@ -14,7 +14,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./code-panel-webview.module.scss"
 
-interface EditorProps {
+interface CodePanelWebviewProps {
   disk: Disk
   editDisk: (lua: string) => void
   onLoad: () => void
@@ -30,8 +30,14 @@ const mapDispatchToProps = {
   editDisk,
 }
 
-export function Editor({ disk, editDisk, onLoad }: EditorProps) {
+export function CodePanelWebview({
+  disk,
+  editDisk,
+  onLoad,
+}: CodePanelWebviewProps) {
+  console.log("<CodePanelWebview /> 🐉")
   const lua = disk && disk.lua
+  console.log(lua)
 
   const events: WebviewBridgeEvents = {
     "webview/start": async function($1, app: WebviewApp): Promise<void> {
@@ -62,4 +68,4 @@ export function Editor({ disk, editDisk, onLoad }: EditorProps) {
   return <WebviewBridge {...props} />
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editor)
+export default connect(mapStateToProps, mapDispatchToProps)(CodePanelWebview)

@@ -114,6 +114,9 @@ const extraReducers = {
     panels.code.availability = PanelAvailabilities.Unavailable
     panels.play.availability = PanelAvailabilities.Unavailable
     panels.draw.availability = PanelAvailabilities.Unavailable
+    panels.code.visibility = PanelVisibilities.Hidden
+    panels.play.visibility = PanelVisibilities.Hidden
+    panels.draw.visibility = PanelVisibilities.Hidden
   },
 
   "disks/create": (panels): void => {
@@ -204,6 +207,16 @@ export const selectVisiblePanels = createSelector(
     _.filter(panels, { visibility: PanelVisibilities.Visible })
 )
 
+export const selectCodePanel = createSelector(
+  [selectPanels],
+  (panels): CodePanel => panels.code as CodePanel
+)
+
+export const selectCodePanelAvailability = createSelector(
+  [selectCodePanel],
+  (codePanel): PanelAvailabilities => codePanel.availability
+)
+
 export const selectDiskPanel = createSelector(
   [selectPanels],
   (panels): DiskPanel => panels.disk as DiskPanel
@@ -214,6 +227,16 @@ export const selectDiskPanelMode = createSelector(
   (diskPanel): DiskPanelModes => diskPanel.mode
 )
 
+export const selectDrawPanel = createSelector(
+  [selectPanels],
+  (panels): DrawPanel => panels.draw as DrawPanel
+)
+
+export const selectDrawPanelAvailability = createSelector(
+  [selectDrawPanel],
+  (drawPanel): PanelAvailabilities => drawPanel.availability
+)
+
 export const selectHelpPanel = createSelector(
   [selectPanels],
   (panels): HelpPanel => panels.help as HelpPanel
@@ -222,6 +245,16 @@ export const selectHelpPanel = createSelector(
 export const selectHelpPanelPath = createSelector(
   [selectHelpPanel],
   (helpPanel): string => helpPanel.path
+)
+
+export const selectPlayPanel = createSelector(
+  [selectPanels],
+  (panels): PlayPanel => panels.play as PlayPanel
+)
+
+export const selectPlayPanelAvailability = createSelector(
+  [selectPlayPanel],
+  (playPanel): PanelAvailabilities => playPanel.availability
 )
 
 export const selectPanelMode = createSelector([selectDevice], (device) => {
