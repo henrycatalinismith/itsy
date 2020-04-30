@@ -49,25 +49,25 @@ export function Webview({
   style,
   uri,
 }: WebviewProps) {
-  const onMount = () => loadWebview(webview.id)
-  const onUnmount = () => stopWebview(webview.id)
-  const onStart = () => finishLoadingWebview(webview.id)
+  React.useEffect(() => {
+    if (webview.status === WebviewStatuses.Offline) {
+      loadWebview(webview.id)
+    }
+  }, [webview.status])
 
   React.useEffect(() => {
-    onMount()
-    return () => onUnmount()
+    return () => stopWebview(webview.id)
   }, [])
 
   const externalStart = events["webview/start"] || _.noop
   const onWebviewStart = React.useCallback((...args) => {
     externalStart(...args)
-    onStart()
+    finishLoadingWebview(webview.id)
   }, [])
   events["webview/start"] = onWebviewStart
 
   const bridgeStatuses = [WebviewStatuses.Loading, WebviewStatuses.Online]
-
-  const loaderStatuses = [WebviewStatuses.Loading]
+  const loaderStatuses = [WebviewStatuses.Loading, WebviewStatuses.Offline]
 
   const bridgeProps: WebviewBridgeProps = {
     id,
