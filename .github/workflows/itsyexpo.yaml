@@ -12,8 +12,11 @@ on:
       - "itsyread/**/*"
 
 jobs:
-  itsyplay:
-    - name: "itsyplay:build"
+  build:
+  runs-on: "highvalleysystems/itsy:latest"
+  steps:
+    - name: build
+
       run: |
         cd itsyplay
         yarn --pure-lockfile
