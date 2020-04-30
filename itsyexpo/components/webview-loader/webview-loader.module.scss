@@ -1,0 +1,19 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.loading {
+  flex: 1;
+
+  background-color: pico8-original-palette(6);
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.disk {
+  margin-top: 16px;
+}

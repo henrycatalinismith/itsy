@@ -1,0 +1,8 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  background-color: pico8-original-palette(12);
+  display: flex;
+  flex: 1;
+  position: relative;
+}

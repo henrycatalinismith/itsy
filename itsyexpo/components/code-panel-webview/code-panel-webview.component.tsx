@@ -1,8 +1,8 @@
 import delay from "delay"
-import WebviewBridge, {
+import Webview from "@highvalley.systems/itsyexpo/components/webview"
+import {
   WebviewApp,
   WebviewBridgeEvents,
-  WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import {
   Disk,
@@ -40,33 +40,33 @@ export function CodePanelWebview({
   const lua = disk && disk.lua
   console.log(lua)
 
-  const events: WebviewBridgeEvents = {
-    "webview/start": async function($1, app: WebviewApp): Promise<void> {
-      console.log(app)
-      app.dispatch("text/change", lua)
-      await delay(Math.pow(2, 8))
-      onLoad()
-    },
+  const events: WebviewBridgeEvents = {}
 
-    "text/change": async (payload: any): Promise<void> => {
-      if (payload !== lua) {
-        editDisk(payload)
-      }
-    },
+  events["webview/start"] = async function($1, app: WebviewApp): Promise<void> {
+    console.log(app)
+    app.dispatch("text/change", lua)
+    await delay(Math.pow(2, 8))
+    onLoad()
+  }
+
+  events["text/change"] = async (payload: any): Promise<void> => {
+    if (payload !== lua) {
+      editDisk(payload)
+    }
   }
 
   const id = WebviewIds.code
   const style = styles.component
   const uri = html.uri
 
-  const props: WebviewBridgeProps = {
+  const props = {
     id,
     events,
     style,
     uri,
   }
 
-  return <WebviewBridge {...props} />
+  return <Webview {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CodePanelWebview)

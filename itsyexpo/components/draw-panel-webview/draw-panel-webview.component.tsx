@@ -1,8 +1,8 @@
 import delay from "delay"
-import WebviewBridge, {
+import Webview from "@highvalley.systems/itsyexpo/components/webview"
+import {
   WebviewApp,
   WebviewBridgeEvents,
-  WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import {
   Disk,
@@ -12,8 +12,6 @@ import {
 import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import { Asset } from "expo-asset"
 import React from "react"
-import { View } from "react-native"
-import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
 import styles from "./draw-panel-webview.module.scss"
 
@@ -38,32 +36,32 @@ export function DrawPanelWebview({
   onLoad,
   updateSpritesheet,
 }: DrawPanelWebviewProps) {
-  const events: WebviewBridgeEvents = {
-    "webview/start": async function($1, app: WebviewApp): Promise<void> {
-      if (disk) {
-        app.dispatch("importSpritesheet", disk.spritesheet, disk.palette)
-      }
-      await delay(Math.pow(2, 8))
-      onLoad()
-    },
+  const events: WebviewBridgeEvents = {}
 
-    "spritesheet/update": async (payload: any): Promise<void> => {
-      updateSpritesheet(payload.uri)
-    },
+  events["webview/start"] = async function($1, app: WebviewApp): Promise<void> {
+    if (disk) {
+      app.dispatch("importSpritesheet", disk.spritesheet, disk.palette)
+    }
+    await delay(Math.pow(2, 8))
+    onLoad()
+  }
+
+  events["spritesheet/update"] = async (payload: any): Promise<void> => {
+    updateSpritesheet(payload.uri)
   }
 
   const id = WebviewIds.draw
   const style = styles.component
   const uri = html.uri
 
-  const props: WebviewBridgeProps = {
+  const props = {
     id,
     events,
     style,
     uri,
   }
 
-  return <WebviewBridge {...props} />
+  return <Webview {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawPanelWebview)

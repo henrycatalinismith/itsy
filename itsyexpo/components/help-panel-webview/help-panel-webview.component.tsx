@@ -1,7 +1,7 @@
-import WebviewBridge, {
+import Webview from "@highvalley.systems/itsyexpo/components/webview"
+import {
   WebviewApp,
   WebviewBridgeEvents,
-  WebviewBridgeProps,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import { selectHelpPanelPath } from "@highvalley.systems/itsyexpo/store/panels"
 import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
@@ -44,14 +44,14 @@ export function HelpPanelWebview({ path }: HelpPanelWebviewProps) {
   const style = styles.component
   const uri = html.uri
 
-  const props: WebviewBridgeProps = {
+  const props = {
     id,
     events,
     style,
     uri,
   }
 
-  return <WebviewBridge {...props} />
+  return <Webview {...props} />
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HelpPanelWebview)

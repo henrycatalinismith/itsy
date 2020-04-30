@@ -1,55 +1,24 @@
-import {
-  Webview,
-  WebviewIds,
-  loadWebview,
-  finishLoadingWebview,
-  stopWebview,
-  WebviewStatuses,
-} from "@highvalley.systems/itsyexpo/store/webviews"
+import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import React from "react"
 import { WebView, WebViewProps } from "react-native-webview"
-import { connect } from "react-redux"
+import styles from "./webview-bridge.module.scss"
 
 export interface WebviewApp {
   dispatch: (id: string, ...payload: any[]) => void
 }
 
 export interface WebviewBridgeEvents {
-  [name: string]: (payload: any) => any
+  [name: string]: (payload: any, app: WebviewApp) => any
 }
 
 export interface WebviewBridgeProps {
-  webview?: Webview
-  loadWebview: (id: WebviewIds) => void
-  finishLoadingWebview: (id: WebviewIds) => void
-  stopWebview: (id: WebviewIds) => void
-  events: WebviewBridgeEvents
   id: WebviewIds
+  events: WebviewBridgeEvents
   uri: string
   app?: any
-  style?: any
 }
 
-const mapStateToProps = (state, { id }) => ({
-  webview: state.webviews[id],
-})
-
-const mapDispatchToProps = {
-  loadWebview,
-  finishLoadingWebview,
-  stopWebview,
-}
-
-export function WebviewBridge({
-  webview,
-  loadWebview,
-  finishLoadingWebview,
-  stopWebview,
-  events,
-  id,
-  style,
-  uri,
-}: WebviewBridgeProps) {
+export function WebviewBridge({ events, id, uri }: WebviewBridgeProps) {
   const app = React.useRef<WebviewApp>()
   const ref = React.useRef<WebView>()
 
@@ -57,6 +26,7 @@ export function WebviewBridge({
   const originWhitelist = ["*"]
   const scrollEnabled = false
   const source = { uri }
+  const style = styles.component
 
   const defaultEvents: WebviewBridgeEvents = {
     "console/log": async (payload: any[]): Promise<void> => {
@@ -94,13 +64,6 @@ export function WebviewBridge({
   }
 
   React.useEffect(() => {
-    if (webview.status === WebviewStatuses.Offline) {
-      loadWebview(webview.id)
-    }
-    return () => stopWebview(webview.id)
-  }, [])
-
-  React.useEffect(() => {
     app.current = { dispatch }
   }, [])
 
@@ -117,10 +80,6 @@ export function WebviewBridge({
       events[type] || defaultEvents[type] || onMissing.bind(undefined, type)
     console.log(`<WebviewBridge id="${id}" /> 💌  ${type}`)
     handler.call(ref.current, message.payload, app.current)
-
-    if (type === "webview/start") {
-      finishLoadingWebview(webview.id)
-    }
   }
 
   const props: WebViewProps = {
@@ -132,13 +91,7 @@ export function WebviewBridge({
     style,
   }
 
-  return React.useMemo(
-    () =>
-      [WebviewStatuses.Loading, WebviewStatuses.Online].includes(
-        webview.status
-      ) && <WebView ref={ref} {...props} />,
-    [webview.status, uri]
-  )
+  return React.useMemo(() => <WebView ref={ref} {...props} />, [])
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WebviewBridge)
+export default WebviewBridge

@@ -1,5 +1,4 @@
 import CodePanelWebview from "@highvalley.systems/itsyexpo/components/code-panel-webview"
-import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import {
   PanelAvailabilities,
   selectCodePanelAvailability,
