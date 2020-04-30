@@ -38,7 +38,7 @@ const fontThemes: { [theme in ButtonThemes]: Object } = {
 
 export interface ButtonProps {
   children: any
-  onPress: any
+  action: any
   size?: ButtonSizes
   theme?: ButtonThemes
 }
@@ -50,7 +50,7 @@ const fontSizes: { [key in ButtonSizes]: number } = {
 
 export function Button({
   children = undefined,
-  onPress = () => {},
+  action = () => {},
   size = ButtonSizes.Regular,
   theme = ButtonThemes.Gray,
 }: ButtonProps) {
@@ -64,7 +64,7 @@ export function Button({
   return (
     <TouchableOpacity
       style={[styles.button, styles[size], styles[theme]]}
-      onPress={onPress}
+      onPress={action}
     >
       {_.isArray(children) ? (
         <>

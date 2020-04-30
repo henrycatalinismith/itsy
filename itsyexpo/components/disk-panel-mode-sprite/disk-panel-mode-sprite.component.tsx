@@ -73,17 +73,17 @@ export function DiskPanelModeSprite({
     <DiskPanelSubmodeInspect title="spritesheet" style={styles.component}>
       <View style={styles.buttons}>
         <View style={styles.import}>
-          <Button onPress={onImport} theme={ButtonThemes.Blue}>
+          <Button action={onImport} theme={ButtonThemes.Blue}>
             import
           </Button>
         </View>
         <View style={styles.export}>
-          <Button onPress={onExport} theme={ButtonThemes.Gray}>
+          <Button action={onExport} theme={ButtonThemes.Gray}>
             export
           </Button>
         </View>
         <View style={styles.cancel}>
-          <Button onPress={onCancel} theme={ButtonThemes.Gray}>
+          <Button action={onCancel} theme={ButtonThemes.Gray}>
             cancel
           </Button>
         </View>

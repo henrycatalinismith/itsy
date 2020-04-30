@@ -64,12 +64,12 @@ export function DiskPanelModeRename({
       />
       <View style={styles.buttons}>
         <View style={styles.save}>
-          <Button onPress={onSubmit} theme={ButtonThemes.Blue}>
+          <Button action={onSubmit} theme={ButtonThemes.Blue}>
             save
           </Button>
         </View>
         <View style={styles.cancel}>
-          <Button onPress={onCancel} theme={ButtonThemes.Gray}>
+          <Button action={onCancel} theme={ButtonThemes.Gray}>
             cancel
           </Button>
         </View>

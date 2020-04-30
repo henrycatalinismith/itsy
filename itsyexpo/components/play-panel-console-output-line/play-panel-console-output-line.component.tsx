@@ -42,7 +42,7 @@ export function PlayPanelConsoleOutputLine({
         <Text {...textProps}>{text}</Text>
         {selected && (
           <View style={styles.copy}>
-            <Button onPress={onCopy}>copy</Button>
+            <Button action={onCopy}>copy</Button>
           </View>
         )}
       </>

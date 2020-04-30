@@ -18,12 +18,12 @@ const mapDispatchToProps = {
 }
 
 export function HelpButton({ path, setHelpPanelPath }: HelpButtonProps) {
-  const onPress = React.useCallback(() => {
+  const action = React.useCallback(() => {
     setHelpPanelPath(path)
   }, [path])
 
   const button: ButtonProps = {
-    onPress,
+    action,
     theme: ButtonThemes.Blue,
   }
 

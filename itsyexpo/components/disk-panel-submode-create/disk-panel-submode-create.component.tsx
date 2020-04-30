@@ -60,7 +60,7 @@ export function DiskPanelSubmodeCreate({
         </View>
         {canCancel && (
           <View style={styles.headerButton}>
-            <Button onPress={onCancel} theme={ButtonThemes.Red}>
+            <Button action={onCancel} theme={ButtonThemes.Red}>
               cancel
             </Button>
           </View>

@@ -47,7 +47,7 @@ export function DiskPanelModeCreate({
       <View style={styles.buttons}>
         <View style={styles.template}>
           <Button
-            onPress={onStarter}
+            action={onStarter}
             size={ButtonSizes.Large}
             theme={ButtonThemes.Blue}
           >
@@ -57,7 +57,7 @@ export function DiskPanelModeCreate({
 
         <View style={styles.blank}>
           <Button
-            onPress={onBlank}
+            action={onBlank}
             size={ButtonSizes.Large}
             theme={ButtonThemes.Gray}
           >
@@ -67,7 +67,7 @@ export function DiskPanelModeCreate({
 
         <View style={styles.import}>
           <Button
-            onPress={onImport}
+            action={onImport}
             size={ButtonSizes.Large}
             theme={ButtonThemes.Gray}
           >

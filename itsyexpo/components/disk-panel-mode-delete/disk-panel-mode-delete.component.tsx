@@ -48,12 +48,12 @@ export function DiskPanelModeDelete({
     <DiskPanelSubmodeInspect title="delete" style={styles.component}>
       <View style={styles.buttons}>
         <View style={styles.delete}>
-          <Button onPress={onConfirm} theme={ButtonThemes.Red}>
+          <Button action={onConfirm} theme={ButtonThemes.Red}>
             delete
           </Button>
         </View>
         <View style={styles.cancel}>
-          <Button onPress={onCancel}>cancel</Button>
+          <Button action={onCancel}>cancel</Button>
         </View>
       </View>
     </DiskPanelSubmodeInspect>

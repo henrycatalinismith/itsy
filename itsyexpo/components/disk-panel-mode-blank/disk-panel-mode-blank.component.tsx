@@ -61,7 +61,7 @@ export function DiskPanelModeBlank({
       />
       <View style={styles.buttons}>
         <View style={styles.save}>
-          <Button onPress={onSubmit} theme={ButtonThemes.Blue}>
+          <Button action={onSubmit} theme={ButtonThemes.Blue}>
             create
           </Button>
         </View>

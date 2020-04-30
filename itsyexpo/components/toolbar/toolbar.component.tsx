@@ -37,7 +37,7 @@ export function Toolbar({ buttons, theme }: ToolbarProps) {
           const button = item as ToolbarButton
           return (
             <View key={button.label} style={styles.button}>
-              <Button onPress={button.action} theme={button.theme}>
+              <Button action={button.action} theme={button.theme}>
                 {button.label}
               </Button>
             </View>
