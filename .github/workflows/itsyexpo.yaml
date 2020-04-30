@@ -1,0 +1,20 @@
+name: itsyexpo
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "itsycode/**/*"
+      - "itsydraw/**/*"
+      - "itsyexpo/**/*"
+      - "itsyhelp/**/*"
+      - "itsyplay/**/*"
+      - "itsyread/**/*"
+
+jobs:
+  itsyplay:
+    - name: itsyplay:build
+      run: |
+        cd itsyplay
+        yarn --pure-lockfile
+        make its
