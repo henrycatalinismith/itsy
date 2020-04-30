@@ -35,8 +35,8 @@ export function DiskPanelModeInspectButtonGroup({
       </View>
       <View style={styles.buttons}>
         {buttons.map((button) => {
-          const buttonProps: ButtonProps = {
-            onPress: button.action,
+          const buttonProps = {
+            action: button.action,
             theme: button.theme,
           }
 

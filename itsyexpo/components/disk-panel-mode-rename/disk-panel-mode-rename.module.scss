@@ -3,22 +3,3 @@
 .component {
   padding: 8px;
 }
-
-.input {
-  background-color: pico8-original-palette(7);
-  border-color: pico8-original-palette(0);
-  border-width: 2px;
-  font-family: "overpass-mono-bold";
-  font-size: 16px;
-  padding: 4px;
-  width: 100%;
-}
-
-.buttons {
-  margin-top: 8px;
-  flex-direction: row;
-}
-
-.save {
-  margin-right: 8px;
-}
