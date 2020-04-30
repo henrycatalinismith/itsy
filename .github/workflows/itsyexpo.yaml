@@ -13,11 +13,10 @@ on:
 
 jobs:
   build:
-  runs-on: "highvalleysystems/itsy:latest"
-  steps:
-    - name: build
-
-      run: |
-        cd itsyplay
-        yarn --pure-lockfile
-        make its
+    runs-on: "highvalleysystems/itsy:latest"
+    steps:
+      - name: build
+        run: |
+          cd itsyplay
+          yarn --pure-lockfile
+          make its
