@@ -1,4 +1,5 @@
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
+import HelpButton from "@highvalley.systems/itsyexpo/components/help-button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
@@ -28,6 +29,8 @@ export function DiskPanelModeInspectToolbar({
     action: closeDisk,
     theme: ButtonThemes.Gray,
   })
+
+  buttons.push(<HelpButton path="/disk/inspect" />)
 
   const toolbar: ToolbarProps = {
     buttons,

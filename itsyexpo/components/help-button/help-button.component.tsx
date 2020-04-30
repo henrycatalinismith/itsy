@@ -1,5 +1,4 @@
 import Button, {
-  ButtonProps,
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
 import { setHelpPanelPath } from "@highvalley.systems/itsyexpo/store/panels"
@@ -22,9 +21,9 @@ export function HelpButton({ path, setHelpPanelPath }: HelpButtonProps) {
     setHelpPanelPath(path)
   }, [path])
 
-  const button: ButtonProps = {
+  const button = {
     action,
-    theme: ButtonThemes.Blue,
+    theme: ButtonThemes.Orange,
   }
 
   return <Button {...button}>help</Button>

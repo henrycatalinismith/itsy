@@ -13,6 +13,8 @@ export enum ButtonSizes {
 export enum ButtonThemes {
   Blue = "Blue",
   Gray = "Gray",
+  Green = "Green",
+  Orange = "Orange",
   Red = "Red",
   White = "White",
 }
@@ -23,6 +25,14 @@ const fontThemes: { [theme in ButtonThemes]: Object } = {
     borderColor: colors[1],
   },
   [ButtonThemes.Gray]: {
+    color: colors[7],
+    borderColor: colors[1],
+  },
+  [ButtonThemes.Green]: {
+    color: colors[7],
+    borderColor: colors[1],
+  },
+  [ButtonThemes.Orange]: {
     color: colors[7],
     borderColor: colors[1],
   },

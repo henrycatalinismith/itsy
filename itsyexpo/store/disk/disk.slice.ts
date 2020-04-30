@@ -5,11 +5,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "disk"
 
-const initialState = "empty"
+const initialState = ""
 
 const reducers = {
   close(): string {
-    return "empty"
+    return ""
   },
 
   open(disk, action: PayloadAction<string>): string {
@@ -23,7 +23,7 @@ const extraReducers = {
   },
 
   "disks/delete": (diskPanel): string => {
-    return "empty"
+    return ""
   },
 }
 
@@ -41,6 +41,10 @@ export const closeDisk = (): Thunk => async (dispatch) => {
 }
 
 export const openDisk = (id: string): Thunk => async (dispatch, getState) => {
+  if (selectDisk(getState()) === id) {
+    return
+  }
+
   dispatch(slice.actions.open(id))
   dispatch(onDiskOpen())
 }
