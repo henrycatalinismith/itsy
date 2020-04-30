@@ -36,7 +36,7 @@ export function DiskPanelModeInspectActions({
 
   buttons.push({
     action: React.useCallback(() => {
-      // setDiskPanelMode(DiskPanelModes.Share)
+      setDiskPanelMode(DiskPanelModes.Copy)
     }, []),
     label: "copy",
     text: "duplicate the disk",

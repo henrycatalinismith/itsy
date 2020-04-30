@@ -1,5 +1,6 @@
 import DiskPanelModeBlank from "@highvalley.systems/itsyexpo/components/disk-panel-mode-blank"
 import DiskPanelModeBrowse from "@highvalley.systems/itsyexpo/components/disk-panel-mode-browse"
+import DiskPanelModeCopy from "@highvalley.systems/itsyexpo/components/disk-panel-mode-copy"
 import DiskPanelModeCreate from "@highvalley.systems/itsyexpo/components/disk-panel-mode-create"
 import DiskPanelModeDelete from "@highvalley.systems/itsyexpo/components/disk-panel-mode-delete"
 import DiskPanelModeImport from "@highvalley.systems/itsyexpo/components/disk-panel-mode-import"
@@ -34,6 +35,7 @@ export function DiskPanel({ mode }: DiskPanelProps) {
     <View style={styles.component}>
       <DiskPanelModeBrowse />
       {mode === DiskPanelModes.Blank && <DiskPanelModeBlank />}
+      {mode === DiskPanelModes.Copy && <DiskPanelModeCopy />}
       {mode === DiskPanelModes.Create && <DiskPanelModeCreate />}
       {mode === DiskPanelModes.Delete && <DiskPanelModeDelete />}
       {mode === DiskPanelModes.Import && <DiskPanelModeImport />}

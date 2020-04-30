@@ -41,8 +41,10 @@ export interface CodePanel extends Panel {
 export enum DiskPanelModes {
   Blank = "Blank",
   Browse = "Browse",
+  Copy = "Copy",
   Create = "Create",
   Delete = "Delete",
+  Import = "Import",
   Inspect = "Inspect",
   Rename = "Rename",
   Share = "Share",

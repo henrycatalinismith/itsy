@@ -4,7 +4,7 @@ import {
   spritesheet as defaultSpritesheet,
 } from "@highvalley.systems/itsyexpo/defaults"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
+import { openDisk, selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import player from "@highvalley.systems/itsyexpo/store/player"
 import {
   DiskPanelModes,
@@ -160,6 +160,25 @@ export const createDisk = (partialDisk: Partial<Disk>): Thunk => async (
 
   await dispatch(slice.actions.create(disk))
   await dispatch(writeValue(disk.uri, disk))
+}
+
+export const copyDisk = (name: string): Thunk => async (dispatch, getState) => {
+  const state = getState()
+  const oldDisk = selectActiveDisk(state)
+
+  const id = uuid()
+  const uri = makeUri(id)
+  const updated = new Date().toISOString()
+
+  const newDisk: Disk = {
+    ...oldDisk,
+    id,
+    uri,
+    name,
+    updated,
+  }
+
+  await dispatch(createDisk(newDisk))
 }
 
 export const createBlankDisk = (name: string): Thunk => async (dispatch) => {
