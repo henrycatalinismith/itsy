@@ -12,6 +12,7 @@
 .slide {
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
 }
 
 .tiles {
@@ -20,5 +21,6 @@
 .corner {
   flex-direction: row;
   justify-content: space-between;
+  align-items: flex-end;
   width: 256px;
 }
