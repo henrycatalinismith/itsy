@@ -46,7 +46,7 @@ export function PlayPanel({
     screenStyles.push({ width: panelLayout.height - 4 })
   } else {
     panelStyles.push(styles.portrait)
-    screenStyles.push({ height: panelLayout.width - 4 })
+    screenStyles.push({ height: panelLayout.width })
   }
 
   if (playPanelAvailability === PanelAvailabilities.Unavailable) {
