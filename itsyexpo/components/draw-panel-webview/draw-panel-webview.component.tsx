@@ -52,12 +52,14 @@ export function DrawPanelWebview({
 
   const id = WebviewIds.draw
   const style = styles.component
+  const loaderStyle = styles.loader
   const uri = html.uri
 
   const props = {
     id,
     events,
     style,
+    loaderStyle,
     uri,
   }
 

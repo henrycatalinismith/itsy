@@ -23,6 +23,8 @@ export interface WebviewProps {
   uri: string
   style: any
 
+  loaderStyle?: any
+
   webview: _Webview
   loadWebview: (id: WebviewIds) => void
   finishLoadingWebview: (id: WebviewIds) => void
@@ -40,14 +42,15 @@ const mapDispatchToProps = {
 }
 
 export function Webview({
-  webview,
-  loadWebview,
-  finishLoadingWebview,
-  stopWebview,
   events,
+  finishLoadingWebview,
   id,
+  loadWebview,
+  loaderStyle,
+  stopWebview,
   style,
   uri,
+  webview,
 }: WebviewProps) {
   React.useEffect(() => {
     if (webview.status === WebviewStatuses.Offline) {
@@ -81,7 +84,9 @@ export function Webview({
         {bridgeStatuses.includes(webview.status) && (
           <WebviewBridge {...bridgeProps} />
         )}
-        {loaderStatuses.includes(webview.status) && <WebviewLoader />}
+        {loaderStatuses.includes(webview.status) && (
+          <WebviewLoader style={loaderStyle} />
+        )}
       </View>
     ),
     [webview.status, uri]

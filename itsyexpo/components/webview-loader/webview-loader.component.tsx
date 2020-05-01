@@ -43,7 +43,7 @@ export function WebviewLoader({ style }: WebviewLoaderProps) {
   ].join(" ")
 
   return (
-    <View style={{ ...style, ...styles.loading }}>
+    <View style={[styles.component, style]}>
       <Font
         fontSize={32}
         color={colors[7]}
