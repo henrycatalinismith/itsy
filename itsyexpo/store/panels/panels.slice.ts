@@ -185,8 +185,24 @@ export const setDiskPanelMode = (mode: DiskPanelModes): Thunk => async (
   dispatch(slice.actions.diskPanelMode(mode))
 }
 
-export const setHelpPanelPath = (path: string): Thunk => async (dispatch) => {
+export const setHelpPanelPath = (path: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const state = getState()
+  const panelMode = selectPanelMode(state)
+
   dispatch(slice.actions.helpPanelPath(path))
+
+  if (panelMode === PanelModes.slide) {
+    dispatch(slice.actions.swap(PanelIds.help))
+    return
+  }
+
+  if (panelMode === PanelModes.tiles) {
+    dispatch(slice.actions.show(PanelIds.help))
+    return
+  }
 }
 
 export const selectPanels = ({ panels }): PanelsState => panels
