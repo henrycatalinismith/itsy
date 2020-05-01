@@ -1,0 +1,8 @@
+$picolite-palette: (
+  #000000 #365099 #8c2964 #039041 #cc6a3e #746b62 #cfd0d4 #fff6ff #ed484b
+    #ffb900 #fde42b #00e451 #29deff #88569f #ff5996 #f9cbc4
+);
+
+@function picolite($c) {
+  @return nth($picolite-palette, $c + 1);
+}
