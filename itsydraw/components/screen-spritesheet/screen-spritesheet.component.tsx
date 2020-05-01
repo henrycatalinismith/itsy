@@ -27,7 +27,7 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./spritesheet.module.scss"
+import styles from "./screen-spritesheet.module.scss"
 
 interface SpritesheetProps {
   camera: Rect
@@ -53,7 +53,7 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-export function Spritesheet({
+export function ScreenSpritesheet({
   camera,
   palette,
   pencil,
@@ -61,7 +61,7 @@ export function Spritesheet({
   updateSpritesheet,
   webview,
   zoom,
-}: SpritesheetProps): React.ReactElement {
+}: ScreenSpritesheetProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
 
@@ -263,4 +263,4 @@ export function Spritesheet({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Spritesheet)
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenSpritesheet)

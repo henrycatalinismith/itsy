@@ -1,5 +1,4 @@
-import useResizeObserver from "use-resize-observer/polyfilled"
-import Graphics from "@highvalley.systems/itsydraw/components/graphics"
+import App from "@highvalley.systems/itsydraw/components/app"
 import store from "@highvalley.systems/itsydraw/store"
 import { startWebview } from "@highvalley.systems/itsydraw/store/webview"
 import React from "react"
@@ -12,7 +11,7 @@ document.body.style.margin = "0"
 
 const graphics = (
   <Provider store={store}>
-    <Graphics />
+    <App />
   </Provider>
 )
 

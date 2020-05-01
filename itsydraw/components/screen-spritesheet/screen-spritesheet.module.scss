@@ -1,0 +1,11 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  flex: 1;
+}
+
+.canvas {
+  image-rendering: pixelated;
+  width: 100vw;
+  height: 100vw;
+}

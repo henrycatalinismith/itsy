@@ -1,4 +1,4 @@
-import Spritesheet from "@highvalley.systems/itsydraw/components/spritesheet"
+import Screen from "@highvalley.systems/itsydraw/components/screen"
 import Toolbox from "@highvalley.systems/itsydraw/components/toolbox"
 import {
   selectWebview,
@@ -6,9 +6,9 @@ import {
 } from "@highvalley.systems/itsydraw/store/webview"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./graphics.module.scss"
+import styles from "./app.module.scss"
 
-interface GraphicsProps {
+interface AppProps {
   webview: WebviewState
 }
 
@@ -18,11 +18,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function Graphics({ webview }: GraphicsProps): React.ReactElement {
+export function App({ webview }: AppProps): React.ReactElement {
   return (
-    <div className={styles.graphics}>
-      <div className={styles.spritesheet}>
-        <Spritesheet />
+    <div className={styles.component}>
+      <div className={styles.screen}>
+        <Screen />
       </div>
       <div className={styles.toolbox}>
         <Toolbox />
@@ -31,4 +31,4 @@ export function Graphics({ webview }: GraphicsProps): React.ReactElement {
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Graphics)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
