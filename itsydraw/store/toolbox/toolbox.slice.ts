@@ -5,6 +5,7 @@ import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 export enum ToolboxToolIds {
   Brush = "Brush",
   Camera = "Camera",
+  Palette = "Palette",
   Select = "Select",
 }
 

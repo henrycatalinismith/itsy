@@ -1,18 +1,9 @@
 .component {
   border: 1px solid green;
   background: rgba(#fff, 0.1);
-  width: 32px;
-  height: 32px;
+  width: 64px;
+  height: 64px;
   overflow: hidden;
   display: grid;
-  padding: 0;
-}
-
-.svg {
-  flex: 1;
-}
-
-.path {
-  fill: white;
-  stroke: red;
+  padding: 4px;
 }

@@ -1,5 +1,6 @@
 import ToolboxPickerButtonBrush from "@highvalley.systems/itsydraw/components/toolbox-picker-button-brush"
 import ToolboxPickerButtonCamera from "@highvalley.systems/itsydraw/components/toolbox-picker-button-camera"
+import ToolboxPickerButtonPalette from "@highvalley.systems/itsydraw/components/toolbox-picker-button-palette"
 import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-select"
 import {
   selectToolbox,
@@ -22,9 +23,17 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
+const buttonOrder = [
+  ToolboxToolIds.Brush,
+  ToolboxToolIds.Palette,
+  ToolboxToolIds.Camera,
+  ToolboxToolIds.Select,
+]
+
 const buttonMap: { [key in ToolboxToolIds]: React.ReactElement } = {
   [ToolboxToolIds.Brush]: <ToolboxPickerButtonBrush />,
   [ToolboxToolIds.Camera]: <ToolboxPickerButtonCamera />,
+  [ToolboxToolIds.Palette]: <ToolboxPickerButtonPalette />,
   [ToolboxToolIds.Select]: <ToolboxPickerButtonSelect />,
 }
 
@@ -33,7 +42,7 @@ export function ToolboxPicker({
 }: ToolboxPickerProps): React.ReactElement {
   return (
     <ol className={styles.component}>
-      {Object.keys(ToolboxToolIds).map((id) => {
+      {buttonOrder.map((id) => {
         return (
           <li className={styles.item} key={id}>
             {buttonMap[id]}
