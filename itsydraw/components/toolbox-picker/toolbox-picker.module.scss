@@ -1,0 +1,12 @@
+.component {
+  display: grid;
+  grid-area: menu;
+  grid-auto-rows: min-content;
+  list-style-type: none;
+  margin: 0;
+  padding: 8px;
+}
+
+.menuitem {
+  padding: 8px;
+}

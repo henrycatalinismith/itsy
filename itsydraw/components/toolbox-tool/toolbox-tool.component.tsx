@@ -4,7 +4,7 @@ import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-t
 import {
   selectToolbox,
   ToolboxState,
-  ToolboxTools,
+  ToolboxToolIds,
 } from "@highvalley.systems/itsydraw/store/toolbox"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
@@ -16,7 +16,7 @@ import ToolboxToolContext from "./toolbox-tool.context"
 import styles from "./toolbox-tool.module.scss"
 
 interface ToolboxToolProps {
-  tool: ToolboxTools
+  tool: ToolboxToolIds
   toolbox: ToolboxState
 }
 
@@ -70,9 +70,9 @@ export function ToolboxTool({
   return (
     <div {...divProps} ref={divRef}>
       <ToolboxToolContext.Provider value={{ rect }}>
-        {tool === ToolboxTools.Camera && <ToolboxToolCamera />}
-        {tool === ToolboxTools.Pencil && <ToolboxToolPencil />}
-        {tool === ToolboxTools.Select && <ToolboxToolSelect />}
+        {tool === ToolboxToolIds.Camera && <ToolboxToolCamera />}
+        {tool === ToolboxToolIds.Brush && <ToolboxToolPencil />}
+        {tool === ToolboxToolIds.Select && <ToolboxToolSelect />}
       </ToolboxToolContext.Provider>
     </div>
   )

@@ -29,7 +29,7 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./screen-spritesheet.module.scss"
 
-interface SpritesheetProps {
+interface ScreenSpritesheetProps {
   camera: Rect
   color: PaletteIndex
   palette: Palette

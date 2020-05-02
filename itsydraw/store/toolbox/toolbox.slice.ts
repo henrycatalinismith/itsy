@@ -2,8 +2,8 @@ import { Thunk } from "@highvalley.systems/itsydraw/store"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export enum ToolboxTools {
-  Pencil = "Pencil",
+export enum ToolboxToolIds {
+  Brush = "Brush",
   Camera = "Camera",
   Select = "Select",
 }
@@ -16,8 +16,8 @@ export enum ToolboxLayouts {
 export interface ToolboxState {
   layout: ToolboxLayouts
   rect: Rect
-  tool: ToolboxTools
-  tools: ToolboxTools[]
+  tool: ToolboxToolIds
+  tools: ToolboxToolIds[]
 }
 
 const name = "toolbox"
@@ -30,9 +30,9 @@ const initialState: ToolboxState = {
     width: 0,
     height: 0,
   },
-  tool: ToolboxTools.Pencil,
-  // tool: ToolboxTools.Camera,
-  tools: [ToolboxTools.Pencil, ToolboxTools.Camera, ToolboxTools.Select],
+  tool: ToolboxToolIds.Brush,
+  // tool: ToolboxToolIds.Camera,
+  tools: [ToolboxToolIds.Brush, ToolboxToolIds.Camera, ToolboxToolIds.Select],
 }
 
 const reducers = {
@@ -45,7 +45,7 @@ const reducers = {
     }
   },
 
-  tool(toolbox, action: PayloadAction<ToolboxTools>): void {
+  tool(toolbox, action: PayloadAction<ToolboxToolIds>): void {
     toolbox.tool = action.payload
   },
 }
@@ -63,7 +63,7 @@ export const updateToolboxLayout = (rect: Rect): Thunk => async (
   dispatch(slice.actions.layout(rect))
 }
 
-export const updateToolboxTool = (tool: ToolboxTools): Thunk => async (
+export const updateToolboxTool = (tool: ToolboxToolIds): Thunk => async (
   dispatch,
   getState
 ) => {
@@ -74,12 +74,12 @@ export const selectToolbox = ({ toolbox }) => toolbox
 
 export const selectToolboxTool = createSelector(
   [selectToolbox],
-  (toolbox): ToolboxTools => toolbox.tool
+  (toolbox): ToolboxToolIds => toolbox.tool
 )
 
 export const selectToolboxTools = createSelector(
   [selectToolbox],
-  (toolbox): ToolboxTools[] => toolbox.tools
+  (toolbox): ToolboxToolIds[] => toolbox.tools
 )
 
 export default slice

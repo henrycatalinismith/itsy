@@ -1,13 +1,12 @@
+import ToolboxPicker from "@highvalley.systems/itsydraw/components/toolbox-picker"
 import ToolboxTool from "@highvalley.systems/itsydraw/components/toolbox-tool"
 import {
   selectToolbox,
   ToolboxLayouts,
   ToolboxState,
-  ToolboxTools,
+  ToolboxToolIds,
   updateToolboxLayout,
-  updateToolboxTool,
 } from "@highvalley.systems/itsydraw/store/toolbox"
-import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import React from "react"
@@ -18,7 +17,6 @@ import styles from "./toolbox.module.scss"
 interface ToolboxProps {
   toolbox: ToolboxState
   updateToolboxLayout: (rect: Rect) => void
-  updateToolboxTool: (tool: ToolboxTools) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -27,13 +25,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   updateToolboxLayout,
-  updateToolboxTool,
 }
 
 export function Toolbox({
   toolbox,
   updateToolboxLayout,
-  updateToolboxTool,
 }: ToolboxProps): React.ReactElement {
   const divRef = React.useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: divRef })
@@ -63,28 +59,11 @@ export function Toolbox({
 
   return (
     <div {...divProps} ref={divRef}>
-      <ol className={styles.menu}>
-        {Object.keys(ToolboxTools).map((tool) => {
-          const onClick = React.useCallback(() => {
-            updateToolboxTool(tool as ToolboxTools)
-          }, [])
-          const li = {
-            className: cx(styles.menuitem, {
-              [styles.menuitem__active]: toolbox.tool === tool,
-            }),
-            onClick,
-          }
-          return (
-            <li {...li} key={tool}>
-              <Pixlflip fontSize={24}>{tool}</Pixlflip>
-            </li>
-          )
-        })}
-      </ol>
+      <ToolboxPicker />
       <div {...toolsDiv}>
-        <ToolboxTool tool={ToolboxTools.Pencil} />
-        <ToolboxTool tool={ToolboxTools.Camera} />
-        <ToolboxTool tool={ToolboxTools.Select} />
+        <ToolboxTool tool={ToolboxToolIds.Brush} />
+        <ToolboxTool tool={ToolboxToolIds.Camera} />
+        <ToolboxTool tool={ToolboxToolIds.Select} />
       </div>
     </div>
   )
