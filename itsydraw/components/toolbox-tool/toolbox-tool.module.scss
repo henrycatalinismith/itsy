@@ -1,4 +1,7 @@
-.tool {
+.component {
+  display: none;
+}
+
+.active {
   display: grid;
-  transition: all 0.2s;
 }

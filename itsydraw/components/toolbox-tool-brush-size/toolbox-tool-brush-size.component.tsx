@@ -7,9 +7,9 @@ import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-tool-pencil-size.module.scss"
+import styles from "./toolbox-tool-brush-size.module.scss"
 
-interface ToolboxToolPencilSizeProps {
+interface ToolboxToolBrushSizeProps {
   brushSize: BrushSizes
   changeBrushSize: (s: BrushSizes) => void
 }
@@ -24,12 +24,12 @@ const mapDispatchToProps = {
 
 const sizes = [1, 2, 4, 8]
 
-export function ToolboxToolPencilSize({
+export function ToolboxToolBrushSize({
   brushSize,
   changeBrushSize,
-}: ToolboxToolPencilSizeProps): React.ReactElement {
+}: ToolboxToolBrushSizeProps): React.ReactElement {
   return (
-    <div className={styles.sizes}>
+    <div className={styles.component}>
       {sizes.map((s) => {
         const className = cx(styles.size, {
           [styles.active]: s === brushSize,
@@ -57,4 +57,4 @@ export function ToolboxToolPencilSize({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToolboxToolPencilSize)
+)(ToolboxToolBrushSize)

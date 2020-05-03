@@ -1,0 +1,11 @@
+.component {
+  display: grid;
+  grid-template-areas:
+    ". ..... ."
+    ". index ."
+    ". ..... ."
+    ".  hex  ."
+    ". ..... .";
+  grid-template-columns: 8px auto 8px;
+  grid-template-rows: 8px min-content 8px min-content 8px;
+}

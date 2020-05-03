@@ -62,6 +62,7 @@ export function Toolbox({
       <div {...toolsDiv}>
         <ToolboxTool id={ToolIds.Brush} />
         <ToolboxTool id={ToolIds.Camera} />
+        <ToolboxTool id={ToolIds.Palette} />
         <ToolboxTool id={ToolIds.Select} />
       </div>
     </div>

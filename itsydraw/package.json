@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "didyoumean2": "^4.0.0",
-    "use-resize-observer": "^6.0.0"
+    "use-resize-observer": "^6.0.0",
+    "wcag-contrast": "^3.0.0"
   }
 }
