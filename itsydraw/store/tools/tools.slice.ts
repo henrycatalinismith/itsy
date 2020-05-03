@@ -60,26 +60,16 @@ const name = "tools"
 const initialState: ToolsState = {
   [ToolIds.Brush]: {
     id: ToolIds.Brush,
-    status: ToolStatuses.Active,
+    status: ToolStatuses.Inactive,
     rank: 0,
     color: 0,
     size: 1,
   },
 
-  [ToolIds.Camera]: {
-    id: ToolIds.Camera,
-    status: ToolStatuses.Inactive,
-    rank: 1,
-    x: 0,
-    y: 0,
-    width: 64,
-    height: 64,
-  },
-
   [ToolIds.Palette]: {
     id: ToolIds.Palette,
-    status: ToolStatuses.Inactive,
-    rank: 2,
+    status: ToolStatuses.Active,
+    rank: 1,
     colors: _.zipObject(
       _.range(16),
       _.range(16).map((id) => ({
@@ -87,6 +77,16 @@ const initialState: ToolsState = {
         hex: pico8[id],
       }))
     ),
+  },
+
+  [ToolIds.Camera]: {
+    id: ToolIds.Camera,
+    status: ToolStatuses.Inactive,
+    rank: 2,
+    x: 0,
+    y: 0,
+    width: 64,
+    height: 64,
   },
 
   [ToolIds.Select]: {

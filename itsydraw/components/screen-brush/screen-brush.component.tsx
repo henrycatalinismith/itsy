@@ -4,7 +4,6 @@ import {
   selectBrushSize,
   selectCamera,
   selectPalette,
-  selectZoom,
 } from "@highvalley.systems/itsydraw/store/tools"
 import {
   selectSpritesheet,
@@ -27,9 +26,9 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./screen-spritesheet.module.scss"
+import styles from "./screen-brush.module.scss"
 
-interface ScreenSpritesheetProps {
+interface ScreenBrushProps {
   camera: Rect
   brushColor: PaletteColor
   brushSize: BrushSizes
@@ -38,7 +37,6 @@ interface ScreenSpritesheetProps {
   spritesheet: SpritesheetState
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
-  zoom: number
 }
 
 const mapStateToProps = (state) => ({
@@ -48,14 +46,13 @@ const mapStateToProps = (state) => ({
   palette: selectPalette(state),
   spritesheet: selectSpritesheet(state),
   webview: selectWebview(state),
-  zoom: selectZoom(state),
 })
 
 const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-export function ScreenSpritesheet({
+export function ScreenBrush({
   brushColor,
   brushSize,
   camera,
@@ -63,8 +60,7 @@ export function ScreenSpritesheet({
   spritesheet,
   updateSpritesheet,
   webview,
-  zoom,
-}: ScreenSpritesheetProps): React.ReactElement {
+}: ScreenBrushProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
 
@@ -266,4 +262,4 @@ export function ScreenSpritesheet({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenSpritesheet)
+export default connect(mapStateToProps, mapDispatchToProps)(ScreenBrush)

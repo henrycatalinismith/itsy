@@ -19,6 +19,7 @@
 .screen {
   border: 2px solid pico8-original-palette(2);
   grid-area: spritesheet;
+  display: flex;
 }
 
 .toolbox {

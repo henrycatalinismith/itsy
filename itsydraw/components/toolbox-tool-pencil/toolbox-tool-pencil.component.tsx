@@ -1,4 +1,3 @@
-import ToolboxToolPencilPalette from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette"
 import ToolboxToolPencilSize from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-size"
 import React from "react"
 import { connect } from "react-redux"
@@ -17,7 +16,6 @@ const mapDispatchToProps = {}
 export function ToolboxToolPencil({}: ToolboxToolPencilProps): React.ReactElement {
   return (
     <div className={styles.pencil}>
-      <ToolboxToolPencilPalette />
       <ToolboxToolPencilSize />
     </div>
   )
