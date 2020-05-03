@@ -5,7 +5,7 @@ import {
   selectPalette,
   selectZoom,
 } from "@highvalley.systems/itsydraw/store/tools"
-import { selectSpritesheet } from "@highvalley.systems/itsydraw/store/spritesheet"
+import { selectSpritesheetPixels } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
   Palette,
   PaletteIndex,
@@ -22,14 +22,14 @@ interface ToolboxToolCameraNavigatorProps {
   camera: Rect
   panCamera: (x: number, y: number) => void
   palette: Palette
-  spritesheet: Spritesheet
+  spritesheetPixels: Spritesheet
   zoom: number
 }
 
 const mapStateToProps = (state) => ({
   camera: selectCamera(state),
   palette: selectPalette(state),
-  spritesheet: selectSpritesheet(state),
+  spritesheetPixels: selectSpritesheetPixels(state),
   zoom: selectZoom(state),
 })
 
@@ -41,7 +41,7 @@ export function ToolboxToolCameraNavigator({
   camera,
   panCamera,
   palette,
-  spritesheet,
+  spritesheetPixels,
   zoom,
 }: ToolboxToolCameraNavigatorProps): React.ReactElement {
   const { rect } = React.useContext(ToolboxToolContext)
@@ -77,7 +77,7 @@ export function ToolboxToolCameraNavigator({
     cls(0)
     console.log("repainting")
     console.log(camera.x)
-    Object.entries(spritesheet).map(([x, column]) => {
+    Object.entries(spritesheetPixels).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
         pset(x as any, y as any, pixel)
       })
@@ -102,7 +102,7 @@ export function ToolboxToolCameraNavigator({
 
   const onUpdateSpritesheet = React.useCallback(() => {
     repaint()
-  }, [spritesheet])
+  }, [spritesheetPixels])
 
   const onUpdateCamera = React.useCallback(() => {
     repaint()
@@ -122,7 +122,7 @@ export function ToolboxToolCameraNavigator({
 
   React.useEffect(onLoad, [])
   React.useEffect(onResize, [scale])
-  React.useEffect(onUpdateSpritesheet, [spritesheet])
+  React.useEffect(onUpdateSpritesheet, [spritesheetPixels])
   React.useEffect(onUpdateCamera, [camera])
 
   const props: React.HTMLProps<HTMLCanvasElement> = {

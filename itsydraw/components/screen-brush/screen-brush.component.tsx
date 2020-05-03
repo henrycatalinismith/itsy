@@ -6,7 +6,7 @@ import {
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
 import {
-  selectSpritesheet,
+  selectSpritesheetPixels,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
@@ -34,7 +34,7 @@ interface ScreenBrushProps {
   brushSize: BrushSizes
   color: PaletteIndex
   palette: Palette
-  spritesheet: SpritesheetState
+  spritesheetPixels: SpritesheetState
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
 }
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
   brushSize: selectBrushSize(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
-  spritesheet: selectSpritesheet(state),
+  spritesheetPixels: selectSpritesheetPixels(state),
   webview: selectWebview(state),
 })
 
@@ -57,7 +57,7 @@ export function ScreenBrush({
   brushSize,
   camera,
   palette,
-  spritesheet,
+  spritesheetPixels,
   updateSpritesheet,
   webview,
 }: ScreenBrushProps): React.ReactElement {
@@ -114,7 +114,7 @@ export function ScreenBrush({
 
   const repaint = () => {
     cls(0)
-    Object.entries(spritesheet).map(([x, column]) => {
+    Object.entries(spritesheetPixels).map(([x, column]) => {
       Object.entries(column).map(([y, pixel]) => {
         draw(x as any, y as any, pixel)
       })
@@ -176,7 +176,7 @@ export function ScreenBrush({
 
   const onImport = React.useCallback(() => {
     repaint()
-  }, [spritesheet, palette])
+  }, [spritesheetPixels, palette])
 
   const touchLocation = (
     event: React.TouchEvent<HTMLCanvasElement>

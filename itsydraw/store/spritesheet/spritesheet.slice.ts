@@ -9,20 +9,33 @@ import {
   Spritesheet,
   SpritesheetPixelIndex,
 } from "@highvalley.systems/typedefs/itsy"
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import didYouMean from "didyoumean2"
 import _ from "lodash"
 
 const name = "spritesheet"
 
-const initialState: Spritesheet = _.zipObject(
-  _.range(128),
-  _.range(128).map(() => _.zipObject(_.range(128), _.fill(Array(128), 0)))
-)
+export interface SpritesheetState {
+  pixels: Spritesheet
+  png: string
+}
+
+const initialState: SpritesheetState = {
+  pixels: _.zipObject(
+    _.range(128),
+    _.range(128).map(() => _.zipObject(_.range(128), _.fill(Array(128), 0)))
+  ),
+  png:
+    "iVBORw0KGgoAAAANSUhEUgAAAIAAAACAAQMAAAD58POIAAAABlBMVEUAAAAAAA5C35TIAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAGUlEQVRIiWNgGAWjYBSMglEwCkbBKKAvAAAIgAABKseJDwAAAABJRU5ErkJggg==",
+}
 
 const reducers = {
-  import(spritesheet, action: PayloadAction<Spritesheet>) {
-    return action.payload
+  import(
+    spritesheet,
+    action: PayloadAction<{ pixels: Spritesheet; png: string }>
+  ) {
+    spritesheet.pixels = action.payload.pixels
+    spritesheet.png = action.payload.png
   },
 
   line(
@@ -44,7 +57,7 @@ const reducers = {
     let err = (dx > dy ? dx : -dy) / 2
 
     while (true) {
-      spritesheet[x0][y0] = color
+      spritesheet.pixels[x0][y0] = color
       if (x0 === x1 && y0 === y1) break
       var e2 = err
       if (e2 > -dx) {
@@ -66,7 +79,8 @@ const reducers = {
       color: PaletteIndex
     }>
   ) {
-    spritesheet[action.payload.x][action.payload.y] = action.payload.color
+    spritesheet.pixels[action.payload.x][action.payload.y] =
+      action.payload.color
   },
 
   update(
@@ -76,7 +90,7 @@ const reducers = {
     const { changes } = action.payload
     _.forEach(changes, (column, x) => {
       _.forEach(column, (color, y) => {
-        spritesheet[x][y] = color
+        spritesheet.pixels[x][y] = color
       })
     })
   },
@@ -87,8 +101,6 @@ const slice = createSlice({
   initialState,
   reducers,
 })
-
-export const selectSpritesheet = ({ spritesheet }) => spritesheet
 
 // const hex = (red: number, blue: number, green: number) => ((blue | green << 8 | red << 16) | 1 << 24).toString(16).slice(1)
 
@@ -168,7 +180,12 @@ export const importSpritesheet = (
   }
 
   dispatch(tools.actions.palette(paletteState))
-  dispatch(slice.actions.import(spritesheet as Spritesheet))
+  dispatch(
+    slice.actions.import({
+      pixels: spritesheet as Spritesheet,
+      png: spritesheetSource,
+    })
+  )
   dispatch(webview.actions.import())
 }
 
@@ -215,5 +232,17 @@ export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
   const action = slice.actions.update({ changes, uri })
   dispatch(action)
 }
+
+export const selectSpritesheet = ({ spritesheet }) => spritesheet
+
+export const selectSpritesheetPixels = createSelector(
+  [selectSpritesheet],
+  (spritesheet) => spritesheet.pixels
+)
+
+export const selectSpritesheetPng = createSelector(
+  [selectSpritesheet],
+  (spritesheet) => spritesheet.png
+)
 
 export default slice
