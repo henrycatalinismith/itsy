@@ -125,29 +125,6 @@ const reducers = {
 
     camera.x = x
     camera.y = y
-    /*
-    camera.x = x - camera.width / 2
-    camera.y = y - camera.height / 2
-
-    if (camera.x < 0) {
-      camera.x = 0
-    }
-
-    if (camera.y < 0) {
-      camera.y = 0
-    }
-
-    if (camera.x + camera.width > 127) {
-      camera.x = 127 - camera.width
-    }
-
-    if (camera.y + camera.height > 127) {
-      camera.y = 127 - camera.height
-    }
-
-    camera.x = Math.ceil(camera.x / camera.width) * camera.width
-    camera.y = Math.ceil(camera.y / camera.height) * camera.height
-    */
   },
 
   zoom(tools, action: PayloadAction<number>): void {
@@ -198,7 +175,7 @@ export const panCamera = (x: number, y: number): Thunk => async (
     y,
   }
 
-  if (point.x === camera.x || point.y === camera.y) {
+  if (point.x === camera.x && point.y === camera.y) {
     console.log("no", x, y, point.x, point.y)
     return
   }

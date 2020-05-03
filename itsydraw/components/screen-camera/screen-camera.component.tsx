@@ -31,18 +31,34 @@ export function ScreenCamera({
   spritesheet,
   panCamera,
 }: ScreenCameraProps): React.ReactElement {
+  const rect = React.useRef<Rect>({
+    x: camera.x,
+    y: camera.y,
+    width: camera.width,
+    height: camera.height,
+  })
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
-  const { rect } = React.useContext(ScreenContext)
+  const screen = React.useContext(ScreenContext)
 
-  const scale = rect.width / 128
+  const scale = screen.rect.width / 128
+
+  const update = _.debounce(() => {
+    panCamera(rect.current.x, rect.current.y)
+  }, 100)
 
   const drawCamera = () => {
+    ctx.current.drawImage(image.current, 0, 0)
     ctx.current.strokeStyle = "#01ffff"
     ctx.current.lineWidth = 1
     ctx.current.beginPath()
-    ctx.current.rect(camera.x, camera.y, camera.width, camera.height)
+    ctx.current.rect(
+      rect.current.x,
+      rect.current.y,
+      rect.current.width,
+      rect.current.height
+    )
     ctx.current.stroke()
   }
 
@@ -59,6 +75,10 @@ export function ScreenCamera({
 
   const onUpdateCamera = () => {
     console.log("UPDATE!!")
+    rect.current.x = camera.x
+    rect.current.y = camera.y
+    rect.current.width = camera.width
+    rect.current.height = camera.height
     ctx.current.drawImage(image.current, 0, 0)
     drawCamera()
   }
@@ -80,9 +100,12 @@ export function ScreenCamera({
       const tx = _.clamp(sx - camera.width / 2, 0, 127 - camera.width)
       const ty = _.clamp(sy - camera.width / 2, 0, 127 - camera.width)
 
-      panCamera(tx, ty)
+      rect.current.x = tx
+      rect.current.y = ty
+      drawCamera()
+      update()
     },
-    [scale, camera]
+    [scale, camera, rect]
   )
 
   const onTouchMove = onTouchStart
