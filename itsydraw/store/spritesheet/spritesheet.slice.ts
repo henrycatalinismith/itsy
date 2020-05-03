@@ -85,14 +85,15 @@ const reducers = {
 
   update(
     spritesheet,
-    action: PayloadAction<{ changes: PartialSpritesheet; uri: string }>
+    action: PayloadAction<{ changes: PartialSpritesheet; png: string }>
   ) {
-    const { changes } = action.payload
+    const { changes, png } = action.payload
     _.forEach(changes, (column, x) => {
       _.forEach(column, (color, y) => {
         spritesheet.pixels[x][y] = color
       })
     })
+    spritesheet.png = png
   },
 }
 
@@ -212,7 +213,7 @@ export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
   getState
 ) => {
   const state = getState()
-  const { spritesheet } = state
+  const pixels = selectSpritesheetPixels(state)
   const palette = selectPalette(state)
   const canvas = document.createElement("canvas")
   const context = canvas.getContext("2d")
@@ -222,14 +223,21 @@ export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
 
   for (let x = 0; x < 128; x++) {
     for (let y = 0; y < 128; y++) {
-      context.fillStyle = palette[spritesheet[x][y]].hex
+      if (
+        typeof changes[x] === "undefined" ||
+        typeof changes[x][y] === "undefined"
+      ) {
+        context.fillStyle = palette[pixels[x][y]].hex
+      } else {
+        context.fillStyle = palette[changes[x][y]].hex
+      }
       context.fillRect(x, y, 1, 1)
     }
   }
 
-  const uri = canvas.toDataURL("image/png").split(",")[1]
+  const png = canvas.toDataURL("image/png").split(",")[1]
 
-  const action = slice.actions.update({ changes, uri })
+  const action = slice.actions.update({ changes, png })
   dispatch(action)
 }
 
