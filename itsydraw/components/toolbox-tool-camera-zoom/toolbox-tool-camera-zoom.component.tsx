@@ -28,7 +28,7 @@ export function ToolboxToolCameraZoom({
   zoomCamera,
 }: ToolboxToolCameraZoomProps): React.ReactElement {
   return (
-    <div className={styles.zooms}>
+    <div className={styles.component}>
       {zoomLevels.map((z) => {
         const className = cx(styles.zoom, {
           [styles.active]: z === zoom,
