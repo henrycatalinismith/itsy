@@ -1,4 +1,3 @@
-import ToolboxToolCameraNavigator from "@highvalley.systems/itsydraw/components/toolbox-tool-camera-navigator"
 import ToolboxToolCameraZoom from "@highvalley.systems/itsydraw/components/toolbox-tool-camera-zoom"
 import React from "react"
 import { connect } from "react-redux"
@@ -16,7 +15,6 @@ const mapDispatchToProps = {}
 export function ToolboxToolCamera({}: ToolboxToolCameraProps): React.ReactElement {
   return (
     <>
-      <ToolboxToolCameraNavigator />
       <ToolboxToolCameraZoom />
     </>
   )

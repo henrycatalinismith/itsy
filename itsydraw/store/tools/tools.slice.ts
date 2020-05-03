@@ -68,7 +68,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Palette]: {
     id: ToolIds.Palette,
-    status: ToolStatuses.Active,
+    status: ToolStatuses.Inactive,
     rank: 1,
     colors: _.zipObject(
       _.range(16),
@@ -81,7 +81,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Camera]: {
     id: ToolIds.Camera,
-    status: ToolStatuses.Inactive,
+    status: ToolStatuses.Active,
     rank: 2,
     x: 0,
     y: 0,
@@ -122,6 +122,10 @@ const reducers = {
   pan(tools, action: PayloadAction<Point>): void {
     const { x, y } = action.payload
     const camera = tools[ToolIds.Camera]
+
+    camera.x = x
+    camera.y = y
+    /*
     camera.x = x - camera.width / 2
     camera.y = y - camera.height / 2
 
@@ -143,6 +147,7 @@ const reducers = {
 
     camera.x = Math.ceil(camera.x / camera.width) * camera.width
     camera.y = Math.ceil(camera.y / camera.height) * camera.height
+    */
   },
 
   zoom(tools, action: PayloadAction<number>): void {
@@ -184,9 +189,13 @@ export const panCamera = (x: number, y: number): Thunk => async (
   getState
 ) => {
   const camera = selectCamera(getState())
+  // const point = {
+  // x: Math.round(x / camera.width) * (camera.width - 1),
+  // y: Math.round(y / camera.height) * (camera.height - 1),
+  // }
   const point = {
-    x: Math.round(x / camera.width) * (camera.width - 1),
-    y: Math.round(y / camera.height) * (camera.height - 1),
+    x,
+    y,
   }
 
   if (point.x === camera.x || point.y === camera.y) {

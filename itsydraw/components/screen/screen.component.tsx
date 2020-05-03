@@ -1,4 +1,5 @@
 import ScreenBrush from "@highvalley.systems/itsydraw/components/screen-brush"
+import ScreenCamera from "@highvalley.systems/itsydraw/components/screen-camera"
 import ScreenPalette from "@highvalley.systems/itsydraw/components/screen-palette"
 import {
   Tool,
@@ -26,7 +27,7 @@ const mapDispatchToProps = {}
 
 const screenMap: { [key in ToolIds]: React.ReactElement } = {
   [ToolIds.Brush]: <ScreenBrush />,
-  [ToolIds.Camera]: <></>,
+  [ToolIds.Camera]: <ScreenCamera />,
   [ToolIds.Palette]: <ScreenPalette />,
   [ToolIds.Select]: <></>,
 }
