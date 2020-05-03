@@ -2,10 +2,12 @@ import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-t
 import ToolboxToolPencil from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil"
 import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-tool-select"
 import {
-  selectToolbox,
-  ToolboxState,
-  ToolboxToolIds,
-} from "@highvalley.systems/itsydraw/store/toolbox"
+  selectActiveTool,
+  selectRankedTools,
+  Tool,
+  ToolIds,
+} from "@highvalley.systems/itsydraw/store/tools"
+import { selectToolboxHeight } from "@highvalley.systems/itsydraw/store/toolbox"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
@@ -16,22 +18,25 @@ import ToolboxToolContext from "./toolbox-tool.context"
 import styles from "./toolbox-tool.module.scss"
 
 interface ToolboxToolProps {
-  tool: ToolboxToolIds
-  toolbox: ToolboxState
+  id: ToolIds
+  activeTool: Tool
+  tools: Tool[]
+  toolboxHeight: number
 }
 
 const mapStateToProps = (state) => ({
-  toolbox: selectToolbox(state),
+  activeTool: selectActiveTool(state),
+  tools: selectRankedTools(state),
+  toolboxHeight: selectToolboxHeight(state),
 })
 
-const mapDispatchToProps = {
-  // updateToolboxLayout,
-  // updateToolboxTool,
-}
+const mapDispatchToProps = {}
 
 export function ToolboxTool({
-  tool,
-  toolbox,
+  id,
+  activeTool,
+  tools,
+  toolboxHeight,
 }: ToolboxToolProps): React.ReactElement {
   const divRef = React.useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: divRef })
@@ -43,19 +48,19 @@ export function ToolboxTool({
     height,
   }
 
-  const thisIndex = _.indexOf(toolbox.tools, tool)
-  const thatIndex = _.indexOf(toolbox.tools, toolbox.tool)
+  const thisIndex = _.indexOf(tools, id)
+  const thatIndex = _.indexOf(tools, activeTool)
 
   console.log(thisIndex, thatIndex)
   const offset = 0 - thatIndex
 
-  const translateY = offset * toolbox.rect.height
+  const translateY = offset * toolboxHeight
   const transform = `translateY(${translateY}px)`
 
   const gridRow = thisIndex + 1
 
   const style: CSSProperties = {
-    height: toolbox.rect.height,
+    height: toolboxHeight,
     gridArea: `${gridRow} / 1 / ${gridRow} /2`,
     transform,
   }
@@ -70,9 +75,9 @@ export function ToolboxTool({
   return (
     <div {...divProps} ref={divRef}>
       <ToolboxToolContext.Provider value={{ rect }}>
-        {tool === ToolboxToolIds.Camera && <ToolboxToolCamera />}
-        {tool === ToolboxToolIds.Brush && <ToolboxToolPencil />}
-        {tool === ToolboxToolIds.Select && <ToolboxToolSelect />}
+        {id === ToolIds.Camera && <ToolboxToolCamera />}
+        {id === ToolIds.Brush && <ToolboxToolPencil />}
+        {id === ToolIds.Select && <ToolboxToolSelect />}
       </ToolboxToolContext.Provider>
     </div>
   )

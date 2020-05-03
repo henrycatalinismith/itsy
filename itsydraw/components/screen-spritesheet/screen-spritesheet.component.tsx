@@ -1,12 +1,11 @@
 import {
+  BrushSizes,
+  selectBrushColor,
+  selectBrushSize,
   selectCamera,
+  selectPalette,
   selectZoom,
-} from "@highvalley.systems/itsydraw/store/camera"
-import {
-  selectPencil,
-  PencilState,
-} from "@highvalley.systems/itsydraw/store/pencil"
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+} from "@highvalley.systems/itsydraw/store/tools"
 import {
   selectSpritesheet,
   updateSpritesheet,
@@ -17,6 +16,7 @@ import {
 } from "@highvalley.systems/itsydraw/store/webview"
 import {
   Palette,
+  PaletteColor,
   PaletteIndex,
   PartialSpritesheet,
   Rect,
@@ -31,9 +31,10 @@ import styles from "./screen-spritesheet.module.scss"
 
 interface ScreenSpritesheetProps {
   camera: Rect
+  brushColor: PaletteColor
+  brushSize: BrushSizes
   color: PaletteIndex
   palette: Palette
-  pencil: PencilState
   spritesheet: SpritesheetState
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
@@ -41,9 +42,10 @@ interface ScreenSpritesheetProps {
 }
 
 const mapStateToProps = (state) => ({
+  brushColor: selectBrushColor(state),
+  brushSize: selectBrushSize(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
-  pencil: selectPencil(state),
   spritesheet: selectSpritesheet(state),
   webview: selectWebview(state),
   zoom: selectZoom(state),
@@ -54,9 +56,10 @@ const mapDispatchToProps = {
 }
 
 export function ScreenSpritesheet({
+  brushColor,
+  brushSize,
   camera,
   palette,
-  pencil,
   spritesheet,
   updateSpritesheet,
   webview,
@@ -127,8 +130,8 @@ export function ScreenSpritesheet({
     y: SpritesheetPixelIndex,
     i: PaletteIndex
   ) => {
-    for (let sx = x; sx < x + pencil.size && sx < 127; sx++) {
-      for (let sy = y; sy < y + pencil.size && sy < 127; sy++) {
+    for (let sx = x; sx < x + brushSize && sx < 127; sx++) {
+      for (let sy = y; sy < y + brushSize && sy < 127; sy++) {
         draw(sx, sy, i)
         if (!changes.current[sx]) {
           changes.current[sx] = {}
@@ -209,10 +212,10 @@ export function ScreenSpritesheet({
         return
       }
 
-      sset(x, y, pencil.color)
+      sset(x, y, brushColor.id)
       last.current = { x, y }
     },
-    [camera, pencil.color, pencil.size]
+    [camera, brushColor.hex, brushSize]
   )
 
   const onTouchMove = React.useCallback(
@@ -229,14 +232,14 @@ export function ScreenSpritesheet({
 
       console.log(x, y)
       if (last.current.x === undefined) {
-        sset(x, y, pencil.color)
+        sset(x, y, brushColor.id)
       } else {
-        line(last.current.x, last.current.y, x, y, pencil.color)
+        line(last.current.x, last.current.y, x, y, brushColor.id)
       }
 
       last.current = { x, y }
     },
-    [camera, pencil.color, pencil.size]
+    [camera, brushColor.hex, brushSize]
   )
 
   const onUpdateCamera = React.useCallback(() => {

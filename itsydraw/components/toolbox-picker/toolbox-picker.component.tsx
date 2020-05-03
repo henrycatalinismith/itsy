@@ -3,49 +3,41 @@ import ToolboxPickerButtonCamera from "@highvalley.systems/itsydraw/components/t
 import ToolboxPickerButtonPalette from "@highvalley.systems/itsydraw/components/toolbox-picker-button-palette"
 import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-select"
 import {
-  selectToolbox,
-  ToolboxState,
-  ToolboxToolIds,
-} from "@highvalley.systems/itsydraw/store/toolbox"
+  Tool,
+  ToolIds,
+  selectRankedTools,
+} from "@highvalley.systems/itsydraw/store/tools"
 import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker.module.scss"
-import ToolboxPickerButton from "../toolbox-picker-button"
 
 interface ToolboxPickerProps {
-  toolbox: ToolboxState
+  tools: Tool[]
 }
 
 const mapStateToProps = (state) => ({
-  toolbox: selectToolbox(state),
+  tools: selectRankedTools(state),
 })
 
 const mapDispatchToProps = {}
 
-const buttonOrder = [
-  ToolboxToolIds.Brush,
-  ToolboxToolIds.Palette,
-  ToolboxToolIds.Camera,
-  ToolboxToolIds.Select,
-]
-
-const buttonMap: { [key in ToolboxToolIds]: React.ReactElement } = {
-  [ToolboxToolIds.Brush]: <ToolboxPickerButtonBrush />,
-  [ToolboxToolIds.Camera]: <ToolboxPickerButtonCamera />,
-  [ToolboxToolIds.Palette]: <ToolboxPickerButtonPalette />,
-  [ToolboxToolIds.Select]: <ToolboxPickerButtonSelect />,
+const buttonMap: { [key in ToolIds]: React.ReactElement } = {
+  [ToolIds.Brush]: <ToolboxPickerButtonBrush />,
+  [ToolIds.Camera]: <ToolboxPickerButtonCamera />,
+  [ToolIds.Palette]: <ToolboxPickerButtonPalette />,
+  [ToolIds.Select]: <ToolboxPickerButtonSelect />,
 }
 
 export function ToolboxPicker({
-  toolbox,
+  tools,
 }: ToolboxPickerProps): React.ReactElement {
   return (
     <ol className={styles.component}>
-      {buttonOrder.map((id) => {
+      {tools.map((tool) => {
         return (
-          <li className={styles.item} key={id}>
-            {buttonMap[id]}
+          <li className={styles.item} key={tool.id}>
+            {buttonMap[tool.id]}
           </li>
         )
       })}

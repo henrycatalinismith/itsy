@@ -1,9 +1,8 @@
 import {
-  changePencilSize,
-  PencilSizes,
-  PencilState,
-  selectPencil,
-} from "@highvalley.systems/itsydraw/store/pencil"
+  changeBrushSize,
+  BrushSizes,
+  selectBrushSize,
+} from "@highvalley.systems/itsydraw/store/tools"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import cx from "classnames"
 import React from "react"
@@ -11,33 +10,33 @@ import { connect } from "react-redux"
 import styles from "./toolbox-tool-pencil-size.module.scss"
 
 interface ToolboxToolPencilSizeProps {
-  pencil: PencilState
-  changePencilSize: (s: PencilSizes) => void
+  brushSize: BrushSizes
+  changeBrushSize: (s: BrushSizes) => void
 }
 
 const mapStateToProps = (state) => ({
-  pencil: selectPencil(state),
+  brushSize: selectBrushSize(state),
 })
 
 const mapDispatchToProps = {
-  changePencilSize,
+  changeBrushSize,
 }
 
 const sizes = [1, 2, 4, 8]
 
 export function ToolboxToolPencilSize({
-  changePencilSize,
-  pencil,
+  brushSize,
+  changeBrushSize,
 }: ToolboxToolPencilSizeProps): React.ReactElement {
   return (
     <div className={styles.sizes}>
       {sizes.map((s) => {
         const className = cx(styles.size, {
-          [styles.active]: s === pencil.size,
+          [styles.active]: s === brushSize,
         })
 
         const onClick = React.useCallback(() => {
-          changePencilSize(s as PencilSizes)
+          changeBrushSize(s as BrushSizes)
         }, [])
 
         const button: React.HTMLAttributes<HTMLButtonElement> = {

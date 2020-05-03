@@ -1,5 +1,5 @@
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
-import { ToolboxToolIds } from "@highvalley.systems/itsydraw/store/toolbox"
+import { ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker-button-camera.module.scss"
@@ -27,7 +27,7 @@ export function ToolboxPickerButtonCamera({}: ToolboxPickerButtonCameraProps): R
   }
 
   return (
-    <ToolboxPickerButton id={ToolboxToolIds.Camera}>
+    <ToolboxPickerButton id={ToolIds.Camera}>
       <svg {...svg}>
         <path {...canvas} />
         <path {...camera} />

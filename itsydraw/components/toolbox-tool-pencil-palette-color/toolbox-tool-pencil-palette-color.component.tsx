@@ -1,9 +1,8 @@
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
 import {
-  activatePencilColor,
-  PencilState,
-  selectPencil,
-} from "@highvalley.systems/itsydraw/store/pencil"
+  changeBrushColor,
+  selectBrushColor,
+  selectPalette,
+} from "@highvalley.systems/itsydraw/store/tools"
 import { PaletteColor, PaletteIndex } from "@highvalley.systems/typedefs/itsy"
 import { RectConfig } from "konva/types/shapes/Rect"
 import React from "react"
@@ -13,35 +12,34 @@ import { connect } from "react-redux"
 interface ToolboxToolPencilPaletteColorProps {
   id: PaletteIndex
   color: PaletteColor
-  activatePencilColor: (i: PaletteIndex) => void
+  brushColor: PaletteColor
+  changeBrushColor: (i: PaletteIndex) => void
   x: number
   y: number
   size: number
-  pencil: PencilState
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  pencil: selectPencil(state),
   color: selectPalette(state)[ownProps.id],
+  brushColor: selectBrushColor(state),
 })
 
 const mapDispatchToProps = {
-  activatePencilColor,
+  changeBrushColor,
 }
 
 export function ToolboxToolPencilPaletteColor({
-  activatePencilColor,
+  brushColor,
+  changeBrushColor,
   id,
   color,
   x,
   y,
   size,
-  pencil,
 }: ToolboxToolPencilPaletteColorProps): React.ReactElement {
-  const active =
-    parseInt(pencil.color.toString(), 10) === parseInt(id.toString(), 10)
+  const active = brushColor.id === parseInt(id.toString(), 10)
   const onClick = React.useCallback(() => {
-    activatePencilColor(id)
+    changeBrushColor(id)
   }, [])
 
   const props: RectConfig = {

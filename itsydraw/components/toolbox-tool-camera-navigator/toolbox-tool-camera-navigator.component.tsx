@@ -1,10 +1,10 @@
 import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
 import {
-  moveCamera,
+  panCamera,
   selectCamera,
+  selectPalette,
   selectZoom,
-} from "@highvalley.systems/itsydraw/store/camera"
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+} from "@highvalley.systems/itsydraw/store/tools"
 import { selectSpritesheet } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
   Palette,
@@ -20,7 +20,7 @@ import styles from "./toolbox-tool-camera-navigator.module.scss"
 
 interface ToolboxToolCameraNavigatorProps {
   camera: Rect
-  moveCamera: (x: number, y: number) => void
+  panCamera: (x: number, y: number) => void
   palette: Palette
   spritesheet: Spritesheet
   zoom: number
@@ -34,12 +34,12 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  moveCamera,
+  panCamera,
 }
 
 export function ToolboxToolCameraNavigator({
   camera,
-  moveCamera,
+  panCamera,
   palette,
   spritesheet,
   zoom,
@@ -113,7 +113,7 @@ export function ToolboxToolCameraNavigator({
       const rect = canvas.current.getBoundingClientRect()
       const x = Math.floor((event.touches[0].clientX - rect.left) / 1)
       const y = Math.floor((event.touches[0].clientY - rect.top) / 1)
-      moveCamera(x, y)
+      panCamera(x, y)
     },
     []
   )

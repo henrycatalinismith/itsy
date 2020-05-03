@@ -1,6 +1,8 @@
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
-import { ToolboxToolIds } from "@highvalley.systems/itsydraw/store/toolbox"
+import {
+  ToolIds,
+  selectPalette,
+} from "@highvalley.systems/itsydraw/store/tools"
 import { Palette } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
@@ -30,7 +32,7 @@ export function ToolboxPickerButtonPalette({
   const transform = `scale(${scale}) translate(${translateX} ${translateY})`
 
   return (
-    <ToolboxPickerButton id={ToolboxToolIds.Palette}>
+    <ToolboxPickerButton id={ToolIds.Palette}>
       <svg {...svg}>
         {Object.values(palette).map((color) => {
           const x = color.id % 4
@@ -47,7 +49,7 @@ export function ToolboxPickerButtonPalette({
             fill,
           }
 
-          return <rect {...rect} />
+          return <rect key={color.id} {...rect} />
         })}
       </svg>
     </ToolboxPickerButton>

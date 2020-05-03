@@ -1,6 +1,8 @@
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
-import { selectPencilColor } from "@highvalley.systems/itsydraw/store/pencil"
-import { ToolboxToolIds } from "@highvalley.systems/itsydraw/store/toolbox"
+import {
+  ToolIds,
+  selectBrushColor,
+} from "@highvalley.systems/itsydraw/store/tools"
 import { PaletteColor } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
@@ -11,7 +13,7 @@ interface ToolboxPickerButtonBrushProps {
 }
 
 const mapStateToProps = (state) => ({
-  color: selectPencilColor(state),
+  color: selectBrushColor(state),
 })
 
 const mapDispatchToProps = {}
@@ -45,7 +47,7 @@ export function ToolboxPickerButtonBrush({
   }
 
   return (
-    <ToolboxPickerButton id={ToolboxToolIds.Brush}>
+    <ToolboxPickerButton id={ToolIds.Brush}>
       <svg {...svg}>
         <path {...handle} />
         <path {...brush} />

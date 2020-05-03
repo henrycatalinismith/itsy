@@ -1,5 +1,5 @@
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
-import { ToolboxToolIds } from "@highvalley.systems/itsydraw/store/toolbox"
+import { ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker-button-select.module.scss"
@@ -22,7 +22,7 @@ export function ToolboxPickerButtonSelect({}: ToolboxPickerButtonSelectProps): R
   }
 
   return (
-    <ToolboxPickerButton id={ToolboxToolIds.Select}>
+    <ToolboxPickerButton id={ToolIds.Select}>
       <svg {...svg}>
         <path {...selection} />
       </svg>

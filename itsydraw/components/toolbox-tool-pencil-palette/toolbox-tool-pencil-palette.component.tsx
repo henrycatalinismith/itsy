@@ -1,6 +1,6 @@
 import ToolboxToolPencilPaletteColor from "@highvalley.systems/itsydraw/components/toolbox-tool-pencil-palette-color"
 import ToolboxToolContext from "@highvalley.systems/itsydraw/components/toolbox-tool/toolbox-tool.context"
-import { selectPalette } from "@highvalley.systems/itsydraw/store/palette"
+import { selectPalette } from "@highvalley.systems/itsydraw/store/tools"
 import { Palette } from "@highvalley.systems/typedefs/itsy"
 import _ from "lodash"
 import React from "react"

@@ -11,11 +11,9 @@ import {
 import logger from "redux-logger"
 import { ThunkAction } from "redux-thunk"
 
-import camera from "./camera"
-import palette from "./palette"
-import pencil from "./pencil"
 import spritesheet, { importSpritesheet } from "./spritesheet"
 import toolbox from "./toolbox"
+import tools from "./tools"
 import webview from "./webview"
 
 const isReactNative = !!(window as any).ReactNativeWebView
@@ -23,10 +21,9 @@ const middleware = [...getDefaultMiddleware()]
 
 const webviewMiddlewareOptions: WebviewBridgeMiddlewareOptions = {
   slices: {
-    camera,
-    palette,
     spritesheet,
     toolbox,
+    tools,
     webview,
   },
   thunks: {
@@ -44,11 +41,9 @@ if (isReactNative) {
 }
 
 const reducer = combineReducers({
-  camera: camera.reducer,
-  palette: palette.reducer,
-  pencil: pencil.reducer,
   spritesheet: spritesheet.reducer,
   toolbox: toolbox.reducer,
+  tools: tools.reducer,
   webview: webview.reducer,
 })
 

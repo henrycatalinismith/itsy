@@ -2,13 +2,6 @@ import { Thunk } from "@highvalley.systems/itsydraw/store"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-export enum ToolboxToolIds {
-  Brush = "Brush",
-  Camera = "Camera",
-  Palette = "Palette",
-  Select = "Select",
-}
-
 export enum ToolboxLayouts {
   Crowded = "Crowded",
   Stacked = "Stacked",
@@ -17,8 +10,6 @@ export enum ToolboxLayouts {
 export interface ToolboxState {
   layout: ToolboxLayouts
   rect: Rect
-  tool: ToolboxToolIds
-  tools: ToolboxToolIds[]
 }
 
 const name = "toolbox"
@@ -31,23 +22,16 @@ const initialState: ToolboxState = {
     width: 0,
     height: 0,
   },
-  tool: ToolboxToolIds.Brush,
-  // tool: ToolboxToolIds.Camera,
-  tools: [ToolboxToolIds.Brush, ToolboxToolIds.Camera, ToolboxToolIds.Select],
 }
 
 const reducers = {
-  layout(toolbox, action: PayloadAction<Rect>): void {
-    toolbox.rect = action.payload
+  layout(tools, action: PayloadAction<Rect>): void {
+    tools.rect = action.payload
 
-    toolbox.layout = ToolboxLayouts.Crowded
-    if (toolbox.rect.width * 2 < toolbox.rect.height) {
-      toolbox.layout = ToolboxLayouts.Stacked
+    tools.layout = ToolboxLayouts.Crowded
+    if (tools.rect.width * 2 < tools.rect.height) {
+      tools.layout = ToolboxLayouts.Stacked
     }
-  },
-
-  tool(toolbox, action: PayloadAction<ToolboxToolIds>): void {
-    toolbox.tool = action.payload
   },
 }
 
@@ -64,23 +48,16 @@ export const updateToolboxLayout = (rect: Rect): Thunk => async (
   dispatch(slice.actions.layout(rect))
 }
 
-export const updateToolboxTool = (tool: ToolboxToolIds): Thunk => async (
-  dispatch,
-  getState
-) => {
-  dispatch(slice.actions.tool(tool))
-}
-
 export const selectToolbox = ({ toolbox }) => toolbox
 
-export const selectToolboxTool = createSelector(
+export const selectToolboxHeight = createSelector(
   [selectToolbox],
-  (toolbox): ToolboxToolIds => toolbox.tool
+  (toolbox): number => toolbox.rect.height
 )
 
-export const selectToolboxTools = createSelector(
+export const selectToolboxLayout = createSelector(
   [selectToolbox],
-  (toolbox): ToolboxToolIds[] => toolbox.tools
+  (toolbox): ToolboxLayouts => toolbox.layout
 )
 
 export default slice

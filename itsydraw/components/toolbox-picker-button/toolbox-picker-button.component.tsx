@@ -1,34 +1,33 @@
 import {
-  selectToolbox,
-  ToolboxState,
-  ToolboxToolIds,
-  updateToolboxTool,
-} from "@highvalley.systems/itsydraw/store/toolbox"
+  selectTools,
+  ToolIds,
+  changeActiveTool,
+} from "@highvalley.systems/itsydraw/store/tools"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker-button.module.scss"
 
 interface ToolboxPickerButtonProps {
   children: any
-  id: ToolboxToolIds
-  updateToolboxTool: (id: ToolboxToolIds) => void
+  id: ToolIds
+  changeActiveTool: (id: ToolIds) => void
 }
 
 const mapStateToProps = (state) => ({
-  toolbox: selectToolbox(state),
+  toolbox: selectTools(state),
 })
 
 const mapDispatchToProps = {
-  updateToolboxTool,
+  changeActiveTool,
 }
 
 export function ToolboxPickerButton({
   children,
   id,
-  updateToolboxTool,
+  changeActiveTool,
 }: ToolboxPickerButtonProps): React.ReactElement {
   const onClick = React.useCallback(() => {
-    updateToolboxTool(id)
+    changeActiveTool(id)
   }, [])
 
   const button: React.HTMLAttributes<HTMLButtonElement> = {

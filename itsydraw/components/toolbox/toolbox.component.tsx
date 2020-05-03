@@ -1,12 +1,11 @@
 import ToolboxPicker from "@highvalley.systems/itsydraw/components/toolbox-picker"
 import ToolboxTool from "@highvalley.systems/itsydraw/components/toolbox-tool"
 import {
-  selectToolbox,
   ToolboxLayouts,
-  ToolboxState,
-  ToolboxToolIds,
+  selectToolboxLayout,
   updateToolboxLayout,
 } from "@highvalley.systems/itsydraw/store/toolbox"
+import { ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import React from "react"
@@ -15,12 +14,12 @@ import useResizeObserver from "use-resize-observer/polyfilled"
 import styles from "./toolbox.module.scss"
 
 interface ToolboxProps {
-  toolbox: ToolboxState
+  layout: ToolboxLayouts
   updateToolboxLayout: (rect: Rect) => void
 }
 
 const mapStateToProps = (state) => ({
-  toolbox: selectToolbox(state),
+  layout: selectToolboxLayout(state),
 })
 
 const mapDispatchToProps = {
@@ -28,21 +27,21 @@ const mapDispatchToProps = {
 }
 
 export function Toolbox({
-  toolbox,
+  layout,
   updateToolboxLayout,
 }: ToolboxProps): React.ReactElement {
   const divRef = React.useRef<HTMLDivElement>(null)
   const { width, height } = useResizeObserver({ ref: divRef })
 
   const onResize = React.useCallback(() => {
-    updateToolboxLayout({ ...toolbox.rect, width, height })
+    updateToolboxLayout({ x: 0, y: 0, width, height })
   }, [width, height])
 
   React.useEffect(() => onResize(), [width, height])
 
   const className = cx(styles.component, {
-    [styles.crowded]: toolbox.layout === ToolboxLayouts.Crowded,
-    [styles.stacked]: toolbox.layout === ToolboxLayouts.Stacked,
+    [styles.crowded]: layout === ToolboxLayouts.Crowded,
+    [styles.stacked]: layout === ToolboxLayouts.Stacked,
   })
 
   const divProps: React.HTMLAttributes<HTMLDivElement> = {
@@ -53,7 +52,7 @@ export function Toolbox({
     className: styles.tools,
     style: {
       height,
-      gridTemplateRows: `repeat(${toolbox.tools.length}, ${height}px)`,
+      gridTemplateRows: `repeat(${4}, ${height}px)`,
     },
   }
 
@@ -61,9 +60,9 @@ export function Toolbox({
     <div {...divProps} ref={divRef}>
       <ToolboxPicker />
       <div {...toolsDiv}>
-        <ToolboxTool tool={ToolboxToolIds.Brush} />
-        <ToolboxTool tool={ToolboxToolIds.Camera} />
-        <ToolboxTool tool={ToolboxToolIds.Select} />
+        <ToolboxTool id={ToolIds.Brush} />
+        <ToolboxTool id={ToolIds.Camera} />
+        <ToolboxTool id={ToolIds.Select} />
       </div>
     </div>
   )

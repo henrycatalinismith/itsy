@@ -1,5 +1,5 @@
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import palette from "@highvalley.systems/itsydraw/store/palette"
+import tools, { selectPalette } from "@highvalley.systems/itsydraw/store/tools"
 import webview from "@highvalley.systems/itsydraw/store/webview"
 import readPalette from "@highvalley.systems/itsyread/palette"
 import {
@@ -167,7 +167,7 @@ export const importSpritesheet = (
     }
   }
 
-  dispatch(palette.actions.import(paletteState))
+  dispatch(tools.actions.palette(paletteState))
   dispatch(slice.actions.import(spritesheet as Spritesheet))
   dispatch(webview.actions.import())
 }
@@ -194,7 +194,9 @@ export const updateSpritesheet = (changes: PartialSpritesheet): Thunk => async (
   dispatch,
   getState
 ) => {
-  const { palette, spritesheet } = getState()
+  const state = getState()
+  const { spritesheet } = state
+  const palette = selectPalette(state)
   const canvas = document.createElement("canvas")
   const context = canvas.getContext("2d")
 

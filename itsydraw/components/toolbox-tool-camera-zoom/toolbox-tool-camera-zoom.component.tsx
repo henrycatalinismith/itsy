@@ -1,7 +1,7 @@
 import {
   selectZoom,
   zoomCamera,
-} from "@highvalley.systems/itsydraw/store/camera"
+} from "@highvalley.systems/itsydraw/store/tools"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import cx from "classnames"
 import React from "react"
