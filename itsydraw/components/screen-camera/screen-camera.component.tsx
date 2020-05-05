@@ -40,8 +40,8 @@ export function ScreenCamera({
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
-  const screen = React.useContext(ScreenContext)
 
+  const screen = React.useContext(ScreenContext)
   const scale = screen.rect.width / 128
 
   const update = _.debounce(() => {

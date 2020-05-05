@@ -40,13 +40,14 @@ export interface CameraState extends ToolState, Rect {
   id: ToolIds.Camera
 }
 
+export interface ClipboardState extends ToolState {
+  id: ToolIds.Clipboard
+  rect: Rect
+}
+
 export interface PaletteState extends ToolState {
   id: ToolIds.Palette
   colors: Palette
-}
-
-export interface ClipboardState extends ToolState {
-  id: ToolIds.Clipboard
 }
 
 export type Tool = BrushState | CameraState | ClipboardState | PaletteState
@@ -93,6 +94,12 @@ const initialState: ToolsState = {
     id: ToolIds.Clipboard,
     status: ToolStatuses.Inactive,
     rank: 3,
+    rect: {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0,
+    },
   },
 }
 
@@ -112,6 +119,10 @@ const reducers = {
   brushSize(tools, action: PayloadAction<BrushSizes>): void {
     const brush = tools[ToolIds.Brush]
     brush.size = action.payload
+  },
+
+  clipboard(tools, action: PayloadAction<Rect>): void {
+    tools[ToolIds.Clipboard].rect = action.payload
   },
 
   palette(tools, action: PayloadAction<Palette>): void {
@@ -192,6 +203,13 @@ export const zoomCamera = (z: number): Thunk => async (dispatch, getState) => {
   dispatch(slice.actions.zoom(z))
 }
 
+export const setClipboard = (rect: Rect): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.clipboard(rect))
+}
+
 export const selectTools = ({ tools }) => tools
 
 export const selectActiveTool = createSelector(
@@ -202,6 +220,16 @@ export const selectActiveTool = createSelector(
 export const selectCamera = createSelector(
   [selectTools],
   (tools): CameraState => tools[ToolIds.Camera]
+)
+
+export const selectClipboard = createSelector(
+  [selectTools],
+  (tools): ClipboardState => tools[ToolIds.Clipboard]
+)
+
+export const selectClipboardRect = createSelector(
+  [selectClipboard],
+  (clipboard): Rect => clipboard.rect
 )
 
 export const selectPalette = createSelector(
