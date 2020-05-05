@@ -60,9 +60,9 @@ const name = "tools"
 const initialState: ToolsState = {
   [ToolIds.Brush]: {
     id: ToolIds.Brush,
-    status: ToolStatuses.Inactive,
+    status: ToolStatuses.Active,
     rank: 0,
-    color: 0,
+    color: 7,
     size: 1,
   },
 
@@ -81,7 +81,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Camera]: {
     id: ToolIds.Camera,
-    status: ToolStatuses.Active,
+    status: ToolStatuses.Inactive,
     rank: 2,
     x: 0,
     y: 0,

@@ -6,7 +6,7 @@ import {
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
 import {
-  selectSpritesheetPixels,
+  selectSpritesheetPng,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
 import {
@@ -35,6 +35,7 @@ interface ScreenBrushProps {
   color: PaletteIndex
   palette: Palette
   spritesheetPixels: SpritesheetState
+  spritesheetPng: string
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
 }
@@ -44,7 +45,7 @@ const mapStateToProps = (state) => ({
   brushSize: selectBrushSize(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
-  spritesheetPixels: selectSpritesheetPixels(state),
+  spritesheetPng: selectSpritesheetPng(state),
   webview: selectWebview(state),
 })
 
@@ -58,11 +59,13 @@ export function ScreenBrush({
   camera,
   palette,
   spritesheetPixels,
+  spritesheetPng,
   updateSpritesheet,
   webview,
 }: ScreenBrushProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
+  const image = React.useRef<HTMLImageElement>()
 
   const last = React.useRef<{
     x: SpritesheetPixelIndex
@@ -114,11 +117,20 @@ export function ScreenBrush({
 
   const repaint = () => {
     cls(0)
-    Object.entries(spritesheetPixels).map(([x, column]) => {
-      Object.entries(column).map(([y, pixel]) => {
-        draw(x as any, y as any, pixel)
-      })
-    })
+    image.current.onload = () => {
+      ctx.current.drawImage(
+        image.current,
+        camera.x,
+        camera.y,
+        camera.width,
+        camera.height,
+        0,
+        0,
+        canvas.current.width,
+        canvas.current.height
+      )
+    }
+    image.current.src = `data:image/png;base64,${spritesheetPng}`
   }
 
   const sset = (
@@ -171,12 +183,13 @@ export function ScreenBrush({
     canvas.current.width = camera.width
     canvas.current.height = camera.height
     ctx.current = canvas.current.getContext("2d")
+    image.current = new Image()
     repaint()
   }, [])
 
   const onImport = React.useCallback(() => {
     repaint()
-  }, [spritesheetPixels, palette])
+  }, [spritesheetPng, palette])
 
   const touchLocation = (
     event: React.TouchEvent<HTMLCanvasElement>
