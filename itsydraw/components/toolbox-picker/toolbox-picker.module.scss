@@ -1,11 +1,11 @@
 .component {
+  background-color: #394467;
   display: grid;
   grid-area: menu;
   grid-auto-rows: min-content;
-  row-gap: 8px;
   list-style-type: none;
   margin: 0;
-  padding: 8px;
+  padding: 0;
 }
 
 .menuitem {

@@ -1,9 +1,19 @@
+@import "../../../palettes/pico8/_original.scss";
+
 .component {
-  border: 1px solid green;
-  background: rgba(#fff, 0.1);
-  width: 32px;
-  height: 32px;
+  border: none;
+  background: transparent;
+  width: 48px;
+  height: 48px;
   overflow: hidden;
   display: grid;
-  padding: 4px;
+  padding: 8px;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.active {
+  background-color: pico8-original-palette(1);
 }

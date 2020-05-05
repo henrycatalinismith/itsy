@@ -44,7 +44,7 @@ export function ScreenPalette({
 
   const colorSize = 128 / 4
   const virtualSize = 128
-  const browserSize = min
+  const browserSize = min + 4
   const scale = browserSize / virtualSize
 
   return (

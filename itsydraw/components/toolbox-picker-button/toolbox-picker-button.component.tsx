@@ -1,8 +1,10 @@
 import {
-  selectTools,
+  selectActiveTool,
+  Tool,
   ToolIds,
   changeActiveTool,
 } from "@highvalley.systems/itsydraw/store/tools"
+import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker-button.module.scss"
@@ -10,11 +12,12 @@ import styles from "./toolbox-picker-button.module.scss"
 interface ToolboxPickerButtonProps {
   children: any
   id: ToolIds
+  activeTool: Tool
   changeActiveTool: (id: ToolIds) => void
 }
 
 const mapStateToProps = (state) => ({
-  toolbox: selectTools(state),
+  activeTool: selectActiveTool(state),
 })
 
 const mapDispatchToProps = {
@@ -24,14 +27,19 @@ const mapDispatchToProps = {
 export function ToolboxPickerButton({
   children,
   id,
+  activeTool,
   changeActiveTool,
 }: ToolboxPickerButtonProps): React.ReactElement {
   const onClick = React.useCallback(() => {
     changeActiveTool(id)
   }, [])
 
+  const className = cx(styles.component, {
+    [styles.active]: activeTool.id === id,
+  })
+
   const button: React.HTMLAttributes<HTMLButtonElement> = {
-    className: styles.component,
+    className,
     onClick,
   }
 
