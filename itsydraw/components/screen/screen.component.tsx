@@ -1,5 +1,6 @@
 import ScreenBrush from "@highvalley.systems/itsydraw/components/screen-brush"
 import ScreenCamera from "@highvalley.systems/itsydraw/components/screen-camera"
+import ScreenClipboard from "@highvalley.systems/itsydraw/components/screen-clipboard"
 import ScreenPalette from "@highvalley.systems/itsydraw/components/screen-palette"
 import {
   Tool,
@@ -29,7 +30,7 @@ const screenMap: { [key in ToolIds]: React.ReactElement } = {
   [ToolIds.Brush]: <ScreenBrush />,
   [ToolIds.Camera]: <ScreenCamera />,
   [ToolIds.Palette]: <ScreenPalette />,
-  [ToolIds.Clipboard]: <></>,
+  [ToolIds.Clipboard]: <ScreenClipboard />,
 }
 
 export function Screen({ tools }: ScreenProps): React.ReactElement {
