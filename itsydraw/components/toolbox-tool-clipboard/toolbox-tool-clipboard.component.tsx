@@ -2,7 +2,7 @@ import ToolboxToolCameraZoom from "@highvalley.systems/itsydraw/components/toolb
 import React from "react"
 import { connect } from "react-redux"
 
-interface ToolboxToolSelectProps {
+interface ToolboxToolClipboardProps {
   // palette: Palette
 }
 
@@ -12,12 +12,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function ToolboxToolSelect({}: ToolboxToolSelectProps): React.ReactElement {
-  return (
-    <>
-      <ToolboxToolCameraZoom />
-    </>
-  )
+export function ToolboxToolClipboard({}: ToolboxToolClipboardProps): React.ReactElement {
+  return <></>
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolboxToolSelect)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ToolboxToolClipboard)

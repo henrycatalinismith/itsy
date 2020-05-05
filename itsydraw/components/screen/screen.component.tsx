@@ -29,7 +29,7 @@ const screenMap: { [key in ToolIds]: React.ReactElement } = {
   [ToolIds.Brush]: <ScreenBrush />,
   [ToolIds.Camera]: <ScreenCamera />,
   [ToolIds.Palette]: <ScreenPalette />,
-  [ToolIds.Select]: <></>,
+  [ToolIds.Clipboard]: <></>,
 }
 
 export function Screen({ tools }: ScreenProps): React.ReactElement {

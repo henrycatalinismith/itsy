@@ -90,6 +90,7 @@ export function ScreenPalette({
                     height={colorSize - 1}
                     stroke="white"
                     strokeWidth={2}
+                    lineJoin="round"
                   />
                   <Rect
                     x={x + 2}
@@ -98,6 +99,7 @@ export function ScreenPalette({
                     height={colorSize - 5}
                     stroke="black"
                     strokeWidth={2}
+                    lineJoin="round"
                   />
                 </>
               )

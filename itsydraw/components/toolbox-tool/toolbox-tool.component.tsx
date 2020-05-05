@@ -1,7 +1,7 @@
 import ToolboxToolBrush from "@highvalley.systems/itsydraw/components/toolbox-tool-brush"
 import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
+import ToolboxToolClipboard from "@highvalley.systems/itsydraw/components/toolbox-tool-clipboard"
 import ToolboxToolPalette from "@highvalley.systems/itsydraw/components/toolbox-tool-palette"
-import ToolboxToolSelect from "@highvalley.systems/itsydraw/components/toolbox-tool-select"
 import {
   selectActiveTool,
   Tool,
@@ -54,8 +54,8 @@ export function ToolboxTool({
       <ToolboxToolContext.Provider value={{ rect }}>
         {id === ToolIds.Brush && <ToolboxToolBrush />}
         {id === ToolIds.Camera && <ToolboxToolCamera />}
+        {id === ToolIds.Clipboard && <ToolboxToolClipboard />}
         {id === ToolIds.Palette && <ToolboxToolPalette />}
-        {id === ToolIds.Select && <ToolboxToolSelect />}
       </ToolboxToolContext.Provider>
     </div>
   )

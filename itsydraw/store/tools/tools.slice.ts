@@ -14,7 +14,7 @@ export enum ToolIds {
   Brush = "Brush",
   Camera = "Camera",
   Palette = "Palette",
-  Select = "Select",
+  Clipboard = "Clipboard",
 }
 
 export enum ToolStatuses {
@@ -45,11 +45,11 @@ export interface PaletteState extends ToolState {
   colors: Palette
 }
 
-export interface SelectState extends ToolState {
-  id: ToolIds.Select
+export interface ClipboardState extends ToolState {
+  id: ToolIds.Clipboard
 }
 
-export type Tool = BrushState | CameraState | PaletteState | SelectState
+export type Tool = BrushState | CameraState | ClipboardState | PaletteState
 
 export interface ToolsState {
   [id: string]: Tool
@@ -89,8 +89,8 @@ const initialState: ToolsState = {
     height: 64,
   },
 
-  [ToolIds.Select]: {
-    id: ToolIds.Select,
+  [ToolIds.Clipboard]: {
+    id: ToolIds.Clipboard,
     status: ToolStatuses.Inactive,
     rank: 3,
   },

@@ -27,24 +27,25 @@ export function ToolboxPickerButtonPalette({
 }: ToolboxPickerButtonPaletteProps): React.ReactElement {
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.component,
-    viewBox: "0 0 4 4",
+    viewBox: "-8 -8 136 136",
   }
 
   const highlight: React.SVGAttributes<SVGRectElement> = {
-    x: brushColor.id % 4,
-    y: Math.floor(brushColor.id / 4),
-    width: 1,
-    height: 1,
+    x: (brushColor.id % 4) * 32 + 8,
+    y: Math.floor(brushColor.id / 4) * 32 + 8,
+    width: 24,
+    height: 24,
+    mask: "url(#brushColor)",
   }
 
   return (
     <ToolboxPickerButton id={ToolIds.Palette}>
       <svg {...svg}>
         {Object.values(palette).map((color) => {
-          const x = color.id % 4
-          const y = Math.floor(color.id / 4)
-          const width = 1
-          const height = 1
+          const x = (color.id % 4) * 32
+          const y = Math.floor(color.id / 4) * 32
+          const width = 32
+          const height = 32
           const fill = color.hex
 
           const rect: React.SVGAttributes<SVGRectElement> = {

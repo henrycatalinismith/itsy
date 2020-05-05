@@ -1,7 +1,7 @@
 import ToolboxPickerButtonBrush from "@highvalley.systems/itsydraw/components/toolbox-picker-button-brush"
 import ToolboxPickerButtonCamera from "@highvalley.systems/itsydraw/components/toolbox-picker-button-camera"
 import ToolboxPickerButtonPalette from "@highvalley.systems/itsydraw/components/toolbox-picker-button-palette"
-import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-select"
+import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-clipboard"
 import {
   Tool,
   ToolIds,
@@ -25,8 +25,8 @@ const mapDispatchToProps = {}
 const buttonMap: { [key in ToolIds]: React.ReactElement } = {
   [ToolIds.Brush]: <ToolboxPickerButtonBrush />,
   [ToolIds.Camera]: <ToolboxPickerButtonCamera />,
+  [ToolIds.Clipboard]: <ToolboxPickerButtonSelect />,
   [ToolIds.Palette]: <ToolboxPickerButtonPalette />,
-  [ToolIds.Select]: <ToolboxPickerButtonSelect />,
 }
 
 export function ToolboxPicker({

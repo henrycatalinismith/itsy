@@ -2,15 +2,15 @@ import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox
 import { ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-picker-button-select.module.scss"
+import styles from "./toolbox-picker-button-clipboard.module.scss"
 
-interface ToolboxPickerButtonSelectProps {}
+interface ToolboxPickerButtonClipboardProps {}
 
 const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
-export function ToolboxPickerButtonSelect({}: ToolboxPickerButtonSelectProps): React.ReactElement {
+export function ToolboxPickerButtonClipboard({}: ToolboxPickerButtonClipboardProps): React.ReactElement {
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.component,
     viewBox: "0 0 32 32",
@@ -22,7 +22,7 @@ export function ToolboxPickerButtonSelect({}: ToolboxPickerButtonSelectProps): R
   }
 
   return (
-    <ToolboxPickerButton id={ToolIds.Select}>
+    <ToolboxPickerButton id={ToolIds.Clipboard}>
       <svg {...svg}>
         <path {...selection} />
       </svg>
@@ -33,4 +33,4 @@ export function ToolboxPickerButtonSelect({}: ToolboxPickerButtonSelectProps): R
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ToolboxPickerButtonSelect)
+)(ToolboxPickerButtonClipboard)
