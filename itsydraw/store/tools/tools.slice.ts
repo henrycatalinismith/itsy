@@ -30,10 +30,17 @@ export interface ToolState {
 
 export type BrushSizes = 1 | 2 | 4 | 8
 
+export enum BrushTypes {
+  Pencil = "Pencil",
+  Line = "Line",
+  Circle = "Circle",
+}
+
 export interface BrushState extends ToolState {
   id: ToolIds.Brush
-  color: PaletteIndex
   size: BrushSizes
+  type: BrushTypes
+  color: PaletteIndex
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -63,8 +70,9 @@ const initialState: ToolsState = {
     id: ToolIds.Brush,
     status: ToolStatuses.Active,
     rank: 0,
-    color: 7,
+    type: BrushTypes.Circle,
     size: 1,
+    color: 7,
   },
 
   [ToolIds.Palette]: {
@@ -112,13 +120,15 @@ const reducers = {
   },
 
   brushColor(tools, action: PayloadAction<PaletteIndex>): void {
-    const brush = tools[ToolIds.Brush]
-    brush.color = action.payload
+    tools[ToolIds.Brush].color = action.payload
   },
 
   brushSize(tools, action: PayloadAction<BrushSizes>): void {
-    const brush = tools[ToolIds.Brush]
-    brush.size = action.payload
+    tools[ToolIds.Brush].size = action.payload
+  },
+
+  brushType(tools, action: PayloadAction<BrushTypes>): void {
+    tools[ToolIds.Brush].type = action.payload
   },
 
   clipboard(tools, action: PayloadAction<Rect>): void {
@@ -126,22 +136,17 @@ const reducers = {
   },
 
   palette(tools, action: PayloadAction<Palette>): void {
-    const palette = tools[ToolIds.Palette]
-    palette.colors = action.payload
+    tools[ToolIds.Palette].colors = action.payload
   },
 
   pan(tools, action: PayloadAction<Point>): void {
-    const { x, y } = action.payload
-    const camera = tools[ToolIds.Camera]
-
-    camera.x = x
-    camera.y = y
+    tools[ToolIds.Camera].x = action.payload.x
+    tools[ToolIds.Camera].y = action.payload.y
   },
 
   zoom(tools, action: PayloadAction<number>): void {
-    const camera = tools[ToolIds.Camera]
-    camera.width = 128 / action.payload
-    camera.height = 128 / action.payload
+    tools[ToolIds.Camera].width = 128 / action.payload
+    tools[ToolIds.Camera].height = 128 / action.payload
   },
 }
 
@@ -170,6 +175,13 @@ export const changeBrushSize = (size: BrushSizes): Thunk => async (
   getState
 ) => {
   dispatch(slice.actions.brushSize(size))
+}
+
+export const changeBrushType = (type: BrushTypes): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.brushType(type))
 }
 
 export const panCamera = (x: number, y: number): Thunk => async (
@@ -250,6 +262,11 @@ export const selectBrushColor = createSelector(
 export const selectBrushSize = createSelector(
   [selectBrush],
   (brush): BrushSizes => brush.size
+)
+
+export const selectBrushType = createSelector(
+  [selectBrush],
+  (brush): BrushTypes => brush.type
 )
 
 export const selectRankedTools = createSelector(

@@ -1,4 +1,5 @@
 import ToolboxToolBrushSize from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-size"
+import ToolboxToolBrushType from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-type"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-brush.module.scss"
@@ -17,6 +18,7 @@ export function ToolboxToolBrush({}: ToolboxToolBrushProps): React.ReactElement 
   return (
     <div className={styles.component}>
       <ToolboxToolBrushSize />
+      <ToolboxToolBrushType />
     </div>
   )
 }
