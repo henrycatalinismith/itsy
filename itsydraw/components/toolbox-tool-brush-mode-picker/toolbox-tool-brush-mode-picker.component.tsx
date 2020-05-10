@@ -1,7 +1,7 @@
 import {
   changeBrushMode,
   BrushModes,
-  selectBrushMode,
+  selectActiveBrushMode,
 } from "@highvalley.systems/itsydraw/store/tools"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import cx from "classnames"
@@ -15,7 +15,7 @@ interface ToolboxToolBrushModePickerProps {
 }
 
 const mapStateToProps = (state) => ({
-  brushMode: selectBrushMode(state),
+  brushMode: selectActiveBrushMode(state),
 })
 
 const mapDispatchToProps = {

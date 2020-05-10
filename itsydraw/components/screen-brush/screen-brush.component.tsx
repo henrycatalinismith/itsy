@@ -4,7 +4,7 @@ import {
   LineAngles,
   selectBrushColor,
   selectBrushSize,
-  selectBrushMode,
+  selectActiveBrushMode,
   selectLineBrushAngle,
   selectCamera,
   selectPalette,
@@ -50,7 +50,7 @@ interface ScreenBrushProps {
 const mapStateToProps = (state) => ({
   brushColor: selectBrushColor(state),
   brushSize: selectBrushSize(state),
-  brushMode: selectBrushMode(state),
+  brushMode: selectActiveBrushMode(state),
   lineAngle: selectLineBrushAngle(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
@@ -253,7 +253,7 @@ export function ScreenBrush({
     ctx.current = canvas.current.getContext("2d")
     image.current = new Image()
     repaint()
-  }, [])
+  }, [spritesheetPng])
 
   const onImport = React.useCallback(() => {
     repaint()

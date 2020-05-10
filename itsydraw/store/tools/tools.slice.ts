@@ -43,10 +43,42 @@ export enum LineAngles {
 
 export interface BrushState extends ToolState {
   id: ToolIds.Brush
-  size: BrushSizes
-  mode: BrushModes
+  brushes: BrushesState
+}
+
+export enum BrushModeStatuses {
+  Active = "Active",
+  Inactive = "Inactive",
+}
+
+export interface BrushModeState {
+  id: BrushModes
+  status: BrushModeStatuses
+}
+
+export interface PencilBrushState extends BrushModeState {
+  id: BrushModes.Pencil
   color: PaletteIndex
+  size: BrushSizes
+}
+
+export interface LineBrushState extends BrushModeState {
+  id: BrushModes.Line
+  color: PaletteIndex
+  size: BrushSizes
   angle: LineAngles
+}
+
+export interface CircleBrushState extends BrushModeState {
+  id: BrushModes.Circle
+  color: PaletteIndex
+  size: BrushSizes
+}
+
+export interface BrushesState {
+  [BrushModes.Circle]: CircleBrushState
+  [BrushModes.Line]: LineBrushState
+  [BrushModes.Pencil]: PencilBrushState
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -76,10 +108,29 @@ const initialState: ToolsState = {
     id: ToolIds.Brush,
     status: ToolStatuses.Active,
     rank: 0,
-    mode: BrushModes.Line,
-    size: 1,
-    color: 7,
-    angle: LineAngles.Free,
+    brushes: {
+      [BrushModes.Pencil]: {
+        id: BrushModes.Pencil,
+        status: BrushModeStatuses.Active,
+        color: 7,
+        size: 1,
+      },
+
+      [BrushModes.Line]: {
+        id: BrushModes.Line,
+        status: BrushModeStatuses.Inactive,
+        size: 1,
+        color: 7,
+        angle: LineAngles.Free,
+      },
+
+      [BrushModes.Circle]: {
+        id: BrushModes.Circle,
+        status: BrushModeStatuses.Inactive,
+        color: 7,
+        size: 1,
+      },
+    },
   },
 
   [ToolIds.Palette]: {
@@ -127,19 +178,26 @@ const reducers = {
   },
 
   brushColor(tools, action: PayloadAction<PaletteIndex>): void {
-    tools[ToolIds.Brush].color = action.payload
+    tools[ToolIds.Brush].brushes[BrushModes.Circle].color = action.payload
+    tools[ToolIds.Brush].brushes[BrushModes.Line].color = action.payload
+    tools[ToolIds.Brush].brushes[BrushModes.Pencil].color = action.payload
   },
 
   brushMode(tools, action: PayloadAction<BrushModes>): void {
-    tools[ToolIds.Brush].mode = action.payload
+    const oldMode =
+      tools[ToolIds.Brush].brushes[selectActiveBrushMode({ tools })]
+    const newMode = tools[ToolIds.Brush].brushes[action.payload]
+    oldMode.status = BrushModeStatuses.Inactive
+    newMode.status = BrushModeStatuses.Active
   },
 
   brushSize(tools, action: PayloadAction<BrushSizes>): void {
-    tools[ToolIds.Brush].size = action.payload
+    tools[ToolIds.Brush].brushes[selectActiveBrushMode({ tools })].size =
+      action.payload
   },
 
   lineAngle(tools, action: PayloadAction<LineAngles>): void {
-    tools[ToolIds.Brush].angle = action.payload
+    tools[ToolIds.Brush].brushes[BrushModes.Line].angle = action.payload
   },
 
   clipboard(tools, action: PayloadAction<Rect>): void {
@@ -196,8 +254,7 @@ export const changeBrushMode = (type: BrushModes): Thunk => async (
 }
 
 export const changeLineBrushAngle = (angle: LineAngles): Thunk => async (
-  dispatch,
-  getState
+  dispatch
 ) => {
   dispatch(slice.actions.lineAngle(angle))
 }
@@ -272,24 +329,45 @@ export const selectBrush = createSelector(
   (tools): BrushState => tools[ToolIds.Brush]
 )
 
+export const selectBrushes = createSelector(
+  [selectBrush],
+  (brush): BrushesState => brush.brushes
+)
+
+export const selectCircleBrush = createSelector(
+  [selectBrushes],
+  (brushes): CircleBrushState => brushes[BrushModes.Circle]
+)
+
+export const selectLineBrush = createSelector(
+  [selectBrushes],
+  (brushes): LineBrushState => brushes[BrushModes.Line]
+)
+
+export const selectPencilBrush = createSelector(
+  [selectBrushes],
+  (brushes): PencilBrushState => brushes[BrushModes.Pencil]
+)
+
+export const selectActiveBrushMode = createSelector(
+  [selectBrushes],
+  (brushes): BrushModes =>
+    _.find(brushes, { status: BrushModeStatuses.Active }).id
+)
+
 export const selectBrushColor = createSelector(
-  [selectBrush, selectPalette],
-  (brush, palette): PaletteColor => palette[brush.color]
+  [selectBrushes, selectActiveBrushMode, selectPalette],
+  (brushes, mode, palette): PaletteColor => palette[brushes[mode].color]
 )
 
 export const selectBrushSize = createSelector(
-  [selectBrush],
-  (brush): BrushSizes => brush.size
-)
-
-export const selectBrushMode = createSelector(
-  [selectBrush],
-  (brush): BrushModes => brush.mode
+  [selectBrushes, selectActiveBrushMode],
+  (brushes, mode): BrushSizes => brushes[mode].size
 )
 
 export const selectLineBrushAngle = createSelector(
-  [selectBrush],
-  (brush): LineAngles => brush.angle
+  [selectLineBrush],
+  (line): LineAngles => line.angle
 )
 
 export const selectRankedTools = createSelector(

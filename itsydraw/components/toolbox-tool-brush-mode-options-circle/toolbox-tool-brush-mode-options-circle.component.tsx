@@ -9,7 +9,7 @@ interface ToolboxToolBrushModeOptionsCircleProps {
 }
 
 const mapStateToProps = (state) => ({
-  // brushMode: selectBrushMode(state),
+  // brushMode: selectActiveBrushMode(state),
 })
 
 const mapDispatchToProps = {
