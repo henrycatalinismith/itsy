@@ -1,9 +1,11 @@
 import {
   BrushSizes,
-  BrushTypes,
+  BrushModes,
+  LineAngles,
   selectBrushColor,
   selectBrushSize,
-  selectBrushType,
+  selectBrushMode,
+  selectLineBrushAngle,
   selectCamera,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
@@ -35,7 +37,8 @@ interface ScreenBrushProps {
   camera: Rect
   brushColor: PaletteColor
   brushSize: BrushSizes
-  brushType: BrushTypes
+  brushMode: BrushModes
+  lineAngle: LineAngles
   color: PaletteIndex
   palette: Palette
   spritesheetPixels: SpritesheetState
@@ -47,7 +50,8 @@ interface ScreenBrushProps {
 const mapStateToProps = (state) => ({
   brushColor: selectBrushColor(state),
   brushSize: selectBrushSize(state),
-  brushType: selectBrushType(state),
+  brushMode: selectBrushMode(state),
+  lineAngle: selectLineBrushAngle(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
   spritesheetPng: selectSpritesheetPng(state),
@@ -64,7 +68,8 @@ const outOfBounds = (x: number, y: number): boolean =>
 export function ScreenBrush({
   brushColor,
   brushSize,
-  brushType,
+  brushMode,
+  lineAngle,
   camera,
   palette,
   spritesheetPixels,
@@ -278,8 +283,8 @@ export function ScreenBrush({
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const { x, y } = touchLocation(event)
 
-      switch (brushType) {
-        case BrushTypes.Pencil:
+      switch (brushMode) {
+        case BrushModes.Pencil:
           if (
             outOfBounds(x, y) ||
             (x === last.current.x && y === last.current.y)
@@ -290,14 +295,14 @@ export function ScreenBrush({
           sset(x, y, brushColor.id)
           break
 
-        case BrushTypes.Line:
+        case BrushModes.Line:
           if (outOfBounds(x, y)) return
           sset(x, y, brushColor.id, true)
           lineOrigin.current.x = x
           lineOrigin.current.y = y
           break
 
-        case BrushTypes.Circle:
+        case BrushModes.Circle:
           if (outOfBounds(x, y)) return
           sset(x, y, brushColor.id, true)
           circleOrigin.current.x = x
@@ -306,15 +311,15 @@ export function ScreenBrush({
       }
       last.current = { x, y }
     },
-    [camera, brushColor.hex, brushSize, brushType]
+    [camera, brushColor.hex, brushSize, brushMode]
   )
 
   const onTouchMove = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const { x, y } = touchLocation(event)
 
-      switch (brushType) {
-        case BrushTypes.Pencil:
+      switch (brushMode) {
+        case BrushModes.Pencil:
           if (
             outOfBounds(x, y) ||
             (x === last.current.x && y === last.current.y)
@@ -329,20 +334,28 @@ export function ScreenBrush({
           last.current = { x, y }
           break
 
-        case BrushTypes.Line:
+        case BrushModes.Line:
+          const lx1 = lineOrigin.current.x
+          const ly1 = lineOrigin.current.y
+          let lx2 = x
+          let ly2 = y
+
+          if (lineAngle === LineAngles.Snap) {
+            const lxd = Math.abs(lx1 - lx2)
+            const lyd = Math.abs(ly1 - ly2)
+            if (lxd > lyd) {
+              ly2 = ly1
+            } else {
+              lx2 = lx1
+            }
+          }
+
           clearPreview()
           redraw()
-          line(
-            lineOrigin.current.x,
-            lineOrigin.current.y,
-            x,
-            y,
-            brushColor.id,
-            true
-          )
+          line(lx1, ly1, lx2, ly2, brushColor.id, true)
           break
 
-        case BrushTypes.Circle:
+        case BrushModes.Circle:
           clearPreview()
           redraw()
           const r = Math.round(
@@ -361,24 +374,24 @@ export function ScreenBrush({
           break
       }
     },
-    [camera, brushColor.hex, brushSize, brushType]
+    [camera, brushColor.hex, brushSize, brushMode, lineAngle]
   )
 
   const onTouchEnd = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
-      switch (brushType) {
-        case BrushTypes.Line:
+      switch (brushMode) {
+        case BrushModes.Line:
           flushPreview()
           update()
           break
 
-        case BrushTypes.Circle:
+        case BrushModes.Circle:
           flushPreview()
           update()
           break
       }
     },
-    [brushSize, brushType]
+    [brushSize, brushMode]
   )
 
   const onUpdateCamera = React.useCallback(() => {

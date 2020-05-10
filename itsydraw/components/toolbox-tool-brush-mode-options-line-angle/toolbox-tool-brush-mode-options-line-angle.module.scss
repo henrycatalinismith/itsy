@@ -2,13 +2,13 @@
 
 .component {
   display: grid;
-  grid-area: type;
+  grid-area: line-angle;
   height: 32px;
   grid-template-columns: repeat(4, 1fr);
   column-gap: 8px;
 }
 
-.type {
+.size {
   display: block;
   background-color: pico8-original-palette(2);
   border: 1px solid pico8-original-palette(15);

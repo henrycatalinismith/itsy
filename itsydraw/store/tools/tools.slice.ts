@@ -30,17 +30,23 @@ export interface ToolState {
 
 export type BrushSizes = 1 | 2 | 4 | 8
 
-export enum BrushTypes {
+export enum BrushModes {
   Pencil = "Pencil",
   Line = "Line",
   Circle = "Circle",
 }
 
+export enum LineAngles {
+  Free = "Free",
+  Snap = "Snap",
+}
+
 export interface BrushState extends ToolState {
   id: ToolIds.Brush
   size: BrushSizes
-  type: BrushTypes
+  mode: BrushModes
   color: PaletteIndex
+  angle: LineAngles
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -70,9 +76,10 @@ const initialState: ToolsState = {
     id: ToolIds.Brush,
     status: ToolStatuses.Active,
     rank: 0,
-    type: BrushTypes.Circle,
+    mode: BrushModes.Line,
     size: 1,
     color: 7,
+    angle: LineAngles.Free,
   },
 
   [ToolIds.Palette]: {
@@ -123,12 +130,16 @@ const reducers = {
     tools[ToolIds.Brush].color = action.payload
   },
 
+  brushMode(tools, action: PayloadAction<BrushModes>): void {
+    tools[ToolIds.Brush].mode = action.payload
+  },
+
   brushSize(tools, action: PayloadAction<BrushSizes>): void {
     tools[ToolIds.Brush].size = action.payload
   },
 
-  brushType(tools, action: PayloadAction<BrushTypes>): void {
-    tools[ToolIds.Brush].type = action.payload
+  lineAngle(tools, action: PayloadAction<LineAngles>): void {
+    tools[ToolIds.Brush].angle = action.payload
   },
 
   clipboard(tools, action: PayloadAction<Rect>): void {
@@ -177,11 +188,18 @@ export const changeBrushSize = (size: BrushSizes): Thunk => async (
   dispatch(slice.actions.brushSize(size))
 }
 
-export const changeBrushType = (type: BrushTypes): Thunk => async (
+export const changeBrushMode = (type: BrushModes): Thunk => async (
   dispatch,
   getState
 ) => {
-  dispatch(slice.actions.brushType(type))
+  dispatch(slice.actions.brushMode(type))
+}
+
+export const changeLineBrushAngle = (angle: LineAngles): Thunk => async (
+  dispatch,
+  getState
+) => {
+  dispatch(slice.actions.lineAngle(angle))
 }
 
 export const panCamera = (x: number, y: number): Thunk => async (
@@ -264,9 +282,14 @@ export const selectBrushSize = createSelector(
   (brush): BrushSizes => brush.size
 )
 
-export const selectBrushType = createSelector(
+export const selectBrushMode = createSelector(
   [selectBrush],
-  (brush): BrushTypes => brush.type
+  (brush): BrushModes => brush.mode
+)
+
+export const selectLineBrushAngle = createSelector(
+  [selectBrush],
+  (brush): LineAngles => brush.angle
 )
 
 export const selectRankedTools = createSelector(
