@@ -47,10 +47,6 @@ export function Toolbox({
 
   const toolsDiv: React.HTMLAttributes<HTMLDivElement> = {
     className: styles.tools,
-    style: {
-      height,
-      gridTemplateRows: `repeat(${4}, ${height}px)`,
-    },
   }
 
   return (

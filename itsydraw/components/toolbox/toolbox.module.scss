@@ -6,12 +6,13 @@
   display: grid;
   flex: 1;
   overflow: hidden;
+  max-height: 100%;
 }
 
 .Horizontal {
   grid-template-areas: "menu tools";
   grid-template-columns: min-content auto;
-  grid-template-rows: repeat(1, min-content);
+  grid-template-rows: repeat(1, auto);
 }
 
 .Vertical {

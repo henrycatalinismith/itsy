@@ -7,7 +7,7 @@ import {
   selectCamera,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
-import spritesheet, {
+import {
   selectSpritesheetPng,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"

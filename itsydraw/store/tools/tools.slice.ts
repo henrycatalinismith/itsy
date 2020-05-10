@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import pico8 from "@highvalley.systems/palettes/pico8/original.es6"
+import pico8 from "@highvalley.systems/palettes/pico8"
 import {
   Rect,
   Palette,
