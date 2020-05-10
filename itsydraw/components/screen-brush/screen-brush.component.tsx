@@ -7,7 +7,7 @@ import {
   selectCamera,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
-import {
+import spritesheet, {
   selectSpritesheetPng,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
@@ -58,6 +58,9 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
+const outOfBounds = (x: number, y: number): boolean =>
+  x < 0 || x > 127 || y < 0 || y > 127
+
 export function ScreenBrush({
   brushColor,
   brushSize,
@@ -74,8 +77,8 @@ export function ScreenBrush({
   const image = React.useRef<HTMLImageElement>()
 
   const last = React.useRef<{
-    x: SpritesheetPixelIndex
-    y: SpritesheetPixelIndex
+    x: number
+    y: number
   }>({ x: undefined, y: undefined })
 
   const changes = React.useRef<
@@ -95,13 +98,13 @@ export function ScreenBrush({
   >({})
 
   const lineOrigin = React.useRef<{
-    x: SpritesheetPixelIndex
-    y: SpritesheetPixelIndex
+    x: number
+    y: number
   }>({ x: 0, y: 0 })
 
   const circleOrigin = React.useRef<{
-    x: SpritesheetPixelIndex
-    y: SpritesheetPixelIndex
+    x: number
+    y: number
   }>({ x: 0, y: 0 })
 
   const update = _.debounce(() => {
@@ -124,11 +127,7 @@ export function ScreenBrush({
     ctx.current.scale(1, 1)
   }
 
-  const draw = (
-    x: SpritesheetPixelIndex,
-    y: SpritesheetPixelIndex,
-    i: PaletteIndex
-  ) => {
+  const draw = (x: number, y: number, i: PaletteIndex) => {
     const ix = parseInt(x.toString(), 10)
     const iy = parseInt(y.toString(), 10)
 
@@ -150,19 +149,7 @@ export function ScreenBrush({
 
   const repaint = () => {
     cls(0)
-    image.current.onload = () => {
-      ctx.current.drawImage(
-        image.current,
-        camera.x,
-        camera.y,
-        camera.width,
-        camera.height,
-        0,
-        0,
-        canvas.current.width,
-        canvas.current.height
-      )
-    }
+    image.current.onload = () => redraw()
     image.current.src = `data:image/png;base64,${spritesheetPng}`
   }
 
@@ -180,13 +167,9 @@ export function ScreenBrush({
     )
   }
 
-  const sset = (
-    x: SpritesheetPixelIndex,
-    y: SpritesheetPixelIndex,
-    i: PaletteIndex,
-    preview = false
-  ) => {
+  const sset = (x: number, y: number, i: PaletteIndex, preview = false) => {
     const target = preview ? previewChanges : changes
+    if (outOfBounds(x, y)) return
     for (let sx = x; sx < x + brushSize && sx < 127; sx++) {
       for (let sy = y; sy < y + brushSize && sy < 127; sy++) {
         draw(sx, sy, i)
@@ -201,10 +184,10 @@ export function ScreenBrush({
   }
 
   const line = (
-    x0: SpritesheetPixelIndex,
-    y0: SpritesheetPixelIndex,
-    x1: SpritesheetPixelIndex,
-    y1: SpritesheetPixelIndex,
+    x0: number,
+    y0: number,
+    x1: number,
+    y1: number,
     i: PaletteIndex,
     preview = false
   ) => {
@@ -230,24 +213,24 @@ export function ScreenBrush({
   }
 
   const circ = (
-    cx: SpritesheetPixelIndex,
-    cy: SpritesheetPixelIndex,
+    cx: number,
+    cy: number,
     r: number,
     i: PaletteIndex,
     preview = false
   ) => {
-    let x = r as SpritesheetPixelIndex
-    let y = 0 as SpritesheetPixelIndex
+    let x = r
+    let y = 0
     let radiusError = 1 - x
     while (x >= y) {
-      sset((+x + cx) as any, (+y + cy) as any, i, preview)
-      sset((+y + cx) as any, (+x + cy) as any, i, preview)
-      sset((-x + cx) as any, (+y + cy) as any, i, preview)
-      sset((-y + cx) as any, (+x + cy) as any, i, preview)
-      sset((-x + cx) as any, (-y + cy) as any, i, preview)
-      sset((-y + cx) as any, (-x + cy) as any, i, preview)
-      sset((+x + cx) as any, (-y + cy) as any, i, preview)
-      sset((+y + cx) as any, (-x + cy) as any, i, preview)
+      sset(+x + cx, +y + cy, i, preview)
+      sset(+y + cx, +x + cy, i, preview)
+      sset(-x + cx, +y + cy, i, preview)
+      sset(-y + cx, +x + cy, i, preview)
+      sset(-x + cx, -y + cy, i, preview)
+      sset(-y + cx, -x + cy, i, preview)
+      sset(+x + cx, -y + cy, i, preview)
+      sset(+y + cx, -x + cy, i, preview)
       y++
 
       if (radiusError < 0) {
@@ -274,29 +257,33 @@ export function ScreenBrush({
   const touchLocation = (
     event: React.TouchEvent<HTMLCanvasElement>
   ): {
-    x: SpritesheetPixelIndex
-    y: SpritesheetPixelIndex
+    x: number
+    y: number
   } => {
     const rect = canvas.current.getBoundingClientRect()
-    const x = (camera.x +
+    const x =
+      camera.x +
       Math.floor(
         (camera.width / rect.width) * (event.touches[0].clientX - rect.left)
-      )) as SpritesheetPixelIndex
-    const y = (camera.y +
+      )
+    const y =
+      camera.y +
       Math.floor(
         (camera.height / rect.height) * (event.touches[0].clientY - rect.top)
-      )) as SpritesheetPixelIndex
+      )
     return { x, y }
   }
 
   const onTouchStart = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const { x, y } = touchLocation(event)
-      const outOfBounds = x < 0 || x > 127 || y < 0 || y > 127
 
       switch (brushType) {
         case BrushTypes.Pencil:
-          if (outOfBounds || (x === last.current.x && y === last.current.y)) {
+          if (
+            outOfBounds(x, y) ||
+            (x === last.current.x && y === last.current.y)
+          ) {
             return
           }
 
@@ -304,14 +291,14 @@ export function ScreenBrush({
           break
 
         case BrushTypes.Line:
-          if (outOfBounds) return
+          if (outOfBounds(x, y)) return
           sset(x, y, brushColor.id, true)
           lineOrigin.current.x = x
           lineOrigin.current.y = y
           break
 
         case BrushTypes.Circle:
-          if (outOfBounds) return
+          if (outOfBounds(x, y)) return
           sset(x, y, brushColor.id, true)
           circleOrigin.current.x = x
           circleOrigin.current.y = y
@@ -325,11 +312,13 @@ export function ScreenBrush({
   const onTouchMove = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
       const { x, y } = touchLocation(event)
-      const outOfBounds = x < 0 || x > 127 || y < 0 || y > 127
 
       switch (brushType) {
         case BrushTypes.Pencil:
-          if (outOfBounds || (x === last.current.x && y === last.current.y)) {
+          if (
+            outOfBounds(x, y) ||
+            (x === last.current.x && y === last.current.y)
+          ) {
             return
           }
           if (last.current.x === undefined) {
@@ -398,9 +387,14 @@ export function ScreenBrush({
     repaint()
   }, [camera])
 
+  const onUpdateSpritesheet = React.useCallback(() => {
+    repaint()
+  }, [camera, spritesheetPng])
+
   React.useEffect(onLoad, [])
   React.useEffect(onImport, [webview.imported])
   React.useEffect(onUpdateCamera, [camera])
+  React.useEffect(onUpdateSpritesheet, [spritesheetPng])
 
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
