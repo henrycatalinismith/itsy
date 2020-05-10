@@ -39,10 +39,7 @@ export function Toolbox({
 
   React.useEffect(() => onResize(), [width, height])
 
-  const className = cx(styles.component, {
-    [styles.crowded]: layout === ToolboxLayouts.Crowded,
-    [styles.stacked]: layout === ToolboxLayouts.Stacked,
-  })
+  const className = cx(styles.component, styles[layout])
 
   const divProps: React.HTMLAttributes<HTMLDivElement> = {
     className,

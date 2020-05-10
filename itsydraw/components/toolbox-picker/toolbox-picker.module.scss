@@ -2,12 +2,25 @@
   background-color: #394467;
   display: grid;
   grid-area: menu;
-  grid-auto-rows: min-content;
   list-style-type: none;
   margin: 0;
   padding: 0;
+  flex: 1;
+  max-height: 100%;
 }
 
-.menuitem {
-  padding: 8px;
+.Horizontal {
+  grid-template-rows: repeat(4, 1fr);
+}
+
+.Vertical {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.item {
+  display: flex;
+
+  .Vertical & {
+    max-height: 48px;
+  }
 }

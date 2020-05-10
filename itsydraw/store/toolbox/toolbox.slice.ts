@@ -3,8 +3,8 @@ import { Rect } from "@highvalley.systems/typedefs/itsy"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export enum ToolboxLayouts {
-  Crowded = "Crowded",
-  Stacked = "Stacked",
+  Horizontal = "Horizontal",
+  Vertical = "Vertical",
 }
 
 export interface ToolboxState {
@@ -15,7 +15,7 @@ export interface ToolboxState {
 const name = "toolbox"
 
 const initialState: ToolboxState = {
-  layout: ToolboxLayouts.Crowded,
+  layout: ToolboxLayouts.Horizontal,
   rect: {
     x: 0,
     y: 0,
@@ -28,9 +28,9 @@ const reducers = {
   layout(tools, action: PayloadAction<Rect>): void {
     tools.rect = action.payload
 
-    tools.layout = ToolboxLayouts.Crowded
-    if (tools.rect.width * 2 < tools.rect.height) {
-      tools.layout = ToolboxLayouts.Stacked
+    tools.layout = ToolboxLayouts.Horizontal
+    if (tools.rect.width < 360) {
+      tools.layout = ToolboxLayouts.Vertical
     }
   },
 }

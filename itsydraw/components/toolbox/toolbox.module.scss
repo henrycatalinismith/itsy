@@ -8,10 +8,19 @@
   overflow: hidden;
 }
 
-.crowded {
+.Horizontal {
   grid-template-areas: "menu tools";
-  grid-template-rows: repeat(1, min-content);
   grid-template-columns: min-content auto;
+  grid-template-rows: repeat(1, min-content);
+}
+
+.Vertical {
+  grid-template-areas:
+    "menu"
+    "tools";
+  grid-template-columns: min-content auto;
+  grid-template-rows: repeat(2, min-content);
+  grid-template-columns: auto;
 }
 
 .menu {

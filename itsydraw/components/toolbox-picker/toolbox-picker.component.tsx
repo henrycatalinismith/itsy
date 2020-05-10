@@ -3,6 +3,10 @@ import ToolboxPickerButtonCamera from "@highvalley.systems/itsydraw/components/t
 import ToolboxPickerButtonPalette from "@highvalley.systems/itsydraw/components/toolbox-picker-button-palette"
 import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-clipboard"
 import {
+  ToolboxLayouts,
+  selectToolboxLayout,
+} from "@highvalley.systems/itsydraw/store/toolbox"
+import {
   Tool,
   ToolIds,
   selectRankedTools,
@@ -13,10 +17,12 @@ import { connect } from "react-redux"
 import styles from "./toolbox-picker.module.scss"
 
 interface ToolboxPickerProps {
+  layout: ToolboxLayouts
   tools: Tool[]
 }
 
 const mapStateToProps = (state) => ({
+  layout: selectToolboxLayout(state),
   tools: selectRankedTools(state),
 })
 
@@ -30,10 +36,12 @@ const buttonMap: { [key in ToolIds]: React.ReactElement } = {
 }
 
 export function ToolboxPicker({
+  layout,
   tools,
 }: ToolboxPickerProps): React.ReactElement {
+  const className = cx(styles.component, styles[layout])
   return (
-    <ol className={styles.component}>
+    <ol className={className}>
       {tools.map((tool) => {
         return (
           <li className={styles.item} key={tool.id}>

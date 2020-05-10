@@ -14,6 +14,11 @@
   grid-template-columns: auto;
   grid-template-rows: 100vmin 4px auto;
   overflow: hidden;
+
+  @media (orientation: landscape) {
+    grid-template-areas: "spritesheet . toolbox";
+    grid-template-columns: 100vh 4px auto;
+  }
 }
 
 .screen {
