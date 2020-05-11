@@ -56,8 +56,8 @@ export function ScreenCamera({
     ctx.current.rect(
       rect.current.x,
       rect.current.y,
-      rect.current.width,
-      rect.current.height
+      rect.current.width - 1,
+      rect.current.height - 1
     )
     ctx.current.stroke()
   }

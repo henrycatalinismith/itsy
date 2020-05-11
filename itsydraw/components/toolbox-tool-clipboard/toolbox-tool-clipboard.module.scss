@@ -1,0 +1,7 @@
+.component {
+  flex: 1;
+  display: grid;
+  grid-template-areas: "rect";
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+}

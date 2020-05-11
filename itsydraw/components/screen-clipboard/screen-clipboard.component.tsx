@@ -35,6 +35,7 @@ export function ScreenClipboard({
   spritesheet,
   setClipboard,
 }: ScreenClipboardProps): React.ReactElement {
+  console.log(clipboard)
   const rect = React.useRef<Rect>({
     x: clipboard.x,
     y: clipboard.y,
@@ -49,24 +50,26 @@ export function ScreenClipboard({
   const scale = screen.rect.width / 128
 
   const update = _.debounce(() => {
-    setClipboard(rect.current)
+    setClipboard({ ...rect.current })
   }, 100)
 
   const repaint = () => {
-    image.current.onload = () => {
-      ctx.current.drawImage(
-        image.current,
-        camera.x,
-        camera.y,
-        camera.width,
-        camera.height,
-        0,
-        0,
-        canvas.current.width,
-        canvas.current.height
-      )
-    }
+    image.current.onload = () => redraw()
     image.current.src = `data:image/png;base64,${spritesheet}`
+  }
+
+  const redraw = () => {
+    ctx.current.drawImage(
+      image.current,
+      camera.x,
+      camera.y,
+      camera.width,
+      camera.height,
+      0,
+      0,
+      canvas.current.width,
+      canvas.current.height
+    )
 
     ctx.current.strokeStyle = "#01ffff"
     ctx.current.lineWidth = 1
@@ -99,29 +102,33 @@ export function ScreenClipboard({
     // rect.current.y = clipboard.y
     // rect.current.width = clipboard.width
     // rect.current.height = clipboard.height
-    repaint()
+    redraw()
   }
 
   const onUpdateSpritesheet = () => {
     repaint()
   }
 
-  const onTouchStart = (event: React.TouchEvent<HTMLCanvasElement>) => {
-    const r = canvas.current.getBoundingClientRect()
+  const onTouchStart = React.useCallback(
+    (event: React.TouchEvent<HTMLCanvasElement>) => {
+      const r = canvas.current.getBoundingClientRect()
 
-    const cx = event.touches[0].clientX - r.left
-    const cy = event.touches[0].clientY - r.top
+      const cx = event.touches[0].clientX - r.left
+      const cy = event.touches[0].clientY - r.top
 
-    const sx = _.clamp(Math.floor((1 / scale) * cx), 0, 127)
-    const sy = _.clamp(Math.floor((1 / scale) * cy), 0, 127)
+      const sx = _.clamp(Math.floor((1 / scale) * cx), 0, 127)
+      const sy = _.clamp(Math.floor((1 / scale) * cy), 0, 127)
 
-    const tx = camera.x + Math.round((camera.width / 128) * sx)
-    const ty = camera.y + Math.round((camera.height / 128) * sy)
+      const tx = camera.x + Math.round((camera.width / 128) * sx)
+      const ty = camera.y + Math.round((camera.height / 128) * sy)
 
-    rect.current.x = tx
-    rect.current.y = ty
-    repaint()
-  }
+      console.log(rect)
+      rect.current.x = tx
+      rect.current.y = ty
+      repaint()
+    },
+    [camera, rect, scale]
+  )
 
   const onTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
     const r = canvas.current.getBoundingClientRect()
@@ -137,9 +144,27 @@ export function ScreenClipboard({
 
     rect.current.width = tx - rect.current.x
     rect.current.height = ty - rect.current.y
+
+    if (rect.current.width < 0) {
+      rect.current.width *= -1
+      rect.current.x = tx
+    }
+
+    if (rect.current.height < 0) {
+      rect.current.height *= -1
+      rect.current.y -= rect.current.height
+    }
+
+    console.log(rect.current)
     repaint()
-    update()
   }
+
+  const onTouchEnd = React.useCallback(
+    (event: React.TouchEvent<HTMLCanvasElement>) => {
+      update()
+    },
+    []
+  )
 
   React.useEffect(onLoad, [])
   React.useEffect(onUpdateCamera, [camera])
@@ -151,6 +176,7 @@ export function ScreenClipboard({
     ref: canvas,
     onTouchStart,
     onTouchMove,
+    onTouchEnd,
   }
 
   return (

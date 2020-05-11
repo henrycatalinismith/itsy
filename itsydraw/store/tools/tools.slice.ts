@@ -106,7 +106,7 @@ const name = "tools"
 const initialState: ToolsState = {
   [ToolIds.Brush]: {
     id: ToolIds.Brush,
-    status: ToolStatuses.Active,
+    status: ToolStatuses.Inactive,
     rank: 0,
     brushes: {
       [BrushModes.Pencil]: {
@@ -158,7 +158,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Clipboard]: {
     id: ToolIds.Clipboard,
-    status: ToolStatuses.Inactive,
+    status: ToolStatuses.Active,
     rank: 3,
     rect: {
       x: 0,
@@ -209,13 +209,17 @@ const reducers = {
   },
 
   pan(tools, action: PayloadAction<Point>): void {
-    tools[ToolIds.Camera].x = action.payload.x
-    tools[ToolIds.Camera].y = action.payload.y
+    const camera = tools[ToolIds.Camera]
+    camera.x = _.clamp(action.payload.x, 0, 127 - camera.width)
+    camera.y = _.clamp(action.payload.y, 0, 127 - camera.height)
   },
 
   zoom(tools, action: PayloadAction<number>): void {
-    tools[ToolIds.Camera].width = 128 / action.payload
-    tools[ToolIds.Camera].height = 128 / action.payload
+    const camera = tools[ToolIds.Camera]
+    camera.width = 128 / action.payload
+    camera.height = 128 / action.payload
+    camera.x = _.clamp(camera.x, 0, 127 - camera.width)
+    camera.y = _.clamp(camera.y, 0, 127 - camera.height)
   },
 }
 
