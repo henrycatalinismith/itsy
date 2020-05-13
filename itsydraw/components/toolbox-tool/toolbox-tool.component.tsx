@@ -2,6 +2,7 @@ import ToolboxToolBrush from "@highvalley.systems/itsydraw/components/toolbox-to
 import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
 import ToolboxToolClipboard from "@highvalley.systems/itsydraw/components/toolbox-tool-clipboard"
 import ToolboxToolPalette from "@highvalley.systems/itsydraw/components/toolbox-tool-palette"
+import { selectToolboxHeight } from "@highvalley.systems/itsydraw/store/toolbox"
 import {
   selectActiveTool,
   Tool,
@@ -19,10 +20,12 @@ import styles from "./toolbox-tool.module.scss"
 interface ToolboxToolProps {
   id: ToolIds
   activeTool: Tool
+  height: number
 }
 
 const mapStateToProps = (state) => ({
   activeTool: selectActiveTool(state),
+  height: selectToolboxHeight(state),
 })
 
 const mapDispatchToProps = {}
@@ -30,23 +33,29 @@ const mapDispatchToProps = {}
 export function ToolboxTool({
   id,
   activeTool,
+  height,
 }: ToolboxToolProps): React.ReactElement {
   const divRef = React.useRef<HTMLDivElement>(null)
-  const { width, height } = useResizeObserver({ ref: divRef })
+  const toolRect = useResizeObserver({ ref: divRef })
 
   const rect: Rect = {
     x: 0,
     y: 0,
-    width,
-    height,
+    width: toolRect.width,
+    height: toolRect.height,
   }
 
   const className = cx(styles.component, {
     [styles.active]: id === activeTool.id,
   })
 
+  const style = {
+    maxHeight: height,
+  }
+
   const divProps: React.HTMLAttributes<HTMLDivElement> = {
     className,
+    style,
   }
 
   return (

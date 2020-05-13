@@ -1,7 +1,9 @@
 import {
   selectCamera,
   selectClipboardRect,
+  selectClipboardStatus,
   setClipboard,
+  ToolStatuses,
 } from "@highvalley.systems/itsydraw/store/tools"
 import { selectSpritesheetPng } from "@highvalley.systems/itsydraw/store/spritesheet"
 import { Point, Rect } from "@highvalley.systems/typedefs/itsy"
@@ -17,12 +19,14 @@ interface ScreenClipboardProps {
   clipboard: Rect
   spritesheet: string
   setClipboard: (rect: Rect) => void
+  status: ToolStatuses
 }
 
 const mapStateToProps = (state) => ({
   camera: selectCamera(state),
   clipboard: selectClipboardRect(state),
   spritesheet: selectSpritesheetPng(state),
+  status: selectClipboardStatus(state),
 })
 
 const mapDispatchToProps = {
@@ -34,6 +38,7 @@ export function ScreenClipboard({
   clipboard,
   spritesheet,
   setClipboard,
+  status,
 }: ScreenClipboardProps): React.ReactElement {
   const origin = React.useRef<Point>({
     x: 0,
@@ -79,8 +84,8 @@ export function ScreenClipboard({
     ctx.current.lineWidth = 1
     ctx.current.beginPath()
     ctx.current.rect(
-      rect.current.x,
-      rect.current.y,
+      rect.current.x - camera.x,
+      rect.current.y - camera.y,
       rect.current.width,
       rect.current.height
     )
@@ -176,6 +181,11 @@ export function ScreenClipboard({
   React.useEffect(onUpdateCamera, [camera])
   React.useEffect(onUpdateClipboard, [clipboard])
   React.useEffect(onUpdateSpritesheet, [spritesheet])
+  React.useEffect(() => {
+    if (status === ToolStatuses.Active) {
+      redraw()
+    }
+  }, [status])
 
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),

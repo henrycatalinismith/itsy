@@ -42,6 +42,9 @@ export function ToolboxToolClipboardRect({
   const image: React.SVGAttributes<SVGImageElement> = {
     className: styles.image,
     href: `data:image/png;base64,${spritesheetPng}`,
+    x: 0,
+    y: 0,
+    width: 128,
     height: 128,
     clipPath: "url(#clipboard)",
   }

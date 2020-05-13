@@ -323,6 +323,11 @@ export const selectClipboardRect = createSelector(
   (clipboard): Rect => clipboard.rect
 )
 
+export const selectClipboardStatus = createSelector(
+  [selectClipboard],
+  (clipboard): ToolStatuses => clipboard.status
+)
+
 export const selectPalette = createSelector(
   [selectTools],
   (tools): Palette => tools[ToolIds.Palette].colors
