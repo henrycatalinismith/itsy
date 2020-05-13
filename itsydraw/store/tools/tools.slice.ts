@@ -163,8 +163,8 @@ const initialState: ToolsState = {
     rect: {
       x: 0,
       y: 0,
-      width: 0,
-      height: 0,
+      width: 128,
+      height: 128,
     },
   },
 }
