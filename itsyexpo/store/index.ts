@@ -58,7 +58,9 @@ const initialPanelVisibilities: { [key in PanelIds]: PanelVisibilities } = {
   [PanelIds.code]: PanelVisibilities.Hidden,
   [PanelIds.play]: PanelVisibilities.Hidden,
   [PanelIds.draw]: PanelVisibilities.Hidden,
-  [PanelIds.help]: PanelVisibilities.Visible,
+  [PanelIds.help]: !!Device.modelName.match(/iPad/)
+    ? PanelVisibilities.Visible
+    : PanelVisibilities.Hidden,
 }
 
 const panelsState: PanelsState = {

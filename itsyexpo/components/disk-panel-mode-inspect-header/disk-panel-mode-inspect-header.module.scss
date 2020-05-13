@@ -2,15 +2,17 @@
 
 .component {
   background-color: pico8-original-palette(7);
-  flex-direction: row;
+  flex-direction: column;
   padding: 8px;
   align-items: center;
   overflow: hidden;
 }
 
 .icon {
+  margin-top: 16px;
 }
 
 .name {
-  margin-left: 8px;
+  margin-top: 8px;
+  margin-bottom: 16px;
 }
