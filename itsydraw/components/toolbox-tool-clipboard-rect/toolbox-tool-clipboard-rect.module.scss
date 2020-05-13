@@ -1,12 +1,38 @@
+@import "../../../palettes/pico8/_original.scss";
+
 .component {
+  background-color: pico8-original-palette(5);
   grid-area: rect;
+  display: grid;
+  grid-template-areas:
+    ".  ...  ."
+    ".  svg  ."
+    ".  ...  .";
+  grid-template-columns: 8px auto 8px;
+  grid-template-rows: 8px auto 8px;
   max-height: 100%;
   max-width: 100%;
+}
+
+.svg {
+  grid-area: svg;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  width: calc(100%);
+  height: calc(100% - 16px);
+}
+
+/*
+.bg {
+  fill: pico8-original-palette(5);
 }
 
 .clip {
   fill: none;
 }
+*/
 
 .image {
+  image-rendering: pixelated;
 }

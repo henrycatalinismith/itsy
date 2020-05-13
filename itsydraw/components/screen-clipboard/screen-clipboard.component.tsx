@@ -4,7 +4,7 @@ import {
   setClipboard,
 } from "@highvalley.systems/itsydraw/store/tools"
 import { selectSpritesheetPng } from "@highvalley.systems/itsydraw/store/spritesheet"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
+import { Point, Rect } from "@highvalley.systems/typedefs/itsy"
 import cx from "classnames"
 import _ from "lodash"
 import React from "react"
@@ -35,13 +35,17 @@ export function ScreenClipboard({
   spritesheet,
   setClipboard,
 }: ScreenClipboardProps): React.ReactElement {
-  console.log(clipboard)
+  const origin = React.useRef<Point>({
+    x: 0,
+    y: 0,
+  })
   const rect = React.useRef<Rect>({
     x: clipboard.x,
     y: clipboard.y,
     width: clipboard.width,
     height: clipboard.height,
   })
+
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
@@ -125,6 +129,8 @@ export function ScreenClipboard({
       console.log(rect)
       rect.current.x = tx
       rect.current.y = ty
+      origin.current.x = tx
+      origin.current.y = ty
       repaint()
     },
     [camera, rect, scale]
@@ -142,20 +148,20 @@ export function ScreenClipboard({
     const tx = camera.x + Math.round((camera.width / 128) * sx)
     const ty = camera.y + Math.round((camera.height / 128) * sy)
 
-    rect.current.width = tx - rect.current.x
-    rect.current.height = ty - rect.current.y
-
-    if (rect.current.width < 0) {
-      rect.current.width *= -1
+    if (origin.current.x < tx) {
+      rect.current.width = tx - rect.current.x
+    } else {
       rect.current.x = tx
+      rect.current.width = origin.current.x - tx
     }
 
-    if (rect.current.height < 0) {
-      rect.current.height *= -1
-      rect.current.y -= rect.current.height
+    if (origin.current.y < ty) {
+      rect.current.height = ty - rect.current.y
+    } else {
+      rect.current.y = ty
+      rect.current.height = origin.current.y - ty
     }
 
-    console.log(rect.current)
     repaint()
   }
 
