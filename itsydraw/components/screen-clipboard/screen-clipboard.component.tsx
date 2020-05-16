@@ -1,3 +1,4 @@
+import useTouchLocation from "@highvalley.systems/itsydraw/hooks/useTouchLocation"
 import {
   selectCamera,
   selectClipboardRect,
@@ -54,9 +55,12 @@ export function ScreenClipboard({
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
+  const active = React.useRef(false)
 
   const screen = React.useContext(ScreenContext)
   const scale = screen.rect.width / 128
+
+  const touchLocation = useTouchLocation(canvas.current, camera)
 
   const update = _.debounce(() => {
     setClipboard({ ...rect.current })
@@ -118,64 +122,59 @@ export function ScreenClipboard({
     repaint()
   }
 
-  const onTouchStart = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      const r = canvas.current.getBoundingClientRect()
-
-      const cx = event.touches[0].clientX - r.left
-      const cy = event.touches[0].clientY - r.top
-
-      const sx = _.clamp(Math.floor((1 / scale) * cx), 0, 127)
-      const sy = _.clamp(Math.floor((1 / scale) * cy), 0, 127)
-
-      const tx = camera.x + Math.round((camera.width / 128) * sx)
-      const ty = camera.y + Math.round((camera.height / 128) * sy)
-
-      console.log(rect)
-      rect.current.x = tx
-      rect.current.y = ty
-      origin.current.x = tx
-      origin.current.y = ty
-      repaint()
-    },
-    [camera, rect, scale]
-  )
-
-  const onTouchMove = (event: React.TouchEvent<HTMLCanvasElement>) => {
-    const r = canvas.current.getBoundingClientRect()
-
-    const cx = event.touches[0].clientX - r.left
-    const cy = event.touches[0].clientY - r.top
-
-    const sx = _.clamp(Math.floor((1 / scale) * cx), 0, 127)
-    const sy = _.clamp(Math.floor((1 / scale) * cy), 0, 127)
-
-    const tx = camera.x + Math.round((camera.width / 128) * sx)
-    const ty = camera.y + Math.round((camera.height / 128) * sy)
-
-    if (origin.current.x < tx) {
-      rect.current.width = tx - rect.current.x
-    } else {
-      rect.current.x = tx
-      rect.current.width = origin.current.x - tx
-    }
-
-    if (origin.current.y < ty) {
-      rect.current.height = ty - rect.current.y
-    } else {
-      rect.current.y = ty
-      rect.current.height = origin.current.y - ty
-    }
-
-    repaint()
+  const beginSelection = (
+    event:
+      | React.TouchEvent<HTMLCanvasElement>
+      | React.MouseEvent<HTMLCanvasElement>
+  ): void => {
+    const { x, y } = touchLocation(event)
+    active.current = true
+    rect.current.x = x
+    rect.current.y = y
+    origin.current.x = x
+    origin.current.y = y
+    redraw()
   }
 
-  const onTouchEnd = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      update()
-    },
-    []
-  )
+  const updateSelection = (
+    event:
+      | React.TouchEvent<HTMLCanvasElement>
+      | React.MouseEvent<HTMLCanvasElement>
+  ): void => {
+    const { x, y } = touchLocation(event)
+    if (active.current === false) {
+      return
+    }
+
+    if (origin.current.x < x) {
+      rect.current.width = x - rect.current.x
+    } else {
+      rect.current.x = x
+      rect.current.width = origin.current.x - x
+    }
+
+    if (origin.current.y < y) {
+      rect.current.height = y - rect.current.y
+    } else {
+      rect.current.y = y
+      rect.current.height = origin.current.y - y
+    }
+
+    redraw()
+  }
+
+  const finishSelection = (): void => {
+    active.current = false
+    update()
+  }
+
+  const onMouseDown = React.useCallback(beginSelection, [camera, rect, scale])
+  const onMouseMove = React.useCallback(updateSelection, [camera, rect, scale])
+  const onMouseUp = React.useCallback(finishSelection, [])
+
+  const onTouchStart = React.useCallback(beginSelection, [camera, rect, scale])
+  const onTouchMove = React.useCallback(updateSelection, [camera, rect, scale])
+  const onTouchEnd = React.useCallback(finishSelection, [])
 
   React.useEffect(onLoad, [])
   React.useEffect(onUpdateCamera, [camera])
@@ -190,6 +189,9 @@ export function ScreenClipboard({
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
     ref: canvas,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
     onTouchStart,
     onTouchMove,
     onTouchEnd,

@@ -1,3 +1,4 @@
+import useTouchLocation from "@highvalley.systems/itsydraw/hooks/useTouchLocation"
 import {
   BrushSizes,
   BrushModes,
@@ -259,6 +260,8 @@ export function ScreenBrush({
     repaint()
   }, [spritesheetPng, palette])
 
+  const touchLocation = useTouchLocation(canvas.current, camera)
+  /*
   const touchLocation = (
     event: React.TouchEvent<HTMLCanvasElement>
   ): {
@@ -278,6 +281,7 @@ export function ScreenBrush({
       )
     return { x, y }
   }
+  */
 
   const onTouchStart = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {

@@ -59,7 +59,7 @@ export function ScreenPalette({
         <Layer>
           {_.toPairs(palette).map(([id, color]) => {
             const active = brushColor.id === parseInt(id.toString(), 10)
-            const onClick = React.useCallback(() => {
+            const activate = React.useCallback(() => {
               changeBrushColor(id)
             }, [])
 
@@ -72,9 +72,9 @@ export function ScreenPalette({
               width: colorSize,
               height: colorSize,
               fill: color.hex,
-              onClick,
-              onTap: onClick,
-              onTouchMove: onClick,
+              onClick: activate,
+              onTap: activate,
+              onTouchStart: activate,
             }
 
             const rect = <Rect {...props} />

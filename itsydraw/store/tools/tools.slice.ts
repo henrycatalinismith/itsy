@@ -103,10 +103,24 @@ export interface ToolsState {
 
 const name = "tools"
 
+function initialToolStatus(id: ToolIds): ToolStatuses {
+  switch (id) {
+    case ToolIds.Brush:
+      return ToolStatuses.Inactive
+    case ToolIds.Camera:
+      return ToolStatuses.Inactive
+    case ToolIds.Clipboard:
+      return ToolStatuses.Active
+      return ToolStatuses.Inactive
+    case ToolIds.Palette:
+      return ToolStatuses.Inactive
+  }
+}
+
 const initialState: ToolsState = {
   [ToolIds.Brush]: {
     id: ToolIds.Brush,
-    status: ToolStatuses.Inactive,
+    status: initialToolStatus(ToolIds.Brush),
     rank: 0,
     brushes: {
       [BrushModes.Pencil]: {
@@ -135,7 +149,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Palette]: {
     id: ToolIds.Palette,
-    status: ToolStatuses.Inactive,
+    status: initialToolStatus(ToolIds.Palette),
     rank: 1,
     colors: _.zipObject(
       _.range(16),
@@ -148,7 +162,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Camera]: {
     id: ToolIds.Camera,
-    status: ToolStatuses.Inactive,
+    status: initialToolStatus(ToolIds.Camera),
     rank: 2,
     x: 0,
     y: 0,
@@ -158,7 +172,7 @@ const initialState: ToolsState = {
 
   [ToolIds.Clipboard]: {
     id: ToolIds.Clipboard,
-    status: ToolStatuses.Active,
+    status: initialToolStatus(ToolIds.Clipboard),
     rank: 3,
     rect: {
       x: 0,

@@ -1,3 +1,4 @@
+import useTouchLocation from "@highvalley.systems/itsydraw/hooks/useTouchLocation"
 import {
   panCamera,
   selectCamera,
@@ -44,6 +45,13 @@ export function ScreenCamera({
   const screen = React.useContext(ScreenContext)
   const scale = screen.rect.width / 128
 
+  const touchLocation = useTouchLocation(canvas.current, {
+    x: 0,
+    y: 0,
+    width: 128,
+    height: 128,
+  })
+
   const update = _.debounce(() => {
     panCamera(rect.current.x, rect.current.y)
   }, 100)
@@ -89,19 +97,12 @@ export function ScreenCamera({
 
   const onTouchStart = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
-      const r = canvas.current.getBoundingClientRect()
+      let { x, y } = touchLocation(event)
+      x = _.clamp(x - camera.width / 2, 0, 127 - camera.width)
+      y = _.clamp(y - camera.height / 2, 0, 127 - camera.height)
 
-      const cx = event.touches[0].clientX - r.left
-      const cy = event.touches[0].clientY - r.top
-
-      const sx = _.clamp(Math.floor((1 / scale) * cx), 0, 127)
-      const sy = _.clamp(Math.floor((1 / scale) * cy), 0, 127)
-
-      const tx = _.clamp(sx - camera.width / 2, 0, 127 - camera.width)
-      const ty = _.clamp(sy - camera.width / 2, 0, 127 - camera.width)
-
-      rect.current.x = tx
-      rect.current.y = ty
+      rect.current.x = x
+      rect.current.y = y
       drawCamera()
       update()
     },
