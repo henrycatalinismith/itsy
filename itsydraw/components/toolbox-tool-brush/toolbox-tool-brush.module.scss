@@ -3,8 +3,12 @@
 }
 
 .Horizontal {
-  grid-template-areas: "mode-picker . mode-options";
-  grid-template-columns: 32px 8px auto;
+  grid-template-areas:
+    ". ............ . mode-picker"
+    ". mode-options . mode-picker"
+    ". ............ . mode-picker";
+  grid-template-columns: 8px auto 8px 32px;
+  grid-template-rows: 8px auto 8px;
 }
 
 .Vertical {

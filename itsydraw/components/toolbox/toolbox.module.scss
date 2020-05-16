@@ -20,7 +20,7 @@
     "menu"
     "tools";
   grid-template-columns: min-content auto;
-  grid-template-rows: repeat(2, min-content);
+  grid-template-rows: min-content auto;
   grid-template-columns: auto;
 }
 

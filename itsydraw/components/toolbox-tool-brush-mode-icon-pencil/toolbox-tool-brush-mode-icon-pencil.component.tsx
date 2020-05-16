@@ -5,7 +5,7 @@ interface ToolboxToolBrushModeIconPencilProps {}
 
 export function ToolboxToolBrushModeIconPencil({}: ToolboxToolBrushModeIconPencilProps): React.ReactElement {
   const className = styles.component
-  const viewBox = "0 0 100 100"
+  const viewBox = "-10 -10 120 120"
   const preserveAspectRatio = "xMidYMid meet"
   const width = "100%"
   const height = "100%"
