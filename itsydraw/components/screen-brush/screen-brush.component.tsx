@@ -63,9 +63,6 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-const outOfBounds = (x: number, y: number): boolean =>
-  x < 0 || x > 127 || y < 0 || y > 127
-
 export function ScreenBrush({
   brushColor,
   brushSize,
@@ -112,6 +109,15 @@ export function ScreenBrush({
     x: number
     y: number
   }>({ x: 0, y: 0 })
+
+  const outOfBounds = (x: number, y: number): boolean => {
+    return (
+      x < camera.x ||
+      y < camera.y ||
+      x > camera.x + camera.width ||
+      y > camera.y + camera.height
+    )
+  }
 
   const update = _.debounce(() => {
     updateSpritesheet(changes.current)
@@ -178,6 +184,7 @@ export function ScreenBrush({
     if (outOfBounds(x, y)) return
     for (let sx = x; sx < x + brushSize && sx < 127; sx++) {
       for (let sy = y; sy < y + brushSize && sy < 127; sy++) {
+        if (outOfBounds(sx, sy)) continue
         draw(sx, sy, i)
         if (!target.current[sx]) {
           target.current[sx] = {}
