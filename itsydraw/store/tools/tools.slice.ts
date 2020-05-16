@@ -106,11 +106,10 @@ const name = "tools"
 function initialToolStatus(id: ToolIds): ToolStatuses {
   switch (id) {
     case ToolIds.Brush:
-      return ToolStatuses.Inactive
+      return ToolStatuses.Active
     case ToolIds.Camera:
       return ToolStatuses.Inactive
     case ToolIds.Clipboard:
-      return ToolStatuses.Active
       return ToolStatuses.Inactive
     case ToolIds.Palette:
       return ToolStatuses.Inactive

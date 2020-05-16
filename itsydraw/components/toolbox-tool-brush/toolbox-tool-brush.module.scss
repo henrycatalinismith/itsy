@@ -1,11 +1,15 @@
 .component {
   display: grid;
+}
+
+.Horizontal {
+  grid-template-areas: "mode-picker . mode-options";
+  grid-template-columns: 32px 8px auto;
+}
+
+.Vertical {
   grid-template-areas:
-    ". .... ."
-    ". mode-picker ."
-    ". .... ."
-    ". mode-options ."
-    ". .... .";
-  grid-template-columns: 8px auto 8px;
-  grid-template-rows: 8px min-content 8px min-content 8px;
+    "mode-options"
+    "mode-picker";
+  grid-template-rows: 1fr 32px;
 }
