@@ -54,6 +54,7 @@ export enum BrushModeStatuses {
 export interface BrushModeState {
   id: BrushModes
   status: BrushModeStatuses
+  rank: number
 }
 
 export interface PencilBrushState extends BrushModeState {
@@ -125,6 +126,7 @@ const initialState: ToolsState = {
       [BrushModes.Pencil]: {
         id: BrushModes.Pencil,
         status: BrushModeStatuses.Active,
+        rank: 0,
         color: 7,
         size: 1,
       },
@@ -132,6 +134,7 @@ const initialState: ToolsState = {
       [BrushModes.Line]: {
         id: BrushModes.Line,
         status: BrushModeStatuses.Inactive,
+        rank: 1,
         size: 1,
         color: 7,
         angle: LineAngles.Free,
@@ -140,6 +143,7 @@ const initialState: ToolsState = {
       [BrushModes.Circle]: {
         id: BrushModes.Circle,
         status: BrushModeStatuses.Inactive,
+        rank: 2,
         color: 7,
         size: 1,
       },
@@ -256,13 +260,6 @@ export const changeBrushColor = (index: PaletteIndex): Thunk => async (
   dispatch(slice.actions.brushColor(index))
 }
 
-export const changeBrushSize = (size: BrushSizes): Thunk => async (
-  dispatch,
-  getState
-) => {
-  dispatch(slice.actions.brushSize(size))
-}
-
 export const cycleBrushSize = (): Thunk => async (dispatch, getState) => {
   const currentBrushSize = selectBrushSize(getState())
   const nextBrushSize = {
@@ -295,13 +292,20 @@ export const handleBrushModeTap = (mode: BrushModes): Thunk => async (
     return await dispatch(cycleBrushSize())
   }
 
+  if (mode === BrushModes.Line) {
+    return await dispatch(cycleLineAngle())
+  }
+
   console.log("handle")
 }
 
-export const changeLineBrushAngle = (angle: LineAngles): Thunk => async (
-  dispatch
-) => {
-  dispatch(slice.actions.lineAngle(angle))
+export const cycleLineAngle = (): Thunk => async (dispatch, getState) => {
+  const currentAngle = selectLineBrushAngle(getState())
+  const nextAngle = {
+    [LineAngles.Free]: LineAngles.Snap,
+    [LineAngles.Snap]: LineAngles.Free,
+  }[currentAngle] as LineAngles
+  dispatch(slice.actions.lineAngle(nextAngle))
 }
 
 export const panCamera = (x: number, y: number): Thunk => async (

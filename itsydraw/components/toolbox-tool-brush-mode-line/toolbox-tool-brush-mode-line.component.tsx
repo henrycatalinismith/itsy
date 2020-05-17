@@ -1,15 +1,23 @@
 import ToolboxToolBrushMode, {
   ToolboxToolBrushModeProps,
 } from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode"
-import { BrushModes } from "@highvalley.systems/itsydraw/store/tools"
-import cx from "classnames"
+import {
+  BrushModes,
+  LineAngles,
+  selectLineBrushAngle,
+} from "@highvalley.systems/itsydraw/store/tools"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-tool-brush-mode-line.module.scss"
 
-interface ToolboxToolBrushModeLineProps {}
+interface ToolboxToolBrushModeLineProps {
+  lineAngle: LineAngles
+}
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+  lineAngle: selectLineBrushAngle(state),
+})
 
 const mapDispatchToProps = {}
 
@@ -37,13 +45,17 @@ function LineIcon(): React.ReactElement {
   )
 }
 
-export function ToolboxToolBrushModeLine({}: ToolboxToolBrushModeLineProps): React.ReactElement {
+export function ToolboxToolBrushModeLine({
+  lineAngle,
+}: ToolboxToolBrushModeLineProps): React.ReactElement {
   const mode = BrushModes.Line
   const icon = <LineIcon />
+  const meta = <Pixlflip fontSize={16}>{lineAngle}</Pixlflip>
 
   const props: ToolboxToolBrushModeProps = {
-    mode,
     icon,
+    meta,
+    mode,
   }
 
   return <ToolboxToolBrushMode {...props} />

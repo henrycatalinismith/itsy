@@ -1,0 +1,7 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  background-color: pico8-original-palette(12);
+  transition: transform 200ms ease-out;
+  z-index: 0;
+}

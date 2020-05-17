@@ -1,3 +1,4 @@
+import ToolboxToolBrushHighlight from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-highlight"
 import ToolboxToolBrushModeCircle from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-circle"
 import ToolboxToolBrushModeLine from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-line"
 import ToolboxToolBrushModePencil from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-pencil"
@@ -26,6 +27,7 @@ export function ToolboxToolBrush({
   const className = cx(styles.component, styles[layout])
   return (
     <div className={className}>
+      <ToolboxToolBrushHighlight />
       <ToolboxToolBrushModePencil />
       <ToolboxToolBrushModeLine />
       <ToolboxToolBrushModeCircle />
