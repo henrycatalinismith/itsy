@@ -1,11 +1,11 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .svg {
-  max-height: 32px;
-  max-width: 32px;
-  overflow: hidden;
-  width: calc(100%);
-  height: calc(100% - 16px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 
 .image {

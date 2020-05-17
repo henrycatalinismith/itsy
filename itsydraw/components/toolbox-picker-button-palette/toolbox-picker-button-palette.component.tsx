@@ -27,7 +27,10 @@ export function ToolboxPickerButtonPalette({
 }: ToolboxPickerButtonPaletteProps): React.ReactElement {
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.component,
-    viewBox: "-8 -8 136 136",
+    viewBox: "-8 -8 144 144",
+    preserveAspectRatio: "xMidYMid meet",
+    width: "100%",
+    height: "100%",
   }
 
   const highlight: React.SVGAttributes<SVGRectElement> = {

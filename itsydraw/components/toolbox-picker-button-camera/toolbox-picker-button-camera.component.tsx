@@ -24,7 +24,10 @@ export function ToolboxPickerButtonCamera({
 }: ToolboxPickerButtonCameraProps): React.ReactElement {
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.component,
-    viewBox: "0 0 128 128",
+    viewBox: "-8 -8 144 144",
+    preserveAspectRatio: "xMidYMid meet",
+    width: "100%",
+    height: "100%",
   }
 
   const image: React.SVGAttributes<SVGImageElement> = {

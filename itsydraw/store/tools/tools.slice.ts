@@ -356,6 +356,11 @@ export const selectBrushes = createSelector(
   (brush): BrushesState => brush.brushes
 )
 
+export const selectBrushStatus = createSelector(
+  [selectBrush],
+  (brush): ToolStatuses => brush.status
+)
+
 export const selectCircleBrush = createSelector(
   [selectBrushes],
   (brushes): CircleBrushState => brushes[BrushModes.Circle]

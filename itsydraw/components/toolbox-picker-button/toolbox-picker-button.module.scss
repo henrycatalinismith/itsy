@@ -7,9 +7,9 @@
   min-height: 48px;
   overflow: hidden;
   display: grid;
-  padding: 8px;
   flex: 1;
   max-height: 100%;
+  position: relative;
 
   &:focus {
     outline: none;

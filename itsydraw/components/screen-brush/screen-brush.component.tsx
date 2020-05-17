@@ -3,8 +3,10 @@ import {
   BrushSizes,
   BrushModes,
   LineAngles,
+  ToolStatuses,
   selectBrushColor,
   selectBrushSize,
+  selectBrushStatus,
   selectActiveBrushMode,
   selectLineBrushAngle,
   selectCamera,
@@ -39,6 +41,7 @@ interface ScreenBrushProps {
   brushColor: PaletteColor
   brushSize: BrushSizes
   brushMode: BrushModes
+  brushStatus: ToolStatuses
   lineAngle: LineAngles
   color: PaletteIndex
   palette: Palette
@@ -52,6 +55,7 @@ const mapStateToProps = (state) => ({
   brushColor: selectBrushColor(state),
   brushSize: selectBrushSize(state),
   brushMode: selectActiveBrushMode(state),
+  brushStatus: selectBrushStatus(state),
   lineAngle: selectLineBrushAngle(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
@@ -65,8 +69,9 @@ const mapDispatchToProps = {
 
 export function ScreenBrush({
   brushColor,
-  brushSize,
   brushMode,
+  brushSize,
+  brushStatus,
   lineAngle,
   camera,
   palette,
@@ -419,6 +424,12 @@ export function ScreenBrush({
   React.useEffect(onImport, [webview.imported])
   React.useEffect(onUpdateCamera, [camera])
   React.useEffect(onUpdateSpritesheet, [spritesheetPng])
+
+  React.useEffect(() => {
+    if (status === ToolStatuses.Active) {
+      redraw()
+    }
+  }, [status])
 
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),

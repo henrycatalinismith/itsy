@@ -29,9 +29,9 @@ const reducers = {
     tools.rect = action.payload
 
     tools.layout = ToolboxLayouts.Horizontal
-    if (tools.rect.width < 360) {
-      tools.layout = ToolboxLayouts.Vertical
-    }
+    // if (tools.rect.width < 360) {
+    tools.layout = ToolboxLayouts.Vertical
+    // }
   },
 }
 

@@ -36,6 +36,9 @@ export function ToolboxPickerButtonClipboard({
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.svg,
     viewBox,
+    preserveAspectRatio: "xMidYMid meet",
+    width: "100%",
+    height: "100%",
   }
 
   const clip: React.SVGAttributes<SVGRectElement> = {

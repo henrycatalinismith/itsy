@@ -1,7 +1,7 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
-  background-color: pico8-original-palette(1);
+  background-color: pico8-original-palette(14);
   box-sizing: border-box;
   display: grid;
   flex: 1;
@@ -18,9 +18,10 @@
 .Vertical {
   grid-template-areas:
     "menu"
+    "...."
     "tools";
   grid-template-columns: min-content auto;
-  grid-template-rows: min-content auto;
+  grid-template-rows: min-content 4px auto;
   grid-template-columns: auto;
 }
 
@@ -42,6 +43,8 @@
 }
 
 .tools {
+  background-color: pico8-original-palette(1);
+  border: 2px solid pico8-original-palette(2);
   display: grid;
   grid-area: tools;
   overflow: hidden;

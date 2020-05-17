@@ -24,6 +24,9 @@ export function ToolboxPickerButtonBrush({
   const svg: React.SVGAttributes<SVGElement> = {
     className: styles.component,
     viewBox: "0 0 32 32",
+    preserveAspectRatio: "xMidYMid meet",
+    width: "100%",
+    height: "100%",
   }
 
   const scale = 0.05
