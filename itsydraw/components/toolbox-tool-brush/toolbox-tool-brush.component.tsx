@@ -1,5 +1,6 @@
-import ToolboxToolBrushModeOptions from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-options"
-import ToolboxToolBrushModePicker from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-picker"
+import ToolboxToolBrushModeCircle from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-circle"
+import ToolboxToolBrushModeLine from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-line"
+import ToolboxToolBrushModePencil from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-pencil"
 import {
   ToolboxLayouts,
   selectToolboxLayout,
@@ -25,8 +26,9 @@ export function ToolboxToolBrush({
   const className = cx(styles.component, styles[layout])
   return (
     <div className={className}>
-      <ToolboxToolBrushModePicker />
-      <ToolboxToolBrushModeOptions />
+      <ToolboxToolBrushModePencil />
+      <ToolboxToolBrushModeLine />
+      <ToolboxToolBrushModeCircle />
     </div>
   )
 }

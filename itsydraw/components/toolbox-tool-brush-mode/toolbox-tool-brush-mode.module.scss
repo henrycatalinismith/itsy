@@ -1,0 +1,41 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.active {
+  background-color: pico8-original-palette(12);
+  border: 0;
+}
+
+.layout {
+  display: grid;
+  grid-template-areas: "icon label label meta";
+  grid-template-columns: repeat(4, 1fr);
+  height: 48px;
+}
+
+.icon {
+  grid-area: icon;
+  position: relative;
+  overflow: hidden;
+  height: 32px;
+  align-self: center;
+}
+
+.label {
+  grid-area: label;
+  align-self: center;
+  justify-self: flex-start;
+}
+
+.meta {
+  grid-area: meta;
+}

@@ -263,11 +263,39 @@ export const changeBrushSize = (size: BrushSizes): Thunk => async (
   dispatch(slice.actions.brushSize(size))
 }
 
+export const cycleBrushSize = (): Thunk => async (dispatch, getState) => {
+  const currentBrushSize = selectBrushSize(getState())
+  const nextBrushSize = {
+    [1]: 2,
+    [2]: 4,
+    [4]: 8,
+    [8]: 1,
+  }[currentBrushSize] as BrushSizes
+  console.log(currentBrushSize, nextBrushSize)
+  dispatch(slice.actions.brushSize(nextBrushSize))
+}
+
 export const changeBrushMode = (type: BrushModes): Thunk => async (
   dispatch,
   getState
 ) => {
   dispatch(slice.actions.brushMode(type))
+}
+
+export const handleBrushModeTap = (mode: BrushModes): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const activeBrushMode = selectActiveBrushMode(getState())
+  if (mode !== activeBrushMode) {
+    return await dispatch(changeBrushMode(mode))
+  }
+
+  if (mode === BrushModes.Pencil) {
+    return await dispatch(cycleBrushSize())
+  }
+
+  console.log("handle")
 }
 
 export const changeLineBrushAngle = (angle: LineAngles): Thunk => async (

@@ -12,8 +12,9 @@
 }
 
 .Vertical {
-  grid-template-areas:
-    "mode-options"
-    "mode-picker";
-  grid-template-rows: 1fr 32px;
+  // grid-template-areas:
+  // "mode-options"
+  // "mode-picker";
+  // grid-template-rows: 1fr 32px;
+  grid-template-rows: repeat(3, 48px);
 }
