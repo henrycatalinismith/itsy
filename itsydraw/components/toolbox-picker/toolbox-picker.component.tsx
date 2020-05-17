@@ -2,6 +2,7 @@ import ToolboxPickerButtonBrush from "@highvalley.systems/itsydraw/components/to
 import ToolboxPickerButtonCamera from "@highvalley.systems/itsydraw/components/toolbox-picker-button-camera"
 import ToolboxPickerButtonPalette from "@highvalley.systems/itsydraw/components/toolbox-picker-button-palette"
 import ToolboxPickerButtonSelect from "@highvalley.systems/itsydraw/components/toolbox-picker-button-clipboard"
+import ToolboxPickerHighlight from "@highvalley.systems/itsydraw/components/toolbox-picker-highlight"
 import {
   ToolboxLayouts,
   selectToolboxLayout,
@@ -12,6 +13,7 @@ import {
   selectRankedTools,
 } from "@highvalley.systems/itsydraw/store/tools"
 import cx from "classnames"
+import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./toolbox-picker.module.scss"
@@ -42,9 +44,11 @@ export function ToolboxPicker({
   const className = cx(styles.component, styles[layout])
   return (
     <ol className={className}>
+      <ToolboxPickerHighlight />
       {tools.map((tool) => {
+        const gridArea = [1, tool.rank + 1, 1, tool.rank + 1].join(" / ")
         return (
-          <li className={styles.item} key={tool.id}>
+          <li className={styles.item} key={tool.id} style={{ gridArea }}>
             {buttonMap[tool.id]}
           </li>
         )
