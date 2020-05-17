@@ -1,5 +1,3 @@
-import ToolboxToolPaletteHex from "@highvalley.systems/itsydraw/components/toolbox-tool-palette-hex"
-import ToolboxToolPaletteIndex from "@highvalley.systems/itsydraw/components/toolbox-tool-palette-index"
 import { selectBrushColor } from "@highvalley.systems/itsydraw/store/tools"
 import { PaletteColor } from "@highvalley.systems/typedefs/itsy"
 import Pixlflip from "@highvalley.systems/pixlflip/regular"
