@@ -133,7 +133,7 @@ const initialState: ToolsState = {
         id: BrushModes.Pencil,
         status: BrushModeStatuses.Active,
         rank: 0,
-        color: 7,
+        color: 8,
         size: 1,
       },
 
@@ -142,7 +142,7 @@ const initialState: ToolsState = {
         status: BrushModeStatuses.Inactive,
         rank: 1,
         size: 1,
-        color: 7,
+        color: 8,
         angle: LineAngles.Free,
       },
 
@@ -150,7 +150,7 @@ const initialState: ToolsState = {
         id: BrushModes.Circle,
         status: BrushModeStatuses.Inactive,
         rank: 2,
-        color: 7,
+        color: 8,
         size: 1,
         style: CircleStyles.Stroke,
       },
