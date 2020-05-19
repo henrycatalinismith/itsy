@@ -41,6 +41,11 @@ export enum LineAngles {
   Snap = "Snap",
 }
 
+export enum CircleStyles {
+  Stroke = "Stroke",
+  Fill = "Fill",
+}
+
 export interface BrushState extends ToolState {
   id: ToolIds.Brush
   brushes: BrushesState
@@ -74,6 +79,7 @@ export interface CircleBrushState extends BrushModeState {
   id: BrushModes.Circle
   color: PaletteIndex
   size: BrushSizes
+  style: CircleStyles
 }
 
 export interface BrushesState {
@@ -146,6 +152,7 @@ const initialState: ToolsState = {
         rank: 2,
         color: 7,
         size: 1,
+        style: CircleStyles.Stroke,
       },
     },
   },
@@ -215,6 +222,10 @@ const reducers = {
 
   lineAngle(tools, action: PayloadAction<LineAngles>): void {
     tools[ToolIds.Brush].brushes[BrushModes.Line].angle = action.payload
+  },
+
+  circleStyle(tools, action: PayloadAction<CircleStyles>): void {
+    tools[ToolIds.Brush].brushes[BrushModes.Circle].style = action.payload
   },
 
   clipboard(tools, action: PayloadAction<Rect>): void {
@@ -296,6 +307,10 @@ export const handleBrushModeTap = (mode: BrushModes): Thunk => async (
     return await dispatch(cycleLineAngle())
   }
 
+  if (mode === BrushModes.Circle) {
+    return await dispatch(cycleCircleStyle())
+  }
+
   console.log("handle")
 }
 
@@ -306,6 +321,15 @@ export const cycleLineAngle = (): Thunk => async (dispatch, getState) => {
     [LineAngles.Snap]: LineAngles.Free,
   }[currentAngle] as LineAngles
   dispatch(slice.actions.lineAngle(nextAngle))
+}
+
+export const cycleCircleStyle = (): Thunk => async (dispatch, getState) => {
+  const currentStyle = selectCircleBrushStyle(getState())
+  const nextStyle = {
+    [CircleStyles.Fill]: CircleStyles.Stroke,
+    [CircleStyles.Stroke]: CircleStyles.Fill,
+  }[currentStyle] as CircleStyles
+  dispatch(slice.actions.circleStyle(nextStyle))
 }
 
 export const panCamera = (x: number, y: number): Thunk => async (
@@ -427,6 +451,11 @@ export const selectBrushSize = createSelector(
 export const selectLineBrushAngle = createSelector(
   [selectLineBrush],
   (line): LineAngles => line.angle
+)
+
+export const selectCircleBrushStyle = createSelector(
+  [selectCircleBrush],
+  (circle): CircleStyles => circle.style
 )
 
 export const selectRankedTools = createSelector(

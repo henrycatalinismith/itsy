@@ -3,12 +3,14 @@ import {
   BrushSizes,
   BrushModes,
   LineAngles,
+  CircleStyles,
   ToolStatuses,
   selectBrushColor,
   selectBrushSize,
   selectBrushStatus,
   selectActiveBrushMode,
   selectLineBrushAngle,
+  selectCircleBrushStyle,
   selectCamera,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
@@ -42,6 +44,7 @@ interface ScreenBrushProps {
   brushSize: BrushSizes
   brushMode: BrushModes
   brushStatus: ToolStatuses
+  circleStyle: CircleStyles
   lineAngle: LineAngles
   color: PaletteIndex
   palette: Palette
@@ -56,6 +59,7 @@ const mapStateToProps = (state) => ({
   brushSize: selectBrushSize(state),
   brushMode: selectActiveBrushMode(state),
   brushStatus: selectBrushStatus(state),
+  circleStyle: selectCircleBrushStyle(state),
   lineAngle: selectLineBrushAngle(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
@@ -71,6 +75,7 @@ export function ScreenBrush({
   brushColor,
   brushMode,
   brushSize,
+  circleStyle,
   brushStatus,
   lineAngle,
   camera,
@@ -260,6 +265,41 @@ export function ScreenBrush({
     }
   }
 
+  const circfill = (
+    x: number,
+    y: number,
+    r: number,
+    i: PaletteIndex,
+    preview = false
+  ) => {
+    let f = 1 - r
+    let ddF_x = 0
+    let ddF_y = -2 * r
+    let cx = 0
+    let cy = r
+
+    sset(x, y + r, i, preview)
+    sset(x, y - r, i, preview)
+    line(x + r, y, x - r, y, i, preview)
+
+    while (cx < cy) {
+      if (f >= 0) {
+        cy--
+        ddF_y += 2
+        f += ddF_y
+      }
+
+      cx++
+      ddF_x += 2
+      f += ddF_x + 1
+
+      line(x + cx, y + cy, x - cx, y + cy, i, preview)
+      line(x + cx, y - cy, x - cx, y - cy, i, preview)
+      line(x + cy, y + cx, x - cy, y + cx, i, preview)
+      line(x + cy, y - cx, x - cy, y - cx, i, preview)
+    }
+  }
+
   const onLoad = React.useCallback(() => {
     canvas.current.width = camera.width
     canvas.current.height = camera.height
@@ -273,27 +313,6 @@ export function ScreenBrush({
   }, [spritesheetPng, palette])
 
   const touchLocation = useTouchLocation(canvas.current, camera)
-  /*
-  const touchLocation = (
-    event: React.TouchEvent<HTMLCanvasElement>
-  ): {
-    x: number
-    y: number
-  } => {
-    const rect = canvas.current.getBoundingClientRect()
-    const x =
-      camera.x +
-      Math.floor(
-        (camera.width / rect.width) * (event.touches[0].clientX - rect.left)
-      )
-    const y =
-      camera.y +
-      Math.floor(
-        (camera.height / rect.height) * (event.touches[0].clientY - rect.top)
-      )
-    return { x, y }
-  }
-  */
 
   const onTouchStart = React.useCallback(
     (event: React.TouchEvent<HTMLCanvasElement>) => {
@@ -380,7 +399,9 @@ export function ScreenBrush({
                 Math.pow(circleOrigin.current.y - y, 2)
             )
           )
-          circ(
+          const fn = circleStyle === CircleStyles.Fill ? circfill : circ
+          console.log(circleStyle)
+          fn(
             circleOrigin.current.x,
             circleOrigin.current.y,
             r,
@@ -390,7 +411,7 @@ export function ScreenBrush({
           break
       }
     },
-    [camera, brushColor.hex, brushSize, brushMode, lineAngle]
+    [camera, brushColor.hex, brushSize, brushMode, lineAngle, circleStyle]
   )
 
   const onTouchEnd = React.useCallback(
