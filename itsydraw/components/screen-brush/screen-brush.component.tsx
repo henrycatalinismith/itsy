@@ -38,6 +38,20 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./screen-brush.module.scss"
 
+type BrushInputEvent =
+  | React.TouchEvent<HTMLCanvasElement>
+  | React.MouseEvent<HTMLCanvasElement>
+
+interface BrushInputHandler {
+  start(event: BrushInputEvent): void
+  move(event: BrushInputEvent): void
+  end(event: BrushInputEvent): void
+}
+
+type BrushModeInputHandlers = {
+  [key in BrushModes]: BrushInputHandler
+}
+
 interface ScreenBrushProps {
   camera: Rect
   brushColor: PaletteColor
@@ -170,7 +184,6 @@ export function ScreenBrush({
   }
 
   const repaint = () => {
-    cls(0)
     image.current.onload = () => redraw()
     image.current.src = `data:image/png;base64,${spritesheetPng}`
   }
@@ -314,122 +327,125 @@ export function ScreenBrush({
 
   const touchLocation = useTouchLocation(canvas.current, camera)
 
-  const onTouchStart = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      const { x, y } = touchLocation(event)
+  const inputActive = React.useRef(false)
+  const input: BrushModeInputHandlers = {
+    [BrushModes.Pencil]: {
+      start(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        inputActive.current = true
+        if (
+          outOfBounds(x, y) ||
+          (x === last.current.x && y === last.current.y)
+        ) {
+          return
+        }
 
-      switch (brushMode) {
-        case BrushModes.Pencil:
-          if (
-            outOfBounds(x, y) ||
-            (x === last.current.x && y === last.current.y)
-          ) {
-            return
-          }
+        sset(x, y, brushColor.id)
+      },
 
+      move(event: BrushInputEvent) {
+        if (!inputActive.current) return
+        const { x, y } = touchLocation(event)
+        if (
+          outOfBounds(x, y) ||
+          (x === last.current.x && y === last.current.y)
+        ) {
+          return
+        }
+        if (last.current.x === undefined) {
           sset(x, y, brushColor.id)
-          break
+        } else {
+          line(last.current.x, last.current.y, x, y, brushColor.id)
+        }
+        last.current = { x, y }
+      },
 
-        case BrushModes.Line:
-          if (outOfBounds(x, y)) return
-          sset(x, y, brushColor.id, true)
-          lineOrigin.current.x = x
-          lineOrigin.current.y = y
-          break
-
-        case BrushModes.Circle:
-          if (outOfBounds(x, y)) return
-          sset(x, y, brushColor.id, true)
-          circleOrigin.current.x = x
-          circleOrigin.current.y = y
-          break
-      }
-      last.current = { x, y }
+      end(event: BrushInputEvent) {
+        inputActive.current = false
+        last.current.x = undefined
+        last.current.y = undefined
+      },
     },
-    [camera, brushColor.hex, brushSize, brushMode]
-  )
 
-  const onTouchMove = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      const { x, y } = touchLocation(event)
+    [BrushModes.Line]: {
+      start(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        inputActive.current = true
+        if (outOfBounds(x, y)) return
+        sset(x, y, brushColor.id, true)
+        lineOrigin.current.x = x
+        lineOrigin.current.y = y
+      },
 
-      switch (brushMode) {
-        case BrushModes.Pencil:
-          if (
-            outOfBounds(x, y) ||
-            (x === last.current.x && y === last.current.y)
-          ) {
-            return
-          }
-          if (last.current.x === undefined) {
-            sset(x, y, brushColor.id)
+      move(event: BrushInputEvent) {
+        if (!inputActive.current) return
+        const { x, y } = touchLocation(event)
+        const lx1 = lineOrigin.current.x
+        const ly1 = lineOrigin.current.y
+        let lx2 = x
+        let ly2 = y
+
+        if (lineAngle === LineAngles.Snap) {
+          const lxd = Math.abs(lx1 - lx2)
+          const lyd = Math.abs(ly1 - ly2)
+          if (lxd > lyd) {
+            ly2 = ly1
           } else {
-            line(last.current.x, last.current.y, x, y, brushColor.id)
+            lx2 = lx1
           }
-          last.current = { x, y }
-          break
+        }
 
-        case BrushModes.Line:
-          const lx1 = lineOrigin.current.x
-          const ly1 = lineOrigin.current.y
-          let lx2 = x
-          let ly2 = y
+        clearPreview()
+        redraw()
+        line(lx1, ly1, lx2, ly2, brushColor.id, true)
+      },
 
-          if (lineAngle === LineAngles.Snap) {
-            const lxd = Math.abs(lx1 - lx2)
-            const lyd = Math.abs(ly1 - ly2)
-            if (lxd > lyd) {
-              ly2 = ly1
-            } else {
-              lx2 = lx1
-            }
-          }
-
-          clearPreview()
-          redraw()
-          line(lx1, ly1, lx2, ly2, brushColor.id, true)
-          break
-
-        case BrushModes.Circle:
-          clearPreview()
-          redraw()
-          const r = Math.round(
-            Math.sqrt(
-              Math.pow(circleOrigin.current.x - x, 2) +
-                Math.pow(circleOrigin.current.y - y, 2)
-            )
-          )
-          const fn = circleStyle === CircleStyles.Fill ? circfill : circ
-          console.log(circleStyle)
-          fn(
-            circleOrigin.current.x,
-            circleOrigin.current.y,
-            r,
-            brushColor.id,
-            true
-          )
-          break
-      }
+      end(event: BrushInputEvent) {
+        inputActive.current = false
+        flushPreview()
+        update()
+      },
     },
-    [camera, brushColor.hex, brushSize, brushMode, lineAngle, circleStyle]
-  )
 
-  const onTouchEnd = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      switch (brushMode) {
-        case BrushModes.Line:
-          flushPreview()
-          update()
-          break
+    [BrushModes.Circle]: {
+      start(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        inputActive.current = true
+        if (outOfBounds(x, y)) return
+        sset(x, y, brushColor.id, true)
+        circleOrigin.current.x = x
+        circleOrigin.current.y = y
+      },
 
-        case BrushModes.Circle:
-          flushPreview()
-          update()
-          break
-      }
+      move(event: BrushInputEvent) {
+        if (!inputActive.current) return
+        const { x, y } = touchLocation(event)
+        clearPreview()
+        redraw()
+        const r = Math.round(
+          Math.sqrt(
+            Math.pow(circleOrigin.current.x - x, 2) +
+              Math.pow(circleOrigin.current.y - y, 2)
+          )
+        )
+        const fn = circleStyle === CircleStyles.Fill ? circfill : circ
+        console.log(circleStyle)
+        fn(
+          circleOrigin.current.x,
+          circleOrigin.current.y,
+          r,
+          brushColor.id,
+          true
+        )
+      },
+
+      end(event: BrushInputEvent) {
+        inputActive.current = false
+        flushPreview()
+        update()
+      },
     },
-    [brushSize, brushMode]
-  )
+  }
 
   const onUpdateCamera = React.useCallback(() => {
     canvas.current.width = camera.width
@@ -452,12 +468,23 @@ export function ScreenBrush({
     }
   }, [status])
 
+  const onTouchStart = input[brushMode].start
+  const onTouchMove = input[brushMode].move
+  const onTouchEnd = input[brushMode].end
+
+  const onMouseDown = onTouchStart
+  const onMouseMove = onTouchMove
+  const onMouseUp = onTouchEnd
+
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
     ref: canvas,
     onTouchStart,
     onTouchMove,
     onTouchEnd,
+    onMouseDown,
+    onMouseMove,
+    onMouseUp,
   }
 
   return (
