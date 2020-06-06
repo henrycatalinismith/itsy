@@ -14,7 +14,8 @@ import {
   selectCamera,
   selectPalette,
 } from "@highvalley.systems/itsydraw/store/tools"
-import {
+import spritesheet, {
+  selectSpritesheetPixels,
   selectSpritesheetPng,
   updateSpritesheet,
 } from "@highvalley.systems/itsydraw/store/spritesheet"
@@ -77,6 +78,7 @@ const mapStateToProps = (state) => ({
   lineAngle: selectLineBrushAngle(state),
   camera: selectCamera(state),
   palette: selectPalette(state),
+  spritesheetPixels: selectSpritesheetPixels(state),
   spritesheetPng: selectSpritesheetPng(state),
   webview: selectWebview(state),
 })
@@ -200,6 +202,14 @@ export function ScreenBrush({
       canvas.current.width,
       canvas.current.height
     )
+  }
+
+  const sget = (x: number, y: number, preview = false) => {
+    return preview
+      ? previewChanges[x]
+        ? previewChanges[x][y]
+        : spritesheetPixels[x][y]
+      : spritesheetPixels[x][y]
   }
 
   const sset = (x: number, y: number, i: PaletteIndex, preview = false) => {
@@ -445,6 +455,39 @@ export function ScreenBrush({
         update()
       },
     },
+
+    [BrushModes.Fill]: {
+      start(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        if (outOfBounds(x, y)) return
+
+        const originColor = sget(x, y)
+        fill(x, y, originColor, brushColor.id)
+      },
+
+      move(event: BrushInputEvent) {},
+
+      end(event: BrushInputEvent) {},
+    },
+  }
+
+  const fill = (x: number, y: number, from: number, to: number, done = []) => {
+    if (outOfBounds(x, y)) return
+    if (sget(x, y) !== from) return
+    if (sget(x, y, true) === to) return
+    if (done.includes(`${x},${y}`)) return
+
+    sset(x, y, to as PaletteIndex)
+    done.push(`${x},${y}`)
+
+    fill(x - 1, y - 1, from, to, done)
+    fill(x - 1, y + 0, from, to, done)
+    fill(x - 1, y + 1, from, to, done)
+    fill(x + 0, y - 1, from, to, done)
+    fill(x + 0, y + 1, from, to, done)
+    fill(x + 1, y - 1, from, to, done)
+    fill(x + 1, y + 0, from, to, done)
+    fill(x + 1, y + 1, from, to, done)
   }
 
   const onUpdateCamera = React.useCallback(() => {

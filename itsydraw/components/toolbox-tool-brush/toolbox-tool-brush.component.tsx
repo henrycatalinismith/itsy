@@ -1,5 +1,6 @@
 import ToolboxToolBrushHighlight from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-highlight"
 import ToolboxToolBrushModeCircle from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-circle"
+import ToolboxToolBrushModeFill from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-fill"
 import ToolboxToolBrushModeLine from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-line"
 import ToolboxToolBrushModePencil from "@highvalley.systems/itsydraw/components/toolbox-tool-brush-mode-pencil"
 import {
@@ -31,6 +32,7 @@ export function ToolboxToolBrush({
       <ToolboxToolBrushModePencil />
       <ToolboxToolBrushModeLine />
       <ToolboxToolBrushModeCircle />
+      <ToolboxToolBrushModeFill />
     </div>
   )
 }

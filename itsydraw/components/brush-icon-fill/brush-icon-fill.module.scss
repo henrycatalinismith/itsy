@@ -1,0 +1,29 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.bucket {
+  fill: pico8-original-palette(1);
+  stroke: pico8-original-palette(7);
+  stroke-width: 8px;
+  transform-origin: 50% 50%;
+  transform: rotate(45deg);
+}
+
+.paint {
+  stroke: pico8-original-palette(7);
+  stroke-width: 8px;
+  transform-origin: 50% 50%;
+  transform: rotate(45deg);
+}
+
+.droplet {
+  stroke: pico8-original-palette(7);
+  stroke-width: 4px;
+}

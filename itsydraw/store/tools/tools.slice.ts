@@ -34,6 +34,7 @@ export enum BrushModes {
   Pencil = "Pencil",
   Line = "Line",
   Circle = "Circle",
+  Fill = "Fill",
 }
 
 export enum LineAngles {
@@ -82,10 +83,16 @@ export interface CircleBrushState extends BrushModeState {
   style: CircleStyles
 }
 
+export interface FillBrushState extends BrushModeState {
+  id: BrushModes.Fill
+  color: PaletteIndex
+}
+
 export interface BrushesState {
   [BrushModes.Circle]: CircleBrushState
   [BrushModes.Line]: LineBrushState
   [BrushModes.Pencil]: PencilBrushState
+  [BrushModes.Fill]: FillBrushState
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -131,7 +138,7 @@ const initialState: ToolsState = {
     brushes: {
       [BrushModes.Pencil]: {
         id: BrushModes.Pencil,
-        status: BrushModeStatuses.Active,
+        status: BrushModeStatuses.Inactive,
         rank: 0,
         color: 8,
         size: 1,
@@ -153,6 +160,13 @@ const initialState: ToolsState = {
         color: 8,
         size: 1,
         style: CircleStyles.Stroke,
+      },
+
+      [BrushModes.Fill]: {
+        id: BrushModes.Fill,
+        status: BrushModeStatuses.Active,
+        rank: 3,
+        color: 8,
       },
     },
   },
@@ -205,6 +219,7 @@ const reducers = {
     tools[ToolIds.Brush].brushes[BrushModes.Circle].color = action.payload
     tools[ToolIds.Brush].brushes[BrushModes.Line].color = action.payload
     tools[ToolIds.Brush].brushes[BrushModes.Pencil].color = action.payload
+    tools[ToolIds.Brush].brushes[BrushModes.Fill].color = action.payload
   },
 
   brushMode(tools, action: PayloadAction<BrushModes>): void {
@@ -445,7 +460,7 @@ export const selectBrushColor = createSelector(
 
 export const selectBrushSize = createSelector(
   [selectBrushes, selectActiveBrushMode],
-  (brushes, mode): BrushSizes => brushes[mode].size
+  (brushes, mode): BrushSizes => brushes[BrushModes.Pencil].size
 )
 
 export const selectLineBrushAngle = createSelector(
