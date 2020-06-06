@@ -18,9 +18,35 @@ export default function BrushIconPaste({}: BrushIconPasteProps): React.ReactElem
     height,
   }
 
+  const handle: React.SVGAttributes<SVGEllipseElement> = {
+    className: styles.handle,
+    cx: 64,
+    cy: 32,
+    rx: 16,
+    ry: 24,
+  }
+
+  const shaft: React.SVGAttributes<SVGRectElement> = {
+    className: styles.shaft,
+    x: 60,
+    y: 32,
+    width: 8,
+    height: 32,
+  }
+
+  const stamp: React.SVGAttributes<SVGRectElement> = {
+    className: styles.stamp,
+    x: 32,
+    y: 64,
+    width: 64,
+    height: 16,
+  }
+
   return (
     <svg {...svg}>
-      <circle cx={32} cy={32} r={64} fill="red" />
+      <ellipse {...handle} />
+      <rect {...shaft} />
+      <rect {...stamp} />
     </svg>
   )
 }
