@@ -13,6 +13,7 @@ import {
   selectCircleBrushStyle,
   selectCamera,
   selectPalette,
+  selectClipboardRect,
 } from "@highvalley.systems/itsydraw/store/tools"
 import spritesheet, {
   selectSpritesheetPixels,
@@ -67,6 +68,7 @@ interface ScreenBrushProps {
   spritesheetPng: string
   updateSpritesheet: (changes: PartialSpritesheet) => void
   webview: WebviewState
+  clipboardRect: Rect
 }
 
 const mapStateToProps = (state) => ({
@@ -81,6 +83,7 @@ const mapStateToProps = (state) => ({
   spritesheetPixels: selectSpritesheetPixels(state),
   spritesheetPng: selectSpritesheetPng(state),
   webview: selectWebview(state),
+  clipboardRect: selectClipboardRect(state),
 })
 
 const mapDispatchToProps = {
@@ -92,6 +95,7 @@ export function ScreenBrush({
   brushMode,
   brushSize,
   circleStyle,
+  clipboardRect,
   brushStatus,
   lineAngle,
   camera,
@@ -463,11 +467,47 @@ export function ScreenBrush({
 
         const originColor = sget(x, y)
         fill(x, y, originColor, brushColor.id)
+        flushPreview()
+        update()
       },
 
       move(event: BrushInputEvent) {},
 
       end(event: BrushInputEvent) {},
+    },
+
+    [BrushModes.Paste]: {
+      start(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
+          for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {
+            draw(x + cx, y + cy, spritesheetPixels[cx][cy])
+          }
+        }
+      },
+
+      move(event: BrushInputEvent) {
+        const { x, y } = touchLocation(event)
+        redraw()
+        for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
+          for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {
+            draw(x + cx, y + cy, spritesheetPixels[cx][cy])
+          }
+        }
+        last.current = { x, y }
+      },
+
+      end(event: BrushInputEvent) {
+        const { x, y } = last.current
+        for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
+          for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {
+            sset(x + cx, y + cy, spritesheetPixels[cx][cy])
+          }
+        }
+        redraw()
+        flushPreview()
+        update()
+      },
     },
   }
 

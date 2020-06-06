@@ -35,6 +35,7 @@ export enum BrushModes {
   Line = "Line",
   Circle = "Circle",
   Fill = "Fill",
+  Paste = "Paste",
 }
 
 export enum LineAngles {
@@ -88,11 +89,16 @@ export interface FillBrushState extends BrushModeState {
   color: PaletteIndex
 }
 
+export interface PasteBrushState extends BrushModeState {
+  id: BrushModes.Paste
+}
+
 export interface BrushesState {
   [BrushModes.Circle]: CircleBrushState
   [BrushModes.Line]: LineBrushState
   [BrushModes.Pencil]: PencilBrushState
   [BrushModes.Fill]: FillBrushState
+  [BrushModes.Paste]: PasteBrushState
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -164,9 +170,15 @@ const initialState: ToolsState = {
 
       [BrushModes.Fill]: {
         id: BrushModes.Fill,
-        status: BrushModeStatuses.Active,
+        status: BrushModeStatuses.Inactive,
         rank: 3,
         color: 8,
+      },
+
+      [BrushModes.Paste]: {
+        id: BrushModes.Paste,
+        status: BrushModeStatuses.Active,
+        rank: 4,
       },
     },
   },
@@ -190,8 +202,8 @@ const initialState: ToolsState = {
     rank: 2,
     x: 0,
     y: 0,
-    width: 64,
-    height: 64,
+    width: 128,
+    height: 128,
   },
 
   [ToolIds.Clipboard]: {
@@ -201,8 +213,8 @@ const initialState: ToolsState = {
     rect: {
       x: 0,
       y: 0,
-      width: 128,
-      height: 128,
+      width: 32,
+      height: 32,
     },
   },
 }
@@ -455,7 +467,8 @@ export const selectActiveBrushMode = createSelector(
 
 export const selectBrushColor = createSelector(
   [selectBrushes, selectActiveBrushMode, selectPalette],
-  (brushes, mode, palette): PaletteColor => palette[brushes[mode].color]
+  (brushes, mode, palette): PaletteColor =>
+    palette[brushes[BrushModes.Pencil].color]
 )
 
 export const selectBrushSize = createSelector(

@@ -1,6 +1,7 @@
 import BrushIconCircle from "@highvalley.systems/itsydraw/components/brush-icon-circle"
 import BrushIconFill from "@highvalley.systems/itsydraw/components/brush-icon-fill"
 import BrushIconLine from "@highvalley.systems/itsydraw/components/brush-icon-line"
+import BrushIconPaste from "@highvalley.systems/itsydraw/components/brush-icon-paste"
 import BrushIconPencil from "@highvalley.systems/itsydraw/components/brush-icon-pencil"
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
 import {
@@ -44,6 +45,7 @@ export function ToolboxPickerButtonBrush({
       {brushMode === BrushModes.Fill && (
         <BrushIconFill color={brushColor.hex} />
       )}
+      {brushMode === BrushModes.Paste && <BrushIconPaste />}
     </ToolboxPickerButton>
   )
 }
