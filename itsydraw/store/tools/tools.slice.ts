@@ -126,9 +126,9 @@ const name = "tools"
 function initialToolStatus(id: ToolIds): ToolStatuses {
   switch (id) {
     case ToolIds.Brush:
-      return ToolStatuses.Active
-    case ToolIds.Camera:
       return ToolStatuses.Inactive
+    case ToolIds.Camera:
+      return ToolStatuses.Active
     case ToolIds.Clipboard:
       return ToolStatuses.Inactive
     case ToolIds.Palette:
@@ -200,10 +200,10 @@ const initialState: ToolsState = {
     id: ToolIds.Camera,
     status: initialToolStatus(ToolIds.Camera),
     rank: 2,
-    x: 0,
-    y: 0,
-    width: 128,
-    height: 128,
+    x: 64,
+    y: 16,
+    width: 32,
+    height: 32,
   },
 
   [ToolIds.Clipboard]: {

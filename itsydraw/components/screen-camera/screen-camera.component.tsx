@@ -58,16 +58,41 @@ export function ScreenCamera({
 
   const drawCamera = () => {
     ctx.current.drawImage(image.current, 0, 0)
+
+    ctx.current.save()
+    const cameraClip = new Path2D()
+    cameraClip.rect(0, 0, 128, rect.current.y)
+    cameraClip.rect(
+      rect.current.x + rect.current.width,
+      rect.current.y,
+      127,
+      127
+    )
+    cameraClip.rect(
+      0,
+      rect.current.y + rect.current.height,
+      rect.current.x + rect.current.width,
+      128
+    )
+    cameraClip.rect(
+      0,
+      rect.current.y,
+      rect.current.x,
+      rect.current.y + rect.current.height
+    )
+    ctx.current.clip(cameraClip)
+    ctx.current.fillStyle = "rgba(0, 0, 0, 0.8)"
+    ctx.current.fillRect(0, 0, 128, 128)
+    ctx.current.restore()
+
     ctx.current.strokeStyle = "#01ffff"
-    ctx.current.lineWidth = 1
-    ctx.current.beginPath()
-    ctx.current.rect(
+    ctx.current.lineWidth = 2
+    ctx.current.strokeRect(
       rect.current.x,
       rect.current.y,
-      rect.current.width - 1,
-      rect.current.height - 1
+      rect.current.width,
+      rect.current.height
     )
-    ctx.current.stroke()
   }
 
   const onLoad = React.useCallback(() => {
@@ -82,7 +107,6 @@ export function ScreenCamera({
   }, [image.current])
 
   const onUpdateCamera = () => {
-    console.log("UPDATE!!")
     rect.current.x = camera.x
     rect.current.y = camera.y
     rect.current.width = camera.width
@@ -100,6 +124,9 @@ export function ScreenCamera({
       let { x, y } = touchLocation(event)
       x = _.clamp(x - camera.width / 2, 0, 127 - camera.width)
       y = _.clamp(y - camera.height / 2, 0, 127 - camera.height)
+
+      // x = Math.ceil(x / camera.width) * camera.width
+      // y = Math.ceil(y / camera.height) * camera.height
 
       rect.current.x = x
       rect.current.y = y
