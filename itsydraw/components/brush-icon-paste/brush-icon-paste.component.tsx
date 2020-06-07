@@ -44,7 +44,9 @@ export default function BrushIconPaste({}: BrushIconPasteProps): React.ReactElem
 
   return (
     <svg {...svg}>
+      <ellipse {...handle} className={styles.handleShadow} />
       <ellipse {...handle} />
+      <rect {...stamp} className={styles.stampShadow} />
       <rect {...shaft} />
       <rect {...stamp} />
     </svg>

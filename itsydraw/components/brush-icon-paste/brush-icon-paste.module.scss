@@ -12,10 +12,20 @@
   fill: pico8-original-palette(7);
 }
 
+.handleShadow {
+  stroke: pico8-original-palette(0);
+  stroke-width: 16px;
+}
+
 .shaft {
   fill: pico8-original-palette(7);
 }
 
 .stamp {
   fill: pico8-original-palette(7);
+}
+
+.stampShadow {
+  stroke: pico8-original-palette(0);
+  stroke-width: 16px;
 }

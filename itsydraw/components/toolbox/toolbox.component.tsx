@@ -7,7 +7,6 @@ import {
 } from "@highvalley.systems/itsydraw/store/toolbox"
 import { ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
-import cx from "classnames"
 import React from "react"
 import { connect } from "react-redux"
 import useResizeObserver from "use-resize-observer/polyfilled"
@@ -39,10 +38,8 @@ export function Toolbox({
 
   React.useEffect(() => onResize(), [width, height])
 
-  const className = cx(styles.component, styles[layout])
-
   const divProps: React.HTMLAttributes<HTMLDivElement> = {
-    className,
+    className: styles.component,
   }
 
   const toolsDiv: React.HTMLAttributes<HTMLDivElement> = {

@@ -484,9 +484,11 @@ export function ScreenBrush({
             draw(x + cx, y + cy, spritesheetPixels[cx][cy])
           }
         }
+        inputActive.current = true
       },
 
       move(event: BrushInputEvent) {
+        if (!inputActive.current) return
         const { x, y } = touchLocation(event)
         redraw()
         for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
@@ -501,12 +503,15 @@ export function ScreenBrush({
         const { x, y } = last.current
         for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
           for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {
-            sset(x + cx, y + cy, spritesheetPixels[cx][cy])
+            draw(x + cx, y + cy, spritesheetPixels[cx][cy])
+            sset(x + cx, y + cy, spritesheetPixels[cx][cy], true)
           }
         }
-        redraw()
         flushPreview()
         update()
+        last.current.x = undefined
+        last.current.y = undefined
+        inputActive.current = false
       },
     },
   }
@@ -546,10 +551,10 @@ export function ScreenBrush({
   React.useEffect(onUpdateSpritesheet, [spritesheetPng])
 
   React.useEffect(() => {
-    if (status === ToolStatuses.Active) {
+    if (brushStatus === ToolStatuses.Active) {
       redraw()
     }
-  }, [status])
+  }, [brushStatus])
 
   const onTouchStart = input[brushMode].start
   const onTouchMove = input[brushMode].move

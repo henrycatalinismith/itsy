@@ -23,7 +23,7 @@
 
 .screen {
   border: 2px solid pico8-original-palette(2);
-  width: calc(100% - 4px);
+  width: 100%;
   box-sizing: border-box;
   flex: 1;
   grid-area: spritesheet;
@@ -31,9 +31,10 @@
 }
 
 .toolbox {
-  width: calc(100% - 4px);
+  width: 100%;
   box-sizing: border-box;
   grid-area: toolbox;
   display: flex;
   max-height: 100%;
+  overflow: hidden;
 }
