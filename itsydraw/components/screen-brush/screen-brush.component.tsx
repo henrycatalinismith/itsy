@@ -40,14 +40,14 @@ import React from "react"
 import { connect } from "react-redux"
 import styles from "./screen-brush.module.scss"
 
-type BrushInputEvent =
+type PointerInputEvent =
   | React.TouchEvent<HTMLCanvasElement>
   | React.MouseEvent<HTMLCanvasElement>
 
 interface BrushInputHandler {
-  start(event: BrushInputEvent): void
-  move(event: BrushInputEvent): void
-  end(event: BrushInputEvent): void
+  start(event: PointerInputEvent): void
+  move(event: PointerInputEvent): void
+  end(event: PointerInputEvent): void
 }
 
 type BrushModeInputHandlers = {
@@ -230,7 +230,7 @@ export function ScreenBrush({
       }
     }
 
-    update()
+    // update()
   }
 
   const line = (
@@ -344,7 +344,7 @@ export function ScreenBrush({
   const inputActive = React.useRef(false)
   const input: BrushModeInputHandlers = {
     [BrushModes.Pencil]: {
-      start(event: BrushInputEvent) {
+      start(event: PointerInputEvent) {
         const { x, y } = touchLocation(event)
         inputActive.current = true
         if (
@@ -357,7 +357,7 @@ export function ScreenBrush({
         sset(x, y, brushColor.id)
       },
 
-      move(event: BrushInputEvent) {
+      move(event: PointerInputEvent) {
         if (!inputActive.current) return
         const { x, y } = touchLocation(event)
         if (
@@ -374,15 +374,16 @@ export function ScreenBrush({
         last.current = { x, y }
       },
 
-      end(event: BrushInputEvent) {
+      end(event: PointerInputEvent) {
         inputActive.current = false
         last.current.x = undefined
         last.current.y = undefined
+        update()
       },
     },
 
     [BrushModes.Line]: {
-      start(event: BrushInputEvent) {
+      start(event: PointerInputEvent) {
         const { x, y } = touchLocation(event)
         inputActive.current = true
         if (outOfBounds(x, y)) return
@@ -391,7 +392,7 @@ export function ScreenBrush({
         lineOrigin.current.y = y
       },
 
-      move(event: BrushInputEvent) {
+      move(event: PointerInputEvent) {
         if (!inputActive.current) return
         const { x, y } = touchLocation(event)
         const lx1 = lineOrigin.current.x
@@ -414,7 +415,7 @@ export function ScreenBrush({
         line(lx1, ly1, lx2, ly2, brushColor.id, true)
       },
 
-      end(event: BrushInputEvent) {
+      end(event: PointerInputEvent) {
         inputActive.current = false
         flushPreview()
         update()
@@ -422,7 +423,7 @@ export function ScreenBrush({
     },
 
     [BrushModes.Circle]: {
-      start(event: BrushInputEvent) {
+      start(event: PointerInputEvent) {
         const { x, y } = touchLocation(event)
         inputActive.current = true
         if (outOfBounds(x, y)) return
@@ -431,7 +432,7 @@ export function ScreenBrush({
         circleOrigin.current.y = y
       },
 
-      move(event: BrushInputEvent) {
+      move(event: PointerInputEvent) {
         if (!inputActive.current) return
         const { x, y } = touchLocation(event)
         clearPreview()
@@ -453,7 +454,7 @@ export function ScreenBrush({
         )
       },
 
-      end(event: BrushInputEvent) {
+      end(event: PointerInputEvent) {
         inputActive.current = false
         flushPreview()
         update()
@@ -461,7 +462,7 @@ export function ScreenBrush({
     },
 
     [BrushModes.Fill]: {
-      start(event: BrushInputEvent) {
+      start(event: PointerInputEvent) {
         const { x, y } = touchLocation(event)
         if (outOfBounds(x, y)) return
 
@@ -471,13 +472,13 @@ export function ScreenBrush({
         update()
       },
 
-      move(event: BrushInputEvent) {},
+      move(event: PointerInputEvent) {},
 
-      end(event: BrushInputEvent) {},
+      end(event: PointerInputEvent) {},
     },
 
     [BrushModes.Paste]: {
-      start(event: BrushInputEvent) {
+      start(event: PointerInputEvent) {
         const { x, y } = touchLocation(event)
         for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
           for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {
@@ -487,7 +488,7 @@ export function ScreenBrush({
         inputActive.current = true
       },
 
-      move(event: BrushInputEvent) {
+      move(event: PointerInputEvent) {
         if (!inputActive.current) return
         const { x, y } = touchLocation(event)
         redraw()
@@ -499,7 +500,7 @@ export function ScreenBrush({
         last.current = { x, y }
       },
 
-      end(event: BrushInputEvent) {
+      end(event: PointerInputEvent) {
         const { x, y } = last.current
         for (let cx = clipboardRect.x; cx < clipboardRect.width; cx++) {
           for (let cy = clipboardRect.y; cy < clipboardRect.height; cy++) {

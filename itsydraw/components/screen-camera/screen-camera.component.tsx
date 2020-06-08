@@ -18,6 +18,10 @@ interface ScreenCameraProps {
   panCamera: (x: number, y: number) => void
 }
 
+type PointerInputEvent =
+  | React.TouchEvent<HTMLCanvasElement>
+  | React.MouseEvent<HTMLCanvasElement>
+
 const mapStateToProps = (state) => ({
   camera: selectCamera(state),
   spritesheet: selectSpritesheetPng(state),
@@ -41,6 +45,7 @@ export function ScreenCamera({
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
+  const pointerActive = React.useRef(false)
 
   const screen = React.useContext(ScreenContext)
   const scale = screen.rect.width / 128
@@ -85,20 +90,25 @@ export function ScreenCamera({
     ctx.current.fillRect(0, 0, 128, 128)
     ctx.current.restore()
 
+    ctx.current.save()
+    ctx.current.scale(1, 1)
     ctx.current.strokeStyle = "#01ffff"
-    ctx.current.lineWidth = 2
+    ctx.current.lineWidth = 0.5
     ctx.current.strokeRect(
       rect.current.x,
       rect.current.y,
       rect.current.width,
       rect.current.height
     )
+    ctx.current.restore()
   }
 
   const onLoad = React.useCallback(() => {
-    canvas.current.width = 128
-    canvas.current.height = 128
+    canvas.current.width = 512
+    canvas.current.height = 512
     ctx.current = canvas.current.getContext("2d")
+    ctx.current.scale(4, 4)
+    ctx.current.imageSmoothingEnabled = false
     image.current = new Image()
     image.current.onload = () => {
       ctx.current.drawImage(image.current, 0, 0)
@@ -119,24 +129,41 @@ export function ScreenCamera({
     image.current.src = `data:image/png;base64,${spritesheet}`
   }, [spritesheet])
 
-  const onTouchStart = React.useCallback(
-    (event: React.TouchEvent<HTMLCanvasElement>) => {
-      let { x, y } = touchLocation(event)
-      x = _.clamp(x - camera.width / 2, 0, 127 - camera.width)
-      y = _.clamp(y - camera.height / 2, 0, 127 - camera.height)
+  const pointer = {
+    start: React.useCallback(
+      (event: PointerInputEvent) => {
+        pointerActive.current = true
+        let { x, y } = touchLocation(event)
+        x = _.clamp(x - camera.width / 2, 0, 127 - camera.width)
+        y = _.clamp(y - camera.height / 2, 0, 127 - camera.height)
 
-      // x = Math.ceil(x / camera.width) * camera.width
-      // y = Math.ceil(y / camera.height) * camera.height
+        rect.current.x = x
+        rect.current.y = y
+        drawCamera()
+        update()
+      },
+      [scale, camera, rect]
+    ),
 
-      rect.current.x = x
-      rect.current.y = y
-      drawCamera()
-      update()
-    },
-    [scale, camera, rect]
-  )
+    move: React.useCallback(
+      (event: PointerInputEvent) => {
+        if (!pointerActive.current) return
+        let { x, y } = touchLocation(event)
+        x = _.clamp(x - camera.width / 2, 0, 127 - camera.width)
+        y = _.clamp(y - camera.height / 2, 0, 127 - camera.height)
 
-  const onTouchMove = onTouchStart
+        rect.current.x = x
+        rect.current.y = y
+        drawCamera()
+        update()
+      },
+      [scale, camera, rect]
+    ),
+
+    end: React.useCallback((event: PointerInputEvent) => {
+      pointerActive.current = false
+    }, []),
+  }
 
   React.useEffect(onLoad, [])
   React.useEffect(onUpdateCamera, [camera])
@@ -145,8 +172,13 @@ export function ScreenCamera({
   const canvasProps: React.HTMLProps<HTMLCanvasElement> = {
     className: cx(styles.canvas),
     ref: canvas,
-    onTouchStart,
-    onTouchMove,
+    onMouseDown: pointer.start,
+    onMouseMove: pointer.move,
+    onMouseOut: pointer.end,
+    onMouseUp: pointer.end,
+    onTouchStart: pointer.start,
+    onTouchMove: pointer.move,
+    onTouchEnd: pointer.end,
   }
 
   return (
