@@ -12,9 +12,8 @@ import {
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-tool-camera.module.scss"
 
-interface ToolboxToolCameraProps {
+interface CameraSettingsProps {
   camera: Rect
   spritesheet: string
   zoom: number
@@ -33,12 +32,12 @@ const mapDispatchToProps = {
 
 const zoomLevels = [1, 2, 4, 8]
 
-export function ToolboxToolCamera({
+export function CameraSettings({
   camera,
   spritesheet,
   zoom,
   zoomCamera,
-}: ToolboxToolCameraProps): React.ReactElement {
+}: CameraSettingsProps): React.ReactElement {
   const modes: ModePickerItems = {}
 
   zoomLevels.forEach((level, i) => {
@@ -62,11 +61,7 @@ export function ToolboxToolCamera({
 
   const modePicker = { modes, onTouch }
 
-  return (
-    <div className={styles.component}>
-      <ModePicker {...modePicker} />
-    </div>
-  )
+  return <ModePicker {...modePicker} />
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolboxToolCamera)
+export default connect(mapStateToProps, mapDispatchToProps)(CameraSettings)

@@ -3,9 +3,9 @@ import { selectClipboardRect } from "@highvalley.systems/itsydraw/store/tools"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-tool-clipboard-rect.module.scss"
+import styles from "./clipboard-settings.module.scss"
 
-interface ToolboxToolClipboardRectProps {
+interface ClipboardSettingsProps {
   clipboardRect: Rect
   spritesheetPng: string
 }
@@ -17,10 +17,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function ToolboxToolClipboardRect({
+export function ClipboardSettings({
   clipboardRect,
   spritesheetPng,
-}: ToolboxToolClipboardRectProps): React.ReactElement {
+}: ClipboardSettingsProps): React.ReactElement {
   const viewBox = [
     clipboardRect.x,
     clipboardRect.y,
@@ -63,7 +63,4 @@ export function ToolboxToolClipboardRect({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ToolboxToolClipboardRect)
+export default connect(mapStateToProps, mapDispatchToProps)(ClipboardSettings)

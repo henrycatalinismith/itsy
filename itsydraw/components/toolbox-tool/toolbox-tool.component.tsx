@@ -1,7 +1,7 @@
-import ToolboxToolBrush from "@highvalley.systems/itsydraw/components/toolbox-tool-brush"
-import ToolboxToolCamera from "@highvalley.systems/itsydraw/components/toolbox-tool-camera"
-import ToolboxToolClipboard from "@highvalley.systems/itsydraw/components/toolbox-tool-clipboard"
-import ToolboxToolPalette from "@highvalley.systems/itsydraw/components/toolbox-tool-palette"
+import BrushSettings from "@highvalley.systems/itsydraw/components/brush-settings"
+import CameraSettings from "@highvalley.systems/itsydraw/components/camera-settings"
+import ClipboardSettings from "@highvalley.systems/itsydraw/components/clipboard-settings"
+import PaletteSettings from "@highvalley.systems/itsydraw/components/palette-settings"
 import { selectToolboxHeight } from "@highvalley.systems/itsydraw/store/toolbox"
 import {
   selectActiveTool,
@@ -61,10 +61,10 @@ export function ToolboxTool({
   return (
     <div {...divProps} ref={divRef}>
       <ToolboxToolContext.Provider value={{ rect }}>
-        {id === ToolIds.Brush && <ToolboxToolBrush />}
-        {id === ToolIds.Camera && <ToolboxToolCamera />}
-        {id === ToolIds.Clipboard && <ToolboxToolClipboard />}
-        {id === ToolIds.Palette && <ToolboxToolPalette />}
+        {id === ToolIds.Brush && <BrushSettings />}
+        {id === ToolIds.Camera && <CameraSettings />}
+        {id === ToolIds.Clipboard && <ClipboardSettings />}
+        {id === ToolIds.Palette && <PaletteSettings />}
       </ToolboxToolContext.Provider>
     </div>
   )

@@ -38,7 +38,7 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./screen-brush.module.scss"
+import styles from "./brush-canvas.module.scss"
 
 type PointerInputEvent =
   | React.TouchEvent<HTMLCanvasElement>
@@ -54,7 +54,7 @@ type BrushModeInputHandlers = {
   [key in BrushModes]: BrushInputHandler
 }
 
-interface ScreenBrushProps {
+interface BrushCanvasProps {
   camera: Rect
   brushColor: PaletteColor
   brushSize: BrushSizes
@@ -90,7 +90,7 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-export function ScreenBrush({
+export function BrushCanvas({
   brushColor,
   brushMode,
   brushSize,
@@ -104,7 +104,7 @@ export function ScreenBrush({
   spritesheetPng,
   updateSpritesheet,
   webview,
-}: ScreenBrushProps): React.ReactElement {
+}: BrushCanvasProps): React.ReactElement {
   const canvas = React.useRef<HTMLCanvasElement>()
   const ctx = React.useRef<CanvasRenderingContext2D>()
   const image = React.useRef<HTMLImageElement>()
@@ -583,4 +583,4 @@ export function ScreenBrush({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenBrush)
+export default connect(mapStateToProps, mapDispatchToProps)(BrushCanvas)

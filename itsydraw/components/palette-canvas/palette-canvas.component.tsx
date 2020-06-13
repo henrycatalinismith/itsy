@@ -15,9 +15,9 @@ import { Layer, Stage } from "react-konva"
 import { RectConfig } from "konva/types/shapes/Rect"
 import { Rect } from "react-konva"
 import { connect, Provider, ReactReduxContext } from "react-redux"
-import styles from "./screen-palette.module.scss"
+import styles from "./palette-canvas.module.scss"
 
-interface ScreenPaletteProps {
+interface PaletteCanvasProps {
   brushColor: PaletteColor
   palette: Palette
   changeBrushColor: (i: PaletteIndex) => void
@@ -32,11 +32,11 @@ const mapDispatchToProps = {
   changeBrushColor,
 }
 
-export function ScreenPalette({
+export function PaletteCanvas({
   brushColor,
   changeBrushColor,
   palette,
-}: ScreenPaletteProps): React.ReactElement {
+}: PaletteCanvasProps): React.ReactElement {
   const { rect } = React.useContext(ScreenContext)
   const { store } = React.useContext(ReactReduxContext)
 
@@ -113,4 +113,4 @@ export function ScreenPalette({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenPalette)
+export default connect(mapStateToProps, mapDispatchToProps)(PaletteCanvas)

@@ -4,9 +4,9 @@ import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import { hex } from "wcag-contrast"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-tool-palette.module.scss"
+import styles from "./palette-settings.module.scss"
 
-interface ToolboxToolPaletteProps {
+interface PaletteSettingsProps {
   brushColor: PaletteColor
 }
 
@@ -16,9 +16,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {}
 
-export function ToolboxToolPalette({
+export function PaletteSettings({
   brushColor,
-}: ToolboxToolPaletteProps): React.ReactElement {
+}: PaletteSettingsProps): React.ReactElement {
   const style = {
     backgroundColor: brushColor.hex,
   }
@@ -49,4 +49,4 @@ export function ToolboxToolPalette({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToolboxToolPalette)
+export default connect(mapStateToProps, mapDispatchToProps)(PaletteSettings)

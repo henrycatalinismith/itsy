@@ -1,7 +1,7 @@
-import ScreenBrush from "@highvalley.systems/itsydraw/components/screen-brush"
-import ScreenCamera from "@highvalley.systems/itsydraw/components/screen-camera"
-import ScreenClipboard from "@highvalley.systems/itsydraw/components/screen-clipboard"
-import ScreenPalette from "@highvalley.systems/itsydraw/components/screen-palette"
+import BrushCanvas from "@highvalley.systems/itsydraw/components/brush-canvas"
+import CameraCanvas from "@highvalley.systems/itsydraw/components/camera-canvas"
+import ClipboardCanvas from "@highvalley.systems/itsydraw/components/clipboard-canvas"
+import PaletteCanvas from "@highvalley.systems/itsydraw/components/palette-canvas"
 import {
   Tool,
   ToolIds,
@@ -27,10 +27,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {}
 
 const screenMap: { [key in ToolIds]: React.ReactElement } = {
-  [ToolIds.Brush]: <ScreenBrush />,
-  [ToolIds.Camera]: <ScreenCamera />,
-  [ToolIds.Palette]: <ScreenPalette />,
-  [ToolIds.Clipboard]: <ScreenClipboard />,
+  [ToolIds.Brush]: <BrushCanvas />,
+  [ToolIds.Camera]: <CameraCanvas />,
+  [ToolIds.Clipboard]: <ClipboardCanvas />,
+  [ToolIds.Palette]: <PaletteCanvas />,
 }
 
 export function Screen({ tools }: ScreenProps): React.ReactElement {

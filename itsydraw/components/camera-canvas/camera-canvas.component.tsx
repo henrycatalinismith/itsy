@@ -10,9 +10,9 @@ import cx from "classnames"
 import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./screen-camera.module.scss"
+import styles from "./camera-canvas.module.scss"
 
-interface ScreenCameraProps {
+interface CameraCanvasProps {
   camera: Rect
   spritesheet: string
   panCamera: (x: number, y: number) => void
@@ -31,11 +31,11 @@ const mapDispatchToProps = {
   panCamera,
 }
 
-export function ScreenCamera({
+export function CameraCanvas({
   camera,
   spritesheet,
   panCamera,
-}: ScreenCameraProps): React.ReactElement {
+}: CameraCanvasProps): React.ReactElement {
   const rect = React.useRef<Rect>({
     x: camera.x,
     y: camera.y,
@@ -188,4 +188,4 @@ export function ScreenCamera({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenCamera)
+export default connect(mapStateToProps, mapDispatchToProps)(CameraCanvas)

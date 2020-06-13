@@ -13,9 +13,9 @@ import _ from "lodash"
 import React from "react"
 import { connect } from "react-redux"
 import ScreenContext from "../screen/screen.context"
-import styles from "./screen-clipboard.module.scss"
+import styles from "./clipboard-canvas.module.scss"
 
-interface ScreenClipboardProps {
+interface ClipboardCanvasProps {
   camera: Rect
   clipboard: Rect
   spritesheet: string
@@ -34,13 +34,13 @@ const mapDispatchToProps = {
   setClipboard,
 }
 
-export function ScreenClipboard({
+export function ClipboardCanvas({
   camera,
   clipboard,
   spritesheet,
   setClipboard,
   status,
-}: ScreenClipboardProps): React.ReactElement {
+}: ClipboardCanvasProps): React.ReactElement {
   const origin = React.useRef<Point>({
     x: 0,
     y: 0,
@@ -204,4 +204,4 @@ export function ScreenClipboard({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ScreenClipboard)
+export default connect(mapStateToProps, mapDispatchToProps)(ClipboardCanvas)
