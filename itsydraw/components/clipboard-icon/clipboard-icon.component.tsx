@@ -54,10 +54,10 @@ export function ClipboardIcon({
   }
 
   const outline: React.SVGAttributes<SVGRectElement> = {
-    x: clipboardRect.x - 4,
-    y: clipboardRect.y - 4,
-    width: clipboardRect.width + 4,
-    height: clipboardRect.height + 4,
+    x: clipboardRect.x - 1,
+    y: clipboardRect.y - 1,
+    width: clipboardRect.width + 1,
+    height: clipboardRect.height + 1,
     fill: "none",
     stroke: pico8[14],
     strokeDasharray: Math.max(clipboardRect.width, clipboardRect.height) / 16,
