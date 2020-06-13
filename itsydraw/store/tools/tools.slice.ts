@@ -270,12 +270,19 @@ const reducers = {
   },
 
   zoom(tools, action: PayloadAction<number>): void {
-    const camera = tools[ToolIds.Camera]
-    camera.width = 128 / action.payload
-    camera.height = 128 / action.payload
-    camera.x = _.clamp(camera.x, 0, 127 - camera.width)
-    camera.y = _.clamp(camera.y, 0, 127 - camera.height)
+    tools[ToolIds.Camera] = {
+      ...tools[ToolIds.Camera],
+      ...applyZoom(tools[ToolIds.Camera], action.payload),
+    }
   },
+}
+
+export function applyZoom(before: Rect, zoom: number): Rect {
+  const width = 128 / zoom
+  const height = 128 / zoom
+  const x = _.clamp(before.x, 0, 127 - width)
+  const y = _.clamp(before.y, 0, 127 - height)
+  return { width, height, x, y }
 }
 
 const slice = createSlice({

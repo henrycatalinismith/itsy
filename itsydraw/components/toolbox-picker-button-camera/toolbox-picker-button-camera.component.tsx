@@ -1,3 +1,4 @@
+import CameraIcon from "@highvalley.systems/itsydraw/components/camera-icon"
 import ToolboxPickerButton from "@highvalley.systems/itsydraw/components/toolbox-picker-button"
 import { selectSpritesheetPng } from "@highvalley.systems/itsydraw/store/spritesheet"
 import { selectCamera, ToolIds } from "@highvalley.systems/itsydraw/store/tools"
@@ -22,55 +23,9 @@ export function ToolboxPickerButtonCamera({
   camera,
   spritesheet,
 }: ToolboxPickerButtonCameraProps): React.ReactElement {
-  const svg: React.SVGAttributes<SVGElement> = {
-    className: styles.component,
-    viewBox: "-8 -8 144 144",
-    preserveAspectRatio: "xMidYMid meet",
-    width: "100%",
-    height: "100%",
-  }
-
-  const image: React.SVGAttributes<SVGImageElement> = {
-    className: styles.image,
-    x: 0,
-    y: 0,
-    width: 128,
-    height: 128,
-    href: `data:image/png;base64,${spritesheet}`,
-    mask: "url(#camera)",
-  }
-
-  const frame: React.SVGAttributes<SVGRectElement> = {
-    className: styles.frame,
-    ...camera,
-  }
-
   return (
     <ToolboxPickerButton id={ToolIds.Camera}>
-      <svg {...svg}>
-        <defs>
-          <mask id="camera">
-            <rect
-              x={0}
-              y={0}
-              width={128}
-              height={128}
-              fill="#fff"
-              opacity={0.9}
-            />
-            <rect
-              x={camera.x}
-              y={camera.y}
-              width={camera.width}
-              height={camera.height}
-              fill="#fff"
-              opacity={1}
-            />
-          </mask>
-        </defs>
-        <image {...image} />
-        <rect {...frame} />
-      </svg>
+      <CameraIcon spritesheet={spritesheet} camera={camera} />
     </ToolboxPickerButton>
   )
 }
