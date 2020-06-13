@@ -58,47 +58,47 @@ export enum BrushModeStatuses {
   Inactive = "Inactive",
 }
 
-export interface BrushModeState {
+export type BrushModeState<T extends {}> = T & {
   id: BrushModes
   status: BrushModeStatuses
   rank: number
 }
 
-export interface PencilBrushState extends BrushModeState {
+export interface PencilBrushState {
   id: BrushModes.Pencil
   color: PaletteIndex
   size: BrushSizes
 }
 
-export interface LineBrushState extends BrushModeState {
+export interface LineBrushState {
   id: BrushModes.Line
   color: PaletteIndex
   size: BrushSizes
   angle: LineAngles
 }
 
-export interface CircleBrushState extends BrushModeState {
+export interface CircleBrushState {
   id: BrushModes.Circle
   color: PaletteIndex
   size: BrushSizes
   style: CircleStyles
 }
 
-export interface FillBrushState extends BrushModeState {
+export interface FillBrushState {
   id: BrushModes.Fill
   color: PaletteIndex
 }
 
-export interface PasteBrushState extends BrushModeState {
+export interface PasteBrushState {
   id: BrushModes.Paste
 }
 
 export interface BrushesState {
-  [BrushModes.Circle]: CircleBrushState
-  [BrushModes.Line]: LineBrushState
-  [BrushModes.Pencil]: PencilBrushState
-  [BrushModes.Fill]: FillBrushState
-  [BrushModes.Paste]: PasteBrushState
+  [BrushModes.Circle]: BrushModeState<CircleBrushState>
+  [BrushModes.Line]: BrushModeState<LineBrushState>
+  [BrushModes.Pencil]: BrushModeState<PencilBrushState>
+  [BrushModes.Fill]: BrushModeState<FillBrushState>
+  [BrushModes.Paste]: BrushModeState<PasteBrushState>
 }
 
 export interface CameraState extends ToolState, Rect {
@@ -466,10 +466,22 @@ export const selectPencilBrush = createSelector(
   (brushes): PencilBrushState => brushes[BrushModes.Pencil]
 )
 
-export const selectActiveBrushMode = createSelector(
+export const selectActiveBrush = createSelector(
   [selectBrushes],
-  (brushes): BrushModes =>
-    _.find(brushes, { status: BrushModeStatuses.Active }).id
+  (
+    brushes
+  ): BrushModeState<
+    | CircleBrushState
+    | FillBrushState
+    | LineBrushState
+    | PasteBrushState
+    | PencilBrushState
+  > => _.find(brushes, { status: BrushModeStatuses.Active })
+)
+
+export const selectActiveBrushMode = createSelector(
+  [selectActiveBrush],
+  (brush): BrushModes => brush.id
 )
 
 export const selectBrushColor = createSelector(

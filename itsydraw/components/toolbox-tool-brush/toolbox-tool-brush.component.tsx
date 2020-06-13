@@ -1,8 +1,4 @@
-import BrushIconCircle from "@highvalley.systems/itsydraw/components/brush-icon-circle"
-import BrushIconFill from "@highvalley.systems/itsydraw/components/brush-icon-fill"
-import BrushIconPaste from "@highvalley.systems/itsydraw/components/brush-icon-paste"
-import BrushIconPencil from "@highvalley.systems/itsydraw/components/brush-icon-pencil"
-import BrushIconLine from "@highvalley.systems/itsydraw/components/brush-icon-line"
+import BrushIcon from "@highvalley.systems/itsydraw/components/brush-icon"
 import ModePicker, {
   ModePickerItems,
 } from "@highvalley.systems/itsydraw/components/mode-picker"
@@ -56,7 +52,15 @@ export function ToolboxToolBrush({
 
   modes[BrushModes.Pencil] = {
     active: brushMode === BrushModes.Pencil,
-    icon: <BrushIconPencil color={brushColor.hex} size={brushSize} />,
+    icon: (
+      <BrushIcon
+        brush={{
+          id: BrushModes.Pencil,
+          color: brushColor.id,
+          size: brushSize,
+        }}
+      />
+    ),
     label: "Pencil",
     meta: <Pixlflip fontSize={16}>{`${brushSize}x`}</Pixlflip>,
     rank: 0,
@@ -64,7 +68,16 @@ export function ToolboxToolBrush({
 
   modes[BrushModes.Line] = {
     active: brushMode === BrushModes.Line,
-    icon: <BrushIconLine />,
+    icon: (
+      <BrushIcon
+        brush={{
+          id: BrushModes.Line,
+          color: brushColor.id,
+          size: brushSize,
+          angle: lineAngle,
+        }}
+      />
+    ),
     label: "Line",
     meta: <Pixlflip fontSize={16}>{lineAngle}</Pixlflip>,
     rank: 1,
@@ -72,7 +85,16 @@ export function ToolboxToolBrush({
 
   modes[BrushModes.Circle] = {
     active: brushMode === BrushModes.Circle,
-    icon: <BrushIconCircle />,
+    icon: (
+      <BrushIcon
+        brush={{
+          id: BrushModes.Circle,
+          color: brushColor.id,
+          size: brushSize,
+          style: circleStyle,
+        }}
+      />
+    ),
     label: "Circle",
     meta: <Pixlflip fontSize={16}>{circleStyle}</Pixlflip>,
     rank: 2,
@@ -80,7 +102,14 @@ export function ToolboxToolBrush({
 
   modes[BrushModes.Fill] = {
     active: brushMode === BrushModes.Fill,
-    icon: <BrushIconFill color={brushColor.hex} />,
+    icon: (
+      <BrushIcon
+        brush={{
+          id: BrushModes.Fill,
+          color: brushColor.id,
+        }}
+      />
+    ),
     label: "Fill",
     meta: <></>,
     rank: 3,
@@ -88,7 +117,7 @@ export function ToolboxToolBrush({
 
   modes[BrushModes.Paste] = {
     active: brushMode === BrushModes.Paste,
-    icon: <BrushIconPaste />,
+    icon: <BrushIcon brush={{ id: BrushModes.Paste }} />,
     label: "Paste",
     meta: <></>,
     rank: 4,
