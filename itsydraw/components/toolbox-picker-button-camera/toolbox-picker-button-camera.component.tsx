@@ -5,7 +5,6 @@ import { selectCamera, ToolIds } from "@highvalley.systems/itsydraw/store/tools"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { connect } from "react-redux"
-import styles from "./toolbox-picker-button-camera.module.scss"
 
 interface ToolboxPickerButtonCameraProps {
   camera: Rect
