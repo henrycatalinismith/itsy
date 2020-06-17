@@ -47,7 +47,7 @@ export function DrawPanelWebview({
   }
 
   events["spritesheet/update"] = async (payload: any): Promise<void> => {
-    updateSpritesheet(payload.uri)
+    updateSpritesheet(payload.png)
   }
 
   const id = WebviewIds.draw

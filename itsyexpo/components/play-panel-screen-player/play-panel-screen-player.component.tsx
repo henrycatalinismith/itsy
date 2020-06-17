@@ -2,6 +2,7 @@ import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
 import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
   selectPlayer,
+  PlayerModes,
   PlayerState,
   stop,
 } from "@highvalley.systems/itsyexpo/store/player"
@@ -36,7 +37,7 @@ export function PlayPanelScreenPlayer({
   const webview = React.useRef()
 
   React.useEffect(() => {
-    if (player.stopping) {
+    if (player.mode === PlayerModes.Halt) {
       console.log("triggering snapshot")
       webview.current.injectJavaScript(`
         itsy.pauseMainLoop()
@@ -80,7 +81,7 @@ export function PlayPanelScreenPlayer({
         true;
       `)
     }
-  }, [player.stopping])
+  }, [player.mode])
 
   const onMessage = (event) => {
     const message = JSON.parse(event.nativeEvent.data)
@@ -98,6 +99,7 @@ export function PlayPanelScreenPlayer({
 
       case "snapshot":
         saveSnapshot(message.uri)
+
         break
     }
   }
