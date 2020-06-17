@@ -19,8 +19,8 @@ export function Devtools({}: DevtoolsProps) {
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
       <AppHeader />
       <View style={styles.component}>
-        <PanelMode />
         <PanelPicker />
+        <PanelMode />
       </View>
     </>
   )

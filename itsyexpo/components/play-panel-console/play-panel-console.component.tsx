@@ -14,8 +14,8 @@ const mapDispatchToProps = {}
 export function PlayPanelConsole({}: PlayPanelConsoleProps) {
   return (
     <View style={styles.component}>
-      <PlayPanelConsoleOutput />
       <PlayPanelConsoleToolbar />
+      <PlayPanelConsoleOutput />
     </View>
   )
 }
