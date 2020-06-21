@@ -36,11 +36,9 @@ export function PanelPicker({ panelMode, panels }: PanelPickerProps) {
     case PanelModes.tiles:
       return (
         <View style={[styles.component, styles.tiles]}>
-          <View style={[styles.corner]}>
-            {panels.map((panel) => (
-              <PanelPickerButton key={panel.id} id={panel.id} />
-            ))}
-          </View>
+          {panels.map((panel) => (
+            <PanelPickerButton key={panel.id} id={panel.id} />
+          ))}
         </View>
       )
   }

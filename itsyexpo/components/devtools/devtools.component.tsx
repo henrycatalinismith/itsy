@@ -1,6 +1,5 @@
 import AppHeader from "@highvalley.systems/itsyexpo/components/app-header"
 import PanelMode from "@highvalley.systems/itsyexpo/components/panel-mode"
-import PanelPicker from "@highvalley.systems/itsyexpo/components/panel-picker"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
 import { StatusBar, View } from "react-native"
@@ -19,7 +18,6 @@ export function Devtools({}: DevtoolsProps) {
       <StatusBar backgroundColor={colors[2]} barStyle="light-content" />
       <AppHeader />
       <View style={styles.component}>
-        <PanelPicker />
         <PanelMode />
       </View>
     </>

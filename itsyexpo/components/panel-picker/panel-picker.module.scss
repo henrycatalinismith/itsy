@@ -1,27 +1,30 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
-  border: 2px solid pico8-original-palette(2);
-  border-bottom-width: 0;
-  border-top-width: 0;
-  background-color: pico8-original-palette(14);
+  // border: 2px solid pico8-original-palette(2);
+  // border-bottom-width: 0;
+  // border-top-width: 0;
   height: 32px;
-  padding: 4px;
-  position: relative;
+  // padding: 4px;
 }
 
 .slide {
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .tiles {
+  flex: 1;
+  width: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .corner {
   flex-direction: row;
-  justify-content: space-between;
   align-items: flex-end;
   width: 256px;
 }

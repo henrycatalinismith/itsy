@@ -5,8 +5,60 @@
   background-color: pico8-original-palette(14);
   border-bottom-width: 0;
   flex-direction: row;
-  align-items: center;
-  height: 32px;
   padding: 4px;
   position: relative;
+}
+
+.slideLayout {
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.slideLayoutFirstRow {
+  align-items: center;
+  flex-direction: row;
+  height: 32px;
+}
+
+.slideLayoutFirstRowLeftColumn {
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  height: 32px;
+}
+
+.slideLayoutFirstRowRightColumn {
+  flex: 1;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  height: 32px;
+}
+
+.tileLayout {
+  flex: 1;
+  flex-direction: row;
+  height: 32px;
+}
+
+.tileLayoutCenter {
+  align-items: center;
+  flex: 3;
+  justify-content: center;
+}
+
+.tileLayoutLeftCorner {
+  align-items: center;
+  flex: 3;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.tileLayoutRightCorner {
+  align-items: center;
+  flex: 3;
+  flex-direction: row;
+  justify-content: flex-end;
 }
