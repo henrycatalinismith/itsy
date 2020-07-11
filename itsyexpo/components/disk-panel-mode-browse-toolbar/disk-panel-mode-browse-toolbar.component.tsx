@@ -8,21 +8,25 @@ import {
   DiskPanelModes,
   setDiskPanelMode,
 } from "@highvalley.systems/itsyexpo/store/panels"
+import {
+  HomeScreenModes,
+  setHomeScreenMode,
+} from "@highvalley.systems/itsyexpo/store/screens"
 import React from "react"
 import { connect } from "react-redux"
 
 interface DiskPanelModeBrowseToolbarProps {
-  setDiskPanelMode: (mode: DiskPanelModes) => void
+  setHomeScreenMode: (mode: HomeScreenModes) => void
 }
 
 const mapStateToProps = (state, { id }) => ({})
 
 const mapDispatchToProps = {
-  setDiskPanelMode,
+  setHomeScreenMode,
 }
 
 export function DiskPanelModeBrowseToolbar({
-  setDiskPanelMode,
+  setHomeScreenMode,
 }: DiskPanelModeBrowseToolbarProps) {
   const buttons = []
   const theme = ToolbarThemes.DiskPanelBrowser
@@ -30,12 +34,12 @@ export function DiskPanelModeBrowseToolbar({
   buttons.push({
     label: "new",
     action: React.useCallback(() => {
-      setDiskPanelMode(DiskPanelModes.Create)
+      setHomeScreenMode(HomeScreenModes.Create)
     }, []),
     theme: ButtonThemes.Blue,
   })
 
-  buttons.push(<HelpButton path="/disk/browse" />)
+  // buttons.push(<HelpButton path="/disk/browse" />)
 
   const toolbar: ToolbarProps = {
     buttons,

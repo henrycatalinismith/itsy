@@ -1,13 +1,17 @@
+import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
+import { StackNavigationProp } from "@react-navigation/stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import Code from "@highvalley.systems/itsyexpo/screens/code"
-import Draw from "@highvalley.systems/itsyexpo/screens/draw"
-import Meta from "@highvalley.systems/itsyexpo/screens/meta"
+import Code from "@highvalley.systems/itsyexpo/screens/code/code.screen"
+import Draw from "@highvalley.systems/itsyexpo/screens/draw/draw.screen"
+import Meta from "@highvalley.systems/itsyexpo/screens/meta/meta.screen"
 import Play from "@highvalley.systems/itsyexpo/screens/play"
 import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
 import React from "react"
 import { connect } from "react-redux"
 
-interface DiskScreenProps {}
+interface DiskScreenProps {
+  navigation: StackNavigationProp<RootStackParamList, "Disk">
+}
 
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}

@@ -24,6 +24,7 @@ import output from "./output"
 import player from "./player"
 import safeArea from "./safe-area"
 import screen from "./screen"
+import screens from "./screens"
 import starters from "./starters"
 import storage from "./storage"
 import webviews from "./webviews"
@@ -40,6 +41,7 @@ const reducer = combineReducers({
   player: player.reducer,
   safeArea: safeArea.reducer,
   screen: screen.reducer,
+  screens: screens.reducer,
   starters: starters.reducer,
   storage: storage.reducer,
   webviews: webviews.reducer,
@@ -146,6 +148,7 @@ exports.panels = panels
 exports.player = player
 exports.safeArea = safeArea
 exports.screen = screen
+exports.screens = screens
 exports.starters = starters
 exports.storage = storage
 exports.webviews = webviews

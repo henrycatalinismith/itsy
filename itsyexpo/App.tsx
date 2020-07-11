@@ -9,13 +9,18 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
 import { Provider } from "react-redux"
 
-import Code from "./screens/code"
-import Disk from "./screens/disk"
-import Home from "./screens/home"
+import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
+import Code from "./screens/code/code.screen"
+import Disk from "./screens/disk/disk.screen"
+import Home from "./screens/home/home.screen"
 
 import store from "./store"
 
 import { loadDisks } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  ScreenIds,
+  focusScreen,
+} from "@highvalley.systems/itsyexpo/store/screens"
 import { importStarters } from "@highvalley.systems/itsyexpo/store/starters"
 
 import {
@@ -27,8 +32,7 @@ import {
 
 import { resizeScreen } from "@highvalley.systems/itsyexpo/store/screen"
 
-const Stack = createStackNavigator()
-const AppNavigator = createStackNavigator()
+const Stack = createStackNavigator<RootStackParamList>()
 
 function App({ skipLoadingScreen }): React.ReactElement {
   const keyboardDidHideListener = React.useRef<EmitterSubscription>()

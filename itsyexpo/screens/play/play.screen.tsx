@@ -1,3 +1,5 @@
+import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
+import { StackNavigationProp } from "@react-navigation/stack"
 import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel-console"
 import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
 import {
@@ -14,6 +16,7 @@ import { connect } from "react-redux"
 import styles from "./play.module.scss"
 
 interface PlayScreenProps {
+  navigation: StackNavigationProp<RootStackParamList, "Play">
   player: PlayerState
   screen: ScreenState
 }
