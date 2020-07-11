@@ -1,23 +1,23 @@
-import CodePanel from "@highvalley.systems/itsyexpo/components/code-panel"
+import DrawPanel from "@highvalley.systems/itsyexpo/components/draw-panel"
 import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
 import React from "react"
 import { connect } from "react-redux"
 
-interface CodeScreenProps {}
+interface DrawScreenProps {}
 
 const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
-export function CodeScreen({}: CodeScreenProps) {
+export function DrawScreen({}: DrawScreenProps) {
   return (
     <SafeArea>
-      <CodePanel />
+      <DrawPanel />
     </SafeArea>
   )
 }
 
-CodeScreen.navigationOptions = {
+DrawScreen.navigationOptions = {
   header: <></>,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CodeScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(DrawScreen)

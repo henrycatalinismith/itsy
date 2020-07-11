@@ -1,14 +1,17 @@
+import "react-native-gesture-handler"
 import { AppLoading } from "expo"
 import * as ScreenOrientation from "expo-screen-orientation"
 import * as Font from "expo-font"
 import React from "react"
 import { EmitterSubscription, Keyboard, Dimensions } from "react-native"
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import { createAppContainer } from "react-navigation"
-import { createStackNavigator } from "react-navigation-stack"
+import { createStackNavigator } from "@react-navigation/stack"
+import { NavigationContainer } from "@react-navigation/native"
 import { Provider } from "react-redux"
 
 import Code from "./screens/code"
+import Disk from "./screens/disk"
+import Home from "./screens/home"
 
 import store from "./store"
 
@@ -24,14 +27,8 @@ import {
 
 import { resizeScreen } from "@highvalley.systems/itsyexpo/store/screen"
 
-const routes = {
-  Code: {
-    screen: Code,
-  },
-}
-
-const AppNavigator = createStackNavigator(routes)
-const AppContainer = createAppContainer(AppNavigator)
+const Stack = createStackNavigator()
+const AppNavigator = createStackNavigator()
 
 function App({ skipLoadingScreen }): React.ReactElement {
   const keyboardDidHideListener = React.useRef<EmitterSubscription>()
@@ -108,11 +105,17 @@ function App({ skipLoadingScreen }): React.ReactElement {
   }
 
   return (
-    <SafeAreaProvider>
-      <Provider store={store}>
-        <AppContainer />
-      </Provider>
-    </SafeAreaProvider>
+    <NavigationContainer>
+      <SafeAreaProvider>
+        <Provider store={store}>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Code" component={Code} />
+            <Stack.Screen name="Disk" component={Disk} />
+          </Stack.Navigator>
+        </Provider>
+      </SafeAreaProvider>
+    </NavigationContainer>
   )
 }
 

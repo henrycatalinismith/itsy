@@ -17,7 +17,6 @@ const mapDispatchToProps = {}
 export function DiskPanelModeInspect({}: DiskPanelModeInspectProps) {
   return (
     <DiskPanelSubmodeInspect>
-      <DiskPanelModeInspectPanels />
       <DiskPanelModeInspectActions />
     </DiskPanelSubmodeInspect>
   )

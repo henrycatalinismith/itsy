@@ -1,10 +1,5 @@
 import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel-console"
 import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
-import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
-import {
-  PanelAvailabilities,
-  selectPlayPanelAvailability,
-} from "@highvalley.systems/itsyexpo/store/panels"
 import {
   PlayerState,
   selectPlayer,
@@ -14,47 +9,47 @@ import {
   selectScreen,
 } from "@highvalley.systems/itsyexpo/store/screen"
 import React from "react"
-import { LayoutRectangle, View } from "react-native"
+import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./play-panel.module.scss"
+import styles from "./play.module.scss"
 
-interface PlayPanelProps {
-  playPanelAvailability: PanelAvailabilities
+interface PlayScreenProps {
   player: PlayerState
   screen: ScreenState
 }
 
 const mapStateToProps = (state) => ({
-  playPanelAvailability: selectPlayPanelAvailability(state),
   player: selectPlayer(state),
   screen: selectScreen(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PlayPanel({
-  playPanelAvailability,
-  player,
-  screen,
-}: PlayPanelProps) {
-  const panelLayout = React.useContext<LayoutRectangle>(LayoutContext)
+export function PlayScreen({ player, screen }: PlayScreenProps) {
+  const [layout, setLayout] = React.useState<LayoutRectangle>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  })
+
+  const onLayout = React.useCallback((event: LayoutChangeEvent) => {
+    setLayout(event.nativeEvent.layout)
+  }, [])
+
   const panelStyles = [styles.playPanel]
   const screenStyles = [styles.screen]
 
-  if (panelLayout.width > panelLayout.height) {
+  if (layout.width > layout.height) {
     panelStyles.push(styles.landscape)
-    screenStyles.push({ width: panelLayout.height - 4 })
+    screenStyles.push({ width: layout.height - 4 })
   } else {
     panelStyles.push(styles.portrait)
-    screenStyles.push({ height: panelLayout.width })
-  }
-
-  if (playPanelAvailability === PanelAvailabilities.Unavailable) {
-    return <></>
+    screenStyles.push({ height: layout.width })
   }
 
   return (
-    <View style={panelStyles}>
+    <View style={panelStyles} onLayout={onLayout}>
       <View style={screenStyles}>
         <PlayPanelScreen />
       </View>
@@ -66,4 +61,4 @@ export function PlayPanel({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayPanel)
+export default connect(mapStateToProps, mapDispatchToProps)(PlayScreen)
