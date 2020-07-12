@@ -10,8 +10,6 @@ import {
   selectRankedPanels,
   _Panel,
 } from "@highvalley.systems/itsyexpo/store/panels"
-import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { Animated, LayoutAnimation, View } from "react-native"
 import { connect } from "react-redux"
@@ -20,24 +18,18 @@ import styles from "./panel-mode-slide.module.scss"
 interface PanelModeSlideProps {
   activePanel: _Panel
   panels: _Panel[]
-  safeArea: Rect
 }
 
 const mapStateToProps = (state) => ({
   activePanel: selectVisiblePanel(state),
   panels: selectRankedPanels(state),
-  safeArea: selectSafeArea(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PanelModeSlide({
-  activePanel,
-  panels,
-  safeArea,
-}: PanelModeSlideProps) {
+export function PanelModeSlide({ activePanel, panels }: PanelModeSlideProps) {
   const superwide = {
-    width: safeArea.width * panels.length,
+    width: 1024,
   }
 
   React.useEffect(() => {
@@ -45,7 +37,7 @@ export function PanelModeSlide({
   }, [activePanel.id])
 
   const minus = {
-    marginLeft: safeArea.width * activePanel.rank * -1,
+    marginLeft: 1024,
   }
 
   return (

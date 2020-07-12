@@ -1,6 +1,5 @@
 import delay from "delay"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { selectDevice } from "@highvalley.systems/itsyexpo/store/device"
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
 import _ from "lodash"
 
@@ -274,12 +273,8 @@ export const selectPlayPanelAvailability = createSelector(
   (playPanel): PanelAvailabilities => playPanel.availability
 )
 
-export const selectPanelMode = createSelector([selectDevice], (device) => {
-  if (device.modelName.match(/iPad/)) {
-    return PanelModes.tiles
-  } else {
-    return PanelModes.slide
-  }
+export const selectPanelMode = createSelector([], () => {
+  return PanelModes.slide
 })
 
 export const selectRankedPanels = createSelector(

@@ -21,7 +21,6 @@ interface CodeScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "Code">
   disk: Disk
   editDisk: (lua: string) => void
-  onLoad: () => void
 }
 
 const html = Asset.fromModule(require("../../assets/webviews/itsycode.html"))
@@ -34,7 +33,7 @@ const mapDispatchToProps = {
   editDisk,
 }
 
-export function CodeScreen({ disk, editDisk, onLoad }: CodeScreenProps) {
+export function CodeScreen({ disk, editDisk }: CodeScreenProps) {
   console.log("<CodeScreen /> 🐉")
   const lua = disk && disk.lua
   console.log(lua)
@@ -44,8 +43,6 @@ export function CodeScreen({ disk, editDisk, onLoad }: CodeScreenProps) {
   events["webview/start"] = async function($1, app: WebviewApp): Promise<void> {
     console.log(app)
     app.dispatch("text/change", lua)
-    await delay(Math.pow(2, 8))
-    onLoad()
   }
 
   events["text/change"] = async (payload: any): Promise<void> => {

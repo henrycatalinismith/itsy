@@ -1,17 +1,8 @@
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
-import HelpButton from "@highvalley.systems/itsyexpo/components/help-button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
 } from "@highvalley.systems/itsyexpo/components/toolbar"
-import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/panels"
-import {
-  HomeScreenModes,
-  setHomeScreenMode,
-} from "@highvalley.systems/itsyexpo/store/screens"
 import React from "react"
 import { connect } from "react-redux"
 

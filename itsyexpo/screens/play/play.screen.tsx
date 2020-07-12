@@ -6,10 +6,6 @@ import {
   PlayerState,
   selectPlayer,
 } from "@highvalley.systems/itsyexpo/store/player"
-import {
-  ScreenState,
-  selectScreen,
-} from "@highvalley.systems/itsyexpo/store/screen"
 import React from "react"
 import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
@@ -18,17 +14,15 @@ import styles from "./play.module.scss"
 interface PlayScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "Play">
   player: PlayerState
-  screen: ScreenState
 }
 
 const mapStateToProps = (state) => ({
   player: selectPlayer(state),
-  screen: selectScreen(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PlayScreen({ player, screen }: PlayScreenProps) {
+export function PlayScreen({ player }: PlayScreenProps) {
   const [layout, setLayout] = React.useState<LayoutRectangle>({
     x: 0,
     y: 0,

@@ -7,8 +7,6 @@ import {
   selectPanelMode,
   selectPanels,
 } from "@highvalley.systems/itsyexpo/store/panels"
-import { selectSafeArea } from "@highvalley.systems/itsyexpo/store/safe-area"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
 import _ from "lodash"
 import React from "react"
 import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
@@ -21,14 +19,12 @@ interface PanelProps {
   id: string
   panel: _Panel
   panelMode: PanelModes
-  safeArea: Rect
 }
 
 const mapStateToProps = (state, { id }) => ({
   visiblePanels: selectVisiblePanels(state),
   panel: selectPanels(state)[id],
   panelMode: selectPanelMode(state),
-  safeArea: selectSafeArea(state),
 })
 
 const mapDispatchToProps = {}
@@ -38,7 +34,6 @@ export function Panel({
   children,
   panel,
   panelMode,
-  safeArea,
 }: PanelProps) {
   const [layout, setLayout] = React.useState<LayoutRectangle>({
     x: 0,
@@ -54,11 +49,8 @@ export function Panel({
   switch (panelMode) {
     case PanelModes.slide:
       return (
-        <View style={[styles.slide, { width: safeArea.width }]}>
-          <View
-            style={[styles.inner, { width: safeArea.width - 8 }]}
-            onLayout={onLayout}
-          >
+        <View style={[styles.slide, { width: 1024 }]}>
+          <View style={[styles.inner, { width: 1024 - 8 }]} onLayout={onLayout}>
             <LayoutContext.Provider value={layout}>
               {children}
             </LayoutContext.Provider>

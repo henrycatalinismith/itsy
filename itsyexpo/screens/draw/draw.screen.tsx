@@ -20,7 +20,6 @@ import styles from "./draw.module.scss"
 interface DrawScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "Draw">
   disk: Disk
-  onLoad: () => void
   updateSpritesheet: (png: string) => void
 }
 
@@ -34,11 +33,7 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-export function DrawScreen({
-  disk,
-  onLoad,
-  updateSpritesheet,
-}: DrawScreenProps) {
+export function DrawScreen({ disk, updateSpritesheet }: DrawScreenProps) {
   const events: WebviewBridgeEvents = {}
 
   events["webview/start"] = async function($1, app: WebviewApp): Promise<void> {
@@ -46,7 +41,6 @@ export function DrawScreen({
       app.dispatch("importSpritesheet", disk.spritesheet, disk.palette)
     }
     await delay(Math.pow(2, 8))
-    onLoad()
   }
 
   events["spritesheet/update"] = async (payload: any): Promise<void> => {

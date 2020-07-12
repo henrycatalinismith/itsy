@@ -1,32 +1,31 @@
-import * as itsy from "@highvalley.systems/itsyplay"
-import useAsyncEffect from "use-async-effect"
-import {
-  selectStarters,
-  useStarter,
-} from "@highvalley.systems/itsyexpo/store/starters"
-import Font from "@highvalley.systems/itsyexpo/components/font"
 import Button, {
   ButtonSizes,
   ButtonThemes,
 } from "@highvalley.systems/itsyexpo/components/button"
-import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
-import { StackNavigationProp } from "@react-navigation/stack"
 import DiskPanelModeBrowseToolbar from "@highvalley.systems/itsyexpo/components/disk-panel-mode-browse-toolbar"
 import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
-import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
+import Font from "@highvalley.systems/itsyexpo/components/font"
+import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import {
-  Disk,
-  createDisk,
   createBlankDisk,
+  createDisk,
+  Disk,
   selectDisksForBrowsePanel,
 } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  selectStarters,
+  useStarter,
+} from "@highvalley.systems/itsyexpo/store/starters"
+import words from "@highvalley.systems/itsyexpo/words"
+import * as itsy from "@highvalley.systems/itsyplay"
+import { StackNavigationProp } from "@react-navigation/stack"
 import * as DocumentPicker from "expo-document-picker"
 import * as FileSystem from "expo-file-system"
-import words from "@highvalley.systems/itsyexpo/words"
 import React from "react"
 import { TextInput, View } from "react-native"
 import { connect } from "react-redux"
+import useAsyncEffect from "use-async-effect"
 import styles from "./home.module.scss"
 
 interface HomeScreenProps {
@@ -127,7 +126,7 @@ export function HomeScreen({
   }, [mode])
 
   return (
-    <SafeArea>
+    <View style={styles.component}>
       {mode === HomeScreenModes.List && (
         <>
           <DiskPanelModeBrowseToolbar onNew={onNew} />
@@ -172,7 +171,10 @@ export function HomeScreen({
       )}
 
       {mode === HomeScreenModes.Starter && (
-        <DiskPicker disks={starters} onSelect={onSelectStarter} />
+        <>
+          <Font fontSize={24}>quick start</Font>
+          <DiskPicker disks={starters} onSelect={onSelectStarter} />
+        </>
       )}
 
       {mode === HomeScreenModes.Blank && (
@@ -204,12 +206,8 @@ export function HomeScreen({
       )}
 
       {mode === HomeScreenModes.Import && <Font fontSize={24}>importing</Font>}
-    </SafeArea>
+    </View>
   )
-}
-
-HomeScreen.navigationOptions = {
-  header: <></>,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)
