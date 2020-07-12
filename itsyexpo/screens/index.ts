@@ -5,4 +5,8 @@ export type RootStackParamList = {
   Home: undefined
   Meta: undefined
   Play: undefined
+  New: undefined
+  Blank: undefined
+  Import: undefined
+  Starters: undefined
 }

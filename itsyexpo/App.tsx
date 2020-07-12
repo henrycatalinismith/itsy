@@ -7,12 +7,16 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
 import { Provider } from "react-redux"
 
+import Pixlflip from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
+
 import Code from "./screens/code/code.screen"
 import Disk from "./screens/disk/disk.screen"
 import Home from "./screens/home/home.screen"
+import New from "./screens/new"
 
 import store from "./store"
+import colors from "@highvalley.systems/palettes/pico8/original.es6"
 
 import { loadDisks } from "@highvalley.systems/itsyexpo/store/disks"
 import { importStarters } from "@highvalley.systems/itsyexpo/store/starters"
@@ -48,14 +52,47 @@ function App({ skipLoadingScreen }): React.ReactElement {
     )
   }
 
+  const navigator = {
+    screenOptions: {
+      headerStyle: {
+        backgroundColor: colors[14],
+        borderBottomColor: colors[2],
+        borderBottomWidth: 1,
+      },
+    },
+  }
+
+  const pixlflipHeader = (title: string) => ({
+    options: {
+      headerTitle: (props) => <Pixlflip fontSize={24}>{title}</Pixlflip>,
+    },
+  })
+
   return (
     <NavigationContainer>
       <SafeAreaProvider>
         <Provider store={store}>
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
-            <Stack.Screen name="Code" component={Code} />
-            <Stack.Screen name="Disk" component={Disk} />
+          <Stack.Navigator {...navigator}>
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              {...pixlflipHeader("itsy studio")}
+            />
+            <Stack.Screen
+              name="Code"
+              component={Code}
+              {...pixlflipHeader("itsy studio")}
+            />
+            <Stack.Screen
+              name="Disk"
+              component={Disk}
+              {...pixlflipHeader("disk")}
+            />
+            <Stack.Screen
+              name="New"
+              component={New}
+              {...pixlflipHeader("new disk")}
+            />
           </Stack.Navigator>
         </Provider>
       </SafeAreaProvider>

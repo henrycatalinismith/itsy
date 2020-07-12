@@ -71,12 +71,12 @@ export function HomeScreen({
   const [name, setName] = React.useState("")
 
   const onNew = React.useCallback((disk: Disk) => {
-    setMode(HomeScreenModes.Create)
+    navigation.navigate("New")
   }, [])
 
   const onBlank = React.useCallback(() => {
-    setMode(HomeScreenModes.Blank)
-    setName(words())
+    // setMode(HomeScreenModes.Blank)
+    // setName(words())
   }, [])
 
   const onImport = React.useCallback(() => {
