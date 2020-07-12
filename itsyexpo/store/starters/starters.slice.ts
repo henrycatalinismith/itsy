@@ -45,7 +45,8 @@ export const useStarter = (id: string): Thunk => async (dispatch, getState) => {
     snapshot: starter.snapshot,
     spritesheet: starter.spritesheet,
   }
-  await dispatch(createDisk(disk))
+
+  return await dispatch(createDisk(disk))
 }
 
 const slice = createSlice({

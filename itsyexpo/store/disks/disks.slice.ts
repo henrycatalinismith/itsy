@@ -160,6 +160,8 @@ export const createDisk = (partialDisk: Partial<Disk>): Thunk => async (
 
   await dispatch(slice.actions.create(disk))
   await dispatch(writeValue(disk.uri, disk))
+
+  return disk
 }
 
 export const copyDisk = (name: string): Thunk => async (dispatch, getState) => {
@@ -193,7 +195,7 @@ export const createBlankDisk = (name: string): Thunk => async (dispatch) => {
     "end",
     "",
   ].join("\n")
-  await dispatch(createDisk({ name, lua }))
+  return await dispatch(createDisk({ name, lua }))
 }
 
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {

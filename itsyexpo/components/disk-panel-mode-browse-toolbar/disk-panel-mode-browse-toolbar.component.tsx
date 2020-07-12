@@ -16,26 +16,22 @@ import React from "react"
 import { connect } from "react-redux"
 
 interface DiskPanelModeBrowseToolbarProps {
-  setHomeScreenMode: (mode: HomeScreenModes) => void
+  onNew: () => void
 }
 
 const mapStateToProps = (state, { id }) => ({})
 
-const mapDispatchToProps = {
-  setHomeScreenMode,
-}
+const mapDispatchToProps = {}
 
 export function DiskPanelModeBrowseToolbar({
-  setHomeScreenMode,
+  onNew,
 }: DiskPanelModeBrowseToolbarProps) {
   const buttons = []
   const theme = ToolbarThemes.DiskPanelBrowser
 
   buttons.push({
     label: "new",
-    action: React.useCallback(() => {
-      setHomeScreenMode(HomeScreenModes.Create)
-    }, []),
+    action: onNew,
     theme: ButtonThemes.Blue,
   })
 
