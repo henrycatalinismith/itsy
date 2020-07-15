@@ -6,10 +6,6 @@ import {
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
 import player from "@highvalley.systems/itsyexpo/store/player"
 import {
-  DiskPanelModes,
-  setDiskPanelMode,
-} from "@highvalley.systems/itsyexpo/store/panels"
-import {
   deleteValue,
   readValues,
   writeValue,
@@ -280,7 +276,6 @@ export const shareDisk = (id: string): Thunk => async (dispatch, getState) => {
   }
 
   await Sharing.shareAsync(uri, sharingOptions)
-  await dispatch(setDiskPanelMode(DiskPanelModes.Inspect))
 }
 
 export const stopDisk = (): Thunk => async (dispatch, getState) => {

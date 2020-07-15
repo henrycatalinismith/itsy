@@ -1,6 +1,5 @@
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
-import HelpButton from "@highvalley.systems/itsyexpo/components/help-button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
@@ -95,8 +94,6 @@ export function PlayPanelConsoleToolbar({
     action: () => clearOutput(disk.id),
     label: "clear",
   })
-
-  buttons.push(<HelpButton path="/play" />)
 
   const toolbar: ToolbarProps = {
     buttons,
