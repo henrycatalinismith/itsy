@@ -4,11 +4,11 @@ import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
 import { WebView } from "react-native-webview"
 import { Path, Svg } from "react-native-svg"
-import { TouchableHighlight, TouchableOpacity, View } from "react-native"
+import { TouchableHighlight, View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./play-panel-screen-snapshot.module.scss"
+import styles from "./snapshot.module.scss"
 
-interface PlayPanelScreenSnapshotProps {
+interface SnapshotProps {
   disk: Disk
   playDisk: (disk: Disk) => void
 }
@@ -19,10 +19,7 @@ const mapDispatchToProps = {
   playDisk,
 }
 
-export function PlayPanelScreenSnapshot({
-  disk,
-  playDisk,
-}: PlayPanelScreenSnapshotProps) {
+export function Snapshot({ disk, playDisk }: SnapshotProps) {
   const [active, setActive] = React.useState(false)
 
   const onPressIn = React.useCallback(() => {
@@ -114,7 +111,4 @@ export function PlayPanelScreenSnapshot({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayPanelScreenSnapshot)
+export default connect(mapStateToProps, mapDispatchToProps)(Snapshot)
