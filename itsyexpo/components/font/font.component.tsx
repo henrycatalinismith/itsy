@@ -1,4 +1,4 @@
-import Pixelflip from "@highvalley.systems/pixlflip/regular"
+import Pixlflip from "@highvalley.systems/pixlflip/regular"
 import React from "react"
 import { G, Path, Svg } from "react-native-svg"
 
@@ -18,7 +18,7 @@ export function Font({ children, fg, bg, fontSize = 16 }: FontProps) {
     fg,
     bg,
   }
-  return <Pixelflip {...props}>{children}</Pixelflip>
+  return <Pixlflip {...props}>{children}</Pixlflip>
 }
 
 export default Font

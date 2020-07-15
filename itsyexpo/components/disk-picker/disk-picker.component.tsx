@@ -1,12 +1,10 @@
-import LayoutContext from "@highvalley.systems/itsyexpo/contexts/layout"
-import DiskPickerItem, {
-  DiskPickerItemHeights,
-} from "@highvalley.systems/itsyexpo/components/disk-picker-item"
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
-import { Rect } from "@highvalley.systems/typedefs/itsy"
 import React from "react"
 import { View, VirtualizedList, VirtualizedListProps } from "react-native"
 import { connect } from "react-redux"
+import DiskPickerItem, {
+  DiskPickerItemHeights,
+} from "./disk-picker-item.component"
 import styles from "./disk-picker.module.scss"
 
 interface DiskPickerProps {
@@ -19,19 +17,8 @@ const mapStateToProps = (state, { id }) => ({})
 const mapDispatchToProps = {}
 
 export function DiskPicker({ disks, onSelect }: DiskPickerProps) {
-  const layout: Rect = React.useContext(LayoutContext)
-
-  const narrowWidth = 320
-  const diskIconHeight = (() => {
-    switch (true) {
-      case layout.width < narrowWidth:
-        return DiskPickerItemHeights.Short
-      default:
-        return DiskPickerItemHeights.Tall
-    }
-  })()
-
-  const length = diskIconHeight === DiskPickerItemHeights.Short ? 32 : 64
+  const diskIconHeight = DiskPickerItemHeights.Short
+  const length = 32
 
   const getItem = (data, index) => disks[index]
 

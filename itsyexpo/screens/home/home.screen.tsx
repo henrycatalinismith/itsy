@@ -1,5 +1,8 @@
-import DiskPanelModeBrowseToolbar from "@highvalley.systems/itsyexpo/components/disk-panel-mode-browse-toolbar"
+import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
 import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
+import Toolbar, {
+  ToolbarThemes,
+} from "@highvalley.systems/itsyexpo/components/toolbar"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import {
   Disk,
@@ -36,7 +39,16 @@ export function HomeScreen({ navigation, disks }: HomeScreenProps) {
 
   return (
     <View style={styles.component}>
-      <DiskPanelModeBrowseToolbar onNew={onNew} />
+      <Toolbar
+        theme={ToolbarThemes.DiskPanelBrowser}
+        buttons={[
+          {
+            label: "new",
+            action: onNew,
+            theme: ButtonThemes.Blue,
+          },
+        ]}
+      />
       <DiskPicker disks={disks} onSelect={onSelectDisk} />
     </View>
   )
