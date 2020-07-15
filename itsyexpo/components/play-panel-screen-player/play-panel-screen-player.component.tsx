@@ -1,3 +1,4 @@
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import { saveSnapshot } from "@highvalley.systems/itsyexpo/store/disks"
 import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
@@ -12,8 +13,9 @@ import { connect } from "react-redux"
 import styles from "./play-panel-screen-player.module.scss"
 
 interface PlayPanelScreenPlayerProps {
+  disk: Disk
   player: PlayerState
-  saveSnapshot: (uri: string) => void
+  saveSnapshot: (id: string, uri: string) => void
   stop: () => void
   appendOutput: (text: string) => void
 }
@@ -29,6 +31,7 @@ const mapDispatchToProps = {
 }
 
 export function PlayPanelScreenPlayer({
+  disk,
   appendOutput,
   player,
   saveSnapshot,
@@ -98,8 +101,7 @@ export function PlayPanelScreenPlayer({
         break
 
       case "snapshot":
-        saveSnapshot(message.uri)
-
+        saveSnapshot(disk.id, message.uri)
         break
     }
   }

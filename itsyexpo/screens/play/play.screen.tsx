@@ -1,28 +1,47 @@
-import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
-import { StackNavigationProp } from "@react-navigation/stack"
+import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel-console"
-import PlayPanelScreen from "@highvalley.systems/itsyexpo/components/play-panel-screen"
+import PlayPanelScreenPlayer from "@highvalley.systems/itsyexpo/components/play-panel-screen-player"
+import PlayPanelScreenSnapshot from "@highvalley.systems/itsyexpo/components/play-panel-screen-snapshot"
+import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
+import { DiskTabParamList } from "@highvalley.systems/itsyexpo/screens/disk"
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import {
-  PlayerState,
-  selectPlayer,
+  PlayerModes,
+  selectPlayerMode,
 } from "@highvalley.systems/itsyexpo/store/player"
+import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs"
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native"
+import { StackNavigationProp } from "@react-navigation/stack"
 import React from "react"
 import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
 import { connect } from "react-redux"
 import styles from "./play.module.scss"
 
 interface PlayScreenProps {
-  navigation: StackNavigationProp<RootStackParamList, "Play">
-  player: PlayerState
+  navigation: CompositeNavigationProp<
+    MaterialTopTabNavigationProp<DiskTabParamList, "Play">,
+    StackNavigationProp<RootStackParamList>
+  >
+  disk: Disk
+  playerMode: PlayerModes
+  route: RouteProp<DiskTabParamList, "Play">
 }
 
-const mapStateToProps = (state) => ({
-  player: selectPlayer(state),
+const mapStateToProps = (state, ownProps) => ({
+  disk: state.disks[ownProps.route.params.id],
+  playerMode: selectPlayerMode(state),
 })
 
 const mapDispatchToProps = {}
 
-export function PlayScreen({ player }: PlayScreenProps) {
+export function PlayScreen({
+  disk,
+  navigation,
+  playerMode,
+  route,
+}: PlayScreenProps) {
+  console.log("Play")
+  console.log(route)
   const [layout, setLayout] = React.useState<LayoutRectangle>({
     x: 0,
     y: 0,
@@ -48,7 +67,13 @@ export function PlayScreen({ player }: PlayScreenProps) {
   return (
     <View style={panelStyles} onLayout={onLayout}>
       <View style={screenStyles}>
-        <PlayPanelScreen />
+        {playerMode === PlayerModes.Load ? (
+          <Loading />
+        ) : [PlayerModes.Busy, PlayerModes.Halt].includes(playerMode) ? (
+          <PlayPanelScreenPlayer disk={disk} appendConsoleText={() => {}} />
+        ) : (
+          <PlayPanelScreenSnapshot disk={disk} />
+        )}
       </View>
       <View style={styles.divider} />
       <View style={styles.console}>

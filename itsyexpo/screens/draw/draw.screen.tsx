@@ -1,3 +1,6 @@
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native"
+import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs"
+import { DiskTabParamList } from "@highvalley.systems/itsyexpo/screens/disk"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { StackNavigationProp } from "@react-navigation/stack"
 import delay from "delay"
@@ -18,14 +21,20 @@ import { connect } from "react-redux"
 import styles from "./draw.module.scss"
 
 interface DrawScreenProps {
-  navigation: StackNavigationProp<RootStackParamList, "Draw">
+  navigation: CompositeNavigationProp<
+    MaterialTopTabNavigationProp<DiskTabParamList, "Draw">,
+    StackNavigationProp<RootStackParamList>
+  >
+  route: RouteProp<DiskTabParamList, "Draw">
   disk: Disk
-  updateSpritesheet: (png: string) => void
+  updateSpritesheet: (id: string, png: string) => void
 }
 
-const mapStateToProps = (state) => ({
-  disk: selectActiveDisk(state),
-})
+const mapStateToProps = (state, ownProps) => {
+  return {
+    disk: state.disks[ownProps.route.params.id],
+  }
+}
 
 const html = Asset.fromModule(require("../../assets/webviews/itsydraw.html"))
 
@@ -33,7 +42,12 @@ const mapDispatchToProps = {
   updateSpritesheet,
 }
 
-export function DrawScreen({ disk, updateSpritesheet }: DrawScreenProps) {
+export function DrawScreen({
+  navigation,
+  route,
+  disk,
+  updateSpritesheet,
+}: DrawScreenProps) {
   const events: WebviewBridgeEvents = {}
 
   events["webview/start"] = async function($1, app: WebviewApp): Promise<void> {
@@ -44,7 +58,7 @@ export function DrawScreen({ disk, updateSpritesheet }: DrawScreenProps) {
   }
 
   events["spritesheet/update"] = async (payload: any): Promise<void> => {
-    updateSpritesheet(payload.png)
+    updateSpritesheet(disk.id, payload.png)
   }
 
   const id = WebviewIds.draw

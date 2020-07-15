@@ -1,8 +1,4 @@
-import {
-  Disk,
-  playDisk,
-  selectActiveDisk,
-} from "@highvalley.systems/itsyexpo/store/disks"
+import { Disk, playDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
@@ -14,12 +10,10 @@ import styles from "./play-panel-screen-snapshot.module.scss"
 
 interface PlayPanelScreenSnapshotProps {
   disk: Disk
-  playDisk: () => void
+  playDisk: (disk: Disk) => void
 }
 
-const mapStateToProps = (state) => ({
-  disk: selectActiveDisk(state),
-})
+const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
   playDisk,
@@ -36,8 +30,8 @@ export function PlayPanelScreenSnapshot({
   }, [])
 
   const onPress = React.useCallback(() => {
-    playDisk()
-  }, [])
+    playDisk(disk)
+  }, [disk])
 
   return (
     <View style={styles.component}>

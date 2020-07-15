@@ -206,12 +206,15 @@ export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
   dispatch(deleteValue(disk.uri))
 }
 
-export const editDisk = (lua: string): Thunk => async (dispatch, getState) => {
-  const d = selectActiveDisk(getState())
+export const editDisk = (id: string, lua: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const d = getState().disks[id]
   dispatch(slice.actions.edit({ id: d.id, lua }))
 
   const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = getState().disks[id]
 
   dWrite(dispatch, disk)
 }
@@ -228,7 +231,7 @@ export const loadDisks = (): Thunk => async (dispatch) => {
   dispatch(slice.actions.load(disks))
 }
 
-export const playDisk = (): Thunk => async (dispatch, getState) => {
+export const playDisk = (disk: Disk): Thunk => async (dispatch, getState) => {
   Keyboard.dismiss()
 
   dispatch(player.actions.load())
@@ -236,7 +239,6 @@ export const playDisk = (): Thunk => async (dispatch, getState) => {
   await delay(Math.pow(2, 4))
 
   const state = getState()
-  const disk = selectActiveDisk(state)
   const html = itsy.write(disk)
 
   dispatch(player.actions.play(html))
@@ -294,16 +296,16 @@ export const stopDisk = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.idle())
 }
 
-export const updateSpritesheet = (png: string): Thunk => async (
+export const updateSpritesheet = (id: string, png: string): Thunk => async (
   dispatch,
   getState
 ) => {
   console.log("UPDATING")
-  const d = selectActiveDisk(getState())
+  const d = getState().disks[id]
   dispatch(slice.actions.spritesheet({ id: d.id, spritesheet: png }))
 
   const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = getState().disks[id]
   dispatch(writeValue(disk.uri, disk))
 }
 

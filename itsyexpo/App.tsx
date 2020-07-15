@@ -10,7 +10,6 @@ import { Provider } from "react-redux"
 import Pixlflip from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 
-import Code from "./screens/code/code.screen"
 import Disk from "./screens/disk/disk.screen"
 import Home from "./screens/home/home.screen"
 import New from "./screens/new"
@@ -64,7 +63,9 @@ function App({ skipLoadingScreen }): React.ReactElement {
 
   const pixlflipHeader = (title: string) => ({
     options: {
-      headerTitle: (props) => <Pixlflip fontSize={24}>{title}</Pixlflip>,
+      headerTitle: (props) => {
+        return <Pixlflip fontSize={24}>{title}</Pixlflip>
+      },
     },
   })
 
@@ -79,14 +80,13 @@ function App({ skipLoadingScreen }): React.ReactElement {
               {...pixlflipHeader("itsy studio")}
             />
             <Stack.Screen
-              name="Code"
-              component={Code}
-              {...pixlflipHeader("itsy studio")}
-            />
-            <Stack.Screen
               name="Disk"
               component={Disk}
-              {...pixlflipHeader("disk")}
+              options={({ route }) => ({
+                headerTitle: (
+                  <Pixlflip fontSize={24}>{route.params.name}</Pixlflip>
+                ),
+              })}
             />
             <Stack.Screen
               name="New"

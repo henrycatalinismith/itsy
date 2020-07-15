@@ -1,6 +1,8 @@
+import { CompositeNavigationProp, RouteProp } from "@react-navigation/native"
+import { MaterialTopTabNavigationProp } from "@react-navigation/material-top-tabs"
+import { DiskTabParamList } from "@highvalley.systems/itsyexpo/screens/disk"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { StackNavigationProp } from "@react-navigation/stack"
-import delay from "delay"
 import Webview from "@highvalley.systems/itsyexpo/components/webview"
 import {
   WebviewApp,
@@ -18,25 +20,36 @@ import { connect } from "react-redux"
 import styles from "./code.module.scss"
 
 interface CodeScreenProps {
-  navigation: StackNavigationProp<RootStackParamList, "Code">
+  navigation: CompositeNavigationProp<
+    MaterialTopTabNavigationProp<DiskTabParamList, "Code">,
+    StackNavigationProp<RootStackParamList>
+  >
+  route: RouteProp<DiskTabParamList, "Code">
   disk: Disk
-  editDisk: (lua: string) => void
+  editDisk: (id: string, lua: string) => void
 }
 
 const html = Asset.fromModule(require("../../assets/webviews/itsycode.html"))
 
-const mapStateToProps = (state) => ({
-  disk: selectActiveDisk(state),
-})
+const mapStateToProps = (state, ownProps) => {
+  return {
+    disk: state.disks[ownProps.route.params.id],
+  }
+}
 
 const mapDispatchToProps = {
   editDisk,
 }
 
-export function CodeScreen({ disk, editDisk }: CodeScreenProps) {
+export function CodeScreen({
+  navigation,
+  route,
+  disk,
+  editDisk,
+}: CodeScreenProps) {
   console.log("<CodeScreen /> 🐉")
   const lua = disk && disk.lua
-  console.log(lua)
+  console.log(route)
 
   const events: WebviewBridgeEvents = {}
 
@@ -47,7 +60,7 @@ export function CodeScreen({ disk, editDisk }: CodeScreenProps) {
 
   events["text/change"] = async (payload: any): Promise<void> => {
     if (payload !== lua) {
-      editDisk(payload)
+      editDisk(disk.id, payload)
     }
   }
 
