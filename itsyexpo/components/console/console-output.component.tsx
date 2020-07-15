@@ -1,11 +1,11 @@
-import PlayPanelConsoleOutputLine from "@highvalley.systems/itsyexpo/components/play-panel-console-output-line"
+import { connect } from "react-redux"
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { ScrollView } from "react-native"
-import { connect } from "react-redux"
-import styles from "./play-panel-console-output.module.scss"
+import ConsoleOutputLine from "./console-output-line.component"
+import styles from "./console-output.module.scss"
 
-interface PlayPanelConsoleOutputProps {
+interface ConsoleOutputProps {
   disk: Disk
   output: string[]
 }
@@ -16,10 +16,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = {}
 
-export function PlayPanelConsoleOutput({
-  disk,
-  output,
-}: PlayPanelConsoleOutputProps) {
+export function ConsoleOutput({ disk, output }: ConsoleOutputProps) {
   const view = React.useRef<ScrollView>()
   const [selectedLine, setSelectedLine] = React.useState(-1)
 
@@ -34,7 +31,7 @@ export function PlayPanelConsoleOutput({
   return (
     <ScrollView style={styles.component} ref={view}>
       {output.map((line, i) => (
-        <PlayPanelConsoleOutputLine
+        <ConsoleOutputLine
           key={i}
           text={line}
           selected={selectedLine === i}
@@ -46,7 +43,4 @@ export function PlayPanelConsoleOutput({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayPanelConsoleOutput)
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleOutput)

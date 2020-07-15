@@ -7,7 +7,6 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import Code from "@highvalley.systems/itsyexpo/screens/code/code.screen"
 import Draw from "@highvalley.systems/itsyexpo/screens/draw/draw.screen"
-import Meta from "@highvalley.systems/itsyexpo/screens/meta/meta.screen"
 import Play from "@highvalley.systems/itsyexpo/screens/play"
 import React from "react"
 import { connect } from "react-redux"
@@ -27,7 +26,6 @@ export type DiskTabParamList = {
   Play: { id: string }
   Code: { id: string }
   Draw: { id: string }
-  Meta: { id: string }
 }
 
 const mapStateToProps = (state) => ({})
@@ -48,7 +46,7 @@ export function DiskScreen({ navigation, route }: DiskScreenProps) {
   }, [])
 
   const multitask = !!Device.modelName.match(/iPad/)
-  const tabCount = multitask ? 3 : 4
+  const tabCount = multitask ? 2 : 3
   const tabWidth = tabsLayout.width / tabCount
 
   const tabBarOptions: MaterialTopTabBarOptions = {
@@ -104,11 +102,6 @@ export function DiskScreen({ navigation, route }: DiskScreenProps) {
           <Tab.Screen
             name="Draw"
             component={Draw}
-            initialParams={{ id: route.params.id }}
-          />
-          <Tab.Screen
-            name="Meta"
-            component={Meta}
             initialParams={{ id: route.params.id }}
           />
         </Tab.Navigator>

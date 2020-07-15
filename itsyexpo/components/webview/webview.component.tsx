@@ -4,7 +4,7 @@ import WebviewBridge, {
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import WebviewLoader from "@highvalley.systems/itsyexpo/components/webview-loader"
 import {
-  _Webview,
+  Webview as _Webview,
   WebviewIds,
   loadWebview,
   finishLoadingWebview,

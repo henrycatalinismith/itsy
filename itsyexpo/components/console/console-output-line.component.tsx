@@ -2,9 +2,9 @@ import Button from "@highvalley.systems/itsyexpo/components/button"
 import React from "react"
 import { Clipboard, Text, TouchableHighlight, View } from "react-native"
 import { connect } from "react-redux"
-import styles from "./play-panel-console-output-line.module.scss"
+import styles from "./console-output-line.module.scss"
 
-interface PlayPanelConsoleOutputLineProps {
+interface ConsoleOutputLineProps {
   onSelect: () => void
   selected: boolean
   text: string
@@ -14,11 +14,11 @@ const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {}
 
-export function PlayPanelConsoleOutputLine({
+export function ConsoleOutputLine({
   onSelect,
   selected,
   text,
-}: PlayPanelConsoleOutputLineProps) {
+}: ConsoleOutputLineProps) {
   const onCopy = React.useCallback(() => {
     Clipboard.setString(text)
   }, [])
@@ -50,7 +50,4 @@ export function PlayPanelConsoleOutputLine({
   )
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayPanelConsoleOutputLine)
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleOutputLine)

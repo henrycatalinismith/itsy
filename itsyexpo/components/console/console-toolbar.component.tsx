@@ -1,10 +1,13 @@
-import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
 import Toolbar, {
   ToolbarProps,
   ToolbarThemes,
 } from "@highvalley.systems/itsyexpo/components/toolbar"
-import { playDisk, stopDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import {
+  Disk,
+  playDisk,
+  stopDisk,
+} from "@highvalley.systems/itsyexpo/store/disks"
 import { clearOutput } from "@highvalley.systems/itsyexpo/store/output"
 import {
   PlayerModes,
@@ -15,7 +18,7 @@ import React from "react"
 import { Path, Svg } from "react-native-svg"
 import { connect } from "react-redux"
 
-interface PlayPanelConsoleToolbarProps {
+interface ConsoleToolbarProps {
   disk: Disk
   playerMode: PlayerModes
   clearOutput: (id: string) => void
@@ -33,13 +36,13 @@ const mapDispatchToProps = {
   stopDisk,
 }
 
-export function PlayPanelConsoleToolbar({
+export function ConsoleToolbar({
   disk,
   clearOutput,
   playerMode,
   playDisk,
   stopDisk,
-}: PlayPanelConsoleToolbarProps) {
+}: ConsoleToolbarProps) {
   const buttons = []
   const theme = ToolbarThemes.PlayPanelConsole
 
@@ -103,7 +106,4 @@ export function PlayPanelConsoleToolbar({
   return <Toolbar {...toolbar} />
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayPanelConsoleToolbar)
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleToolbar)
