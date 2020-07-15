@@ -1,21 +1,23 @@
 import PlayPanelConsoleOutputLine from "@highvalley.systems/itsyexpo/components/play-panel-console-output-line"
-import { selectActiveOutput } from "@highvalley.systems/itsyexpo/store/output"
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import React from "react"
 import { ScrollView } from "react-native"
 import { connect } from "react-redux"
 import styles from "./play-panel-console-output.module.scss"
 
 interface PlayPanelConsoleOutputProps {
+  disk: Disk
   output: string[]
 }
 
-const mapStateToProps = (state) => ({
-  output: selectActiveOutput(state),
+const mapStateToProps = (state, ownProps) => ({
+  output: state.output[ownProps.disk.id] || [],
 })
 
 const mapDispatchToProps = {}
 
 export function PlayPanelConsoleOutput({
+  disk,
   output,
 }: PlayPanelConsoleOutputProps) {
   const view = React.useRef<ScrollView>()
@@ -37,6 +39,7 @@ export function PlayPanelConsoleOutput({
           text={line}
           selected={selectedLine === i}
           onSelect={() => setSelectedLine(i)}
+          disk={disk}
         />
       ))}
     </ScrollView>

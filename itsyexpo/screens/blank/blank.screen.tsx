@@ -3,7 +3,6 @@ import Button, {
 } from "@highvalley.systems/itsyexpo/components/button"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
-import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import { createBlankDisk, Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import words from "@highvalley.systems/itsyexpo/words"
 import { StackNavigationProp } from "@react-navigation/stack"
@@ -36,8 +35,10 @@ export function BlankScreen({ navigation, createBlankDisk }: BlankScreenProps) {
 
   const onSubmit = React.useCallback(async () => {
     const disk = await createBlankDisk(name)
-    openDisk(disk.id)
-    navigation.navigate("Disk")
+    navigation.navigate("Disk", {
+      id: disk.id,
+      name: disk.name,
+    })
   }, [name])
 
   return (

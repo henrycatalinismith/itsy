@@ -1,3 +1,4 @@
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import { ButtonThemes } from "@highvalley.systems/itsyexpo/components/button"
 import HelpButton from "@highvalley.systems/itsyexpo/components/help-button"
 import Toolbar, {
@@ -16,8 +17,9 @@ import { Path, Svg } from "react-native-svg"
 import { connect } from "react-redux"
 
 interface PlayPanelConsoleToolbarProps {
+  disk: Disk
   playerMode: PlayerModes
-  clearOutput: () => void
+  clearOutput: (id: string) => void
   playDisk: () => void
   stopDisk: () => void
 }
@@ -33,6 +35,7 @@ const mapDispatchToProps = {
 }
 
 export function PlayPanelConsoleToolbar({
+  disk,
   clearOutput,
   playerMode,
   playDisk,
@@ -89,7 +92,7 @@ export function PlayPanelConsoleToolbar({
   }
 
   buttons.push({
-    action: clearOutput,
+    action: () => clearOutput(disk.id),
     label: "clear",
   })
 

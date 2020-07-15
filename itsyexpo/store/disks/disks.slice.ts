@@ -4,7 +4,6 @@ import {
   spritesheet as defaultSpritesheet,
 } from "@highvalley.systems/itsyexpo/defaults"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { openDisk, selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import player from "@highvalley.systems/itsyexpo/store/player"
 import {
   DiskPanelModes,
@@ -118,17 +117,14 @@ const slice = createSlice({
   reducers,
 })
 
-export const changeDiskSpritesheet = (uri: string): Thunk => async (
-  dispatch,
-  getState
-) => {
-  const d = selectActiveDisk(getState())
-  const action = slice.actions.spritesheet({ id: d.id, spritesheet: uri })
-
+export const changeDiskSpritesheet = (
+  id: string,
+  spritesheet: string
+): Thunk => async (dispatch, getState) => {
+  const action = slice.actions.spritesheet({ id, spritesheet })
   dispatch(action)
 
-  const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = getState().disks[id]
   dispatch(writeValue(disk.uri, disk))
 }
 
@@ -164,9 +160,11 @@ export const createDisk = (partialDisk: Partial<Disk>): Thunk => async (
   return disk
 }
 
-export const copyDisk = (name: string): Thunk => async (dispatch, getState) => {
-  const state = getState()
-  const oldDisk = selectActiveDisk(state)
+export const copyDisk = (oldId: string, name: string): Thunk => async (
+  dispatch,
+  getState
+) => {
+  const oldDisk = getState().disks[oldId]
 
   const id = uuid()
   const uri = makeUri(id)
@@ -199,10 +197,10 @@ export const createBlankDisk = (name: string): Thunk => async (dispatch) => {
 }
 
 export const deleteDisk = (id: string): Thunk => async (dispatch, getState) => {
-  const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = getState().disks[id]
+  const action = slice.actions.delete(id)
 
-  dispatch(slice.actions.delete(id))
+  dispatch(action)
   dispatch(deleteValue(disk.uri))
 }
 
@@ -244,35 +242,30 @@ export const playDisk = (disk: Disk): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.play(html))
 }
 
-export const renameDisk = (name: string): Thunk => async (
+export const renameDisk = (id: string, name: string): Thunk => async (
   dispatch,
   getState
 ) => {
-  const d = selectActiveDisk(getState())
-  const action = slice.actions.rename({ id: d.id, name })
-
+  const action = slice.actions.rename({ id, name })
   dispatch(action)
 
-  const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = getState().disks[id]
   dispatch(writeValue(disk.uri, disk))
 }
 
-export const saveSnapshot = (png: string): Thunk => async (
+export const saveSnapshot = (id: string, snapshot: string): Thunk => async (
   dispatch,
   getState
 ) => {
-  const d = selectActiveDisk(getState())
-  dispatch(slice.actions.snapshot({ id: d.id, snapshot: png }))
+  dispatch(slice.actions.snapshot({ id, snapshot }))
 
   const state = getState()
-  const disk = selectActiveDisk(state)
+  const disk = state.disks[id]
   dispatch(writeValue(disk.uri, disk))
 }
 
-export const shareDisk = (): Thunk => async (dispatch, getState) => {
-  const state = getState()
-  const disk = selectActiveDisk(state)
+export const shareDisk = (id: string): Thunk => async (dispatch, getState) => {
+  const disk = getState().disks[id]
   const html = itsy.write(disk)
 
   const slug = disk.name.replace(/[^a-z0-9]/gi, "-")
@@ -296,15 +289,12 @@ export const stopDisk = (): Thunk => async (dispatch, getState) => {
   dispatch(player.actions.idle())
 }
 
-export const updateSpritesheet = (id: string, png: string): Thunk => async (
-  dispatch,
-  getState
-) => {
-  console.log("UPDATING")
-  const d = getState().disks[id]
-  dispatch(slice.actions.spritesheet({ id: d.id, spritesheet: png }))
+export const updateSpritesheet = (
+  id: string,
+  spritesheet: string
+): Thunk => async (dispatch, getState) => {
+  dispatch(slice.actions.spritesheet({ id, spritesheet }))
 
-  const state = getState()
   const disk = getState().disks[id]
   dispatch(writeValue(disk.uri, disk))
 }
@@ -314,11 +304,6 @@ export const selectDisks = ({ disks }) => _.values(disks)
 export const selectDisksForBrowsePanel = createSelector(
   [selectDisks],
   (disks) => _.orderBy(disks, ["updated"], ["desc"])
-)
-
-export const selectActiveDisk = createSelector(
-  [selectDisks, selectDisk],
-  (disks, disk) => _.find(disks, { id: disk })
 )
 
 export default slice

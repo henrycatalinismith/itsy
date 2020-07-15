@@ -1,6 +1,5 @@
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
-import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import { createDisk, Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import * as itsy from "@highvalley.systems/itsyplay"
 import { useNavigation } from "@react-navigation/native"
@@ -15,7 +14,6 @@ import styles from "./import.module.scss"
 
 interface ImportScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "Import">
-  openDisk: (id: string) => void
   createDisk: (disk: Partial<Disk>) => Promise<Disk>
 }
 
@@ -23,14 +21,9 @@ const mapStateToProps = (state) => ({})
 
 const mapDispatchToProps = {
   createDisk,
-  openDisk,
 }
 
-export function ImportScreen({
-  navigation,
-  openDisk,
-  createDisk,
-}: ImportScreenProps) {
+export function ImportScreen({ navigation, createDisk }: ImportScreenProps) {
   const isFocused = useNavigation().isFocused()
 
   useAsyncEffect(async () => {
@@ -50,8 +43,10 @@ export function ImportScreen({
     })
     const rawDisk = itsy.read(html)
     const disk = await createDisk(rawDisk)
-    openDisk(disk.id)
-    navigation.navigate("Disk")
+    navigation.navigate("Disk", {
+      id: disk.id,
+      name: disk.name,
+    })
   }, [isFocused])
 
   return (

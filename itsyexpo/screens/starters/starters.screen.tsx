@@ -1,7 +1,6 @@
 import DiskPicker from "@highvalley.systems/itsyexpo/components/disk-picker"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
-import { openDisk } from "@highvalley.systems/itsyexpo/store/disk"
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
 import {
   selectStarters,
@@ -15,7 +14,6 @@ import styles from "./starters.module.scss"
 
 interface StartersScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "Starters">
-  openDisk: (id: string) => void
   starters: Disk[]
   useStarter: (id: string) => Promise<Disk>
 }
@@ -25,20 +23,20 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  openDisk,
   useStarter,
 }
 
 export function StartersScreen({
   navigation,
-  openDisk,
   starters,
   useStarter,
 }: StartersScreenProps) {
   const onSelectStarter = React.useCallback(async (starter: Disk) => {
     const disk = await useStarter(starter.id)
-    openDisk(disk.id)
-    navigation.navigate("Disk")
+    navigation.navigate("Disk", {
+      id: disk.id,
+      name: disk.name,
+    })
   }, [])
 
   return (

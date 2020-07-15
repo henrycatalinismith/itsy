@@ -1,6 +1,5 @@
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
-import { selectDisk } from "@highvalley.systems/itsyexpo/store/disk"
-import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 const name = "output"
 
@@ -26,27 +25,18 @@ const slice = createSlice({
 
 export const actions = slice.actions
 
-export const appendOutput = (newOutput: string[]): Thunk => async (
+export const appendOutput = (id: string, newOutput: string[]): Thunk => async (
   dispatch,
   getState
 ) => {
-  const id = selectDisk(getState())
   dispatch(slice.actions.append({ id, lines: newOutput }))
 }
 
-export const clearOutput = (newOutput: string[]): Thunk => async (
+export const clearOutput = (id: string): Thunk => async (
   dispatch,
   getState
 ) => {
-  const id = selectDisk(getState())
   dispatch(slice.actions.clear({ id }))
 }
-
-export const selectOutput = ({ output }): string[] => output
-
-export const selectActiveOutput = createSelector(
-  [selectOutput, selectDisk],
-  (output, disk) => output[disk] || []
-)
 
 export default slice

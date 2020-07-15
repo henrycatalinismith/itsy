@@ -10,14 +10,14 @@ import {
 import React from "react"
 import { WebView } from "react-native-webview"
 import { connect } from "react-redux"
-import styles from "./play-panel-screen-player.module.scss"
+import styles from "./player.module.scss"
 
-interface PlayPanelScreenPlayerProps {
+interface PlayerProps {
   disk: Disk
   player: PlayerState
   saveSnapshot: (id: string, uri: string) => void
   stop: () => void
-  appendOutput: (text: string) => void
+  appendOutput: (id: string, text: string) => void
 }
 
 const mapStateToProps = (state) => ({
@@ -30,13 +30,13 @@ const mapDispatchToProps = {
   stop,
 }
 
-export function PlayPanelScreenPlayer({
+export function Player({
   disk,
   appendOutput,
   player,
   saveSnapshot,
   stop,
-}: PlayPanelScreenPlayerProps) {
+}: PlayerProps) {
   const webview = React.useRef()
 
   React.useEffect(() => {
@@ -92,7 +92,7 @@ export function PlayPanelScreenPlayer({
 
     switch (message.type) {
       case "console.log":
-        appendOutput(message.payload)
+        appendOutput(disk.id, message.payload)
         break
 
       case "error":
@@ -126,10 +126,7 @@ export function PlayPanelScreenPlayer({
   return React.useMemo(() => <WebView {...webviewProps} />, [])
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PlayPanelScreenPlayer)
+export default connect(mapStateToProps, mapDispatchToProps)(Player)
 
 /*
 export default class Player extends React.Component {

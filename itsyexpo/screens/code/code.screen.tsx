@@ -8,11 +8,7 @@ import {
   WebviewApp,
   WebviewBridgeEvents,
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
-import {
-  Disk,
-  editDisk,
-  selectActiveDisk,
-} from "@highvalley.systems/itsyexpo/store/disks"
+import { Disk, editDisk } from "@highvalley.systems/itsyexpo/store/disks"
 import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"
 import { Asset } from "expo-asset"
 import React from "react"

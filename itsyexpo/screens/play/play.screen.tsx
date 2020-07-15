@@ -1,6 +1,6 @@
 import Loading from "@highvalley.systems/itsyexpo/components/loading"
 import PlayPanelConsole from "@highvalley.systems/itsyexpo/components/play-panel-console"
-import PlayPanelScreenPlayer from "@highvalley.systems/itsyexpo/components/play-panel-screen-player"
+import Player from "@highvalley.systems/itsyexpo/components/player"
 import PlayPanelScreenSnapshot from "@highvalley.systems/itsyexpo/components/play-panel-screen-snapshot"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { DiskTabParamList } from "@highvalley.systems/itsyexpo/screens/disk"
@@ -70,14 +70,14 @@ export function PlayScreen({
         {playerMode === PlayerModes.Load ? (
           <Loading />
         ) : [PlayerModes.Busy, PlayerModes.Halt].includes(playerMode) ? (
-          <PlayPanelScreenPlayer disk={disk} appendConsoleText={() => {}} />
+          <Player disk={disk} appendConsoleText={() => {}} />
         ) : (
           <PlayPanelScreenSnapshot disk={disk} />
         )}
       </View>
       <View style={styles.divider} />
       <View style={styles.console}>
-        <PlayPanelConsole />
+        <PlayPanelConsole disk={disk} />
       </View>
     </View>
   )

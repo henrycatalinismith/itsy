@@ -11,7 +11,6 @@ import {
 } from "@highvalley.systems/itsyexpo/components/webview-bridge"
 import {
   Disk,
-  selectActiveDisk,
   updateSpritesheet,
 } from "@highvalley.systems/itsyexpo/store/disks"
 import { WebviewIds } from "@highvalley.systems/itsyexpo/store/webviews"

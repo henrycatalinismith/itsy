@@ -8,7 +8,6 @@ import {
 import { ThunkAction } from "redux-thunk"
 
 import disks from "./disks"
-import disk from "./disk"
 import output from "./output"
 import player from "./player"
 import starters from "./starters"
@@ -19,7 +18,6 @@ const middleware = [...getDefaultMiddleware()]
 
 const reducer = combineReducers({
   disks: disks.reducer,
-  disk: disk.reducer,
   output: output.reducer,
   player: player.reducer,
   starters: starters.reducer,
@@ -37,7 +35,6 @@ const store = configureStore({
 })
 
 exports.disks = disks
-exports.disk = disk
 exports.output = output
 exports.player = player
 exports.starters = starters
