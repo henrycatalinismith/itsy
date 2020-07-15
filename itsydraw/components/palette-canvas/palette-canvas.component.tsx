@@ -40,7 +40,7 @@ export function PaletteCanvas({
   const { rect } = React.useContext(ScreenContext)
   const { store } = React.useContext(ReactReduxContext)
 
-  const min = Math.min(rect.width, rect.height)
+  const min = Math.min(Math.min(rect.width, rect.height), 512)
 
   const colorSize = 128 / 4
   const virtualSize = 128

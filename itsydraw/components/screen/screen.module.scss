@@ -1,6 +1,24 @@
 @import "../../../palettes/pico8/_original.scss";
 
+$stripe1: pico8-original-palette(0);
+$stripe2: #111111;
+
 .component {
+  background-image: linear-gradient(
+    45deg,
+    $stripe1 25%,
+    $stripe2 25%,
+    $stripe2 50%,
+    $stripe1 50%,
+    $stripe1 75%,
+    $stripe2 75%,
+    $stripe2 100%
+  );
+  background-size: 8px 8px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
   flex: 1;
 }
@@ -8,6 +26,15 @@
 .tool {
   display: none;
   height: 100%;
+  flex: 1;
+  max-width: 512px;
+  max-height: 512px;
+  overflow: hidden;
+
+  @media (orientation: landscape) {
+    box-shadow: 0 0 16px transparentize(pico8-original-palette(7), 0.6);
+    border: 1px solid pico8-original-palette(7);
+  }
 }
 
 .active {

@@ -17,7 +17,7 @@
 
   @media (orientation: landscape) {
     grid-template-areas: "spritesheet . toolbox";
-    grid-template-columns: 100vh 4px auto;
+    grid-template-columns: minmax(auto, #{512px + 2 * 32px}) 4px auto;
   }
 }
 

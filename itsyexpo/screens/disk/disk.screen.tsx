@@ -1,3 +1,4 @@
+import * as Device from "expo-device"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { RouteProp } from "@react-navigation/native"
@@ -8,10 +9,9 @@ import Code from "@highvalley.systems/itsyexpo/screens/code/code.screen"
 import Draw from "@highvalley.systems/itsyexpo/screens/draw/draw.screen"
 import Meta from "@highvalley.systems/itsyexpo/screens/meta/meta.screen"
 import Play from "@highvalley.systems/itsyexpo/screens/play"
-import SafeArea from "@highvalley.systems/itsyexpo/components/safe-area"
 import React from "react"
 import { connect } from "react-redux"
-import { View } from "react-native"
+import { LayoutChangeEvent, LayoutRectangle, View } from "react-native"
 import {
   MaterialTopTabNavigationConfig,
   MaterialTopTabBarOptions,
@@ -36,6 +36,21 @@ const mapDispatchToProps = {}
 const Tab = createMaterialTopTabNavigator()
 
 export function DiskScreen({ navigation, route }: DiskScreenProps) {
+  const [tabsLayout, setTabsLayout] = React.useState<LayoutRectangle>({
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
+  })
+
+  const onTabsLayout = React.useCallback((event: LayoutChangeEvent) => {
+    setTabsLayout(event.nativeEvent.layout)
+  }, [])
+
+  const multitask = !!Device.modelName.match(/iPad/)
+  const tabCount = multitask ? 3 : 4
+  const tabWidth = tabsLayout.width / tabCount
+
   const tabBarOptions: MaterialTopTabBarOptions = {
     showLabel: false,
     labelStyle: {
@@ -43,7 +58,9 @@ export function DiskScreen({ navigation, route }: DiskScreenProps) {
     },
     renderBadge: (props: any) => {
       return (
-        <View style={{ position: "absolute", right: 28, top: 5 }}>
+        <View
+          style={{ position: "absolute", right: tabWidth / 2 - 20, top: 5 }}
+        >
           <Font fontSize={18}>{props.route.name.toLowerCase()}</Font>
         </View>
       )
@@ -54,33 +71,49 @@ export function DiskScreen({ navigation, route }: DiskScreenProps) {
 
   const navigator: MaterialTopTabNavigationConfig = {
     tabBarOptions,
+    keyboardDismissMode: "auto",
+  }
+
+  const componentStyles = [styles.component]
+
+  if (multitask) {
+    componentStyles.push(styles.tiles)
   }
 
   return (
-    <SafeArea>
-      <Tab.Navigator {...navigator}>
-        <Tab.Screen
-          name="Play"
-          component={Play}
-          initialParams={{ id: route.params.id }}
-        />
-        <Tab.Screen
-          name="Code"
-          component={Code}
-          initialParams={{ id: route.params.id }}
-        />
-        <Tab.Screen
-          name="Draw"
-          component={Draw}
-          initialParams={{ id: route.params.id }}
-        />
-        <Tab.Screen
-          name="Meta"
-          component={Meta}
-          initialParams={{ id: route.params.id }}
-        />
-      </Tab.Navigator>
-    </SafeArea>
+    <View style={componentStyles}>
+      {multitask && (
+        <View style={styles.playWrapper}>
+          <Play navigation={navigation} route={route} />
+        </View>
+      )}
+      <View style={styles.tabWrapper} onLayout={onTabsLayout}>
+        <Tab.Navigator {...navigator}>
+          {!multitask && (
+            <Tab.Screen
+              name="Play"
+              component={Play}
+              initialParams={{ id: route.params.id }}
+            />
+          )}
+          <Tab.Screen
+            name="Code"
+            component={Code}
+            initialParams={{ id: route.params.id }}
+          />
+          <Tab.Screen
+            name="Draw"
+            component={Draw}
+            initialParams={{ id: route.params.id }}
+          />
+          <Tab.Screen
+            name="Meta"
+            component={Meta}
+            initialParams={{ id: route.params.id }}
+          />
+        </Tab.Navigator>
+      </View>
+    </View>
   )
 }
 
