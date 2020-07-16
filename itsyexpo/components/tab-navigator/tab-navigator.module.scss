@@ -1,0 +1,32 @@
+@import "../../../palettes/pico8/_original.scss";
+
+.component {
+  flex: 1;
+}
+
+.tiles {
+  flex-direction: row;
+}
+
+.playWrapper {
+  flex: 2;
+}
+
+.tabWrapper {
+  flex: 6;
+}
+
+.tabBar {
+  height: 32px;
+  border-bottom-color: pico8-original-palette(13);
+  border-bottom-width: 2px;
+  border-right-color: pico8-original-palette(14);
+  border-right-width: 2px;
+  border-left-color: pico8-original-palette(14);
+  border-left-width: 2px;
+}
+
+.indicator {
+  background-color: pico8-original-palette(12);
+  height: 32px;
+}

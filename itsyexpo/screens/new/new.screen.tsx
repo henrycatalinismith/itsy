@@ -1,3 +1,4 @@
+import TabNavigator from "@highvalley.systems/itsyexpo/components/tab-navigator"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
@@ -7,8 +8,14 @@ import Starters from "@highvalley.systems/itsyexpo/screens/starters"
 import React from "react"
 import { connect } from "react-redux"
 
-interface NewScreenProps {
+export interface NewScreenProps {
   navigation: StackNavigationProp<RootStackParamList, "New">
+}
+
+export type DiskTabParamList = {
+  Play: { id: string }
+  Code: { id: string }
+  Draw: { id: string }
 }
 
 const mapStateToProps = (state) => ({})
@@ -18,11 +25,11 @@ const Tab = createMaterialTopTabNavigator()
 
 export function NewScreen({}: NewScreenProps) {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Quick Start" component={Starters} />
-      <Tab.Screen name="Blank Disk" component={Blank} />
-      <Tab.Screen name="Import" component={Import} />
-    </Tab.Navigator>
+    <TabNavigator tab={Tab}>
+      <Tab.Screen name="quick" component={Starters} />
+      <Tab.Screen name="blank" component={Blank} />
+      <Tab.Screen name="import" component={Import} />
+    </TabNavigator>
   )
 }
 
