@@ -1,20 +1,20 @@
-import WebviewBridge, {
-  WebviewBridgeEvents,
-  WebviewBridgeProps,
-} from "@highvalley.systems/itsyexpo/components/webview-bridge"
-import WebviewLoader from "@highvalley.systems/itsyexpo/components/webview-loader"
 import {
+  finishLoadingWebview,
+  loadWebview,
+  stopWebview,
   Webview as _Webview,
   WebviewIds,
-  loadWebview,
-  finishLoadingWebview,
-  stopWebview,
   WebviewStatuses,
 } from "@highvalley.systems/itsyexpo/store/webviews"
 import _ from "lodash"
 import React from "react"
 import { View } from "react-native"
 import { connect } from "react-redux"
+import WebviewBridge, {
+  WebviewBridgeEvents,
+  WebviewBridgeProps,
+} from "./webview-bridge.component"
+import WebviewLoader from "./webview-loader.component"
 import styles from "./webview.module.scss"
 
 export interface WebviewProps {
@@ -22,9 +22,7 @@ export interface WebviewProps {
   events: WebviewBridgeEvents
   uri: string
   style: any
-
   loaderStyle?: any
-
   webview: _Webview
   loadWebview: (id: WebviewIds) => void
   finishLoadingWebview: (id: WebviewIds) => void
