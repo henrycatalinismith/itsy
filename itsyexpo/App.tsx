@@ -7,6 +7,7 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
 import { Provider } from "react-redux"
 
+import Back from "@highvalley.systems/itsyexpo/components/back"
 import Pixlflip from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 
@@ -52,11 +53,10 @@ function App({ skipLoadingScreen }): React.ReactElement {
   }
 
   const navigator = {
+    headerMode: "screen",
     screenOptions: {
       headerStyle: {
         backgroundColor: colors[14],
-        borderBottomColor: colors[2],
-        borderBottomWidth: 1,
       },
     },
   }
@@ -83,6 +83,7 @@ function App({ skipLoadingScreen }): React.ReactElement {
               name="Disk"
               component={Disk}
               options={({ route }) => ({
+                headerLeft: (props) => <Back onPress={props.onPress} />,
                 headerTitle: (
                   <Pixlflip fontSize={24}>{route.params.name}</Pixlflip>
                 ),
@@ -91,7 +92,10 @@ function App({ skipLoadingScreen }): React.ReactElement {
             <Stack.Screen
               name="New"
               component={New}
-              {...pixlflipHeader("new disk")}
+              options={({ route }) => ({
+                headerLeft: (props) => <Back onPress={props.onPress} />,
+                headerTitle: <Pixlflip fontSize={24}>new disk</Pixlflip>,
+              })}
             />
           </Stack.Navigator>
         </Provider>

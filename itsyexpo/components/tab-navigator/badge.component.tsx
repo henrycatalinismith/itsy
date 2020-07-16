@@ -10,7 +10,7 @@ export interface BadgeProps {
 export function Badge({ label, width }: BadgeProps) {
   const style: any = {}
   style.position = "absolute"
-  style.right = width / 4
+  style.right = width / 2 - label.length * 4
   style.top = 5
 
   return (

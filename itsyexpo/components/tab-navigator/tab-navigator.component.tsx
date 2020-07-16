@@ -21,12 +21,10 @@ export function TabNavigator({ children, tab: Tab }: TabNavigatorProps) {
 
   const tabCount = children.filter((c) => !!c).length
   const tabWidth = width / tabCount
+  console.log({ tabCount, tabWidth, width })
 
   const tabBarOptions: MaterialTopTabBarOptions = {
     showLabel: false,
-    labelStyle: {
-      color: "#ff0000",
-    },
     renderBadge: (props: any) => (
       <Badge label={props.route.name.toLowerCase()} width={tabWidth} />
     ),
