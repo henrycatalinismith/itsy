@@ -1,6 +1,6 @@
 import createWebviewBridgeMiddleware, {
   WebviewBridgeMiddlewareOptions,
-} from "@highvalley.systems/itsyexpo/components/webview-bridge/webview-bridge.middleware"
+} from "@highvalley.systems/itsyexpo/components/webview/webview-bridge.middleware"
 import {
   Action,
   combineReducers,
