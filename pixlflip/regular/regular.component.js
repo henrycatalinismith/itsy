@@ -22,15 +22,26 @@ export default function Regular({
     switch (lines[0][0]) {
       case "w":
         return -0.23;
-
+      case "<":
+        return -0.33;
       default:
         return -0.5;
     }
   })();
 
-  const viewBox = [first, 0, xm * lines[0].length - 1, 4 * lines.length].join(
-    " "
-  );
+  const last = (() => {
+    if (children === "<") {
+      return 0.33;
+    }
+    return 0;
+  })();
+
+  const viewBox = [
+    first,
+    0,
+    xm * lines[0].length - 1 + last,
+    4 * lines.length
+  ].join(" ");
 
   const glyphs = [];
   lines.forEach((line, y) => {
