@@ -16,8 +16,16 @@
 
 .layout {
   display: grid;
-  grid-template-areas: "icon label label meta";
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: ". icon . label meta .";
+  grid-template-columns: 8px 32px 16px auto 64px 8px;
+
+  @media (min-width: 400px) {
+    grid-template-columns: auto 32px 16px 256px 64px auto;
+  }
+
+  @media (min-width: 400px) and (min-height: 760px) {
+    grid-template-columns: auto 32px 16px 384px 64px auto;
+  }
   height: 48px;
 }
 

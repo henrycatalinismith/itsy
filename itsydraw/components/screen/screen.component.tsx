@@ -44,22 +44,26 @@ export function Screen({ tools }: ScreenProps): React.ReactElement {
   }
 
   return (
-    <div className={styles.component} ref={divRef}>
-      <ScreenContext.Provider value={{ rect }}>
-        {tools.map((tool) => {
-          const toolDiv: React.HTMLAttributes<HTMLDivElement> = {
-            className: cx(styles.tool, {
-              [styles.active]: tool.status === ToolStatuses.Active,
-            }),
-          }
+    <div className={styles.component}>
+      <div className={styles.limit} ref={divRef}>
+        <div className={styles.square}>
+          <ScreenContext.Provider value={{ rect }}>
+            {tools.map((tool) => {
+              const toolDiv: React.HTMLAttributes<HTMLDivElement> = {
+                className: cx(styles.tool, {
+                  [styles.active]: tool.status === ToolStatuses.Active,
+                }),
+              }
 
-          return (
-            <div key={tool.id} {...toolDiv}>
-              {screenMap[tool.id]}
-            </div>
-          )
-        })}
-      </ScreenContext.Provider>
+              return (
+                <div key={tool.id} {...toolDiv}>
+                  {screenMap[tool.id]}
+                </div>
+              )
+            })}
+          </ScreenContext.Provider>
+        </div>
+      </div>
     </div>
   )
 }

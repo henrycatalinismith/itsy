@@ -22,6 +22,7 @@
 
 .item {
   display: flex;
+  align-self: center;
 
   .Vertical & {
     max-height: 48px;

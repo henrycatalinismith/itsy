@@ -8,11 +8,11 @@
   overflow: hidden;
   max-height: 100%;
   grid-template-areas:
-    "menu"
+    "tools"
     "...."
-    "tools";
+    "menu";
   grid-template-columns: min-content auto;
-  grid-template-rows: min-content 4px auto;
+  grid-template-rows: auto 4px 64px;
   grid-template-columns: auto;
 }
 

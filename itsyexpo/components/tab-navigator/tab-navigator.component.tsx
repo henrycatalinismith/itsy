@@ -35,6 +35,7 @@ export function TabNavigator({ children, tab: Tab }: TabNavigatorProps) {
   const navigator: MaterialTopTabNavigationConfig = {
     tabBarOptions,
     keyboardDismissMode: "auto",
+    swipeEnabled: false,
   }
 
   return (
