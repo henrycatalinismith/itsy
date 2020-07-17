@@ -43,7 +43,7 @@ export function ImportScreen({ navigation, createDisk }: ImportScreenProps) {
     })
     const rawDisk = itsy.read(html)
     const disk = await createDisk(rawDisk)
-    navigation.navigate("Disk", {
+    navigation.navigate("Devtools", {
       id: disk.id,
       name: disk.name,
     })

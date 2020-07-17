@@ -2,31 +2,24 @@
 
 .component {
   flex: 1;
+  background-color: pico8-original-palette(7);
 }
 
-.tiles {
-  flex-direction: row;
+.header {
+  flex-direction: column;
+  padding: 8px;
+  align-items: center;
 }
 
-.playWrapper {
-  flex: 1;
+.icon {
+  margin-top: 16px;
 }
 
-.tabWrapper {
-  flex: 1;
+.name {
+  margin-top: 8px;
+  margin-bottom: 16px;
 }
 
-.tabBar {
-  height: 32px;
-  border-bottom-color: pico8-original-palette(13);
-  border-bottom-width: 2px;
-  border-right-color: pico8-original-palette(14);
-  border-right-width: 2px;
-  border-left-color: pico8-original-palette(14);
-  border-left-width: 2px;
-}
-
-.indicator {
-  background-color: pico8-original-palette(12);
-  height: 32px;
+.actions {
+  align-items: center;
 }

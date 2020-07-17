@@ -31,7 +31,7 @@ export function HomeScreen({ navigation, disks }: HomeScreenProps) {
   }, [])
 
   const onSelectDisk = React.useCallback((disk: Disk) => {
-    navigation.navigate("Disk", {
+    navigation.navigate("Devtools", {
       id: disk.id,
       name: disk.name,
     })

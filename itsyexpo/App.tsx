@@ -5,15 +5,17 @@ import React from "react"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import { createStackNavigator } from "@react-navigation/stack"
 import { NavigationContainer } from "@react-navigation/native"
+import { TouchableOpacity } from "react-native"
 import { Provider } from "react-redux"
 
 import Back from "@highvalley.systems/itsyexpo/components/back"
 import Pixlflip from "@highvalley.systems/itsyexpo/components/font"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 
-import Disk from "./screens/disk/disk.screen"
-import Home from "./screens/home/home.screen"
-import New from "./screens/new"
+import Devtools from "@highvalley.systems/itsyexpo/screens/devtools"
+import Disk from "@highvalley.systems/itsyexpo/screens/disk"
+import Home from "@highvalley.systems/itsyexpo/screens/home"
+import New from "@highvalley.systems/itsyexpo/screens/new"
 
 import store from "./store"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
@@ -80,13 +82,25 @@ function App({ skipLoadingScreen }): React.ReactElement {
               {...pixlflipHeader("itsy studio")}
             />
             <Stack.Screen
+              name="Devtools"
+              component={Devtools}
+              options={({ navigation, route }) => ({
+                headerLeft: (props) => <Back onPress={props.onPress} />,
+                headerTitle: (
+                  <TouchableOpacity
+                    onPress={() => navigation.navigate("Disk", route.params)}
+                  >
+                    <Pixlflip fontSize={24}>{route.params.name}</Pixlflip>
+                  </TouchableOpacity>
+                ),
+              })}
+            />
+            <Stack.Screen
               name="Disk"
               component={Disk}
               options={({ route }) => ({
                 headerLeft: (props) => <Back onPress={props.onPress} />,
-                headerTitle: (
-                  <Pixlflip fontSize={24}>{route.params.name}</Pixlflip>
-                ),
+                headerTitle: <Pixlflip fontSize={24}>disk</Pixlflip>,
               })}
             />
             <Stack.Screen

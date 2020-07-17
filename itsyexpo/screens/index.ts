@@ -1,4 +1,8 @@
 export type RootStackParamList = {
+  Devtools: {
+    id: string
+    name: string
+  }
   Disk: {
     id: string
     name: string

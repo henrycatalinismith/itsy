@@ -35,7 +35,7 @@ export function BlankScreen({ navigation, createBlankDisk }: BlankScreenProps) {
 
   const onSubmit = React.useCallback(async () => {
     const disk = await createBlankDisk(name)
-    navigation.navigate("Disk", {
+    navigation.navigate("Devtools", {
       id: disk.id,
       name: disk.name,
     })

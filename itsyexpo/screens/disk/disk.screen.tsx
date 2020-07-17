@@ -1,68 +1,48 @@
-import * as Device from "expo-device"
 import { RootStackParamList } from "@highvalley.systems/itsyexpo/screens"
 import { RouteProp } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
-import Code from "@highvalley.systems/itsyexpo/screens/code/code.screen"
-import Draw from "@highvalley.systems/itsyexpo/screens/draw/draw.screen"
-import Play from "@highvalley.systems/itsyexpo/screens/play"
-import TabNavigator from "@highvalley.systems/itsyexpo/components/tab-navigator"
+import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
+import Button from "@highvalley.systems/itsyexpo/components/button"
+import DiskIcon from "@highvalley.systems/itsyexpo/components/disk-icon"
+import Font from "@highvalley.systems/itsyexpo/components/font"
 import React from "react"
 import { connect } from "react-redux"
 import { View } from "react-native"
 import styles from "./disk.module.scss"
 
 export interface DiskScreenProps {
+  disk: Disk
   navigation: StackNavigationProp<RootStackParamList, "Disk">
   route: RouteProp<RootStackParamList, "Disk">
 }
 
-export type DiskTabParamList = {
-  Play: { id: string }
-  Code: { id: string }
-  Draw: { id: string }
-}
+const mapStateToProps = (state, ownProps) => ({
+  disk: state.disks[ownProps.route.params.id],
+})
 
-const mapStateToProps = (state) => ({})
 const mapDispatchToProps = {}
 
 const Tab = createMaterialTopTabNavigator()
 
-export function DiskScreen({ navigation, route }: DiskScreenProps) {
-  const multitask = !!Device.modelName.match(/iPad/)
-  const componentStyles = [styles.component]
-
-  if (multitask) {
-    componentStyles.push(styles.tiles)
-  }
+export function DiskScreen({ disk, navigation, route }: DiskScreenProps) {
+  const rename = React.useCallback(
+    () => navigation.navigate("Rename", route.params),
+    []
+  )
 
   return (
-    <View style={componentStyles}>
-      {multitask && (
-        <View style={styles.playWrapper}>
-          <Play navigation={navigation} route={route} />
+    <View style={styles.component}>
+      <View style={styles.header}>
+        <View style={styles.icon}>
+          <DiskIcon disk={disk} size={128} />
         </View>
-      )}
-      <View style={styles.tabWrapper}>
-        <TabNavigator tab={Tab}>
-          {!multitask && (
-            <Tab.Screen
-              name="Play"
-              component={Play}
-              initialParams={{ id: route.params.id }}
-            />
-          )}
-          <Tab.Screen
-            name="Code"
-            component={Code}
-            initialParams={{ id: route.params.id }}
-          />
-          <Tab.Screen
-            name="Draw"
-            component={Draw}
-            initialParams={{ id: route.params.id }}
-          />
-        </TabNavigator>
+        <View style={styles.name}>
+          <Font fontSize={24}>{disk.name}</Font>
+        </View>
+      </View>
+      <View style={styles.actions}>
+        <Button action={rename}>rename</Button>
       </View>
     </View>
   )

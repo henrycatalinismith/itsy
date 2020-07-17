@@ -33,7 +33,7 @@ export function StartersScreen({
 }: StartersScreenProps) {
   const onSelectStarter = React.useCallback(async (starter: Disk) => {
     const disk = await useStarter(starter.id)
-    navigation.navigate("Disk", {
+    navigation.navigate("Devtools", {
       id: disk.id,
       name: disk.name,
     })
