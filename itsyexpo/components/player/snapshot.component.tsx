@@ -1,7 +1,11 @@
+import { RootState } from "@highvalley.systems/itsyexpo/store"
+import delay from "delay"
 import { Disk, playDisk } from "@highvalley.systems/itsyexpo/store/disks"
+import { PlayerModes } from "@highvalley.systems/itsyexpo/store/player"
 import Font from "@highvalley.systems/itsyexpo/components/font"
 import colors from "@highvalley.systems/palettes/pico8/original.es6"
 import React from "react"
+import { ActivityIndicator } from "react-native"
 import { WebView } from "react-native-webview"
 import { Path, Svg } from "react-native-svg"
 import { TouchableHighlight, View } from "react-native"
@@ -11,31 +15,46 @@ import styles from "./snapshot.module.scss"
 interface SnapshotProps {
   disk: Disk
   playDisk: (disk: Disk) => void
+  playerMode: PlayerModes
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state: RootState) => ({
+  playerMode: state.player.mode,
+})
 
 const mapDispatchToProps = {
   playDisk,
 }
 
-export function Snapshot({ disk, playDisk }: SnapshotProps) {
+export function Snapshot({ disk, playDisk, playerMode }: SnapshotProps) {
   const [active, setActive] = React.useState(false)
 
   const onPressIn = React.useCallback(() => {
     setActive(true)
   }, [])
 
-  const onPress = React.useCallback(() => {
-    playDisk(disk)
+  const onPress = React.useCallback(async () => {
+    if ([PlayerModes.Halt, PlayerModes.Idle].includes(playerMode)) {
+      setActive(true)
+      await delay(10)
+      playDisk(disk)
+    }
   }, [disk])
+
+  React.useEffect(() => {
+    if ([PlayerModes.Halt, PlayerModes.Idle].includes(playerMode)) {
+      setActive(false)
+    }
+  }, [playerMode])
 
   return (
     <View style={styles.component}>
-      <WebView
-        style={styles.webview}
-        source={{
-          html: `
+      {React.useMemo(
+        () => (
+          <WebView
+            style={styles.webview}
+            source={{
+              html: `
           <!DOCTYPE html>
           <html>
           <head>
@@ -74,37 +93,50 @@ export function Snapshot({ disk, playDisk }: SnapshotProps) {
           </body>
           </html>
         `,
-        }}
-      />
+            }}
+          />
+        ),
+        [disk.snapshot]
+      )}
 
       <TouchableHighlight
         style={styles.touchable}
-        onPressIn={onPressIn}
         onPress={onPress}
         activeOpacity={0.6}
       >
         <View style={styles.inner}>
-          <Svg style={styles.icon} width={64} height={64} viewBox="0 0 40 48">
-            <Path
-              d="M8,8 L32,24 L8,40 L8,8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={8}
-              stroke={colors[3]}
-            />
-            <Path
-              d="M8,8 L32,24 L8,40 L8,8"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              stroke={colors[1]}
-              fill={colors[11]}
-            />
-          </Svg>
+          {active ? (
+            <ActivityIndicator color={colors[7]} size="large" />
+          ) : (
+            <>
+              <Svg
+                style={styles.icon}
+                width={64}
+                height={64}
+                viewBox="0 0 40 48"
+              >
+                <Path
+                  d="M8,8 L32,24 L8,40 L8,8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={8}
+                  stroke={colors[3]}
+                />
+                <Path
+                  d="M8,8 L32,24 L8,40 L8,8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  stroke={colors[1]}
+                  fill={colors[11]}
+                />
+              </Svg>
 
-          <View style={styles.play}>
-            <Font fontSize={32}>play</Font>
-          </View>
+              <View style={styles.play}>
+                <Font fontSize={32}>play</Font>
+              </View>
+            </>
+          )}
         </View>
       </TouchableHighlight>
     </View>
