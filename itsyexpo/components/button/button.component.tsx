@@ -1,5 +1,5 @@
 import Font from "@highvalley.systems/itsyexpo/components/font"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/fantasy8"
 import _ from "lodash"
 import React from "react"
 import { TouchableOpacity } from "react-native"

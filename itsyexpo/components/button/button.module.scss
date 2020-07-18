@@ -1,15 +1,15 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .button {
   align-items: center;
-  border-color: pico8-original-palette(1);
+  border-color: fantasy8(1);
   flex-direction: row;
   justify-content: center;
 }
 
 .Regular {
   border-width: 1px;
-  box-shadow: 1px 1px 0.5px pico8-original-palette(13);
+  box-shadow: 1px 1px 0.5px fantasy8(13);
   border-radius: 2px;
   height: 32px;
   width: 72px;
@@ -18,7 +18,7 @@
 
 .Large {
   border-width: 2px;
-  box-shadow: 1px 1px 1px pico8-original-palette(13);
+  box-shadow: 1px 1px 1px fantasy8(13);
   border-radius: 4px;
   height: 64px;
   width: 100%;
@@ -26,31 +26,31 @@
 }
 
 .Blue {
-  background-color: pico8-original-palette(12);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(12);
+  border-color: fantasy8(1);
 }
 
 .Gray {
-  background-color: pico8-original-palette(13);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(13);
+  border-color: fantasy8(1);
 }
 
 .Green {
-  background-color: pico8-original-palette(11);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(11);
+  border-color: fantasy8(1);
 }
 
 .Orange {
-  background-color: pico8-original-palette(9);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(9);
+  border-color: fantasy8(1);
 }
 
 .Red {
-  background-color: pico8-original-palette(8);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(8);
+  border-color: fantasy8(1);
 }
 
 .White {
-  background-color: pico8-original-palette(7);
-  border-color: pico8-original-palette(1);
+  background-color: fantasy8(7);
+  border-color: fantasy8(1);
 }

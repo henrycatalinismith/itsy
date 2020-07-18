@@ -1,4 +1,4 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .webview {
   position: absolute;
@@ -9,5 +9,5 @@
 }
 
 .loader {
-  border: 2px solid pico8-original-palette(2);
+  border: 2px solid fantasy8(2);
 }

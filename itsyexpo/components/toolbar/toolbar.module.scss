@@ -1,30 +1,30 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .component {
   flex-direction: row;
   align-items: center;
   height: 40px;
-  background-color: pico8-original-palette(15);
-  border-bottom-color: pico8-original-palette(13);
+  background-color: fantasy8(15);
+  border-bottom-color: fantasy8(13);
   border-bottom-width: 2px;
   padding-left: 2px;
 }
 
 .DiskPanelBrowser {
-  background-color: pico8-original-palette(15);
-  border-bottom-color: pico8-original-palette(13);
+  background-color: fantasy8(15);
+  border-bottom-color: fantasy8(13);
   border-bottom-width: 2px;
 }
 
 .DiskPanelInspector {
-  background-color: pico8-original-palette(15);
-  border-bottom-color: pico8-original-palette(13);
+  background-color: fantasy8(15);
+  border-bottom-color: fantasy8(13);
   border-bottom-width: 2px;
 }
 
 .PlayPanelConsole {
-  background-color: pico8-original-palette(1);
-  border-bottom-color: pico8-original-palette(13);
+  background-color: transparent;
+  border-bottom-color: fantasy8(13);
   border-bottom-width: 0;
 }
 

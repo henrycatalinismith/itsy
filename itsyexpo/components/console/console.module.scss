@@ -1,7 +1,6 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .component {
-  border: 2px solid pico8-original-palette(2);
   display: flex;
   flex: 1;
   flex-direction: column;

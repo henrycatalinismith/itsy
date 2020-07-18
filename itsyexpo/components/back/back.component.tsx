@@ -4,7 +4,7 @@ import Font from "@highvalley.systems/itsyexpo/components/font"
 import { ActivityIndicator, TouchableOpacity, View } from "react-native"
 import React from "react"
 import { connect } from "react-redux"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/fantasy8"
 import styles from "./back.module.scss"
 
 export interface BackProps {

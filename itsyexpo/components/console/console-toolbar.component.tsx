@@ -13,7 +13,7 @@ import {
   PlayerModes,
   selectPlayerMode,
 } from "@highvalley.systems/itsyexpo/store/player"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/fantasy8"
 import React from "react"
 import { Path, Svg } from "react-native-svg"
 import { connect } from "react-redux"

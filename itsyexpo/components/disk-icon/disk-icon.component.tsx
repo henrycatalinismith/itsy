@@ -1,5 +1,5 @@
 import { Disk } from "@highvalley.systems/itsyexpo/store/disks"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/fantasy8"
 import React from "react"
 import { TouchableHighlight } from "react-native"
 import {

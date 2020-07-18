@@ -1,24 +1,24 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .component {
   display: flex;
   flex: 1;
-  background-color: pico8-original-palette(1);
   position: relative;
 }
 
 .lineText {
-  color: pico8-original-palette(7);
+  background-color: transparent;
+  color: fantasy8(7);
   font-family: "overpass-mono-regular";
   font-size: 16px;
-  text-shadow: 0px 1px 2px pico8-original-palette(0);
+  text-shadow: 0px 1px 2px fantasy8(0);
 }
 
 .selectedLineText {
-  background-color: pico8-original-palette(12);
-  color: pico8-original-palette(7);
+  background-color: fantasy8(12);
+  color: fantasy8(7);
   font-family: "overpass-mono-bold";
-  text-shadow: 0px 1px 2px pico8-original-palette(0);
+  text-shadow: 0px 1px 2px fantasy8(0);
   min-height: 34px;
 }
 

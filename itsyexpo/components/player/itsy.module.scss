@@ -1,8 +1,8 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .component {
   flex: 1;
-  background-color: pico8-original-palette(0);
+  background-color: fantasy8(0);
   position: absolute;
   top: 0;
   right: 0;

@@ -18,7 +18,7 @@ import Home from "@highvalley.systems/itsyexpo/screens/home"
 import New from "@highvalley.systems/itsyexpo/screens/new"
 
 import store from "./store"
-import colors from "@highvalley.systems/palettes/pico8/original.es6"
+import colors from "@highvalley.systems/palettes/fantasy8"
 
 import { loadDisks } from "@highvalley.systems/itsyexpo/store/disks"
 import { importStarters } from "@highvalley.systems/itsyexpo/store/starters"

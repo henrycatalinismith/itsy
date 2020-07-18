@@ -1,14 +1,14 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .loading {
   flex: 1;
-  border-color: pico8-original-palette(2);
+  border-color: fantasy8(2);
   border-top-width: 2px;
   border-right-width: 2px;
   border-bottom-width: 2px;
   border-left-width: 2px;
 
-  background-color: pico8-original-palette(6);
+  background-color: fantasy8(6);
   display: flex;
   align-items: center;
   justify-content: center;

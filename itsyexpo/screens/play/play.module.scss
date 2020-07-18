@@ -1,4 +1,4 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin";
 
 .playPanel {
   display: flex;
@@ -15,12 +15,12 @@
 
 .divider {
   height: 2px;
-  background-color: pico8-original-palette(14);
+  background-color: fantasy8(14);
 }
 
 .screen {
   display: flex;
-  border: 2px solid pico8-original-palette(2);
+  border: 2px solid fantasy8(2);
 }
 
 .controls {
@@ -30,4 +30,5 @@
 .console {
   display: flex;
   flex: 1;
+  background-color: fantasy8(3);
 }
