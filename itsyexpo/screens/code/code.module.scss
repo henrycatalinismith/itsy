@@ -1,6 +1,7 @@
 @import "../../../palettes/pico8/_original.scss";
 
 .component {
+  border: 2px solid pico8-original-palette(15);
   position: absolute;
   top: 0;
   right: 0;

@@ -2,16 +2,13 @@
 
 .component {
   flex: 1;
-  border-right-color: pico8-original-palette(14);
-  border-right-width: 2px;
-  padding-right: 2px;
 }
 
 .tabBar {
   height: 32px;
   // box-shadow: 0px 2px 0px pico8-original-palette(6);
-  border-bottom-color: pico8-original-palette(14);
-  border-bottom-width: 2px;
+  // border-bottom-color: pico8-original-palette(14);
+  // border-bottom-width: 2px;
   // j.border-right-color: pico8-original-palette(14);
   // j.border-right-width: 2px;
   border-left-color: pico8-original-palette(14);
@@ -21,5 +18,8 @@
 
 .indicator {
   background-color: pico8-original-palette(12);
+  border-bottom-color: pico8-original-palette(3);
+  border-bottom-width: 2px;
+  box-sizing: border-box;
   height: 32px;
 }
