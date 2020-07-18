@@ -4,6 +4,7 @@ import {
   spritesheet as defaultSpritesheet,
 } from "@highvalley.systems/itsyexpo/defaults"
 import { Thunk } from "@highvalley.systems/itsyexpo/store"
+import { appendOutput } from "@highvalley.systems/itsyexpo/store/output"
 import player from "@highvalley.systems/itsyexpo/store/player"
 import {
   deleteValue,
@@ -228,11 +229,7 @@ export const loadDisks = (): Thunk => async (dispatch) => {
 export const playDisk = (disk: Disk): Thunk => async (dispatch, getState) => {
   Keyboard.dismiss()
 
-  dispatch(player.actions.load())
-
-  await delay(Math.pow(2, 4))
-
-  const state = getState()
+  await dispatch(appendOutput(disk.id, [`running ${disk.name}`]))
   const html = itsy.write(disk)
 
   dispatch(player.actions.play(html))

@@ -25,13 +25,10 @@ const mapDispatchToProps = {}
 export function Player({ disk, playerMode }: PlayerProps) {
   return (
     <View style={styles.component}>
-      {playerMode === PlayerModes.Load ? (
-        <Loading />
-      ) : [PlayerModes.Busy, PlayerModes.Halt].includes(playerMode) ? (
-        <Itsy disk={disk} />
-      ) : (
-        <Snapshot disk={disk} />
-      )}
+      <Snapshot disk={disk} />
+      {[PlayerModes.Load, PlayerModes.Busy, PlayerModes.Halt].includes(
+        playerMode
+      ) && <Itsy disk={disk} />}
     </View>
   )
 }

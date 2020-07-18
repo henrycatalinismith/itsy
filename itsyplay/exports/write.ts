@@ -78,7 +78,14 @@ if (typeof window.ReactNativeWebView !== "undefined") {
         window.buffer.push(JSON.stringify(l))
         break
     }
-  };
+  }
+
+  window.onerror = function(message, source, lineno, colno, error) {
+    window.ReactNativeWebView.postMessage(JSON.stringify({
+      type: "error",
+      payload: message,
+    }))
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {

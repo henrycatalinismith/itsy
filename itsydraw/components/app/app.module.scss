@@ -12,12 +12,12 @@
     "toolbox";
 
   grid-template-columns: auto;
-  grid-template-rows: min-content 4px auto;
+  grid-template-rows: min-content 2px auto;
   overflow: hidden;
 
   @media (orientation: landscape) {
     grid-template-areas: "spritesheet . toolbox";
-    grid-template-columns: auto 4px auto;
+    grid-template-columns: auto 2px auto;
     grid-template-rows: auto;
   }
 }

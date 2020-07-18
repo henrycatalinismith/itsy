@@ -2,6 +2,8 @@
 
 .component {
   flex: 1;
+  border-bottom-color: pico8-original-palette(14);
+  border-bottom-width: 2px;
 }
 
 .tiles {
@@ -10,10 +12,16 @@
 
 .playWrapper {
   flex: 1;
+  border-left-color: pico8-original-palette(14);
+  border-left-width: 2px;
 }
 
 .tabWrapper {
   flex: 1;
+  border-left-color: pico8-original-palette(14);
+  border-left-width: 2px;
+  border-right-color: pico8-original-palette(14);
+  border-right-width: 2px;
 }
 
 .tabBar {

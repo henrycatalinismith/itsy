@@ -1,5 +1,10 @@
+@import "../../../palettes/pico8/_original.scss";
+
 .component {
   flex: 1;
+  border-color: pico8-original-palette(14);
+  border-width: 2px;
+  border-top-width: 0px;
 }
 
 .create {

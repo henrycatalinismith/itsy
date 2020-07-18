@@ -19,6 +19,7 @@ const mapDispatchToProps = {}
 export function ConsoleOutput({ disk, output }: ConsoleOutputProps) {
   const view = React.useRef<ScrollView>()
   const [selectedLine, setSelectedLine] = React.useState(-1)
+  console.log(output)
 
   React.useEffect(() => {
     if (view.current) {
