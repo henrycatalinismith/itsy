@@ -41,7 +41,7 @@ $stripe2: #111111;
     max-height: 512px;
   }
 
-  @media (orientation: portrait) and (min-height: 512px) {
+  @media (orientation: portrait) and (min-height: 512px) and (min-width: 60vh) {
     margin: 16px;
     box-shadow: 0 0 16px transparentize(pico8-original-palette(7), 0.6);
     border: 1px solid pico8-original-palette(7);
