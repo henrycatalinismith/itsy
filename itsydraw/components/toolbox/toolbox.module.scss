@@ -1,7 +1,7 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin.scss";
 
 .component {
-  background-color: pico8-original-palette(14);
+  background-color: fantasy8(14);
   box-sizing: border-box;
   display: grid;
   flex: 1;
@@ -30,12 +30,12 @@
 }
 
 .menuitem__active {
-  background-color: pico8-original-palette(12);
+  background-color: fantasy8(12);
 }
 
 .tools {
-  background-color: pico8-original-palette(1);
-  border: 2px solid pico8-original-palette(2);
+  background-color: fantasy8(1);
+  border: 2px solid fantasy8(2);
   display: grid;
   grid-area: tools;
   overflow: hidden;

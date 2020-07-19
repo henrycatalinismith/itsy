@@ -1,6 +1,6 @@
 import _ from "lodash"
 import { Thunk } from "@highvalley.systems/itsydraw/store"
-import pico8 from "@highvalley.systems/palettes/pico8"
+import fantasy8 from "@highvalley.systems/palettes/fantasy8"
 import {
   Rect,
   Palette,
@@ -191,7 +191,7 @@ const initialState: ToolsState = {
       _.range(16),
       _.range(16).map((id) => ({
         id,
-        hex: pico8[id],
+        hex: fantasy8[id],
       }))
     ),
   },

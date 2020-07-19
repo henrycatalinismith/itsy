@@ -1,4 +1,4 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin.scss";
 
 .component {
   position: absolute;
@@ -6,74 +6,74 @@
   right: 0;
   bottom: 0;
   left: 0;
-  fill: pico8-original-palette(7);
+  fill: fantasy8(7);
 }
 
 .circle {
-  fill: pico8-original-palette(12);
-  stroke: pico8-original-palette(7);
+  fill: fantasy8(12);
+  stroke: fantasy8(7);
   stroke-width: 8px;
 }
 
 .circlePoint {
-  stroke: pico8-original-palette(7);
+  stroke: fantasy8(7);
   stroke-width: 8px;
-  fill: pico8-original-palette(12);
+  fill: fantasy8(12);
 }
 
 .fillBucket {
-  fill: pico8-original-palette(1);
-  stroke: pico8-original-palette(7);
+  fill: fantasy8(1);
+  stroke: fantasy8(7);
   stroke-width: 8px;
   transform-origin: 50% 50%;
   transform: rotate(45deg);
 }
 
 .fillPaint {
-  stroke: pico8-original-palette(7);
+  stroke: fantasy8(7);
   stroke-width: 8px;
   transform-origin: 50% 50%;
   transform: rotate(45deg);
 }
 
 .fillDroplet {
-  stroke: pico8-original-palette(7);
+  stroke: fantasy8(7);
   stroke-width: 4px;
 }
 
 .line {
-  stroke: pico8-original-palette(7);
+  stroke: fantasy8(7);
   stroke-width: 16px;
 }
 
 .linePoint {
-  stroke: pico8-original-palette(7);
+  stroke: fantasy8(7);
   stroke-width: 8px;
-  fill: pico8-original-palette(12);
+  fill: fantasy8(12);
 }
 
 .pasteHandle {
-  fill: pico8-original-palette(7);
+  fill: fantasy8(7);
 }
 
 .pasteHandleShadow {
-  stroke: pico8-original-palette(0);
+  stroke: fantasy8(0);
   stroke-width: 16px;
 }
 
 .pasteShaft {
-  fill: pico8-original-palette(7);
+  fill: fantasy8(7);
 }
 
 .pasteStamp {
-  fill: pico8-original-palette(7);
+  fill: fantasy8(7);
 }
 
 .pasteStampShadow {
-  stroke: pico8-original-palette(0);
+  stroke: fantasy8(0);
   stroke-width: 16px;
 }
 
 .pencil {
-  fill: pico8-original-palette(7);
+  fill: fantasy8(7);
 }

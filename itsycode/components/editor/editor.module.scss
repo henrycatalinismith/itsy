@@ -1,7 +1,7 @@
-@import "~@highvalley.systems/palettes/pico8/original";
+@import "~@highvalley.systems/palettes/fantasy8/mixin";
 
 .component {
-  background: #eee;
+  background: fantasy8(7);
   width: 100vw !important;
   height: 100vh !important;
   display: flex;

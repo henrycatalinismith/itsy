@@ -1,7 +1,7 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin.scss";
 
 $max: 512px;
-$stripe1: pico8-original-palette(0);
+$stripe1: fantasy8(0);
 $stripe2: #111111;
 
 .component {
@@ -43,8 +43,8 @@ $stripe2: #111111;
 
   @media (orientation: portrait) and (min-height: 512px) and (min-width: 60vh) {
     margin: 16px;
-    box-shadow: 0 0 16px transparentize(pico8-original-palette(7), 0.6);
-    border: 1px solid pico8-original-palette(7);
+    box-shadow: 0 0 16px transparentize(fantasy8(7), 0.6);
+    border: 1px solid fantasy8(7);
   }
 }
 
@@ -61,8 +61,8 @@ $stripe2: #111111;
   overflow: hidden;
 
   @media (orientation: landscape) {
-    box-shadow: 0 0 16px transparentize(pico8-original-palette(7), 0.6);
-    border: 1px solid pico8-original-palette(7);
+    box-shadow: 0 0 16px transparentize(fantasy8(7), 0.6);
+    border: 1px solid fantasy8(7);
   }
 }
 

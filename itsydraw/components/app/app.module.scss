@@ -1,7 +1,7 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin.scss";
 
 .component {
-  background-color: pico8-original-palette(14);
+  background-color: fantasy8(14);
   display: grid;
   width: 100vw;
   height: 100vh;
@@ -23,7 +23,7 @@
 }
 
 .screen {
-  border: 2px solid pico8-original-palette(2);
+  border: 2px solid fantasy8(2);
   width: 100%;
   box-sizing: border-box;
   flex: 1;

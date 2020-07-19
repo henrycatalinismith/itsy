@@ -1,3 +1,9 @@
+@import "../../../palettes/fantasy8/_mixin.scss";
+
+$red: fantasy8(14);
+$blue: fantasy8(12);
+$green: fantasy8(3);
+
 .CodeMirror {
   flex: 1 !important;
 }
@@ -15,11 +21,11 @@
 }
 
 .cm-s-itsy.CodeMirror {
-  color: #65a085;
+  color: fantasy8(11);
 }
 
 .cm-s-itsy div.CodeMirror-selected {
-  background: #49483e;
+  background: fantasy8(15);
 }
 
 .cm-s-itsy .CodeMirror-line::selection,
@@ -48,7 +54,7 @@
 }
 
 .cm-s-itsy .CodeMirror-linenumber {
-  color: #ff77a8;
+  color: $red;
 }
 
 .cm-s-itsy .CodeMirror-cursor {
@@ -64,28 +70,28 @@
 }
 
 .cm-s-itsy span.cm-number {
-  color: #29adff;
+  color: $blue;
 }
 
 .cm-s-itsy span.cm-property,
 .cm-s-itsy span.cm-attribute {
-  color: #a6e22e;
+  color: $green;
 }
 
 .cm-s-itsy span.cm-keyword {
-  color: #ff77a8;
+  color: $red;
 }
 
 .cm-s-itsy span.cm-builtin {
-  color: #66d9ef;
+  color: $blue;
 }
 
 .cm-s-itsy span.cm-string {
-  color: #29adff;
+  color: $blue;
 }
 
 .cm-s-itsy span.cm-variable {
-  color: #65a085;
+  color: $green;
 }
 
 .cm-s-itsy span.cm-variable-2 {
@@ -102,7 +108,7 @@
 }
 
 .cm-s-itsy span.cm-bracket {
-  color: #65a085;
+  color: $green;
 }
 
 .cm-s-itsy span.cm-tag {

@@ -1,8 +1,8 @@
-@import "../../../palettes/pico8/_original.scss";
+@import "../../../palettes/fantasy8/_mixin.scss";
 
 .component {
-  background-color: pico8-original-palette(1);
-  border: 2px solid pico8-original-palette(2);
+  background-color: fantasy8(1);
+  border: 2px solid fantasy8(2);
   display: grid;
   grid-area: menu;
   list-style-type: none;

@@ -4,7 +4,7 @@ import {
   ToolIds,
 } from "@highvalley.systems/itsydraw/store/tools"
 import { Rect } from "@highvalley.systems/typedefs/itsy"
-import pico8 from "@highvalley.systems/palettes/pico8"
+import fantasy8 from "@highvalley.systems/palettes/fantasy8"
 import React from "react"
 import { connect } from "react-redux"
 import styles from "./clipboard-icon.module.scss"
@@ -59,7 +59,7 @@ export function ClipboardIcon({
     width: clipboardRect.width + 1,
     height: clipboardRect.height + 1,
     fill: "none",
-    stroke: pico8[14],
+    stroke: fantasy8[14],
     strokeDasharray: Math.max(clipboardRect.width, clipboardRect.height) / 16,
     strokeWidth: Math.max(clipboardRect.width, clipboardRect.height) / 16,
   }
