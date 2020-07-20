@@ -7,13 +7,18 @@
   justify-content: center;
 }
 
-.Regular {
+.Regular,
+.Wide {
   border-width: 1px;
   box-shadow: 1px 1px 0.5px fantasy8(13);
   border-radius: 2px;
   height: 32px;
   width: 72px;
   padding: 2px 2px 4px 2px;
+}
+
+.Wide {
+  width: 128px;
 }
 
 .Large {

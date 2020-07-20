@@ -16,6 +16,8 @@ import Devtools from "@highvalley.systems/itsyexpo/screens/devtools"
 import Disk from "@highvalley.systems/itsyexpo/screens/disk"
 import Home from "@highvalley.systems/itsyexpo/screens/home"
 import New from "@highvalley.systems/itsyexpo/screens/new"
+import Rename from "@highvalley.systems/itsyexpo/screens/rename"
+import Delete from "@highvalley.systems/itsyexpo/screens/delete"
 
 import store from "./store"
 import colors from "@highvalley.systems/palettes/fantasy8"
@@ -81,6 +83,7 @@ function App({ skipLoadingScreen }): React.ReactElement {
               component={Home}
               {...pixlflipHeader("itsy studio")}
             />
+
             <Stack.Screen
               name="Devtools"
               component={Devtools}
@@ -90,11 +93,14 @@ function App({ skipLoadingScreen }): React.ReactElement {
                   <TouchableOpacity
                     onPress={() => navigation.navigate("Disk", route.params)}
                   >
-                    <Pixlflip fontSize={24}>{route.params.name}</Pixlflip>
+                    <Pixlflip fontSize={24}>
+                      {store.getState().disks[route.params.id].name}
+                    </Pixlflip>
                   </TouchableOpacity>
                 ),
               })}
             />
+
             <Stack.Screen
               name="Disk"
               component={Disk}
@@ -103,12 +109,31 @@ function App({ skipLoadingScreen }): React.ReactElement {
                 headerTitle: <Pixlflip fontSize={24}>disk</Pixlflip>,
               })}
             />
+
             <Stack.Screen
               name="New"
               component={New}
               options={({ route }) => ({
                 headerLeft: (props) => <Back onPress={props.onPress} />,
                 headerTitle: <Pixlflip fontSize={24}>new disk</Pixlflip>,
+              })}
+            />
+
+            <Stack.Screen
+              name="Rename"
+              component={Rename}
+              options={({ route }) => ({
+                headerLeft: (props) => <Back onPress={props.onPress} />,
+                headerTitle: <Pixlflip fontSize={24}>rename</Pixlflip>,
+              })}
+            />
+
+            <Stack.Screen
+              name="Delete"
+              component={Delete}
+              options={({ route }) => ({
+                headerLeft: (props) => <Back onPress={props.onPress} />,
+                headerTitle: <Pixlflip fontSize={24}>delete</Pixlflip>,
               })}
             />
           </Stack.Navigator>

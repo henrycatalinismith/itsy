@@ -1,12 +1,12 @@
+export interface DiskParams {
+  id: string
+}
+
 export type RootStackParamList = {
-  Devtools: {
-    id: string
-    name: string
-  }
-  Disk: {
-    id: string
-    name: string
-  }
+  Devtools: DiskParams
+  Disk: DiskParams
   Home: undefined
   New: undefined
+  Rename: DiskParams
+  Delete: DiskParams
 }

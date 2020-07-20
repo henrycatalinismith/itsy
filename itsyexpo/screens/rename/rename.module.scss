@@ -3,6 +3,7 @@
 .component {
   flex: 1;
   background-color: fantasy8(7);
+  align-items: center;
 }
 
 .header {
@@ -20,7 +21,20 @@
   margin-bottom: 16px;
 }
 
-$actions: 4;
+.input {
+  background-color: fantasy8(7);
+  border-color: fantasy8(0);
+  border-width: 2px;
+  font-family: "overpass-mono-bold";
+  font-size: 16px;
+  padding: 4px;
+  width: 100%;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 512px;
+}
+
+$actions: 2;
 .actions {
   align-self: center;
   justify-content: space-between;

@@ -175,7 +175,7 @@ export const copyDisk = (oldId: string, name: string): Thunk => async (
     updated,
   }
 
-  await dispatch(createDisk(newDisk))
+  return await dispatch(createDisk(newDisk))
 }
 
 export const createBlankDisk = (name: string): Thunk => async (dispatch) => {
